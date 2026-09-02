@@ -1,0 +1,44 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/HelteixInstaller/HelteixInstallerWindow.uss?fileID=7433441132597879392&amp;guid=d2f21e286a7f020468603b8f84ce98b6&amp;type=3#HelteixInstallerWindow" />
+    <ui:VisualElement name="Top" style="flex-grow: 0; flex-direction: row; height: 149px; margin-left: 0; margin-bottom: 0; margin-right: 0; margin-top: 0; padding-left: 15px; padding-right: 15px; padding-top: 15px; padding-bottom: 15px; background-color: rgb(47, 47, 47);">
+        <ui:VisualElement name="Icon" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/HelteixInstaller/power-plant.png?fileID=2800000&amp;guid=eaa363bc21d75dc4eb4c4311783ef124&amp;type=3#power-plant&quot;); -unity-background-scale-mode: scale-to-fit; width: 40%; background-position-x: right 10px;" />
+        <ui:Label text="Helteix" style="font-size: 54px; -unity-text-align: middle-left; -unity-font-style: bold; flex-shrink: 1; width: 60%;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Bottom" style="flex-grow: 1; margin-left: 30px; margin-right: 30px; margin-bottom: 30px; margin-top: 30px;">
+        <ui:Label text="&lt;b&gt;Welcome&lt;/b&gt;,&#10;&#10;If you see this window this means that you&apos;ve been granted free and unlimited access to my packages.&#10;Use this window to quickly setup Helteix and be ready to create great games!" double-click-selects-word="false" triple-click-selects-line="true" class="unity-help-box" style="height: auto; -unity-text-align: upper-center; text-overflow: clip; white-space: pre-wrap; justify-content: center; margin-bottom: 10px; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; padding-left: 20px;" />
+        <ui:Button text="Join the discord" name="DiscordButton" />
+        <ui:ScrollView style="border-top-width: 20px;">
+            <ui:VisualElement name="Step1" class="step-group">
+                <ui:VisualElement name="DescriptionContainer">
+                    <ui:Label text="Step 1" class="step-label" />
+                    <ui:Label text="First make sure that you have access to the scoped registry" style="white-space: normal;" />
+                </ui:VisualElement>
+                <ui:Button text="Grant access" name="SetupButton" class="button" style="margin-bottom: 5px; margin-top: 5px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-right: 0; margin-left: 0;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Step2" class="step-group" style="align-items: flex-start;">
+                <ui:VisualElement name="DescriptionContainer">
+                    <ui:Label text="Step 1" class="step-label" />
+                    <ui:Label text="Add &lt;i&gt;Helteix&lt;/i&gt;&apos;s scoped registry to your project.&#10;&lt;i&gt;ProjectSettings -&gt; Package Manager -&gt; Scoped Registeries&lt;/i&gt;" style="white-space: normal;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Name" class="copy-label">
+                    <ui:Label text="Helteix" enable-rich-text="false" style="-unity-text-align: middle-left; flex-grow: 1;" />
+                    <ui:Button text="Copy" name="CopyName" class="copy-button" />
+                </ui:VisualElement>
+                <ui:VisualElement name="URL" class="copy-label">
+                    <ui:Label text="https://upm.pckgs.io&#10;" enable-rich-text="false" style="-unity-text-align: middle-left; flex-grow: 1; text-overflow: ellipsis;" />
+                    <ui:Button text="Copy" name="CopyURL" class="copy-button" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Scope" class="copy-label">
+                    <ui:Label text="com.helteix" enable-rich-text="false" style="-unity-text-align: middle-left; flex-grow: 1;" />
+                    <ui:Button text="Copy" name="CopyScope" class="copy-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Step3" class="step-group">
+                <ui:VisualElement name="DescriptionContainer">
+                    <ui:Label text="Step 3&#10;" class="step-label" />
+                    <ui:Label text="Download every package you need! And don&apos;t forget to give me feedbacks." style="white-space: normal;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

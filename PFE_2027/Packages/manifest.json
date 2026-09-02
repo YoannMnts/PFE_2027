@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "com.eflatun.scenereference": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#5.0.0",
+    "com.helteix.channeled-properties": "2.1.0",
+    "com.helteix.singletons": "1.4.0",
+    "com.kyrylokuzyk.primetween": "file:../Packages/com.kyrylokuzyk.primetween.tgz",
+    "com.singularitygroup.hotreload": "git+https://gitlab.hotreload.net/root/hot-reload-releases.git#1.13.23",
     "com.unity.ai.navigation": "2.0.14",
     "com.unity.collab-proxy": "2.13.6",
     "com.unity.ide.rider": "3.0.38",
@@ -46,5 +51,14 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Helteix",
+      "url": "https://upm.pckgs.io",
+      "scopes": [
+        "com.helteix"
+      ]
+    }
+  ]
 }

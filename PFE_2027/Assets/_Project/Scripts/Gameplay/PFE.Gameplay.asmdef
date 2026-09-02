@@ -1,0 +1,21 @@
+{
+    "name": "PFE.Gameplay",
+    "rootNamespace": "PFE.Gameplay",
+    "references": [
+        "GUID:73dc112201320564299160a8a979c10f",
+        "GUID:218d83f778a79c74791573f907cb34c7",
+        "GUID:7f6fdd18b438ff245b7f869ddfb77b44",
+        "GUID:c08e6420a9402a248878197da69c4d9a",
+        "GUID:80ecb87cae9c44d19824e70ea7229748",
+        "GUID:caca889fed6088d40b22c2d7e2909c31"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

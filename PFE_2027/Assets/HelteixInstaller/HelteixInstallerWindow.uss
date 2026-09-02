@@ -1,0 +1,52 @@
+.custom-label {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(68, 138, 255);
+}
+
+.button {
+    width: 150px;
+}
+
+.step-label {
+    font-size: 20px;
+    -unity-font-style: bold;
+    padding-bottom: 8px;
+}
+
+.step-group {
+    align-items: center;
+    flex-shrink: 1;
+    align-self: stretch;
+    align-content: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    flex-grow: 1;
+    width: auto;
+}
+
+.copy-label {
+    flex-grow: 1;
+    flex-direction: row;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 0;
+    padding-top: 5px;
+    width: 70%;
+    margin-right: 0;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+
+.copy-button {
+    align-self: flex-end;
+    width: 105px;
+}
+
+#DescriptionContainer {
+    flex-grow: 1;
+    width: 100%;
+}

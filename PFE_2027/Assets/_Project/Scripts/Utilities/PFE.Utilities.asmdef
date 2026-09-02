@@ -1,0 +1,16 @@
+{
+    "name": "PFE.Utilities",
+    "rootNamespace": "PFE.Utilities",
+    "references": [
+        "PrimeTween.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

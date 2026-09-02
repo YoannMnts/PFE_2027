@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e354dfdf100c840bf58624d6cdbe8e, type: 3}
+  m_Name: GameSceneSettings
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.GameSettings.GameSceneSettings
+  <MainMenu>k__BackingField:
+    asset: {fileID: 0}
+    guid: 00000000000000000000000000000000
+  <Game>k__BackingField:
+    asset: {fileID: 102900000, guid: 68a046cb93137634591d6bc1b87db77e, type: 3}
+    guid: 68a046cb93137634591d6bc1b87db77e
+  <TrainingRoom>k__BackingField:
+    asset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+    guid: 99c9720ab356a0642a771bea13969a05
+  <LoaderPrefab>k__BackingField: {fileID: 3907757298378610115, guid: 681ec05cfa37f73459766164b88210d2, type: 3}
