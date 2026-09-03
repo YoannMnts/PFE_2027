@@ -16,11 +16,11 @@ namespace PFE.Gameplay.Scripts.Phases.Runtimes
         [SerializeReference]
         private IRuntimePlayerFactory[] factories;
         
-        private Dictionary<IPlayer, RuntimePlayer> runtimeBattlePlayers;
+        private Dictionary<IPlayer, RuntimePlayer> runtimePlayers;
 
         private void Awake()
         {
-            runtimeBattlePlayers = new ();
+            runtimePlayers = new ();
         }
 
         protected override void OnPhaseBegin(BattlePhase phase)
@@ -29,7 +29,6 @@ namespace PFE.Gameplay.Scripts.Phases.Runtimes
 
             container.ClearChildren();
 
-            Debug.Log($"Player count {phase.PlayerCount}");
             foreach (var player in phase.Players)
             {
                 for (int i = 0; i < factories.Length; i++)
@@ -38,7 +37,7 @@ namespace PFE.Gameplay.Scripts.Phases.Runtimes
                     if(!factory.TryCreateRuntimeFor(player, out var runtime))
                         continue;
                     
-                    runtimeBattlePlayers.Add(player, runtime);
+                    runtimePlayers.Add(player, runtime);
                     runtime.transform.SetParent(container);
                     break;
                 }
@@ -47,10 +46,10 @@ namespace PFE.Gameplay.Scripts.Phases.Runtimes
 
         protected override void OnPhaseEnd(BattlePhase phase)
         {
-            foreach ((_, RuntimePlayer runtime) in runtimeBattlePlayers)
+            foreach ((_, RuntimePlayer runtime) in runtimePlayers)
                 runtime.Disconnect();
             
-            runtimeBattlePlayers.Clear();
+            runtimePlayers.Clear();
             container.ClearChildren();
             
             base.OnPhaseEnd(phase);

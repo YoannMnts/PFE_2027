@@ -3,7 +3,9 @@
     "rootNamespace": "PFE.Core",
     "references": [
         "GUID:218d83f778a79c74791573f907cb34c7",
-        "GUID:caca889fed6088d40b22c2d7e2909c31"
+        "GUID:caca889fed6088d40b22c2d7e2909c31",
+        "GUID:52ef63d36179bf94da36e2ef56759993",
+        "GUID:80ecb87cae9c44d19824e70ea7229748"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -9,7 +9,7 @@ namespace PFE.Gameplay.Scripts.Phases.Runtimes
         public abstract void Disconnect();
     }
 
-    public abstract class RuntimePlayer<T> : RuntimePlayer where T : class, IPlayer
+    public abstract class RuntimePlayer<T> : RuntimePlayer, IRuntimePlayer<T> where T : class, IPlayer
     {
         protected static readonly List<RuntimePlayer<T>> RuntimeBattlePlayers = new();
         

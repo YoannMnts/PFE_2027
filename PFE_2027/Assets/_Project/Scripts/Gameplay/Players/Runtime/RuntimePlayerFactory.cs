@@ -19,11 +19,12 @@ namespace PFE.Gameplay.Scripts.Phases.Runtimes
 
         public bool TryCreateRuntimeFor(IPlayer player, out RuntimePlayer runtimePlayer)
         {
-            if (player is T)
+            if (player is T t)
             {
                 runtimePlayer = SpawnPrefab();
                 if (runtimePlayer is RuntimePlayer<T> compatible)
                 {
+                    compatible.Connect(t);
                     return true;
                 }
             }

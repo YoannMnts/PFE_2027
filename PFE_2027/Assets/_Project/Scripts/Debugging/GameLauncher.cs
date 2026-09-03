@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
@@ -21,7 +22,7 @@ namespace _Project.Scripts.Debugging
         
         [SerializeField]
         private bool launchOnStart = true;
-
+        
         private void Start()
         {
             if(launchOnStart)

@@ -21,6 +21,7 @@ namespace PFE.Utilities.Scripts
             Tween.StopAll(canvasGroup);
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
+            
             return Tween.Alpha(canvasGroup, 0, duration);
         }
 

@@ -16,19 +16,14 @@ namespace PFE.Gameplay.Scripts.Phases
     {
         public IEnumerable<IPlayer> Players => players.Values;
         
-        public IPlayer CurrentPlayer => players[CurrentPlayerID];
-        
         public int PlayerCount => players.Count;
 
-        public int CurrentPlayerID { get; private set; }
-
         private Dictionary<int, IPlayer> players;
-
         
         protected override async Awaitable Initialize(CancellationToken token)
         {
-            SceneReference gameScene = GameSceneSettings.Current.Game;
-            await GameController.GameSceneController.LoadSceneWithLoadingScreen(gameScene);
+            SceneReference battleScene = GameSceneSettings.Current.Game;
+            await GameController.GameSceneController.LoadSceneWithLoadingScreen(battleScene);
             
             players = DictionaryPool<int, IPlayer>.Get();
             
