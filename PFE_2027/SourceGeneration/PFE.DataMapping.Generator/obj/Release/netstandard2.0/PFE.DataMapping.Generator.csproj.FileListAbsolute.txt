@@ -1,0 +1,11 @@
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\bin\Release\netstandard2.0\PFE.DataMapping.Generator.deps.json
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\bin\Release\netstandard2.0\PFE.DataMapping.Generator.dll
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\bin\Release\netstandard2.0\PFE.DataMapping.Generator.pdb
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.csproj.AssemblyReference.cache
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.GeneratedMSBuildEditorConfig.editorconfig
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.AssemblyInfoInputs.cache
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.AssemblyInfo.cs
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.csproj.CoreCompileInputs.cache
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.sourcelink.json
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.dll
+C:\GitHub\PFE_2027\PFE_2027\SourceGeneration\PFE.DataMapping.Generator\obj\Release\netstandard2.0\PFE.DataMapping.Generator.pdb

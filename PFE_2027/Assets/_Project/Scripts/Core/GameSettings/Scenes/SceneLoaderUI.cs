@@ -1,4 +1,5 @@
-﻿using PFE.Utilities.Scripts;
+﻿using System.Collections.Generic;
+using PFE.Utilities.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,7 +14,7 @@ namespace PFE.Core.Scripts.GameSettings
         private GameObject root;
         
         [SerializeField, Range(0f, 10f)] 
-        private int fadeDuration;
+        private float fadeDuration;
         internal async Awaitable StartLoading()
         {
             root.SetActive(true);
