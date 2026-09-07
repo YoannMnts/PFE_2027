@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Helteix.Tools.Phases;
@@ -60,7 +60,12 @@ namespace PFE.Core.Scripts.GameSettings
             return scenesIndices.Select(SceneManager.GetSceneByBuildIndex);
         }
 
-        protected override async Awaitable Dispose(CancellationToken token)
+        /// <summary>
+        /// Not tied to the Initialize/Execute/Dispose lifecycle: call this explicitly once the
+        /// newly loaded scene is actually ready to be shown (e.g. after OnPhaseBegin listeners
+        /// have finished spawning gameplay content), not right when scene loading finishes.
+        /// </summary>
+        public async Awaitable HideLoadingScreen()
         {
             await loaderUI.EndLoading();
             await SceneManager.UnloadSceneAsync(loadingScene);

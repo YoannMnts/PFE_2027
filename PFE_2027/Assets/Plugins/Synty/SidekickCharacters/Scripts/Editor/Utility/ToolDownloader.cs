@@ -24,7 +24,7 @@ namespace Synty.SidekickCharacters
         private const string _GIT_DB_URL = "https://github.com/SyntyStudios/SidekicksToolRelease/releases/latest/download/SidekicksDatabase.unitypackage";
         private const string _PACKAGE_CACHE = "Assets/DownloadCache/Sidekicks.unitypackage";
         private const string _DB_PACKAGE_CACHE = "Assets/DownloadCache/SidekicksDatabase.unitypackage";
-        private const string _VERSION_FILE = "Assets/Synty/SidekickCharacters/Scripts/Editor/version.txt";
+        private const string _VERSION_FILE = "Assets/Plugins/Synty/SidekickCharacters/Scripts/Editor/version.txt";
         private const string _VERSION_TAG = "\"tag_name\":";
         private const string _VERSION_KEY = "sk_current_tool_version";
         private const string _SIDEKICK_TOOL_MENU_ITEM = "Synty/Sidekick Character Tool";

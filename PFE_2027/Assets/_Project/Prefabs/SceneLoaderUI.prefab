@@ -163,8 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.GameSettings.SceneLoaderUI
   group: {fileID: 2525323623783664677}
   root: {fileID: 4907294114195745019}
-  aaaaa: []
-  fadeDuration: 0.7
+  fadeDuration: 0
 --- !u!1 &4920468699662779800
 GameObject:
   m_ObjectHideFlags: 0

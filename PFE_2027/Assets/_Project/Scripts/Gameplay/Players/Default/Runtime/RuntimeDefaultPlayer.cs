@@ -1,8 +1,8 @@
-﻿using PFE.Gameplay.Scripts.Phases.Runtimes;
+using PFE.Gameplay.Scripts.Phases.Runtimes;
 
-namespace PFE.Gameplay.Scripts.Players.Local.Runtime
+namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public class RuntimeLocalPlayer : RuntimePlayer<LocalPlayer>
+    public class RuntimeDefaultPlayer : RuntimePlayer<DefaultPlayer>
     {
         protected override void OnConnected()
         {
