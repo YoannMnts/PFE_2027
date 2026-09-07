@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9c03cb0b985363c4fa734a831b45bf69
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Foliage/Green_Bush/GreenBush.mat
+  uploadId: 902590

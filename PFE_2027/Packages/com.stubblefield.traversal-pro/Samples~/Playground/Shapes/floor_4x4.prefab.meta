@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b0303c843624e6943a616b3feea69f7a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Shapes/floor_4x4.prefab
+  uploadId: 902590

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4de6ace27001e5143a0e9d3ad6a7b5f8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Foliage/Broadleaf_Shrub/Broadleaf_Shrub.prefab
+  uploadId: 902590

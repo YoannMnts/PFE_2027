@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 84175016a2c74a3d8233ea3c537bd393
+timeCreated: 1709586607
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Shapes/Offset.cs
+  uploadId: 902590

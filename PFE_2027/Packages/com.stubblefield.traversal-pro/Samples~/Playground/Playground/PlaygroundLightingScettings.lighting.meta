@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fc08d5dd87da20c48b0469fe3076d457
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Playground/PlaygroundLightingScettings.lighting
+  uploadId: 902590

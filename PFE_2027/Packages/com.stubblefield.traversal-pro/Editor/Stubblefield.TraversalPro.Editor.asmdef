@@ -1,0 +1,40 @@
+{
+    "name": "Stubblefield.TraversalPro.Editor",
+    "rootNamespace": "Stubblefield.TraversalPro.Editor",
+    "references": [
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:9c5c36387dbad3c42a679a06504cd387"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.cinemachine",
+            "expression": "[2,3)",
+            "define": "ENABLE_CINEMACHINE_2"
+        },
+        {
+            "name": "com.unity.cinemachine",
+            "expression": "3",
+            "define": "ENABLE_CINEMACHINE_3"
+        },
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "ENABLE_URP"
+        },
+        {
+            "name": "com.unity.render-pipelines.high-definition",
+            "expression": "",
+            "define": "ENABLE_HDRP"
+        }
+    ],
+    "noEngineReferences": false
+}

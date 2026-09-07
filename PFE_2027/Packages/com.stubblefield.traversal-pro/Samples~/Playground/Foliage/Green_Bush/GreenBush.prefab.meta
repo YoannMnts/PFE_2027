@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 25825d328e2ddee4d97c5d7ac91b10d0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Foliage/Green_Bush/GreenBush.prefab
+  uploadId: 902590

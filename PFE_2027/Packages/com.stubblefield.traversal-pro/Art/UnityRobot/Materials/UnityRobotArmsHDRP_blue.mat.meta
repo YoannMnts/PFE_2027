@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 22c339f01dd3c9f4db32e680e6a422bb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Art/UnityRobot/Materials/UnityRobotArmsHDRP_blue.mat
+  uploadId: 902590

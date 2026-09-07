@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 37db7a969509bfb4e9d387dbc16a24f4
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 327645
+  packageName: "Elven Warriors \u2013 Sidekick Modular Characters by Synty"
+  packageVersion: 1.0.4
+  assetPath: Assets/Synty/SidekickCharacters/Scripts/Editor/Utility/ToolDownloader.cs
+  uploadId: 854792

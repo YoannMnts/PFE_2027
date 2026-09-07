@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 88908a6c4d1074de88e0e28fdc61ce74
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Art/UnityRobot/Animation_Deprecated/Idle_deprecated.anim
+  uploadId: 902590

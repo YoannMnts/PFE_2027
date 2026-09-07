@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: a776b49a505faab499ebd42aff3a22f0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Scripts/PerspectiveSwitcher.cs
+  uploadId: 902590

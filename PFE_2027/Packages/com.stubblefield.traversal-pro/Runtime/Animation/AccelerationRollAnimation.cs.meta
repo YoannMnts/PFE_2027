@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: edb4fe52c13a4b39b86800ea1acbd568
+timeCreated: 1723852937
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Animation/AccelerationRollAnimation.cs
+  uploadId: 902590

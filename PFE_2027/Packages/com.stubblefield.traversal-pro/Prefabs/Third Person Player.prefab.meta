@@ -1,0 +1,14 @@
+﻿fileFormatVersion: 2
+guid: 411df04ac83579246b6a7669aaffe24e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Prefabs/Third Person Player.prefab
+  uploadId: 902590

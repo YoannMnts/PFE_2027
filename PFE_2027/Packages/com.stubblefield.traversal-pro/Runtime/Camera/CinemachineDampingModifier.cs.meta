@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: a05a2520a6b942c583d91a5a79c24203
+timeCreated: 1738915667
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Camera/CinemachineDampingModifier.cs
+  uploadId: 902590

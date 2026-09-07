@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 82adf49e51a649ca91a12d8b0f34d537
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/LICENSE.md
+  uploadId: 902590

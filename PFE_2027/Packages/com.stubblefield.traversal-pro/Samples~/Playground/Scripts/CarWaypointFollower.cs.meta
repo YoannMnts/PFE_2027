@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 6e29e6657d214f1e9715c9e61e680379
+timeCreated: 1737769044
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Scripts/CarWaypointFollower.cs
+  uploadId: 902590

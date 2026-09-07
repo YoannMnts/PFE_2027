@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1834b25bbaed9d445ab3848e1b4a5902
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Art/UnityRobot/Materials/UnityRobotLegsHDRP.mat
+  uploadId: 902590

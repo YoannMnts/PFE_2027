@@ -1,0 +1,31 @@
+{
+  "name": "com.stubblefield.traversal-pro",
+  "version": "0.1.14",
+  "displayName": "Traversal Pro",
+  "description": "Traversal Pro is a physics based character controller where the character is represented as an upright capsule collider with a dynamic rigidbody. It applies forces to the rigidbody to move the character but does not snap or teleport the character to the ground each frame. This allows other game systems to freely add forces to the character. Features in Traversal Pro are implemented as individual components so if you don’t need a particular feature, then you can just remove that component.\n\nTo get started, right click in the Hierarchy window and select Traversal Pro / First Person Player or Third Person Player to create a player. You can control the character with mouse and keyboard or with a gamepad.\n\nFor support, feedback, and to see how others are using it, join the Traversal Pro Discord server (https://discord.gg/Rkk5UzAXTr).",
+  "unity": "6000.3",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {
+    "com.unity.cinemachine": "3.1.0",
+    "com.unity.collections": "2.5.7",
+    "com.unity.inputsystem": "1.7.0"
+  },
+  "keywords": [
+    "Character Controller",
+    "Physics"
+  ],
+  "author": {
+    "name": "Josh Stubblefield",
+    "email": "joshrs926@gmail.com",
+    "url": ""
+  },
+  "samples": [
+    {
+      "displayName": "Playground",
+      "description": "This URP scene demonstrates the ability for a Traversal Pro character to interact with complex geometry and other rigidbodies in the scene without the need for custom setup. As long as an object is a rigidbody and it is moved with AddForce if dynamic or MovePosition if kinematic, a Traversal Pro character will be able to stand on top of it and move with it.",
+      "path": "Samples~/Playground"
+    }
+  ]
+}

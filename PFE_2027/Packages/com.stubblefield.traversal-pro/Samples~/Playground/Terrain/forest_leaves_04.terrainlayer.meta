@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 04a7aa79d209c4341920e99d06d348b4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 8574412962073106934
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Terrain/forest_leaves_04.terrainlayer
+  uploadId: 902590

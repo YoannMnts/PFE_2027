@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 286a118b785bd1e40affcfbaa0c0c391
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Foliage/Broadleaf_Shrub/Broadleaf_Shrub_wind.mat
+  uploadId: 902590

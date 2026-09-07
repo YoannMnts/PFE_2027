@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 36f2af8a8119d4e4e9d1ec30df43da96
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Shapes/door_2x4.prefab
+  uploadId: 902590

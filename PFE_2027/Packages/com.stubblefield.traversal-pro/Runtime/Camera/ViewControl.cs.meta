@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 89c11ec277334ade8888dd92b90c5531
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Camera/ViewControl.cs
+  uploadId: 902590

@@ -1,0 +1,1 @@
+﻿Traversal Pro is released under Unity's Asset Store End User License Agreement found here https://unity.com/legal/as-terms

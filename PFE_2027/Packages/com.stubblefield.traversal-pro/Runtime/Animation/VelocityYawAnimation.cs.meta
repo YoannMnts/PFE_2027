@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: e9c1c57004c34c63864842adb9190501
+timeCreated: 1710068152
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Animation/VelocityYawAnimation.cs
+  uploadId: 902590

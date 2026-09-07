@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 00a1f045701ffb34caef15c0e90af0cc
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Foliage/Fir_Tree/fir_tree.prefab
+  uploadId: 902590

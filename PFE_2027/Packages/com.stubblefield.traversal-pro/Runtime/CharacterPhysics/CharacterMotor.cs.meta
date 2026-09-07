@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: ab099eb10b3f4f05b485d12084743e1b
+timeCreated: 1738728982
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/CharacterPhysics/CharacterMotor.cs
+  uploadId: 902590

@@ -1,0 +1,20 @@
+{
+    "name": "Stubblefield.TraversalPro",
+    "rootNamespace": "Stubblefield.TraversalPro",
+    "references": [
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Cinemachine",
+        "Unity.InputSystem",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

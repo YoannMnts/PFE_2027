@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9bbd398eb56c1c24e866039cf6ce82f8
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Shapes/roof_8x8.prefab
+  uploadId: 902590

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 623bb1fb1f3e4044f8510ddeee83241f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Foliage/Fern/Fern.prefab
+  uploadId: 902590

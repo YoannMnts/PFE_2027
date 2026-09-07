@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0a6f4a688c10beb4f945836625c8102d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Art/UnityRobot/Animation/UnityRobotAnimator.controller
+  uploadId: 902590

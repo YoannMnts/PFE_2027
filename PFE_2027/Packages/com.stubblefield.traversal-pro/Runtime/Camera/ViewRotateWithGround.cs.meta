@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 108753ffc5a843efa4b5f2f832ca78d0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Camera/ViewRotateWithGround.cs
+  uploadId: 902590

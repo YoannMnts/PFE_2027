@@ -1,0 +1,14 @@
+﻿fileFormatVersion: 2
+guid: 5b2335680c04e6244802552018429b6a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Prefabs/First Person Player.prefab
+  uploadId: 902590

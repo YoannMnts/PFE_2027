@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b6926b0c4b8f74af3b29f391509b4215
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Art/UnityRobot/Animation_Deprecated/Walk_N_Land_deprecated.anim
+  uploadId: 902590

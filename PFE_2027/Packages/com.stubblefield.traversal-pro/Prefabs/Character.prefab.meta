@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c2069ce8daa42254d8ed1cd008522af9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Prefabs/Character.prefab
+  uploadId: 902590

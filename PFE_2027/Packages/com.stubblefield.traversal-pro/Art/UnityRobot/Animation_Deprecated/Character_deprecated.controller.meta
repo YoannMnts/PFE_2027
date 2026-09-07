@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3cabb01d678a2724ebfea1ab502c11a7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Art/UnityRobot/Animation_Deprecated/Character_deprecated.controller
+  uploadId: 902590

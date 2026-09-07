@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 20eeda57ed7b49858d87a235af63c3fa
+timeCreated: 1721860547
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/CharacterPhysics/AirControl.cs
+  uploadId: 902590

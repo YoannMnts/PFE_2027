@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 484ac86f4e10475f97039cb4450a58aa
+timeCreated: 1733525714
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Misc/Utility_Math.cs
+  uploadId: 902590

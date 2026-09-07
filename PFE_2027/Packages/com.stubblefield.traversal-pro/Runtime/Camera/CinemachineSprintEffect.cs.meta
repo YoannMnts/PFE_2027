@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 2ee28e282401ad24194942ffabad9ad5
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/Camera/CinemachineSprintEffect.cs
+  uploadId: 902590

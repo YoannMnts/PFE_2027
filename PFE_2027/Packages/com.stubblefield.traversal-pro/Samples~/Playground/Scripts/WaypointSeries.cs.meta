@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 930e5bd4277aa234eb98645de618eae5
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Samples~/Playground/Scripts/WaypointSeries.cs
+  uploadId: 902590

@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 440453d247fd4aeb87fd35c9bbd330d0
+timeCreated: 1739167394
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/CharacterPhysics/GroundSnap.cs
+  uploadId: 902590

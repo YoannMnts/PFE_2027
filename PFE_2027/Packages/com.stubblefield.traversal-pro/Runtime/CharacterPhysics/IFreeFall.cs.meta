@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: 7faece8205cd4d3d86882292d6293977
+timeCreated: 1739218181
+AssetOrigin:
+  serializedVersion: 1
+  productId: 292943
+  packageName: 'Traversal Pro: Physics-based Character Controller'
+  packageVersion: 0.1.14
+  assetPath: Packages/com.stubblefield.traversal-pro/Runtime/CharacterPhysics/IFreeFall.cs
+  uploadId: 902590
