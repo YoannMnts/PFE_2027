@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
+using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
 using PFE.Gameplay.Scripts.Phases;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts.Debugging
 {
@@ -15,7 +17,7 @@ namespace _Project.Scripts.Debugging
         {
             protected override async Awaitable<object> Execute(CancellationToken token)
             {
-                var battlePhase = new BattlePhase();
+                var battlePhase = new BattlePhase(SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
                 return await battlePhase.Run();
             }
         }
