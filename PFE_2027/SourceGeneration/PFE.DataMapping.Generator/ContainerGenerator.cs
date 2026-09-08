@@ -19,9 +19,9 @@ namespace PFE.DataMapping.Generator
     [Generator(LanguageNames.CSharp)]
     public sealed class ContainerGenerator : IIncrementalGenerator
     {
-        private const string GenAttr = "PFE.Core.DataMapping.GenerateContainerAttribute";
-        private const string AddAttr = "PFE.Core.DataMapping.AddToContainerAttribute";
-        private const string BehaviourIface = "PFE.Core.DataMapping.IBehaviour`1";
+        private const string GenAttr = "PFE.Core.Scripts.DataMapping.Attributes.GenerateContainerAttribute";
+        private const string AddAttr = "PFE.Core.Scripts.DataMapping.Attributes.AddToContainerAttribute";
+        private const string BehaviourIface = "PFE.Core.Scripts.DataMapping.Interfaces.IBehaviour`1";
 
         // ---- diagnostics ------------------------------------------------------------------
 
@@ -243,7 +243,7 @@ namespace PFE.DataMapping.Generator
             HeaderWithUsings(sb, scope, d.Namespace, out bool hasNs);
 
             sb.Append("    public interface ").Append(d.ContainerIface)
-              .Append(" : global::PFE.Core.DataMapping.IContainer<").Append(rootName).AppendLine(">");
+              .Append(" : global::PFE.Core.Scripts.DataMapping.Interfaces.IContainer<").Append(rootName).AppendLine(">");
             sb.AppendLine("    {");
             foreach (var m in d.ForwardedMethods)
                 sb.Append("        ").Append(SignatureWidened(m, rootName, scope)).AppendLine(";");
@@ -277,7 +277,7 @@ namespace PFE.DataMapping.Generator
 
             sb.Append("    public sealed class ").Append(d.ContainerClass)
               .AppendLine("<TData, TBehaviour>");
-            sb.Append("        : global::PFE.Core.DataMapping.Container<TData, TBehaviour>, ")
+            sb.Append("        : global::PFE.Core.Scripts.DataMapping.Container<TData, TBehaviour>, ")
               .AppendLine(d.ContainerIface);
             sb.Append("        where TData : ").AppendLine(rootName);
             sb.Append("        where TBehaviour : ").Append(behName).AppendLine("<TData>");
@@ -376,10 +376,10 @@ namespace PFE.DataMapping.Generator
 
             string keyword = BuildPartialKeyword(m.Struct);
             sb.Append("    ").Append(keyword).Append(' ').Append(m.Struct.Name)
-              .Append(" : global::PFE.Core.DataMapping.ISelfMapping<").Append(dataName).AppendLine(">");
+              .Append(" : global::PFE.Core.Scripts.DataMapping.Interfaces.ISelfMapping<").Append(dataName).AppendLine(">");
             sb.AppendLine("    {");
             sb.AppendLine("        public void BuildAndRegister()");
-            sb.Append("            => global::PFE.Core.DataMapping.DomainBucket<")
+            sb.Append("            => global::PFE.Core.Scripts.DataMapping.DomainBucket<")
               .Append(bucket).Append(">.Add(new ").Append(containerClosed).AppendLine("(this));");
             sb.AppendLine("    }");
 
@@ -399,7 +399,7 @@ namespace PFE.DataMapping.Generator
 
             // The bootstrap aggregates the whole assembly, so simple-name
             // collisions are most likely here; let the Scope resolve them.
-            var scope = new Scope("PFE.Core.DataMapping.Generated");
+            var scope = new Scope("PFE.Core.Scripts.DataMapping.Generated");
             foreach (var r in regs)
             {
                 scope.Collect(r.DataType);
@@ -415,7 +415,7 @@ namespace PFE.DataMapping.Generator
             var sb = Header();
             string usings = scope.UsingsBlock();
             if (usings.Length > 0) sb.Append(usings).AppendLine();
-            sb.AppendLine("namespace PFE.Core.DataMapping.Generated");
+            sb.AppendLine("namespace PFE.Core.Scripts.DataMapping.Generated");
             sb.AppendLine("{");
             sb.Append("    internal static class ").AppendLine(typeName);
             sb.AppendLine("    {");
@@ -423,14 +423,14 @@ namespace PFE.DataMapping.Generator
             sb.AppendLine("        private static void Initialize()");
             sb.AppendLine("        {");
             foreach (var b in buckets)
-                sb.Append("            global::PFE.Core.DataMapping.DomainBucket<")
+                sb.Append("            global::PFE.Core.Scripts.DataMapping.DomainBucket<")
                   .Append(b).AppendLine(">.Clear();");
             sb.AppendLine();
             foreach (var r in regs)
             {
                 string dataName = scope.Display(r.DataType);
                 string selfName = scope.Display(r.Struct);
-                sb.Append("            global::PFE.Core.DataMapping.Mapper.Register<")
+                sb.Append("            global::PFE.Core.Scripts.DataMapping.Mapper.Register<")
                   .Append(dataName).Append(", ").Append(selfName).AppendLine(">();");
             }
             sb.AppendLine("        }");

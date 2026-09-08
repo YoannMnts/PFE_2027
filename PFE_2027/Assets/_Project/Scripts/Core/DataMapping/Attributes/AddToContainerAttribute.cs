@@ -1,6 +1,6 @@
 using System;
 
-namespace PFE.Core.DataMapping
+namespace PFE.Core.Scripts.DataMapping.Attributes
 {
     /// <summary>
     /// Marks a method on a <c>[GenerateContainer]</c> behaviour interface as one

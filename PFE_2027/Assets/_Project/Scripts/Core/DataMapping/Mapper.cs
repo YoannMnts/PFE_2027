@@ -1,4 +1,6 @@
-namespace PFE.Core.DataMapping
+using PFE.Core.Scripts.DataMapping.Interfaces;
+
+namespace PFE.Core.Scripts.DataMapping
 {
     /// <summary>
     /// The single global entry point. No domain is named by the caller: the

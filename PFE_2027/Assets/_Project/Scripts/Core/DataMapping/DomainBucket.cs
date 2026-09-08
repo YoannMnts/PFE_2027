@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using PFE.Core.Scripts.DataMapping.Interfaces;
 
-namespace PFE.Core.DataMapping
+namespace PFE.Core.Scripts.DataMapping
 {
     /// <summary>
     /// One strongly-typed store per domain container type. Closed-generic statics

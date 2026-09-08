@@ -1,6 +1,6 @@
-using PFE.Core.DataMapping;
+using PFE.Core.Scripts.DataMapping.Interfaces;
 
-namespace PFE.Core.DataMapping.Sandbox
+namespace PFE.Core.Scripts.DataMapping.Sandbox
 {
     public interface ISandboxData : IData
     {

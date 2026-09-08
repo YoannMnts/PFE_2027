@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.Phases.Runtimes
+namespace PFE.Gameplay.Scripts.Players.Runtime
 {
     public abstract class RuntimePlayer : MonoBehaviour
     {

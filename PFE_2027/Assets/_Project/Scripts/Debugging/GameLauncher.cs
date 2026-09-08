@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
@@ -9,7 +7,7 @@ using PFE.Gameplay.Scripts.Phases;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace _Project.Scripts.Debugging
+namespace PFE.Debugging._Project.Scripts.Debugging
 {
     public class GameLauncher : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PFE.Core.DataMapping.Sandbox
+namespace PFE.Core.Scripts.DataMapping.Sandbox
 {
     public partial struct SandboxBehaviour : ISandboxBehaviour<SandboxData>
     {
