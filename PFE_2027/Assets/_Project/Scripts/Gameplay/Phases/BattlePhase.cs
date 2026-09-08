@@ -14,16 +14,21 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class BattlePhase : Phase<bool>
     {
+        private readonly SceneReference sceneToLoad;
         public IEnumerable<IPlayer> Players => players.Values;
         
         public int PlayerCount => players.Count;
 
         private Dictionary<int, IPlayer> players;
         
+        public BattlePhase(SceneReference sceneToLoad = null)
+        {
+            this.sceneToLoad = sceneToLoad == null ? GameSceneSettings.Current.Game : sceneToLoad;
+        }
+
         protected override async Awaitable Initialize(CancellationToken token)
         {
-            SceneReference battleScene = GameSceneSettings.Current.Game;
-            await GameController.GameSceneController.LoadSceneWithLoadingScreen(battleScene);
+            await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
             
             players = DictionaryPool<int, IPlayer>.Get();
             
