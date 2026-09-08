@@ -1,4 +1,4 @@
-﻿namespace PFE.Gameplay.Scripts.Phases.Runtimes
+﻿namespace PFE.Gameplay.Scripts.Players.Runtime
 {
     public interface IRuntimePlayer<out T>
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace PFE.Core.DataMapping
+namespace PFE.Core.Scripts.DataMapping.Interfaces
 {
     /// <summary>
     /// Non-generic root handle. The store is keyed by the domain container type;

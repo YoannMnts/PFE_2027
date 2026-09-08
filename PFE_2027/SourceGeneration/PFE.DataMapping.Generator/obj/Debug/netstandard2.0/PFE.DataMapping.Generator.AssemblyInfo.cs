@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PFE.DataMapping.Generator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+17b51cb478010e7e2787971f734b660b7ef53fff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+066116b9c85394dc5f91786f5495a4c5b61f19bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("PFE.DataMapping.Generator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PFE.DataMapping.Generator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

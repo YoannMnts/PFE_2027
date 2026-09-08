@@ -1,4 +1,4 @@
-namespace PFE.Core.DataMapping
+namespace PFE.Core.Scripts.DataMapping.Interfaces
 {
     /// <summary>
     /// The structural link across every registrable behaviour. A behaviour that

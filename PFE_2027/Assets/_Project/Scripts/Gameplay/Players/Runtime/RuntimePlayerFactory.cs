@@ -1,10 +1,8 @@
 ﻿using System;
 using Helteix.Tools;
-using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace PFE.Gameplay.Scripts.Phases.Runtimes
+namespace PFE.Gameplay.Scripts.Players.Runtime
 {
     public interface IRuntimePlayerFactory
     {

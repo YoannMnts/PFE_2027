@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Helteix.Tools;
 using Helteix.Tools.Phases.Listeners;
-using PFE.Gameplay.Scripts.Players;
+using PFE.Gameplay.Scripts.Phases;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.Phases.Runtimes
+namespace PFE.Gameplay.Scripts.Players.Runtime
 {
     public class RuntimePlayerManager : MonoPhaseListener<BattlePhase>
     {

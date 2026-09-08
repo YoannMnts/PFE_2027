@@ -1,6 +1,6 @@
 using System;
 
-namespace PFE.Core.DataMapping
+namespace PFE.Core.Scripts.DataMapping.Attributes
 {
     /// <summary>
     /// Placed on a domain's <b>behaviour interface</b>, e.g.

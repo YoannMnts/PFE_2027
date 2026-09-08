@@ -1,6 +1,7 @@
 using System;
+using PFE.Core.Scripts.DataMapping.Interfaces;
 
-namespace PFE.Core.DataMapping
+namespace PFE.Core.Scripts.DataMapping
 {
     /// <summary>
     /// Generic container: the behaviour is stored in its CONCRETE type, so a

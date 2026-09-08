@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-namespace PFE.Core.Scripts.Timers
+namespace PFE.Utilities.Scripts.Timers
 {
     public class Timer
     {

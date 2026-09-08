@@ -1,7 +1,6 @@
-using PFE.Core.DataMapping;
 using UnityEngine;
 
-namespace PFE.Core.DataMapping.Sandbox
+namespace PFE.Core.Scripts.DataMapping.Sandbox
 {
     /// <summary>
     /// Smoke test manuel pour valider la chaîne mapper de bout en bout.

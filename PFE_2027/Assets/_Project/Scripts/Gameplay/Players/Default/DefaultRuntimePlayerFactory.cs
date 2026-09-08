@@ -1,4 +1,4 @@
-using PFE.Gameplay.Scripts.Phases.Runtimes;
+using PFE.Gameplay.Scripts.Players.Runtime;
 
 namespace PFE.Gameplay.Scripts.Players.Default
 {

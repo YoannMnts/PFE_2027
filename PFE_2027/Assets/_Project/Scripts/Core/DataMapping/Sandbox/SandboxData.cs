@@ -1,7 +1,7 @@
 using PFE.Core.Scripts.Databases;
 using UnityEngine;
 
-namespace PFE.Core.DataMapping.Sandbox
+namespace PFE.Core.Scripts.DataMapping.Sandbox
 {
     [CreateAssetMenu(menuName = "PFE/Sandbox/Sandbox Data", fileName = "NewSandboxData")]
     public class SandboxData : GameDatabaseObject, ISandboxData
