@@ -11,5 +11,12 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
     {
         [AddToContainer]
         void ExecuteSubAttack(TData data);
+
+        [AddToContainer]
+        void IComponent<TData>.Trigger(TData data, ComponentContext context)
+        {
+            if(CanTrigger(data, context))
+                ExecuteSubAttack(data);
+        }
     }
 }

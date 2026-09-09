@@ -11,5 +11,11 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
     {
         [AddToContainer]
         void ApplyElement(TData data);
+
+        void IComponent<TData>.Trigger(TData data, ComponentContext context)
+        {
+            if(CanTrigger(data, context))
+                ApplyElement(data);
+        }
     }
 }

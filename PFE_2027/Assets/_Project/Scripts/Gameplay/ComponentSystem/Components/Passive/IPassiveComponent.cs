@@ -11,5 +11,11 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
     {
         [AddToContainer]
         void ApplyPassive(TData data);
+        
+        void IComponent<TData>.Trigger(TData data, ComponentContext context)
+        {
+            if(CanTrigger(data, context))
+                ApplyPassive(data);
+        }
     }
 }

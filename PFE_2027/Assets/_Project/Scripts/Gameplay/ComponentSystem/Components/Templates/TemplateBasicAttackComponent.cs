@@ -2,11 +2,10 @@ using PFE.Core.Scripts.ComponentSystem;
 
 namespace PFE.Gameplay.Scripts.ComponentSystem
 {
-    public partial struct BasicAttackComponent : IBasicAttackComponent<TemplateBasicAttackData>
+    public partial struct TemplateBasicAttackComponent : IBasicAttackComponent<TemplateBasicAttackData>
     {
-        public bool Trigger(TemplateBasicAttackData data, ComponentContext context)
+        public bool CanTrigger(TemplateBasicAttackData data, ComponentContext context)
         {
-            ExecuteBasicAttack(data);
             return true;
         }
 
