@@ -2,7 +2,7 @@ using PFE.Core.Scripts.ComponentSystem;
 
 namespace PFE.Gameplay.Scripts.ComponentSystem
 {
-    public partial struct ElementComponent : IComponent<ElementComponentData>, IElementComponent<ElementComponentData>
+    public partial struct ElementComponent : IElementComponent<ElementComponentData>
     {
         public bool Trigger(ElementComponentData data, ComponentContext context)
         {

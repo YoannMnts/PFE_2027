@@ -2,7 +2,7 @@ using PFE.Core.Scripts.ComponentSystem;
 
 namespace PFE.Gameplay.Scripts.ComponentSystem
 {
-    public partial struct PassiveComponent : IComponent<PassiveComponentData>, IPassiveComponent<PassiveComponentData>
+    public partial struct PassiveComponent : IPassiveComponent<PassiveComponentData>
     {
         public bool Trigger(PassiveComponentData data, ComponentContext context)
         {

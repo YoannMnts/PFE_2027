@@ -2,15 +2,15 @@ using PFE.Core.Scripts.ComponentSystem;
 
 namespace PFE.Gameplay.Scripts.ComponentSystem
 {
-    public partial struct BasicAttackComponent : IComponent<BasicAttackComponentData>, IBasicAttackComponent<BasicAttackComponentData>
+    public partial struct BasicAttackComponent : IBasicAttackComponent<TemplateBasicAttackData>
     {
-        public bool Trigger(BasicAttackComponentData data, ComponentContext context)
+        public bool Trigger(TemplateBasicAttackData data, ComponentContext context)
         {
             ExecuteBasicAttack(data);
             return true;
         }
 
-        public void ExecuteBasicAttack(BasicAttackComponentData data)
+        public void ExecuteBasicAttack(TemplateBasicAttackData data)
         {
             // TODO: logique de l'attaque de base
         }

@@ -1,4 +1,4 @@
-﻿using PFE.Core.DataMapping;
+﻿using PFE.Core.Scripts.DataMapping.Interfaces;
 
 namespace PFE.Core
 {
