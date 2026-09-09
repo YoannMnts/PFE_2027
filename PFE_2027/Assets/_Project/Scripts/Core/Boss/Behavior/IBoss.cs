@@ -1,5 +1,6 @@
-﻿using PFE.Core.DataMapping;
-using PFE.Core.Scripts.AIPattern;
+﻿using PFE.Core.Scripts.AIPattern;
+using PFE.Core.Scripts.DataMapping.Attributes;
+using PFE.Core.Scripts.DataMapping.Interfaces;
 
 namespace PFE.Core
 {

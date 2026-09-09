@@ -1,4 +1,5 @@
 ﻿using PFE.Core.Scripts.Databases;
+using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.DataMapping.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;

@@ -45,11 +45,8 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
             
             foreach (var (data, durationController) in components)
             {
-                if (!data.TryGet(out IComponentContainer container)) 
-                    continue;
-                
-                if(container.Trigger(data, new ComponentContext()))
-                    container.StartRecharge(data, durationController);
+                if (!data.TryGet(out IComponentContainer container))
+                    container.Trigger(data, new ComponentContext(durationController));
             }
         }
     }

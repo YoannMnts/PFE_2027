@@ -59,12 +59,19 @@ namespace PFE.DataMapping.Generator
             public ImmutableArray<IMethodSymbol> ForwardedMethods; // first param == TData
         }
 
-        /// <summary>A struct that implements a decorated behaviour interface.</summary>
+        /// <summary>
+        /// A struct that implements one or more decorated behaviour interfaces.
+        /// A struct commonly implements several independent [GenerateContainer]
+        /// domains at once (e.g. a shared base behaviour plus a family-specific
+        /// one) — every matched domain gets its own registration below, all from
+        /// the same BuildAndRegister() so a single Mapper.Register call covers
+        /// all of them.
+        /// </summary>
         private sealed class MappingModel
         {
             public INamedTypeSymbol Struct;
-            public ITypeSymbol DataType;        // closed TData of the implemented behaviour
-            public DomainModel Domain;
+            public ITypeSymbol DataType;        // closed TData, shared across all matched domains
+            public List<DomainModel> Domains;
             public string Namespace;            // of the struct
         }
 
@@ -337,6 +344,9 @@ namespace PFE.DataMapping.Generator
             // base could reach here through other means — guard semantically too.
             if (st.IsAbstract) return null;
 
+            ITypeSymbol dataType = null;
+            var matched = new List<DomainModel>();
+
             foreach (var iface in st.AllInterfaces)
             {
                 if (!domains.TryGetValue(iface.OriginalDefinition, out var domain)) continue;
@@ -346,30 +356,38 @@ namespace PFE.DataMapping.Generator
                 // open type parameter inherited from a still-generic base.
                 if (iface.TypeArguments[0] is ITypeParameterSymbol) continue;
 
-                return new MappingModel
-                {
-                    Struct = st,
-                    DataType = iface.TypeArguments[0],
-                    Domain = domain,
-                    Namespace = st.ContainingNamespace.IsGlobalNamespace
-                        ? null : st.ContainingNamespace.ToDisplayString(),
-                };
+                // A struct commonly implements several independent [GenerateContainer]
+                // domains at once (e.g. IComponent<TData> plus a family-specific
+                // IPassiveComponent<TData>) — collect every match instead of
+                // stopping at the first, so the struct registers into every
+                // domain's bucket, not just one of them.
+                dataType ??= iface.TypeArguments[0];
+                matched.Add(domain);
             }
-            return null;
+
+            if (matched.Count == 0) return null;
+
+            return new MappingModel
+            {
+                Struct = st,
+                DataType = dataType,
+                Domains = matched,
+                Namespace = st.ContainingNamespace.IsGlobalNamespace
+                    ? null : st.ContainingNamespace.ToDisplayString(),
+            };
         }
 
         private static void EmitSelfMapping(SourceProductionContext spc, MappingModel m)
         {
             var scope = new Scope(m.Namespace);
             scope.Collect(m.DataType);
-            // The container class + bucket interface live in the domain namespace;
-            // collect that namespace so a using is emitted when it differs.
-            if (m.Domain.Namespace != null)
-                scope.AddNamespace(m.Domain.Namespace);
+            // The container classes + bucket interfaces live in their domain's
+            // namespace; collect each so a using is emitted when it differs.
+            foreach (var domain in m.Domains)
+                if (domain.Namespace != null)
+                    scope.AddNamespace(domain.Namespace);
 
             string dataName = scope.Display(m.DataType);
-            string containerClosed = $"{m.Domain.ContainerClass}<{dataName}, {m.Struct.Name}>";
-            string bucket = m.Domain.ContainerIface;
 
             var sb = Header();
             HeaderWithUsings(sb, scope, m.Namespace, out bool hasNs);
@@ -379,8 +397,14 @@ namespace PFE.DataMapping.Generator
               .Append(" : global::PFE.Core.Scripts.DataMapping.Interfaces.ISelfMapping<").Append(dataName).AppendLine(">");
             sb.AppendLine("    {");
             sb.AppendLine("        public void BuildAndRegister()");
-            sb.Append("            => global::PFE.Core.Scripts.DataMapping.DomainBucket<")
-              .Append(bucket).Append(">.Add(new ").Append(containerClosed).AppendLine("(this));");
+            sb.AppendLine("        {");
+            foreach (var domain in m.Domains)
+            {
+                string containerClosed = $"{domain.ContainerClass}<{dataName}, {m.Struct.Name}>";
+                sb.Append("            global::PFE.Core.Scripts.DataMapping.DomainBucket<")
+                  .Append(domain.ContainerIface).Append(">.Add(new ").Append(containerClosed).AppendLine("(this));");
+            }
+            sb.AppendLine("        }");
             sb.AppendLine("    }");
 
             CloseNs(sb, hasNs);
@@ -404,11 +428,13 @@ namespace PFE.DataMapping.Generator
             {
                 scope.Collect(r.DataType);
                 scope.Collect(r.Struct);
-                if (r.Domain.Namespace != null) scope.AddNamespace(r.Domain.Namespace);
+                foreach (var domain in r.Domains)
+                    if (domain.Namespace != null) scope.AddNamespace(domain.Namespace);
             }
 
             var buckets = regs
-                .Select(r => r.Domain.ContainerIface)
+                .SelectMany(r => r.Domains)
+                .Select(d => d.ContainerIface)
                 .Distinct()
                 .ToList();
 
