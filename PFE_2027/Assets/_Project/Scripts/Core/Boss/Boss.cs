@@ -9,11 +9,7 @@ namespace PFE.Core
         {
         }
 
-        public void Move(BossData data, MovePattern movePattern)
-        {
-        }
-
-        public void Attack(BossData data, AttackPattern attackPattern)
+        public void Attack(BossData data)
         {
         }
     }
