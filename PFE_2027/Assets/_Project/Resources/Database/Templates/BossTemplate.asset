@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2821af07431e48fe8fd0e41b9706bd30, type: 3}
+  m_Name: BossTemplate
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Templates.BossTemplate
+  guidText: 073916c5-331f-444a-82c1-a6c00f0ee5ac
+  <Name>k__BackingField: 
+  <Damage>k__BackingField: 10
+  <StageBalances>k__BackingField:
+  - <Health>k__BackingField: 0
+    <AttitudeData>k__BackingField: {fileID: 11400000, guid: 01808636227bd3546b095c2bd5473bdd, type: 2}
+    <ArenaPrefab>k__BackingField: {fileID: 0}
+  - <Health>k__BackingField: 0
+    <AttitudeData>k__BackingField: {fileID: 0}
+    <ArenaPrefab>k__BackingField: {fileID: 0}
+  - <Health>k__BackingField: 0
+    <AttitudeData>k__BackingField: {fileID: 0}
+    <ArenaPrefab>k__BackingField: {fileID: 0}
