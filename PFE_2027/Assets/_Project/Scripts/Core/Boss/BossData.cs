@@ -4,6 +4,9 @@ using PFE.Core.Scripts.GameSettings;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace PFE.Core
 {
@@ -12,16 +15,27 @@ namespace PFE.Core
         [field : SerializeField, BoxGroup("Description")]
         public string Name { get; private set; }
 
-        [SerializeField, BoxGroup] 
+        [SerializeField, BoxGroup]
         private StageStat<BossSpecificity> specificities;
         public StageStat<BossSpecificity> Specificities => specificities;
 
 #if UNITY_EDITOR
+        private void OnEnable() => GameBalancingSettings.OnBalancingChanged += HandleBalancingChanged;
+        private void OnDisable() => GameBalancingSettings.OnBalancingChanged -= HandleBalancingChanged;
+
+        private void HandleBalancingChanged()
+        {
+            RefreshStageStats();
+            EditorUtility.SetDirty(this);
+        }
+
         protected override void OnValidate()
         {
             base.OnValidate();
-            Specificities.EnsureSize();
+            RefreshStageStats();
         }
+
+        protected virtual void RefreshStageStats() => specificities.EnsureSize();
 #endif
     }
 }

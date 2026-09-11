@@ -7,7 +7,8 @@ namespace PFE.Core.Scripts.GameSettings
     [Serializable]
     public struct StageStat<T>
     {
-        [SerializeField, ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)] private T[] stages;
+        [SerializeField, ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)] 
+        private T[] stages;
 
         public readonly T GetValue(int stageIndex)
         {

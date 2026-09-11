@@ -2,7 +2,6 @@ using System;
 using Helteix.Tools.Settings;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PFE.Core.Scripts.GameSettings
 {
@@ -13,14 +12,20 @@ namespace PFE.Core.Scripts.GameSettings
         public float StatisticMultiplier { get; private set; }
 
         [field: SerializeField, Range(1, 100), BoxGroup("Global")]
-        public int StageCount { get; private set; }
+        public int StageCount { get; private set; } = 1;
 
         [SerializeField, BoxGroup("Boss")]
         private StageStat<int> aggressiveness;
         public StageStat<int> Aggressiveness => aggressiveness;
 
+        public static event Action OnBalancingChanged;
+
 #if UNITY_EDITOR
-        private void OnValidate() => aggressiveness.EnsureSize();
+        private void OnValidate()
+        {
+            aggressiveness.EnsureSize();
+            OnBalancingChanged?.Invoke();
+        }
 #endif
     }
 }
