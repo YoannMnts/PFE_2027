@@ -1,11 +1,17 @@
-﻿using PFE.Core.Scripts.Attacks;
-using UnityEngine;
+﻿using PFE.Core.Scripts.Templates;
 
-namespace PFE.Core.Scripts.Templates
+namespace PFE.Core.Scripts.Attacks
 {
-    [CreateAssetMenu(menuName = "PFE/Boss/AttackTemplate")]
-    public class AttackTemplate : AttackData
+    public class AttackTemplate : Attack<AttackDataTemplate>
     {
-        
+        public override bool CanDoAttack(AttackDataTemplate data)
+        {
+            return base.CanDoAttack(data);
+        }
+
+        protected override void Trigger()
+        {
+            //logic de l'attaque spécifique
+        }
     }
 }

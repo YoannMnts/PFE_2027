@@ -10,7 +10,7 @@ namespace PFE.Core.Scripts.AIPattern
         //Contenu général et universel de toutes les attitudes
 
         [field : SerializeField]
-        public AttackData[] AttacksData {get ; private set;}
+        public AttackData[] AttacksDatas {get ; private set;}
         
         
     }

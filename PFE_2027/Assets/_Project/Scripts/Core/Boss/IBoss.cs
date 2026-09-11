@@ -9,7 +9,7 @@ namespace PFE.Core
     {
         [AddToContainer]
         //set the spawning => maybe into scene 
-        void Spawn(TData data);
+        bool CanSpawn(TData data);
         
         [AddToContainer]
         //set the attack 

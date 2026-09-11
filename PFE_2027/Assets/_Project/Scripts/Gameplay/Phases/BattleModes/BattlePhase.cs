@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
+using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameSettings;
+using PFE.Core.Scripts.Templates;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
 using UnityEngine;
@@ -43,10 +45,24 @@ namespace PFE.Gameplay.Scripts.Phases
             // listeners have finished.
             await GameController.GameSceneController.HideLoadingScreen();
 
-            while (true)
+            //TODO a changer plus tard => ABOMINATION
+            BossData currentBoss = GetRandomBoss();
+            //TODO créer un context de battlePhase
+            while (currentBoss != null)
             {
-                await Awaitable.NextFrameAsync(token);
+                var fightPhase = new FightPhase(currentBoss);
+                var fightResult = await fightPhase.Run();
+                BossData previousBoss = fightResult.value;
+                
+                var selectBossPhase = new SelectBossPhase(previousBoss);
+                var selectBossResult = await selectBossPhase.Run();
+                currentBoss = selectBossResult.value;
+                
+                var composeBuildPhase = new ComposeBuildPhase();
+                await composeBuildPhase.Run();
             }
+
+            return false;
         }
 
         protected override Awaitable Dispose(CancellationToken token)
@@ -54,6 +70,12 @@ namespace PFE.Gameplay.Scripts.Phases
             DictionaryPool<int, IPlayer>.Release(players);
             
             return base.Dispose(token);
+        }
+
+        private BossData GetRandomBoss()
+        {
+            //TODO logic pour choisir le premier boss => à compléter 
+            return null;
         }
     }
 }
