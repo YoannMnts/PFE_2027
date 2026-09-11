@@ -1,6 +1,7 @@
 using System;
 using Eflatun.SceneReference;
 using Helteix.Tools.Settings;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PFE.Core.Scripts.GameSettings
@@ -17,7 +18,7 @@ namespace PFE.Core.Scripts.GameSettings
         [field: SerializeField]
         public SceneReference  TrainingRoom { get; private set; }
         
-        [field: SerializeField]
+        [field: SerializeField, BoxGroup("References")]
         internal SceneLoaderUI LoaderPrefab { get; private set; }
     }
 }

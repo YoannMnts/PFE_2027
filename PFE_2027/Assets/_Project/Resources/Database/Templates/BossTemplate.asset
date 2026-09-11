@@ -14,16 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Templates.BossTemplate
   guidText: 073916c5-331f-444a-82c1-a6c00f0ee5ac
   <Name>k__BackingField: 
-  <StageBalances>k__BackingField:
+  <StageSpecificities>k__BackingField:
   - <Health>k__BackingField: 0
-    <AttitudeData>k__BackingField: {fileID: 11400000, guid: 01808636227bd3546b095c2bd5473bdd, type: 2}
+    <AttitudeData>k__BackingField:
+      rid: 2374313163529388117
     <ArenaPrefab>k__BackingField: {fileID: 5907981834685816019, guid: dfde2e244c448294797c3dac6d1658ea, type: 3}
     <ArenaMusic>k__BackingField: {fileID: 0}
-  - <Health>k__BackingField: 0
-    <AttitudeData>k__BackingField: {fileID: 0}
-    <ArenaPrefab>k__BackingField: {fileID: 0}
-    <ArenaMusic>k__BackingField: {fileID: 0}
-  - <Health>k__BackingField: 0
-    <AttitudeData>k__BackingField: {fileID: 0}
-    <ArenaPrefab>k__BackingField: {fileID: 0}
-    <ArenaMusic>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2374313163529388117
+      type: {class: AttitudeDataTemplate, ns: PFE.Core.Scripts.AIPattern, asm: PFE.Core}
+      data:
+        <AttacksDatas>k__BackingField:
+        - {fileID: 11400000, guid: a105b92c8bdf027499dae94724b4e721, type: 2}
+        - {fileID: 11400000, guid: 86c2e82d017f66f4fb255dc7912138e1, type: 2}

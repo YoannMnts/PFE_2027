@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3564f218349614e8bfc990ad0dbecd, type: 3}
+  m_Name: TemplateBasicAttackData
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplateBasicAttackData
+  guidText: 3b795444-bd2a-4870-b023-fe1fad8e7ae4
+  <Balancing>k__BackingField:
+    rid: -2
+  <MaxRechargeValue>k__BackingField: 5
+  <DecrementValue>k__BackingField: -1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
