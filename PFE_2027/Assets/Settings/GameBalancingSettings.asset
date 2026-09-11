@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44803db0d4f446bbede7fafd8490192, type: 3}
   m_Name: GameBalancingSettings
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.GameSettings.GameBalancingSettings
-  <Stages>k__BackingField: []
+  <StatisticMultiplier>k__BackingField: 0
+  <StageCount>k__BackingField: 1
+  aggressiveness:
+    stages: 00000000i

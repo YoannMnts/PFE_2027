@@ -9,11 +9,7 @@ namespace PFE.Core.Scripts.ComponentSystem
         [SerializeField] private StageStat<int> stacks;
 
 #if UNITY_EDITOR
-        protected override void OnValidate()
-        {
-            base.OnValidate();
-            stacks.EnsureSize();
-        }
+        protected override void RefreshStageStats() => stacks.EnsureSize();
 #endif
     }
 }

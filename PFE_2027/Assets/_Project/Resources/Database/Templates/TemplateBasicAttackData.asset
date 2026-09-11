@@ -13,12 +13,5 @@ MonoBehaviour:
   m_Name: TemplateBasicAttackData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplateBasicAttackData
   guidText: 3b795444-bd2a-4870-b023-fe1fad8e7ae4
-  <Balancing>k__BackingField:
-    rid: -2
   <MaxRechargeValue>k__BackingField: 5
   <DecrementValue>k__BackingField: -1
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
