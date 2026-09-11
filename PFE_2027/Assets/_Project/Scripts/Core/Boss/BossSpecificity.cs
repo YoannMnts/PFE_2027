@@ -7,19 +7,19 @@ using UnityEngine;
 namespace PFE.Core.Scripts
 {
     [Serializable]
-    public struct StageBalance
+    public struct BossSpecificity
     {
-        [field : SerializeField, Range(0, 100)]
+        [field : SerializeField, Range(0, 100), BoxGroup("Parameters")]
         public int Health { get; private set; }
         
         //TODO regarder pourquoi on ne peut pas utilser l'interface
-        [field : SerializeReference]
-        public AttitudeData AttitudeData { get; private set; }
+        [field : SerializeReference, HideLabel, BoxGroup("Parameters")]
+        public IAttitudeData AttitudeData { get; private set; }
         
-        [field : SerializeField]
+        [field : SerializeField, BoxGroup("References")]
         public Transform ArenaPrefab { get; private set; }
         
-        [field : SerializeField]
+        [field : SerializeField, BoxGroup("References")]
         public AudioSource ArenaMusic { get; private set; }
     }
 }

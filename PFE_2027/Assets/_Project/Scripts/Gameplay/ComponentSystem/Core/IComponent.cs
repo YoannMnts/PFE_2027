@@ -1,5 +1,4 @@
 using PFE.Core.Scripts.ComponentSystem;
-using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.DataMapping.Attributes;
 using PFE.Core.Scripts.DataMapping.Interfaces;
 
@@ -10,17 +9,8 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
     {
         [AddToContainer]
         public bool CanTrigger(TData data, ComponentContext context);
-        
+
         [AddToContainer]
         public void Trigger(TData data, ComponentContext context);
-        
-        [AddToContainer]
-        public void StartRecharge(TData data, DurationController durationController)
-            => durationController.AddOrRemove(data.MaxRechargeValue);
-        
-        [AddToContainer]
-        public void DecrementRechargeCount(TData data, DurationController durationController)
-            => durationController.AddOrRemove(data.DecrementValue);
-        
     }
 }

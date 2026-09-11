@@ -1,6 +1,6 @@
 namespace PFE.Core.Scripts.ComponentSystem
 {
-    public abstract class SubAttackComponentData : ComponentData
+    public abstract class SubAttackComponentData : RechargeableComponentData
     {
     }
 }
