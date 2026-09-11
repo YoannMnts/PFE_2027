@@ -16,6 +16,7 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class BattlePhase : Phase<bool>
     {
+        private readonly ArenaData arenaData;
         private readonly SceneReference sceneToLoad;
         public IEnumerable<IPlayer> Players => players.Values;
         
@@ -23,8 +24,9 @@ namespace PFE.Gameplay.Scripts.Phases
 
         private Dictionary<int, IPlayer> players;
         
-        public BattlePhase(SceneReference sceneToLoad = null)
+        public BattlePhase(ArenaData arenaData,SceneReference sceneToLoad = null)
         {
+            this.arenaData = arenaData;
             this.sceneToLoad = sceneToLoad == null ? GameSceneSettings.Current.Game : sceneToLoad;
         }
 
@@ -39,10 +41,9 @@ namespace PFE.Gameplay.Scripts.Phases
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            // The loading screen is kept up through Initialize() so that OnPhaseBegin listeners
-            // (e.g. RuntimePlayerManager spawning the runtime player) can populate the scene while
-            // it's still hidden. Only hide it now that Execute() is running, i.e. after those
-            // listeners have finished.
+            var generateArenaPhase = new GenerateArenaPhase(arenaData);
+            await generateArenaPhase.Run();
+            
             await GameController.GameSceneController.HideLoadingScreen();
 
             //TODO a changer plus tard => ABOMINATION

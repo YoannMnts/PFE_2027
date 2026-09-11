@@ -3,6 +3,7 @@ using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
+using PFE.Gameplay.Scripts.ArenaSystem;
 using PFE.Gameplay.Scripts.Phases;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,15 +14,25 @@ namespace PFE.Debugging._Project.Scripts.Debugging
     {
         private class DebugGameMode : GameMode<object>
         {
+            private readonly ArenaData arenaData;
+
+            public DebugGameMode(ArenaData arenaData)
+            {
+                this.arenaData = arenaData;
+            }
+            
             protected override async Awaitable<object> Execute(CancellationToken token)
             {
-                var battlePhase = new BattlePhase(SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
+                var battlePhase = new BattlePhase(arenaData, SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
                 return await battlePhase.Run();
             }
         }
         
         [SerializeField]
         private bool launchOnStart = true;
+        
+        [SerializeField]
+        private ArenaData arenaData;
         
         private void Start()
         {
@@ -35,7 +46,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            var gameMode = new DebugGameMode();
+            var gameMode = new DebugGameMode(arenaData);
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();
         }
