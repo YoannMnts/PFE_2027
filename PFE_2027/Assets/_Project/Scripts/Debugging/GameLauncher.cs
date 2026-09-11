@@ -1,27 +1,43 @@
 using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
+using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
+using PFE.Gameplay.Scripts.ArenaSystem;
+using PFE.Gameplay.Scripts.GameModes;
 using PFE.Gameplay.Scripts.Phases;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace PFE.Debugging._Project.Scripts.Debugging
 {
     public class GameLauncher : MonoBehaviour
     {
-        private class DebugGameMode : GameMode<object>
+        private class DebugGameMode : BattleGameMode
         {
-            protected override async Awaitable<object> Execute(CancellationToken token)
+            private readonly BossData bossData;
+
+            public DebugGameMode(BossData bossData)
             {
-                var battlePhase = new BattlePhase(SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
-                return await battlePhase.Run();
+                this.bossData = bossData;
+            }
+
+            protected override async Awaitable<bool> Execute(CancellationToken token)
+            {
+                var battlePhase = new BattlePhase(bossData, SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
+                var result = await battlePhase.Run();
+            
+                return result.value;
             }
         }
         
         [SerializeField]
         private bool launchOnStart = true;
+        
+        [SerializeField]
+        private BossData bossData;
         
         private void Start()
         {
@@ -35,7 +51,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            var gameMode = new DebugGameMode();
+            var gameMode = new DebugGameMode(bossData);
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();
         }

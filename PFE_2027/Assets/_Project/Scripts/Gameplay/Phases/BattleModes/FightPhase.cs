@@ -7,16 +7,19 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class FightPhase :  Phase<BossData>
     {
-        private readonly BossData currentBoss;
+        public BossData CurrentBoss { get; private set; }
 
         public FightPhase(BossData currentBoss)
         {
-            this.currentBoss = currentBoss;
+            this.CurrentBoss = currentBoss;
         }
 
         protected override async Awaitable<BossData> Execute(CancellationToken token)
         {
-            await Awaitable.MainThreadAsync();
+            while (true)
+            {
+                await Awaitable.NextFrameAsync(token);
+            }
             return null;
         }
     }
