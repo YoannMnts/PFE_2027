@@ -7,13 +7,13 @@ using UnityEngine;
 namespace PFE.Core.Scripts
 {
     [Serializable]
-    public struct StageBalance
+    public struct StageSpecificity
     {
         [field : SerializeField, Range(0, 100)]
         public int Health { get; private set; }
         
         //TODO regarder pourquoi on ne peut pas utilser l'interface
-        [field : SerializeReference]
+        [field : SerializeField]
         public AttitudeData AttitudeData { get; private set; }
         
         [field : SerializeField]

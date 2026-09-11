@@ -17,6 +17,8 @@ namespace PFE.Core.Scripts
             GameSceneController = new GameSceneController();
             GameModeController = new GameModeController();
             GameDatabase = new GameDatabase();
+            
+            GameDatabase.Load();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace PFE.Core
         public string Name { get; private set; }
         
         [field : SerializeField, BoxGroup("Balance")]
-        public StageBalance[] StageBalances { get; private set; }
+        public StageSpecificity[] StageBalances { get; private set; }
 
     }
 }
