@@ -5,21 +5,26 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.ArenaSystem
 {
-    public class ArenaGenerator : MonoPhaseListener<GenerateArenaPhase>
+    public class ArenaGenerator : MonoPhaseListener<FightPhase>
     {
         [SerializeField]
         private Transform container;
         
-        protected override void OnPhaseBegin(GenerateArenaPhase phase)
+        protected override void OnPhaseBegin(FightPhase phase)
         {
             base.OnPhaseBegin(phase);
 
             container.ClearChildren();
             
-            var runtime = phase.data.ArenaPrefab.InstantiatePrefab();
+            var runtime = phase.CurrentBoss.StageBalances[0].ArenaPrefab.InstantiatePrefab();
             runtime.transform.SetParent(container);
+        }
+
+        protected override void OnPhaseEnd(FightPhase phase)
+        {
+            container.ClearChildren();
             
-            phase.SetResult(true);
+            base.OnPhaseEnd(phase);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace PFE.Core.Scripts
         public AttitudeData AttitudeData { get; private set; }
         
         [field : SerializeField]
-        public GameObject ArenaPrefab { get; private set; }
+        public Transform ArenaPrefab { get; private set; }
         
         [field : SerializeField]
         public AudioSource ArenaMusic { get; private set; }

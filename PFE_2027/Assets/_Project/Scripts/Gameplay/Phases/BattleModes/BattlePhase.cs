@@ -7,6 +7,7 @@ using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Core.Scripts.Templates;
+using PFE.Gameplay.Scripts.ArenaSystem;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
 using UnityEngine;
@@ -16,17 +17,22 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class BattlePhase : Phase<bool>
     {
-        private readonly ArenaData arenaData;
         private readonly SceneReference sceneToLoad;
         public IEnumerable<IPlayer> Players => players.Values;
-        
         public int PlayerCount => players.Count;
+        
+        public BossData CurrentBoss { get; private set; }
 
         private Dictionary<int, IPlayer> players;
-        
-        public BattlePhase(ArenaData arenaData,SceneReference sceneToLoad = null)
+
+        //Only to force a boss spawn
+        public BattlePhase(BossData debugData, SceneReference sceneToLoad) : this(sceneToLoad)
         {
-            this.arenaData = arenaData;
+            CurrentBoss = debugData;
+        }
+        
+        public BattlePhase(SceneReference sceneToLoad = null)
+        {
             this.sceneToLoad = sceneToLoad == null ? GameSceneSettings.Current.Game : sceneToLoad;
         }
 
@@ -37,27 +43,24 @@ namespace PFE.Gameplay.Scripts.Phases
             players = DictionaryPool<int, IPlayer>.Get();
             
             players.Add(0, new DefaultPlayer());
+            CurrentBoss = CurrentBoss == null ? GetRandomBoss() : CurrentBoss;
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var generateArenaPhase = new GenerateArenaPhase(arenaData);
-            await generateArenaPhase.Run();
-            
             await GameController.GameSceneController.HideLoadingScreen();
 
-            //TODO a changer plus tard => ABOMINATION
-            BossData currentBoss = GetRandomBoss();
+            
             //TODO créer un context de battlePhase
-            while (currentBoss != null)
+            while (CurrentBoss != null)
             {
-                var fightPhase = new FightPhase(currentBoss);
+                var fightPhase = new FightPhase(CurrentBoss);
                 var fightResult = await fightPhase.Run();
                 BossData previousBoss = fightResult.value;
                 
                 var selectBossPhase = new SelectBossPhase(previousBoss);
                 var selectBossResult = await selectBossPhase.Run();
-                currentBoss = selectBossResult.value;
+                CurrentBoss = selectBossResult.value;
                 
                 var composeBuildPhase = new ComposeBuildPhase();
                 await composeBuildPhase.Run();
