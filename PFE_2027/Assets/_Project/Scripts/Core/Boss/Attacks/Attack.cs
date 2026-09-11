@@ -1,13 +1,16 @@
 ﻿namespace PFE.Core.Scripts.Attacks
 {
-    public abstract class Attack : IAttack<AttackData>
+    public abstract class Attack<TData> : IAttack<TData> where TData : AttackData
     {
-        public void CanAttack(AttackData data)
+        public virtual bool CanDoAttack(TData data) => true;
+
+        public void Execute(TData data, int damage)
         {
+            if (!CanDoAttack(data))
+                return;
+            Trigger();
         }
 
-        public void Execute(AttackData data)
-        {
-        }
+        protected abstract void Trigger();
     }
 }

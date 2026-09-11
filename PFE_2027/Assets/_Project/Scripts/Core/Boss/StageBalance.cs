@@ -18,5 +18,8 @@ namespace PFE.Core.Scripts
         
         [field : SerializeField]
         public GameObject ArenaPrefab { get; private set; }
+        
+        [field : SerializeField]
+        public AudioSource ArenaMusic { get; private set; }
     }
 }

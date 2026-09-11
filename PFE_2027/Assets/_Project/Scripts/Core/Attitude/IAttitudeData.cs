@@ -5,7 +5,7 @@ namespace PFE.Core.Scripts.AIPattern
 {
     public interface IAttitudeData : IData
     {
-        public AttackData[] AttacksData { get; }
+        public AttackData[] AttacksDatas { get; }
         
         
     }
