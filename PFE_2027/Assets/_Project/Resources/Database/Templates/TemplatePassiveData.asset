@@ -13,10 +13,3 @@ MonoBehaviour:
   m_Name: TemplatePassiveData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplatePassiveData
   guidText: 46c9a9e6-93b6-4925-8a9a-705f3050309e
-  <Balancing>k__BackingField:
-    rid: -2
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
