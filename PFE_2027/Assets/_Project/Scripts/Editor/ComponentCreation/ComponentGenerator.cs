@@ -17,7 +17,8 @@ namespace PFE.Editor.ComponentCreation
     {
         private const string PendingNameKey = "PFE.Editor.ComponentGenerator.PendingName";
         private const string PendingFolderKey = "PFE.Editor.ComponentGenerator.PendingFolder";
-        private const string ScriptsRoot = "Assets/_Project/Scripts/Core/ComponentSystem";
+        private const string ScriptsRoot = "Assets/_Project/Scripts/Core/ComponentDatas";
+        private const string GameplayRoot = "Assets/_Project/Scripts/Gameplay/ComponentSystem/Components";
         private const string AssetsRoot = "Assets/_Project/Resources/Database/Components";
 
         public static bool BeginCreate(string name, FamilyInfo family, out string error)
@@ -30,31 +31,71 @@ namespace PFE.Editor.ComponentCreation
                 return false;
             }
 
-            string className = $"{name}Data";
-            string scriptFolder = $"{ScriptsRoot}/{family.FolderName}";
-            string scriptPath = $"{scriptFolder}/{className}.cs";
+            string dataClassName = $"{name}Data";
+            string dataFolder = $"{ScriptsRoot}/{family.FolderName}/{name}";
+            string dataScriptPath = $"{dataFolder}/{dataClassName}.cs";
 
-            if (File.Exists(scriptPath))
+            if (File.Exists(dataScriptPath))
             {
-                error = $"File '{scriptPath}' already exists.";
+                error = $"File '{dataScriptPath}' already exists.";
                 return false;
             }
 
-            Directory.CreateDirectory(scriptFolder);
+            string componentClassName = $"{name}Component";
+            string componentFolder = $"{GameplayRoot}/{family.FolderName}/{name}";
+            string componentScriptPath = $"{componentFolder}/{componentClassName}.cs";
 
-            string content =
+            if (family.ComponentInterfaceType != null && File.Exists(componentScriptPath))
+            {
+                error = $"File '{componentScriptPath}' already exists.";
+                return false;
+            }
+
+            Directory.CreateDirectory(dataFolder);
+
+            string dataContent =
                 "using UnityEngine;\n\n" +
                 "namespace PFE.Core.Scripts.ComponentSystem\n" +
                 "{\n" +
-                $"    [CreateAssetMenu(menuName = \"PFE/ComponentSystem/{family.FolderName}\", fileName = \"{className}\")]\n" +
-                $"    public class {className} : {family.FamilyType.Name}\n" +
+                $"    [CreateAssetMenu(menuName = \"PFE/ComponentSystem/{family.FolderName}\", fileName = \"{dataClassName}\")]\n" +
+                $"    public class {dataClassName} : {family.FamilyType.Name}\n" +
                 "    {\n" +
                 "    }\n" +
                 "}\n";
 
-            File.WriteAllText(scriptPath, content);
+            File.WriteAllText(dataScriptPath, dataContent);
 
-            SessionState.SetString(PendingNameKey, className);
+            if (family.ComponentInterfaceType != null && !string.IsNullOrEmpty(family.ActionMethodName))
+            {
+                string interfaceName = family.ComponentInterfaceType.Name.Split('`')[0];
+
+                Directory.CreateDirectory(componentFolder);
+
+                string componentContent =
+                    "using PFE.Core.Scripts.ComponentSystem;\n\n" +
+                    "namespace PFE.Gameplay.Scripts.ComponentSystem\n" +
+                    "{\n" +
+                    $"    public partial struct {componentClassName} : {interfaceName}<{dataClassName}>\n" +
+                    "    {\n" +
+                    $"        public bool CanTrigger({dataClassName} data, ComponentContext context)\n" +
+                    "        {\n" +
+                    "            return true;\n" +
+                    "        }\n\n" +
+                    $"        public void {family.ActionMethodName}({dataClassName} data)\n" +
+                    "        {\n" +
+                    "            // TODO\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}\n";
+
+                File.WriteAllText(componentScriptPath, componentContent);
+            }
+            else
+            {
+                Debug.LogWarning($"[PFE.Editor] No gameplay component interface found for family '{family.EditorName}' — only the data script was generated.");
+            }
+
+            SessionState.SetString(PendingNameKey, dataClassName);
             SessionState.SetString(PendingFolderKey, family.FolderName);
 
             AssetDatabase.Refresh();
