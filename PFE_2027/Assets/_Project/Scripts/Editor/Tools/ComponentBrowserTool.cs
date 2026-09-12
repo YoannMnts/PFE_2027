@@ -7,7 +7,7 @@ namespace PFE.Editor.Tools
 {
     public sealed class ComponentBrowserTool : DatabaseBrowserTool<ComponentData>
     {
-        public override string DisplayName => "Composant";
+        public override string DisplayName => "Component";
         public override string Icon => "◆";
         public override int Order => 20;
 

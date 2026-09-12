@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using PFE.Core.Scripts.ComponentSystem;
 using UnityEditor;
 using UnityEngine;
@@ -8,6 +10,9 @@ namespace PFE.Editor.ComponentCreation
 {
     /// <summary>
     /// Une famille de ComponentData découverte par réflexion (classe abstraite implémentant IComponentEditor).
+    /// ComponentInterfaceType/ActionMethodName décrivent l'interface de gameplay correspondante
+    /// (ex: IElementComponent&lt;TData&gt;) et sa méthode propre à implémenter (ex: ApplyElement),
+    /// retrouvées elles aussi par réflexion — null si la famille n'a pas encore d'interface de ce genre.
     /// </summary>
     public readonly struct FamilyInfo
     {
@@ -15,6 +20,8 @@ namespace PFE.Editor.ComponentCreation
         public readonly string EditorName;
         public readonly Color EditorColor;
         public readonly string FolderName;
+        public readonly Type ComponentInterfaceType;
+        public readonly string ActionMethodName;
 
         public FamilyInfo(Type familyType, string editorName, Color editorColor)
         {
@@ -24,6 +31,11 @@ namespace PFE.Editor.ComponentCreation
             FolderName = familyType.Name.EndsWith("ComponentData")
                 ? familyType.Name.Substring(0, familyType.Name.Length - "ComponentData".Length)
                 : familyType.Name;
+
+            ComponentInterfaceType = ComponentFamilyCatalog.FindComponentInterface(familyType);
+            ActionMethodName = ComponentInterfaceType != null
+                ? ComponentFamilyCatalog.FindActionMethodName(ComponentInterfaceType)
+                : null;
         }
     }
 
@@ -73,6 +85,53 @@ namespace PFE.Editor.ComponentCreation
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Cherche, dans toutes les assemblies, une interface générique à un seul paramètre dont le nom
+        /// finit par "Component" et dont la contrainte générique correspond au type de famille donné
+        /// (ex: trouve IElementComponent&lt;TData&gt; pour ElementComponentData). Aucune liste en dur :
+        /// une nouvelle famille avec son interface de gameplay est retrouvée automatiquement.
+        /// </summary>
+        public static Type FindComponentInterface(Type familyDataType)
+        {
+            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Type[] types;
+                try { types = assembly.GetTypes(); }
+                catch (ReflectionTypeLoadException e) { types = e.Types; }
+                catch { continue; }
+
+                foreach (Type type in types)
+                {
+                    if (type == null || !type.IsInterface || !type.IsGenericTypeDefinition)
+                        continue;
+                    if (!type.Name.EndsWith("Component`1"))
+                        continue;
+
+                    Type[] genericArgs = type.GetGenericArguments();
+                    if (genericArgs.Length != 1)
+                        continue;
+
+                    if (genericArgs[0].GetGenericParameterConstraints().Contains(familyDataType))
+                        return type;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Retrouve la méthode propre à une interface de famille (ex: ApplyElement) : la seule méthode
+        /// publique déclarée directement dessus — ça exclut CanTrigger/Trigger hérités de IComponent&lt;TData&gt;
+        /// ainsi que l'implémentation par défaut (privée) de Trigger fournie par l'interface de famille.
+        /// </summary>
+        public static string FindActionMethodName(Type componentInterfaceType)
+        {
+            return componentInterfaceType
+                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly)
+                .Select(m => m.Name)
+                .FirstOrDefault();
         }
     }
 }
