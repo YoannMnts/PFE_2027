@@ -11,8 +11,8 @@ namespace PFE.Core.Scripts.ComponentSystem
     public abstract class ComponentData : GameDatabaseObject, IData
     {
 #if UNITY_EDITOR
-        private void OnEnable() => GameBalancingSettings.OnBalancingChanged += HandleBalancingChanged;
-        private void OnDisable() => GameBalancingSettings.OnBalancingChanged -= HandleBalancingChanged;
+        private void OnEnable() => GameMetricsSettings.OnBalancingChanged += HandleBalancingChanged;
+        private void OnDisable() => GameMetricsSettings.OnBalancingChanged -= HandleBalancingChanged;
 
         private void HandleBalancingChanged()
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PFE.Core.Scripts.GameSettings
 {
     [Serializable]
-    public struct StageStat<T>
+    public struct StageMetric<T>
     {
         [SerializeField, ListDrawerSettings(HideAddButton = true, HideRemoveButton = true)] 
         private T[] stages;
@@ -19,7 +19,7 @@ namespace PFE.Core.Scripts.GameSettings
             }
 
 #if UNITY_EDITOR
-            int expected = GameBalancingSettings.Current.StageCount;
+            int expected = GameMetricsSettings.Current.StageCount;
             if (stages.Length != expected)
                 Debug.LogWarning($"[StageStat<{typeof(T).Name}>] Taille ({stages.Length}) désynchronisée avec StageCount ({expected}) — vérifie que EnsureSize() est bien appelé dans l'OnValidate() du propriétaire.");
 #endif
@@ -30,7 +30,7 @@ namespace PFE.Core.Scripts.GameSettings
 #if UNITY_EDITOR
         public void EnsureSize()
         {
-            int count = GameBalancingSettings.Current.StageCount;
+            int count = GameMetricsSettings.Current.StageCount;
             if (stages == null || stages.Length != count)
                 Array.Resize(ref stages, count);
         }

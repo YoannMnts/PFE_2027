@@ -1,0 +1,10 @@
+:root {
+    --pe-canvas: #1D1D1F;
+    --pe-chrome: #232326;
+    --pe-card: #303035;
+    --pe-hairline: #3A3A3E;
+    --pe-accent: #5B9DFF;
+    --pe-text-strong: #F2F2F3;
+    --pe-text-soft: #C7C7CC;
+    --pe-text-muted: #8A8A90;
+}

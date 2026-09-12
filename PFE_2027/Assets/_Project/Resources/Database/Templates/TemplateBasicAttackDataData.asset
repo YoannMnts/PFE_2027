@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a3564f218349614e8bfc990ad0dbecd, type: 3}
-  m_Name: TemplateBasicAttackData
+  m_Name: TemplateBasicAttackDataData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplateBasicAttackData
-  guidText: 3b795444-bd2a-4870-b023-fe1fad8e7ae4
+  guidText: f2ebe618-f177-47b5-bc22-a92d18992d42
   <MaxRechargeValue>k__BackingField: 5
   <DecrementValue>k__BackingField: -1

@@ -1,0 +1,125 @@
+.db-browser {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.db-browser__family-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 4px 4px 14px 4px;
+    margin-bottom: 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--pe-hairline);
+}
+
+.db-browser__family-item {
+    flex-direction: column;
+    align-items: center;
+    margin-right: 14px;
+}
+
+.db-browser__family-divider {
+    width: 1px;
+    height: 56px;
+    margin-right: 14px;
+    background-color: var(--pe-hairline);
+}
+
+.db-browser__family-item:hover {
+    opacity: 0.85;
+}
+
+.db-browser__family-swatch {
+    width: 56px;
+    height: 56px;
+    border-width: 3px;
+    border-radius: 8px;
+}
+
+.db-browser__family-label {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--pe-text-muted);
+    -unity-text-align: upper-center;
+}
+
+.db-browser__family-item--active .db-browser__family-label {
+    color: var(--pe-text-strong);
+    -unity-font-style: bold;
+}
+
+.db-browser__body {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.db-browser__list-pane {
+    width: 240px;
+    flex-direction: column;
+    border-right-width: 1px;
+    border-right-color: var(--pe-hairline);
+    padding-right: 12px;
+    margin-right: 12px;
+}
+
+.db-browser__create-button {
+    margin: 0 0 8px 0;
+    background-color: var(--pe-accent);
+    color: var(--pe-text-strong);
+    border-width: 0;
+    border-radius: 4px;
+    padding: 6px 8px;
+    -unity-font-style: bold;
+}
+
+.db-browser__create-button:hover {
+    opacity: 0.9;
+}
+
+.db-browser__search {
+    flex-shrink: 1;
+    width: 100%;
+    max-width: 100%;
+}
+
+.db-browser__list {
+    flex-grow: 1;
+}
+
+.db-browser__inspector {
+    flex-grow: 1;
+}
+
+.db-browser__row {
+    flex-direction: row;
+    align-items: center;
+    padding: 4px 8px;
+    margin: 1px 0;
+    border-radius: 4px;
+}
+
+.db-browser__row:hover {
+    background-color: var(--pe-card);
+}
+
+.db-browser__row--selected {
+    background-color: var(--pe-card);
+}
+
+.db-browser__row-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.db-browser__row-label {
+    color: var(--pe-text-soft);
+    font-size: 12px;
+}
+
+.db-browser__row--selected .db-browser__row-label {
+    color: var(--pe-text-strong);
+}

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b9f85b6dc570499f440aa12ef4b53, type: 3}
   m_Name: TemplatePassiveData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplatePassiveData
-  guidText: 46c9a9e6-93b6-4925-8a9a-705f3050309e
+  guidText: 3ce67774-8e10-48d5-8cb3-e6e7a6657240

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace PFE.Core.Scripts.GameSettings
 {
     [Serializable, AutoGenerateGameSettings, GameSettingsTitle("Balancing"), GameSettingsPath("PFE/Game Balancing")]
-    public class GameBalancingSettings : GameSettings<GameBalancingSettings>
+    public class GameMetricsSettings : GameSettings<GameMetricsSettings>
     {
         [field: SerializeField, Range(0, 1), BoxGroup("Global")]
         public float StatisticMultiplier { get; private set; }
@@ -15,8 +15,8 @@ namespace PFE.Core.Scripts.GameSettings
         public int StageCount { get; private set; } = 1;
 
         [SerializeField, BoxGroup("Boss")]
-        private StageStat<int> aggressiveness;
-        public StageStat<int> Aggressiveness => aggressiveness;
+        private StageMetric<int> aggressiveness;
+        public StageMetric<int> Aggressiveness => aggressiveness;
 
         public static event Action OnBalancingChanged;
 
