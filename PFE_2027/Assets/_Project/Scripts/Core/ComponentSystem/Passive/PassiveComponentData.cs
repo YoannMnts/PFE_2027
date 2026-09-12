@@ -1,6 +1,6 @@
 namespace PFE.Core.Scripts.ComponentSystem
 {
-    public abstract class PassiveComponentData : ComponentData
+    public abstract partial class PassiveComponentData : ComponentData
     {
     }
 }

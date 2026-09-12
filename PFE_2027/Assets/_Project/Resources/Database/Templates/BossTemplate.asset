@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Templates.BossTemplate
   guidText: 073916c5-331f-444a-82c1-a6c00f0ee5ac
   <Name>k__BackingField: 
-  specificities:
+  metrics:
     stages:
     - <Health>k__BackingField: 0
       <AttitudeData>k__BackingField:

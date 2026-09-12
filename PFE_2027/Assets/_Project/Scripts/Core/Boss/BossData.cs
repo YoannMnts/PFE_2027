@@ -16,12 +16,12 @@ namespace PFE.Core
         public string Name { get; private set; }
 
         [SerializeField, BoxGroup]
-        private StageStat<BossSpecificity> specificities;
-        public StageStat<BossSpecificity> Specificities => specificities;
+        private StageMetric<BossSpecificity> metrics;
+        public StageMetric<BossSpecificity> Metrics => metrics;
 
 #if UNITY_EDITOR
-        private void OnEnable() => GameBalancingSettings.OnBalancingChanged += HandleBalancingChanged;
-        private void OnDisable() => GameBalancingSettings.OnBalancingChanged -= HandleBalancingChanged;
+        private void OnEnable() => GameMetricsSettings.OnBalancingChanged += HandleBalancingChanged;
+        private void OnDisable() => GameMetricsSettings.OnBalancingChanged -= HandleBalancingChanged;
 
         private void HandleBalancingChanged()
         {
@@ -35,7 +35,7 @@ namespace PFE.Core
             RefreshStageStats();
         }
 
-        protected virtual void RefreshStageStats() => specificities.EnsureSize();
+        protected virtual void RefreshStageStats() => metrics.EnsureSize();
 #endif
     }
 }

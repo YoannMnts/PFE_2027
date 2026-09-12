@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd797b2a7d3a96e449f71202a5e95a9b, type: 3}
   m_Name: TemplateElementData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplateElementData
-  guidText: cc26cb42-8e43-4744-a46e-ade63f2fd3eb
-  stacks:
-    stages: 00000000i
+  guidText: e86bebab-3848-4c63-8253-215019370ccd

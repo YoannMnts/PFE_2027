@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266fc81319c426a40bcc79e430150426, type: 3}
   m_Name: TemplateSubAttackData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.TemplateSubAttackData
-  guidText: 5fd662fc-b708-4148-88b5-201d5b21b91c
+  guidText: 5f363921-057a-49ec-a94d-c04823e4ba9f
   <MaxRechargeValue>k__BackingField: 5
   <DecrementValue>k__BackingField: -1
