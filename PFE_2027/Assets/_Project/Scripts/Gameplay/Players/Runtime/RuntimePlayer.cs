@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using PFE.Core.Scripts.ComponentSystem;
+using PFE.Gameplay.Scripts.ComponentSystem;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Runtime
@@ -13,6 +15,7 @@ namespace PFE.Gameplay.Scripts.Players.Runtime
         protected static readonly List<RuntimePlayer<T>> RuntimeBattlePlayers = new();
         
         public T Player { get; private set; }
+        
 
         public void Connect(T player)
         {
