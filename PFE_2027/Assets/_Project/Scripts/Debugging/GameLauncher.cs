@@ -26,7 +26,8 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
             {
-                var battlePhase = new BattlePhase(bossData, SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
+                var context = new BattleGameModeContext(this);
+                var battlePhase = new BattlePhase(context, bossData, SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
                 var result = await battlePhase.Run();
             
                 return result.value;

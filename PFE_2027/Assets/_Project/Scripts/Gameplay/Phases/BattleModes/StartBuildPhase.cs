@@ -1,17 +1,25 @@
 ﻿using System.Threading;
 using Helteix.Tools.Phases;
+using PFE.Gameplay.Scripts.GameModes;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
-    public class StartBuildPhase :  Phase
+    public class StartBuildPhase : Phase
     {
+        private readonly BattleGameModeContext context;
+
+        public StartBuildPhase(BattleGameModeContext context)
+        {
+            this.context = context;
+        }
+
         protected override async Awaitable ExecuteNoResult(CancellationToken token)
         {
-            var selectMap = new SelectMapPhase();
+            var selectMap = new SelectMapPhase(context);
             await selectMap.Run();
             
-            var composeBuild = new ComposeBuildPhase();
+            var composeBuild = new ComposeBuildPhase(context);
             await composeBuild.Run();
         }
     }
