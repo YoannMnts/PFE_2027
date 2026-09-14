@@ -40,8 +40,33 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             }
         }
         
+        private class DebugBattleGameMode : TrialGameMode
+        {
+            private readonly BossData bossData;
+
+            public DebugBattleGameMode(BossData bossData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            {
+                this.bossData = bossData;
+            }
+
+            protected override async Awaitable<bool> Execute(CancellationToken token)
+            {
+                var context = new BattleGameModeContext(this);
+                
+                await GameController.GameSceneController.HideLoadingScreen();
+                
+                var battlePhase = new BattlePhase(context, bossData);
+                var result = await battlePhase.Run();
+            
+                return result.value;
+            }
+        }
+        
         [SerializeField]
         private bool launchOnStart = true;
+
+        [SerializeField] 
+        private bool startInBattle = true;
         
         [SerializeField]
         private BossData bossData;
@@ -58,7 +83,12 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            var gameMode = new DebugGameMode(bossData);
+            TrialGameMode gameMode = new DebugGameMode(bossData);
+            if (startInBattle)
+            {
+                gameMode = new DebugBattleGameMode(bossData);
+            }
+            
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();
         }
