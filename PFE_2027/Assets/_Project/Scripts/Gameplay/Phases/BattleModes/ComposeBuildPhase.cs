@@ -16,7 +16,8 @@ namespace PFE.Gameplay.Scripts.Phases
 
         protected override async Awaitable ExecuteNoResult(CancellationToken token)
         {
-            await Awaitable.MainThreadAsync();
+            var fillGroupComponent = new FillGroupComponentPhase();
+            var result = await fillGroupComponent.Run();
         }
     }
 }

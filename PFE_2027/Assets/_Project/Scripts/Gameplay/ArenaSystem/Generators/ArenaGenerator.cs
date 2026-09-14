@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.ArenaSystem
 {
-    public class ArenaGenerator : MonoPhaseListener<FightPhase>
+    public class ArenaGenerator : MonoPhaseListener<BattlePhase>
     {
         [SerializeField]
         private Transform container;
         
-        protected override void OnPhaseBegin(FightPhase phase)
+        protected override void OnPhaseBegin(BattlePhase phase)
         {
             base.OnPhaseBegin(phase);
 
@@ -20,7 +20,7 @@ namespace PFE.Gameplay.Scripts.ArenaSystem
             runtime.transform.SetParent(container);
         }
 
-        protected override void OnPhaseEnd(FightPhase phase)
+        protected override void OnPhaseEnd(BattlePhase phase)
         {
             container.ClearChildren();
             
