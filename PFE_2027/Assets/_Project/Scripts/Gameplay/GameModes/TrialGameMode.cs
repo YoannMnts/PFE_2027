@@ -10,7 +10,7 @@ using UnityEngine.Pool;
 
 namespace PFE.Gameplay.Scripts.GameModes
 {
-    public class BattleGameMode :  GameMode<bool>
+    public class TrialGameMode :  GameMode<bool>
     {
         public IEnumerable<IPlayer> Players => players.Values;
         public int PlayerCount => players.Count;

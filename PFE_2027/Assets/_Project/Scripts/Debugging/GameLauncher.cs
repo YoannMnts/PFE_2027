@@ -15,7 +15,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 {
     public class GameLauncher : MonoBehaviour
     {
-        private class DebugGameMode : BattleGameMode
+        private class DebugGameMode : TrialGameMode
         {
             private readonly BossData bossData;
 

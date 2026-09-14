@@ -19,7 +19,7 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class BattlePhase : Phase<bool>
     {
-        public IEnumerable<IPlayer> Players => gameModeContext.battleGameMode.Players;
+        public IEnumerable<IPlayer> Players => gameModeContext.trialGameMode.Players;
         
         private readonly BattleGameModeContext gameModeContext;
         private readonly SceneReference sceneToLoad;
