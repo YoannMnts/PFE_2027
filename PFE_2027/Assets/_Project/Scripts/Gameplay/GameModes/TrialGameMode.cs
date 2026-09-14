@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
+using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
+using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.Phases;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
@@ -12,23 +15,32 @@ namespace PFE.Gameplay.Scripts.GameModes
 {
     public class TrialGameMode :  GameMode<bool>
     {
+        private SceneReference sceneToLoad;
         public IEnumerable<IPlayer> Players => players.Values;
         public int PlayerCount => players.Count;
 
         private Dictionary<int, IPlayer> players;
 
-        protected override Awaitable Initialize(CancellationToken token)
+        public TrialGameMode(SceneReference sceneToLoad)
         {
+            this.sceneToLoad = sceneToLoad;
+        }
+        
+        protected override async Awaitable Initialize(CancellationToken token)
+        {
+            sceneToLoad ??= GameSceneSettings.Current.Game;
+            await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
+
             players = DictionaryPool<int, IPlayer>.Get();
             
             players.Add(0, new DefaultPlayer());
-
-            return base.Initialize(token);
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
             var context = new BattleGameModeContext(this);
+            
+            await GameController.GameSceneController.HideLoadingScreen();
             
             var startBuildPhase = new StartBuildPhase(context);
             await startBuildPhase.Run();

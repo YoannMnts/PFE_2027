@@ -2,6 +2,7 @@
 using Helteix.Tools.Phases.Listeners;
 using PFE.Gameplay.Scripts.Phases;
 using PFE.Utilities.Scripts;
+using UnityEditor;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.ComponentSystem
@@ -29,18 +30,22 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
 
         void IPhaseListener<SelectMapPhase>.OnPhaseBegin(SelectMapPhase phase)
         {
+            group.Show(0.3f);
         }
 
         void IPhaseListener<SelectMapPhase>.OnPhaseEnd(SelectMapPhase phase)
         {
+            group.Hide(0.3f);
         }
 
         void IPhaseListener<ComposeBuildPhase>.OnPhaseBegin(ComposeBuildPhase phase)
         {
+            group.Show(0.3f);
         }
 
         void IPhaseListener<ComposeBuildPhase>.OnPhaseEnd(ComposeBuildPhase phase)
         {
+            group.Hide(0.3f);
         }
     } 
 }
