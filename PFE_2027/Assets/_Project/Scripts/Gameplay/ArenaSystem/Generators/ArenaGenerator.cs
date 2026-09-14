@@ -16,7 +16,7 @@ namespace PFE.Gameplay.Scripts.ArenaSystem
 
             container.ClearChildren();
             
-            var runtime = phase.CurrentBoss.Metrics.GetValue(0).ArenaPrefab.InstantiatePrefab();
+            var runtime = phase.CurrentBoss.Metric.GetValue(0).ArenaPrefab.InstantiatePrefab();
             runtime.transform.SetParent(container);
         }
 
