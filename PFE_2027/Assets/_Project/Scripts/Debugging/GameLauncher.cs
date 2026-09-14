@@ -19,7 +19,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         {
             private readonly BossData bossData;
 
-            public DebugGameMode(BossData bossData)
+            public DebugGameMode(BossData bossData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
                 this.bossData = bossData;
             }
@@ -28,10 +28,12 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             {
                 var context = new BattleGameModeContext(this);
                 
+                await GameController.GameSceneController.HideLoadingScreen();
+
                 var startBuildPhase = new StartBuildPhase(context);
                 await startBuildPhase.Run();
                 
-                var battlePhase = new BattlePhase(context, bossData, SceneReference.FromScenePath(SceneManager.GetActiveScene().path));
+                var battlePhase = new BattlePhase(context, bossData);
                 var result = await battlePhase.Run();
             
                 return result.value;

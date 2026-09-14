@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32448867103d49f484ea34c538232e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Players.Local.Runtime.RuntimeLocalPlayer
+  rigidBody: {fileID: 6309114705494582719}
 --- !u!1001 &770703624038140792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -209,6 +210,11 @@ PrefabInstance:
 --- !u!4 &2911639779483781170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2511370522346996554, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
+  m_PrefabInstance: {fileID: 770703624038140792}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &6309114705494582719 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6718364286455180999, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
   m_PrefabInstance: {fileID: 770703624038140792}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7689591776192315360

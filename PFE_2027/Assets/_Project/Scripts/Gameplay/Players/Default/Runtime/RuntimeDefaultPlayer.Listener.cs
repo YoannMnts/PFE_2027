@@ -2,6 +2,7 @@
 using Helteix.Tools;
 using Helteix.Tools.Phases;
 using PFE.Gameplay.Scripts.Phases;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
@@ -19,10 +20,12 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         public void OnPhaseBegin(FightPhase phase)
         {
+            rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
 
         public void OnPhaseEnd(FightPhase phase)
         {
+            rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
         }
     }
 }

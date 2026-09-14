@@ -28,29 +28,24 @@ namespace PFE.Gameplay.Scripts.Phases
 
 
         //Only to force a boss spawn
-        public BattlePhase(BattleGameModeContext gameModeContext, BossData debugData, SceneReference sceneToLoad) : this(gameModeContext)
+        public BattlePhase(BattleGameModeContext gameModeContext, BossData debugData) : this(gameModeContext)
         {
-            currentBoss = debugData;
-            this.sceneToLoad = sceneToLoad;
+            CurrentBoss = debugData;
         }
         
         public BattlePhase(BattleGameModeContext gameModeContext)
         {
             this.gameModeContext = gameModeContext;
-            sceneToLoad = GameSceneSettings.Current.Game;
         }
 
-        protected override async Awaitable Initialize(CancellationToken token)
+        protected override Awaitable Initialize(CancellationToken token)
         {
-            await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
-            
-            currentBoss = currentBoss == null ? GetRandomBoss() : currentBoss;
+            CurrentBoss = CurrentBoss == null ? GetRandomBoss() : CurrentBoss;
+            return base.Initialize(token);
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            await GameController.GameSceneController.HideLoadingScreen();
-            
             //TODO créer un context de battlePhase
             while (currentBoss != null)
             {
