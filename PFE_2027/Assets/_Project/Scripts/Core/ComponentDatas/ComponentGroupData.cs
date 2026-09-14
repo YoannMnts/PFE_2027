@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.ComponentSystem
 {
+    [CreateAssetMenu(menuName = "PFE/ComponentSystem/ComponentGroup", fileName = "ComponentGroupData")]
     public class ComponentGroupData : GameDatabaseObject
     {
         [field: SerializeField]

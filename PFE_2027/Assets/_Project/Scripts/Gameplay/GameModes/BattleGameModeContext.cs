@@ -2,11 +2,11 @@
 {
     public struct BattleGameModeContext
     {
-        public readonly BattleGameMode battleGameMode;
+        public readonly TrialGameMode trialGameMode;
 
-        public BattleGameModeContext(BattleGameMode battleGameMode)
+        public BattleGameModeContext(TrialGameMode trialGameMode)
         {
-            this.battleGameMode = battleGameMode;
+            this.trialGameMode = trialGameMode;
         }
     }
 }
