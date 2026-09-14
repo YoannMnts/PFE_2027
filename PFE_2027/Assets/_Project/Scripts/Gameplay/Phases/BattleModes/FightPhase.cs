@@ -5,22 +5,24 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
-    public class FightPhase :  Phase<BossData>
+    public class FightPhase : Phase<BossData>
     {
-        public BossData CurrentBoss { get; private set; }
+        public BossInstance CurrentBoss { get; private set; }
 
-        public FightPhase(BossData currentBoss)
+        public FightPhase(BossInstance currentBoss)
         {
             this.CurrentBoss = currentBoss;
         }
 
         protected override async Awaitable<BossData> Execute(CancellationToken token)
         {
-            while (true)
-            {
-                await Awaitable.NextFrameAsync(token);
-            }
-            return null;
+            //Pas sur du truc => a checker l'esprit tranquille
+            CurrentBoss.Spawn();
+            
+            AliveBossPhase aliveBossPhase = new AliveBossPhase();
+            PhaseResult<BossData> aliveBossResult = await aliveBossPhase.Run();
+
+            return aliveBossResult.value;
         }
     }
 }

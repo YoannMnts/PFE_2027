@@ -56,7 +56,7 @@ namespace PFE.Gameplay.Scripts.Phases
             {
                 BossInstance instance = new BossInstance(currentBoss);
                 
-                var fightPhase = new FightPhase(currentBoss);
+                var fightPhase = new FightPhase(instance);
                 var fightResult = await fightPhase.Run();
                 BossData previousBoss = fightResult.value;
                 

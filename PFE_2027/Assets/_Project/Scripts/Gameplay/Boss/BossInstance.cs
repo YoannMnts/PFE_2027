@@ -1,9 +1,13 @@
-﻿using PFE.Core.Scripts.DataMapping;
+﻿using PFE.Core.Scripts;
+using PFE.Core.Scripts.DataMapping;
+using PFE.Core.Scripts.GameSettings;
 
 namespace PFE.Core
 {
     public class BossInstance
     {
+        public StageMetric<BossMetric> Metric => data.Metrics;
+        
         private readonly BossData data;
 
         private int damage;
@@ -22,7 +26,7 @@ namespace PFE.Core
             }
         }
 
-        public void TakeDamage()
+        public void AddOrRemoveHealth()
         {
             if (data.TryGet(out IBossContainer container))
             {

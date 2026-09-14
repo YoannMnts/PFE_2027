@@ -18,12 +18,11 @@ namespace PFE.Core
 
         public void TakeDamage(TData data, int damage, int currentHealth)
         {
-            /* PAS SUR QUON EST BESOIN DE LA MAX EN LOGIC
             var bossMetric = data.Metrics.GetValue(0);
             var maxHealth = bossMetric.Health;
-            */
+
+            currentHealth = Mathf.Clamp(currentHealth + damage, 0, maxHealth);
             
-            currentHealth -= damage;
             if (currentHealth <= 0)
             {
                 Dying(data);
@@ -32,7 +31,8 @@ namespace PFE.Core
 
         public void Dying(TData data)
         {
-            
+            //le runtime fera remonter l'info quand il faudra mourir
+            return;
         }
     }
 }
