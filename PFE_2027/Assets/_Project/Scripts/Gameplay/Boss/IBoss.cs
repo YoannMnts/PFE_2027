@@ -14,5 +14,14 @@ namespace PFE.Core
         [AddToContainer]
         //set the attack 
         void Attack(TData data);
+        
+        [AddToContainer]
+        //set taken damage
+        void TakeDamage(TData data, int damage, int  currentHealth);
+        
+        [AddToContainer]
+        //set death
+        void Dying(TData data);
     }
+    
 }

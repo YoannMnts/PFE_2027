@@ -23,14 +23,14 @@ namespace PFE.Gameplay.Scripts.Phases
         
         private readonly BattleGameModeContext gameModeContext;
         private readonly SceneReference sceneToLoad;
-        
-        public BossData CurrentBoss { get; private set; }
+
+        private BossData currentBoss;
 
 
         //Only to force a boss spawn
         public BattlePhase(BattleGameModeContext gameModeContext, BossData debugData, SceneReference sceneToLoad) : this(gameModeContext)
         {
-            CurrentBoss = debugData;
+            currentBoss = debugData;
             this.sceneToLoad = sceneToLoad;
         }
         
@@ -44,7 +44,7 @@ namespace PFE.Gameplay.Scripts.Phases
         {
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
             
-            CurrentBoss = CurrentBoss == null ? GetRandomBoss() : CurrentBoss;
+            currentBoss = currentBoss == null ? GetRandomBoss() : currentBoss;
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -52,15 +52,17 @@ namespace PFE.Gameplay.Scripts.Phases
             await GameController.GameSceneController.HideLoadingScreen();
             
             //TODO créer un context de battlePhase
-            while (CurrentBoss != null)
+            while (currentBoss != null)
             {
-                var fightPhase = new FightPhase(CurrentBoss);
+                BossInstance instance = new BossInstance(currentBoss);
+                
+                var fightPhase = new FightPhase(currentBoss);
                 var fightResult = await fightPhase.Run();
                 BossData previousBoss = fightResult.value;
                 
                 var selectBossPhase = new SelectBossPhase(previousBoss);
                 var selectBossResult = await selectBossPhase.Run();
-                CurrentBoss = selectBossResult.value;
+                currentBoss = selectBossResult.value;
                 
                 var composeBuildPhase = new ComposeBuildPhase(gameModeContext);
                 await composeBuildPhase.Run();
@@ -71,14 +73,16 @@ namespace PFE.Gameplay.Scripts.Phases
 
         protected override Awaitable Dispose(CancellationToken token)
         {
-            
             return base.Dispose(token);
         }
 
         private BossData GetRandomBoss()
         {
-            //TODO logic pour choisir le premier boss => à compléter 
-            return null;
+            var allBossData = GameController.GameDatabase.GetAll<BossData>();
+            var bossArray = allBossData.ToArray();
+            var randomIndex = Random.Range(0, bossArray.Length);
+            
+            return bossArray[randomIndex];
         }
     }
 }

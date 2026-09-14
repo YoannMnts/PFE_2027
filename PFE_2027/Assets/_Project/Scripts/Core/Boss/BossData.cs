@@ -16,8 +16,9 @@ namespace PFE.Core
         public string Name { get; private set; }
 
         [SerializeField, BoxGroup]
-        private StageMetric<BossSpecificity> metrics;
-        public StageMetric<BossSpecificity> Metrics => metrics;
+        private StageMetric<BossMetric> metrics;
+        public StageMetric<BossMetric> Metrics => metrics;
+        
 
 #if UNITY_EDITOR
         private void OnEnable() => GameMetricsSettings.OnBalancingChanged += HandleBalancingChanged;
