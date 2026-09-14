@@ -30,7 +30,7 @@ namespace PFE.Gameplay.Scripts.Phases
         //Only to force a boss spawn
         public BattlePhase(BattleGameModeContext gameModeContext, BossData debugData) : this(gameModeContext)
         {
-            CurrentBoss = debugData;
+            currentBoss = debugData;
         }
         
         public BattlePhase(BattleGameModeContext gameModeContext)
@@ -40,7 +40,7 @@ namespace PFE.Gameplay.Scripts.Phases
 
         protected override Awaitable Initialize(CancellationToken token)
         {
-            CurrentBoss = CurrentBoss == null ? GetRandomBoss() : CurrentBoss;
+            currentBoss ??= GetRandomBoss();
             return base.Initialize(token);
         }
 
