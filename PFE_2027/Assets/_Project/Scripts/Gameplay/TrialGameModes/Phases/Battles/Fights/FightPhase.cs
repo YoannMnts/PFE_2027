@@ -18,6 +18,8 @@ namespace PFE.Gameplay.Scripts.Phases
 
         protected override async Awaitable<BossData> Execute(CancellationToken token)
         {
+            var generateArenaPhase = new GenerateArenaPhase(CurrentBoss);
+            generateArenaPhase.Run();
             //Pas sur du truc => a checker l'esprit tranquille
             CurrentBoss.Spawn();
             

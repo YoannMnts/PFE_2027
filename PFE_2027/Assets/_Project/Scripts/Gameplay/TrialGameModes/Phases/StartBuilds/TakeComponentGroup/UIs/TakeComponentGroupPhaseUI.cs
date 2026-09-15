@@ -52,11 +52,15 @@ namespace PFE.Gameplay.Scripts.Phases
             current = phase;
             
             componentGroupListUI.Connect(phase.groupDatas);
+            
+            canvasGroup.Show(0.3f);
         }
 
         protected override void OnPhaseEnd(TakeComponentGroupPhase phase)
         {
             base.OnPhaseEnd(phase);
+            
+            canvasGroup.Hide(0.3f);
             
             componentGroupListUI.Disconnect();
             
@@ -70,7 +74,6 @@ namespace PFE.Gameplay.Scripts.Phases
 
         private void OnComponentGroupValidate()
         {
-            Debug.Log("OnGroupValidate");
             current.SetResult(currentComponentGroupData);
         }
     }

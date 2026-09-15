@@ -15,6 +15,10 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
 
         [SerializeField]
         private Button validateButton;
+        
+        
+        [SerializeField]
+        private SelectedComponentListUI selectedComponentList;
 
         private FillComponentGroupPhase current;
 
@@ -45,12 +49,18 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
                 current.Cancel();
             
             current = phase;
+            
+            selectedComponentList.Connect(phase.selectedComponentDatas);
+
+            group.Show(0.3f);
         }
 
         protected override void OnPhaseEnd(FillComponentGroupPhase phase)
         {
             base.OnPhaseEnd(phase);
             
+            group.Hide(0.3f);
+            selectedComponentList.Disconnect();
             current = null;
         }
         

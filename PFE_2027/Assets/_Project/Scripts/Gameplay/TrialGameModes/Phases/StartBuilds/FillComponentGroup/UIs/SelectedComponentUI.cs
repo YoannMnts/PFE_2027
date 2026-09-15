@@ -7,12 +7,10 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
     {
         protected override void SyncUI(ComponentData current)
         {
-            throw new System.NotImplementedException();
         }
 
         protected override void ClearUI()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

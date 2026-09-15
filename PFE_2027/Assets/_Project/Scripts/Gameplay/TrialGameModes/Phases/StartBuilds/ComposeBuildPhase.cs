@@ -1,4 +1,5 @@
-﻿using System.Buffers;
+﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -7,6 +8,7 @@ using PFE.Core.Scripts;
 using PFE.Core.Scripts.ComponentSystem;
 using PFE.Gameplay.Scripts.GameModes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
@@ -29,24 +31,21 @@ namespace PFE.Gameplay.Scripts.Phases
             var result = await fillGroupComponent.Run();
         }
 
-        private IEnumerable<ComponentData> GetRandomComponent(IEnumerable<ComponentData> componentDatas)
+        private ComponentData[] GetRandomComponent(IEnumerable<ComponentData> componentDatas)
         {
-            var selectedDatas = new ComponentData[10];
             var array = componentDatas.ToArray();
 
-            for (int i = 0; i < selectedDatas.Length; i++)
+            for (int i = array.Length - 1; i > 0; i--)
             {
-                var randomIndex = Random.Range(0, array.Length);
-                while (array[randomIndex] != null)
-                {
-                    randomIndex = Random.Range(0, array.Length);
-                }
-                
-                selectedDatas[i] = array[randomIndex];
-                array[randomIndex] = null;
+                int j = Random.Range(0, i + 1);
+                (array[i], array[j]) = (array[j], array[i]);
             }
-            
-            return selectedDatas;
+
+            int count = Mathf.Min(10, array.Length);
+            var selected = new ComponentData[count];
+            Array.Copy(array, selected, count);
+
+            return selected;
         }
     }
 }

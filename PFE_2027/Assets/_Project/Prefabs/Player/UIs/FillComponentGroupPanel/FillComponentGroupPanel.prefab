@@ -71,6 +71,7 @@ MonoBehaviour:
       m_Calls: []
   group: {fileID: 4788112875924778754}
   validateButton: {fileID: 4212734772358600498}
+  selectedComponentList: {fileID: 3551952161784231629}
 --- !u!1 &963457020834926619
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +443,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24fe4c571a72afa4796de931d4ed8a4f, type: 3}
+--- !u!114 &3551952161784231629 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6861641223886920755, guid: 24fe4c571a72afa4796de931d4ed8a4f, type: 3}
+  m_PrefabInstance: {fileID: 7958533419655277310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e854e5b32708432ba3555189722266c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.ComponentSystem.SelectedComponentListUI
 --- !u!224 &4045013309631257010 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6219653427629978444, guid: 24fe4c571a72afa4796de931d4ed8a4f, type: 3}
