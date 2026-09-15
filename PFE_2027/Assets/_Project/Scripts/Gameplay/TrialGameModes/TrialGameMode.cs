@@ -38,7 +38,7 @@ namespace PFE.Gameplay.Scripts.GameModes
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var context = new BattleGameModeContext(this);
+            var context = new TrialGameModeContext(this);
             
             await GameController.GameSceneController.HideLoadingScreen();
             

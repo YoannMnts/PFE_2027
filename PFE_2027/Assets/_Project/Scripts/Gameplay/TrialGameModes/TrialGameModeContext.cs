@@ -1,10 +1,10 @@
 ﻿namespace PFE.Gameplay.Scripts.GameModes
 {
-    public struct BattleGameModeContext
+    public struct TrialGameModeContext
     {
         public readonly TrialGameMode trialGameMode;
 
-        public BattleGameModeContext(TrialGameMode trialGameMode)
+        public TrialGameModeContext(TrialGameMode trialGameMode)
         {
             this.trialGameMode = trialGameMode;
         }

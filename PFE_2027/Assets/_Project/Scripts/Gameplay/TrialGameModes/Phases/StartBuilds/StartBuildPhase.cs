@@ -7,16 +7,16 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class StartBuildPhase : Phase
     {
-        private readonly BattleGameModeContext context;
+        private readonly TrialGameModeContext context;
 
-        public StartBuildPhase(BattleGameModeContext context)
+        public StartBuildPhase(TrialGameModeContext context)
         {
             this.context = context;
         }
 
         protected override async Awaitable ExecuteNoResult(CancellationToken token)
         {
-            var selectMap = new SelectMapPhase(context);
+            var selectMap = new SelectGroupPhase(context);
             await selectMap.Run();
             
             var composeBuild = new ComposeBuildPhase(context);

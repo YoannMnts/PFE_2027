@@ -21,19 +21,19 @@ namespace PFE.Gameplay.Scripts.Phases
     {
         public IEnumerable<IPlayer> Players => gameModeContext.trialGameMode.Players;
         
-        private readonly BattleGameModeContext gameModeContext;
+        private readonly TrialGameModeContext gameModeContext;
         private readonly SceneReference sceneToLoad;
 
         private BossData currentBoss;
 
 
         //Only to force a boss spawn
-        public BattlePhase(BattleGameModeContext gameModeContext, BossData debugData) : this(gameModeContext)
+        public BattlePhase(TrialGameModeContext gameModeContext, BossData debugData) : this(gameModeContext)
         {
             currentBoss = debugData;
         }
         
-        public BattlePhase(BattleGameModeContext gameModeContext)
+        public BattlePhase(TrialGameModeContext gameModeContext)
         {
             this.gameModeContext = gameModeContext;
         }
