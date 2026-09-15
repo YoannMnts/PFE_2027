@@ -116,7 +116,19 @@ MonoBehaviour:
     m_ActionId: e7c11b44-cd44-44e2-92b7-786179e38fe9
     m_ActionName: 'Player/LookSpeed[/XInputControllerWindows/rightStick]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6129747126310287363}
+        m_TargetAssemblyTypeName: PFE.Gameplay.Scripts.Players.Default.Runtime.CharacterControllerExtension, PFE.Gameplay
+        m_MethodName: PerformAttack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/XInputControllerWindows/buttonWest,/Mouse/leftButton,/BEEF-46D/trigger,/Keyboard/enter]'
   - m_PersistentCalls:
@@ -1084,6 +1096,7 @@ GameObject:
   - component: {fileID: 9136951459802287415}
   - component: {fileID: 7233192286478262238}
   - component: {fileID: 34518547927797735}
+  - component: {fileID: 6129747126310287363}
   m_Layer: 0
   m_Name: Rigidbody
   m_TagString: Player
@@ -1277,6 +1290,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68483ba0be40464880448a03b72b4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6129747126310287363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2572697175083318197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0683b1e5b29e4aa0a94831cbbc78e159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Players.Default.Runtime.CharacterControllerExtension
 --- !u!1 &2613624759306972994
 GameObject:
   m_ObjectHideFlags: 0
