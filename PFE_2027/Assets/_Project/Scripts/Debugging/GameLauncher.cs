@@ -26,7 +26,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
             {
-                var context = new BattleGameModeContext(this);
+                var context = new TrialGameModeContext(this);
                 
                 await GameController.GameSceneController.HideLoadingScreen();
 
@@ -51,7 +51,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
             {
-                var context = new BattleGameModeContext(this);
+                var context = new TrialGameModeContext(this);
                 
                 await GameController.GameSceneController.HideLoadingScreen();
                 
