@@ -1,3 +1,4 @@
+using System;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using PFE.Core.Scripts.ComponentSystem;
@@ -5,7 +6,7 @@ using PFE.Gameplay.Scripts.ComponentSystem;
 
 namespace PFE.Gameplay.Scripts.Players.Default
 {
-    public class DefaultPlayer : IPlayer
+    public class DefaultPlayer : IPlayer, IDisposable
     {
         public ComponentGroup ComponentGroup { get; private set; }
         
@@ -19,6 +20,10 @@ namespace PFE.Gameplay.Scripts.Players.Default
         public void SetupComponentGroup(ComponentGroupData data)
         {
             ComponentGroup = new ComponentGroup(data);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Helteix.Tools;
 using Helteix.Tools.Phases;
 using Helteix.Tools.Phases.Listeners;
 using PFE.Core.Scripts.ComponentSystem;
@@ -18,11 +20,14 @@ namespace PFE.Gameplay.Scripts.Phases
         private Button validateButton;
         
         [SerializeField]
-        private ComponentGroupListUI componentGroupListUI;
+        private Transform container;
 
         private TakeComponentGroupPhase current;
-        private ComponentGroupData currentComponentGroupData;
-
+        private ComponentGroupData SelectedComponentGroup => currentComponentGroupDatas[currentIndex];
+        
+        private ComponentGroupData[] currentComponentGroupDatas;
+        private int currentIndex = 0;
+        
         private void Awake()
         {
             canvasGroup.Hide(0.3f);
@@ -50,8 +55,9 @@ namespace PFE.Gameplay.Scripts.Phases
                 current.Cancel();
             
             current = phase;
-            
-            componentGroupListUI.Connect(phase.groupDatas);
+
+            currentComponentGroupDatas = phase.groupDatas.ToArray();
+            currentComponentGroupDatas[currentIndex]?.UIPrefab.InstantiatePrefab(container);
             
             canvasGroup.Show(0.3f);
         }
@@ -61,20 +67,15 @@ namespace PFE.Gameplay.Scripts.Phases
             base.OnPhaseEnd(phase);
             
             canvasGroup.Hide(0.3f);
-            
-            componentGroupListUI.Disconnect();
-            
-            current = null;
-        }
 
-        public void SetComponentGroup(ComponentGroupData groupData)
-        {
-            currentComponentGroupData = groupData;
+            currentIndex = 0;
+            currentComponentGroupDatas = null;
+            current = null;
         }
 
         private void OnComponentGroupValidate()
         {
-            current.SetResult(currentComponentGroupData);
+            current.SetResult(SelectedComponentGroup);
         }
     }
 }

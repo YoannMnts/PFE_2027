@@ -1,4 +1,6 @@
 ﻿using System.Threading;
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Gameplay.Scripts.GameModes;
 using UnityEngine;

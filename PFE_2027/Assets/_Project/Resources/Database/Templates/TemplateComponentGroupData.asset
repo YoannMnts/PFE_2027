@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76539d7473574853b959eafcc9ecc264, type: 3}
-  m_Name: ComponentGroupData
+  m_Name: TemplateComponentGroupData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.ComponentGroupData
   guidText: 026e8e36-513a-4fe5-8c21-3744ebfb3b35
   <UIPrefab>k__BackingField: {fileID: 0}
