@@ -1,4 +1,5 @@
-﻿using Helteix.Tools.Phases;
+﻿using Helteix.Tools;
+using Helteix.Tools.Phases;
 using Helteix.Tools.Phases.Listeners;
 using PFE.Gameplay.Scripts.Phases;
 using PFE.Utilities.Scripts;
@@ -16,6 +17,8 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
         [SerializeField]
         private Button validateButton;
         
+        [SerializeField]
+        private Transform componentGroupContainer;
         
         [SerializeField]
         private SelectedComponentListUI selectedComponentList;
@@ -49,6 +52,11 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
                 current.Cancel();
             
             current = phase;
+
+            foreach (var player in phase.gameModeContext.trialGameMode.Players)
+            {
+                player.ComponentGroup.ComponentGroupData.UIPrefab.InstantiatePrefab(componentGroupContainer);
+            }
             
             selectedComponentList.Connect(phase.selectedComponentDatas);
 

@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Players.Local.Runtime.RuntimeLocalPlayer
   rigidBody: {fileID: 6309114705494582719}
+  playerInput: {fileID: 2770197915875695818}
 --- !u!1001 &101857399530923946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -170,7 +171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2676771452886143099, guid: 6b245a2839392a34fba61dae1357e2d0, type: 3}
       propertyPath: m_Size
-      value: 1
+      value: 0.99999815
       objectReference: {fileID: 0}
     - target: {fileID: 5448034288392978094, guid: 6b245a2839392a34fba61dae1357e2d0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -258,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8217500409275860866, guid: 6b245a2839392a34fba61dae1357e2d0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00092025055
+      value: 0.0008606942
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -299,6 +300,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
+--- !u!114 &2770197915875695818 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3225613687677654962, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
+  m_PrefabInstance: {fileID: 770703624038140792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2911639779483781170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2511370522346996554, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
@@ -399,7 +411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 274504737166193689, guid: 07e861728835b0b41820a3b1d7adabaf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00092025055
+      value: 0.0008606942
       objectReference: {fileID: 0}
     - target: {fileID: 490795365648444144, guid: 07e861728835b0b41820a3b1d7adabaf, type: 3}
       propertyPath: m_AnchorMax.x
@@ -431,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7103408077975886768, guid: 07e861728835b0b41820a3b1d7adabaf, type: 3}
       propertyPath: m_Size
-      value: 1
+      value: 0.99999815
       objectReference: {fileID: 0}
     - target: {fileID: 8484716466997376996, guid: 07e861728835b0b41820a3b1d7adabaf, type: 3}
       propertyPath: m_AnchorMax.x

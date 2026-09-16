@@ -25,11 +25,12 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
 
         public ComponentGroup(ComponentGroupData data)
         {
-            componentGroupData = data;
+            ComponentGroupData = data;
         }
         
+        public ComponentGroupData ComponentGroupData { get; private set; }
+        
         private readonly Dictionary<ComponentInstanceId, ComponentInstance> instances = new();
-        private ComponentGroupData componentGroupData;
         private int nextId;
 
         
