@@ -11,10 +11,7 @@ namespace PFE.Core
              return true;
         }
 
-        public void Attack(TData data)
-        {
-            //TODO à coder plus tard
-        }
+        public abstract void Attack(TData data);
 
         public void TakeDamage(TData data, int damage, int currentHealth)
         {

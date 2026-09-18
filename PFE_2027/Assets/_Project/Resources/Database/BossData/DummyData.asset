@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de9ead7905d4b54b996999af20dce5a, type: 3}
+  m_Name: DummyData
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dummy.DummyData
+  guidText: ee862df0-3ed8-4331-a767-f005f2db0c6b
+  <Name>k__BackingField: Dummy
+  <PrefabMesh>k__BackingField: {fileID: 4156158887259431200, guid: fdc6214816ad7344f83dd705ebdf1aee, type: 3}
+  metrics:
+    stages:
+    - <Health>k__BackingField: 10
+      <AttitudeData>k__BackingField:
+        rid: -2
+      <ArenaPrefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
+      <ArenaMusic>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
