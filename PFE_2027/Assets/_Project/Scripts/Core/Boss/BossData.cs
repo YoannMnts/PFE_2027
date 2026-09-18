@@ -14,6 +14,9 @@ namespace PFE.Core
     {
         [field : SerializeField, BoxGroup("Description")]
         public string Name { get; private set; }
+        
+        [field : SerializeField, BoxGroup("Visual")]
+        public Transform PrefabMesh { get; private set; }
 
         [SerializeField, BoxGroup]
         private StageMetric<BossMetric> metrics;
