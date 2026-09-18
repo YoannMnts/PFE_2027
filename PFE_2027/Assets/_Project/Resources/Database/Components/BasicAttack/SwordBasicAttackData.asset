@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SwordBasicAttackData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.ComponentSystem.SwordBasicAttackData
   guidText: 969aea6c-8e88-4310-886d-7dc08e3e1be6
+  <AttackPrefab>k__BackingField: {fileID: 7830046881341878522, guid: ac3eb1bb0e27d034eb68f28fcbcef6d0, type: 3}
   <MaxRechargeValue>k__BackingField: 5
   <DecrementValue>k__BackingField: -1

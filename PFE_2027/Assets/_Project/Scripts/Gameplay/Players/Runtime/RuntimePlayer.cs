@@ -15,7 +15,9 @@ namespace PFE.Gameplay.Scripts.Players.Runtime
         protected static readonly List<RuntimePlayer<T>> RuntimeBattlePlayers = new();
         
         public T Player { get; private set; }
-        
+
+        [SerializeField] 
+        protected Transform attackContainer;
 
         public void Connect(T player)
         {

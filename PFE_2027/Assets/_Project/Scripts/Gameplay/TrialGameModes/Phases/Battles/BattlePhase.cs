@@ -49,6 +49,9 @@ namespace PFE.Gameplay.Scripts.Phases
             //TODO créer un context de battlePhase
             while (currentBoss != null)
             {
+                var composeBuildPhase = new ComposeBuildPhase(gameModeContext);
+                await composeBuildPhase.Run();
+                
                 BossInstance instance = new BossInstance(currentBoss);
                 var battleContext = new BattleContext(this, instance);
                 
@@ -59,9 +62,6 @@ namespace PFE.Gameplay.Scripts.Phases
                 var selectBossPhase = new SelectBossPhase(previousBoss);
                 var selectBossResult = await selectBossPhase.Run();
                 currentBoss = selectBossResult.value;
-                
-                var composeBuildPhase = new ComposeBuildPhase(gameModeContext);
-                await composeBuildPhase.Run();
             }
 
             return false;

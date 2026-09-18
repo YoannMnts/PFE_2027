@@ -9,5 +9,6 @@ namespace PFE.Gameplay.Scripts.Players
         public ComponentGroup ComponentGroup { get;  }
         public Priority<bool> ShowUI { get; }
         public void SetupComponentGroup(ComponentGroupData data);
+        public void CastAttack();
     }
 }
