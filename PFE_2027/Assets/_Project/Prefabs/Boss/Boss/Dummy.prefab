@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4156158887259431200}
-  - component: {fileID: 6176788374723641122}
+  - component: {fileID: 3399205063366915636}
   m_Layer: 0
   m_Name: Dummy
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7579778585094924637}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6176788374723641122
+--- !u!114 &3399205063366915636
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +42,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4681945313772314230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ecb73ba6aaf4ed9aae1e1f0967aea84, type: 3}
+  m_Script: {fileID: 11500000, guid: e746e909c71546cfac975e2512e8b7c7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Phases.DummyRuntime
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyBoss.RuntimeDummy
 --- !u!1 &6084632612200884688
 GameObject:
   m_ObjectHideFlags: 0

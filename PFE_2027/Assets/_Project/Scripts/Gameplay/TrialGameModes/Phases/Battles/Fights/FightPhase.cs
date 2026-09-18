@@ -5,6 +5,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core;
 using PFE.Gameplay.Scripts.Players;
+using UnityEditor.Search;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Phases
@@ -33,10 +34,10 @@ namespace PFE.Gameplay.Scripts.Phases
         protected override async Awaitable<BossData> Execute(CancellationToken token)
         {
             var generateArenaPhase = new GenerateArenaPhase(CurrentBoss);
-            generateArenaPhase.Run();
+            await generateArenaPhase.Run();
             
-            //Pas sur du truc => a checker l'esprit tranquille
-            CurrentBoss.Spawn();
+            var generateBossPhase = new GenerateBossPhase(CurrentBoss);
+            await generateBossPhase.Run();
             
             AliveBossPhase aliveBossPhase = new AliveBossPhase();
             PhaseResult<BossData> aliveBossResult = await aliveBossPhase.Run();

@@ -1,14 +1,17 @@
-﻿using PFE.Core.Scripts;
+﻿using System;
+using PFE.Core.Scripts;
 using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.GameSettings;
+using UnityEngine;
 
 namespace PFE.Core
 {
     public class BossInstance
     {
+        public event Action<int> OnTakeDamage;
         public StageMetric<BossMetric> Metric => data.Metrics;
         
-        private readonly BossData data;
+        public readonly BossData data;
 
         private int damage;
         private int currentHealth;
@@ -31,6 +34,9 @@ namespace PFE.Core
             if (data.TryGet(out IBossContainer container))
             {
                 container.TakeDamage(data, damage,  currentHealth);
+                OnTakeDamage?.Invoke(currentHealth);
+                
+                Debug.Log("Health: " + currentHealth);
             }
         }
     }
