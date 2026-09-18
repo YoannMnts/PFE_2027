@@ -20,9 +20,6 @@ namespace PFE.Gameplay.Scripts.Phases
         {
             var selectMap = new SelectGroupPhase(context);
             await selectMap.Run();
-            
-            var composeBuild = new ComposeBuildPhase(context);
-            await composeBuild.Run();
         }
     }
 }

@@ -1,12 +1,19 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
     public class CharacterControllerExtension : MonoBehaviour
     {
+        private RuntimeDefaultPlayer runtimePlayer;
+
+        private void Awake()
+        {
+            runtimePlayer = GetComponentInParent<RuntimeDefaultPlayer>();
+        }
+
         public void PerformAttack()
         {
-            Debug.Log("PerformAttack");
+            runtimePlayer.Player.CastAttack();
         }
     }
 }

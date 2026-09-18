@@ -8,6 +8,7 @@ namespace PFE.Gameplay.Scripts.Players.Default
 {
     public class DefaultPlayer : IPlayer, IDisposable
     {
+        public event Action<ComponentData> OnComponentTrigger; 
         public ComponentGroup ComponentGroup { get; private set; }
         
         public Priority<bool> ShowUI { get; private set; }
@@ -20,6 +21,11 @@ namespace PFE.Gameplay.Scripts.Players.Default
         public void SetupComponentGroup(ComponentGroupData data)
         {
             ComponentGroup = new ComponentGroup(data);
+        }
+
+        public void CastAttack()
+        {
+            ComponentGroup.TriggerAllComponents(this, OnComponentTrigger);
         }
 
         public void Dispose()

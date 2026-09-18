@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.ComponentSystem;
+using PFE.Gameplay.Scripts.Players;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.ComponentSystem
 {
@@ -61,7 +64,7 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
             return true;
         }
 
-        public void TriggerAllComponents()
+        public void TriggerAllComponents(IPlayer player, Action<ComponentData> onComponentTrigger)
         {
             foreach (var instance in instances.Values)
             {
@@ -73,9 +76,12 @@ namespace PFE.Gameplay.Scripts.ComponentSystem
             foreach (var instance in instances.Values)
             {
                 if (instance.data.TryGet(out IComponentContainer container))
+                {
                     // rechargeTime is null here for Element/Passive — their CanTrigger/Trigger
                     // must not assume context.durationController is set.
-                    container.Trigger(instance.data, new ComponentContext(instance.durationController));
+                    container.Trigger(instance.data, new ComponentContext(instance.durationController, player));
+                    onComponentTrigger?.Invoke(instance.data);
+                }
             }
         }
 
