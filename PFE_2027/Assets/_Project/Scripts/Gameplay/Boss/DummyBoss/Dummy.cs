@@ -2,11 +2,10 @@
 
 namespace PFE.Core.DummyBoss
 {
-    public class Dummy : Boss<DummyData>
+    public partial class Dummy //: Boss<DummyData>
     {
-
-        public override void Attack(DummyData data)
-        {
-        }
+        //public override void Attack(DummyData data)
+        //{
+        //}
     }
 }
