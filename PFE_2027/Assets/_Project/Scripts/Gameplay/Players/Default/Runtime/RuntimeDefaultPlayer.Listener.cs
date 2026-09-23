@@ -6,34 +6,34 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public partial class RuntimeDefaultPlayer : IPhaseListener<FightPhase>, IPhaseListener<GenerateArenaPhase>
+    public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<GenerateAreaPhase>
     {
         private void OnEnable()
         {
-            this.Register<FightPhase>();
-            this.Register<GenerateArenaPhase>();
+            this.Register<BattlePhase>();
+            this.Register<GenerateAreaPhase>();
         }
 
         private void OnDisable()
         {
-            this.Unregister<FightPhase>();
-            this.Unregister<GenerateArenaPhase>();
+            this.Unregister<BattlePhase>();
+            this.Unregister<GenerateAreaPhase>();
         }
 
-        public void OnPhaseBegin(FightPhase phase)
+        public void OnPhaseBegin(BattlePhase phase)
         {
         }
 
-        public void OnPhaseEnd(FightPhase phase)
+        public void OnPhaseEnd(BattlePhase phase)
         {
             rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
-        public void OnPhaseBegin(GenerateArenaPhase phase)
+        public void OnPhaseBegin(GenerateAreaPhase phase)
         {
         }
 
-        public void OnPhaseEnd(GenerateArenaPhase phase)
+        public void OnPhaseEnd(GenerateAreaPhase phase)
         {
             transform.position = Vector3.zero;
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation;

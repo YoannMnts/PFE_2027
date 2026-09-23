@@ -15,10 +15,7 @@ namespace PFE.Core
 
         public void TakeDamage(TData data, int damage, int currentHealth)
         {
-            var enemyMetric = data.Metrics.GetValue(0);
-            var maxHealth = enemyMetric.Health;
-
-            currentHealth = Mathf.Clamp(currentHealth + damage, 0, maxHealth);
+            currentHealth = Mathf.Clamp(currentHealth + damage, 0, 100);
             
             if (currentHealth <= 0)
             {
