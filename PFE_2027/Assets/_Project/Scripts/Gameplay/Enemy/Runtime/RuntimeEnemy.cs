@@ -18,7 +18,7 @@ namespace PFE.Gameplay.Scripts.Phases
         [Button, DisableInEditorMode]
         public void Damage(int damage)
         {
-            enemyInstance.AddOrRemoveHealth();
+            enemyInstance.AddOrRemoveHealth(damage);
         }
     }
 }

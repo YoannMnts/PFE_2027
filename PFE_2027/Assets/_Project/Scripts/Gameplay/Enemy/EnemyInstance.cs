@@ -12,7 +12,6 @@ namespace PFE.Core
         
         public readonly EnemyData data;
 
-        private int damage;
         private int currentHealth;
 
         public EnemyInstance(EnemyData data)
@@ -32,8 +31,7 @@ namespace PFE.Core
         {
             if (data.TryGet(out IEnemyContainer container))
             {
-                var bossMetric = data.Metrics.GetValue(0);
-                currentHealth = bossMetric.Health;
+                currentHealth = 100;
                 
                 container.TakeDamage(data, damage,  currentHealth);
                 OnTakeDamage?.Invoke(currentHealth);
