@@ -1,7 +1,7 @@
 ﻿using System;
 using Helteix.Tools;
 using Helteix.Tools.Phases;
-using PFE.Gameplay.Scripts.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime

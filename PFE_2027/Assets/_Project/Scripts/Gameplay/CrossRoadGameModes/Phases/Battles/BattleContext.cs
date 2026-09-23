@@ -1,6 +1,6 @@
-﻿using PFE.Core;
+﻿using PFE.Gameplay.Scripts.Enemy;
 
-namespace PFE.Gameplay.Scripts.Phases
+namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
     public struct BattleContext
     {

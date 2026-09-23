@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PFE.Core.Scripts.Attacks
+namespace PFE.Core.Scripts.Enemy.Attacks
 {
     public abstract class AttackData : GameDatabaseObject, IAttackData
     {

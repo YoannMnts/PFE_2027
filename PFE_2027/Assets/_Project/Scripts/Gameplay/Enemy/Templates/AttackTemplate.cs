@@ -1,6 +1,7 @@
-﻿using PFE.Core.Scripts.Templates;
+﻿using PFE.Core.Scripts.Enemy.Attacks;
+using PFE.Core.Scripts.Enemy.Templates;
 
-namespace PFE.Core.Scripts.Attacks
+namespace PFE.Gameplay.Scripts.Enemy.Templates
 {
     public class AttackTemplate : Attack<AttackDataTemplate>
     {

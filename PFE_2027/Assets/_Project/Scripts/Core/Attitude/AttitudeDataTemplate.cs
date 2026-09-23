@@ -1,9 +1,8 @@
 ﻿using System;
-using PFE.Core.Scripts.Attacks;
-using PFE.Core.Scripts.Databases;
+using PFE.Core.Scripts.Enemy.Attacks;
 using UnityEngine;
 
-namespace PFE.Core.Scripts.AIPattern
+namespace PFE.Core.Scripts.Attitude
 {
     //si abstract => contenu semblable à l'interface = duplicate into interface
     [Serializable]

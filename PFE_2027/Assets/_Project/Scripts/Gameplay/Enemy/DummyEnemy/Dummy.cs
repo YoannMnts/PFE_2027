@@ -1,6 +1,6 @@
-﻿using PFE.Core.Scripts.DummyEnemy;
+﻿using PFE.Core.Scripts.Enemy.Dummy;
 
-namespace PFE.Core.DummyEnemy
+namespace PFE.Gameplay.Scripts.Enemy.DummyEnemy
 {
     public partial class Dummy : Enemy<DummyData>
     {

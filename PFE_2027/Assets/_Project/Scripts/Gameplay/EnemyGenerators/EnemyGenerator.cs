@@ -2,28 +2,20 @@
 using Codice.CM.Common;
 using Helteix.Tools;
 using Helteix.Tools.Phases;
-using PFE.Gameplay.Scripts.Phases;
+using Helteix.Tools.Phases.Listeners;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.EnemyGenerators
 {
-    public class EnemyGenerator : MonoBehaviour, IPhaseListener<GenerateEnemyPhase>
+    public class EnemyGenerator : MonoPhaseListener<GenerateEnemyPhase>
     {
-        
         [SerializeField]
         private Transform enemyPrefab;
         
-        private void OnEnable()
+        protected override void OnPhaseBegin(GenerateEnemyPhase phase)
         {
-            this.Register<GenerateEnemyPhase>();
-        }
-        private void OnDisable()
-        {
-            this.Unregister<GenerateEnemyPhase>();
-        }
-        
-        public void OnPhaseBegin(GenerateEnemyPhase phase)
-        {
+            //TODO spawn EnemyData.Prefab aux coord
             /*
             enemyPrefab.ClearChildren();
 
@@ -38,11 +30,11 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             currentEnemy.Spawn();
             enemyPrefab.transform.localPosition = Vector3.zero;
             
-            phase.SetResult(true);
             */
+            phase.SetResult(true);
         }
-        
-        public void OnPhaseEnd(GenerateEnemyPhase phase)
+
+        protected override void OnPhaseEnd(GenerateEnemyPhase phase)
         {
         }
 

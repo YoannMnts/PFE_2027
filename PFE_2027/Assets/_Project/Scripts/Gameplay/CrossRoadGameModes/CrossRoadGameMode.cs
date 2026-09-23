@@ -3,16 +3,15 @@ using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
-using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
-using PFE.Gameplay.Scripts.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace PFE.Gameplay.Scripts.GameModes
+namespace PFE.Gameplay.Scripts.CrossRoadGameModes
 {
     public class CrossRoadGameMode :  GameMode<bool>
     {

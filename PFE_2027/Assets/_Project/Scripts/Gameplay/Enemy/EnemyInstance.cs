@@ -1,10 +1,10 @@
 using System;
-using PFE.Core.Scripts;
+using PFE.Core;
 using PFE.Core.Scripts.DataMapping;
-using PFE.Core.Scripts.GameSettings;
+using PFE.Core.Scripts.Enemy;
 using UnityEngine;
 
-namespace PFE.Core
+namespace PFE.Gameplay.Scripts.Enemy
 {
     public class EnemyInstance
     {

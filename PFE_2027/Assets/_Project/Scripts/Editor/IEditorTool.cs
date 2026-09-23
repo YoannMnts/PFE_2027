@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace PFE.Editor
+namespace PFE.Editor._Project.Scripts.Editor
 {
     public interface IEditorTool
     {

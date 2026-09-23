@@ -1,14 +1,8 @@
-using PFE.Core.Scripts;
 using PFE.Core.Scripts.Databases;
-using PFE.Core.Scripts.GameSettings;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
-namespace PFE.Core
+namespace PFE.Core.Scripts.Enemy
 {
     public abstract class EnemyData : GameDatabaseObject, IEnemyData
     {

@@ -16,7 +16,6 @@ namespace PFE.Gameplay.Scripts.Players.Default
         public void CastAttack()
         {
             // TODO: systeme de component supprime, a reimplementer avec le nouveau systeme de combat
-            // ComponentGroup.TriggerAllComponents(this, OnComponentTrigger);
         }
 
         public void Dispose()

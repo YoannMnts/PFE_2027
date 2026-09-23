@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using Helteix.Tools.Phases;
-using PFE.Core;
+using PFE.Core.Scripts.Enemy;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.Phases
+namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
     public class AliveEnemyPhase : PhaseCompletionSource<EnemyData>
     {

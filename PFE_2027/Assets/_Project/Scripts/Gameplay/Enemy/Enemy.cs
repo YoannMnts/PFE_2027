@@ -1,8 +1,7 @@
-using PFE.Core.Scripts.AIPattern;
-using PFE.Core.Scripts.Attacks;
+using PFE.Core.Scripts.Enemy;
 using UnityEngine;
 
-namespace PFE.Core
+namespace PFE.Gameplay.Scripts.Enemy
 {
     public abstract class Enemy<TData> : IEnemy<TData> where TData : EnemyData
     {

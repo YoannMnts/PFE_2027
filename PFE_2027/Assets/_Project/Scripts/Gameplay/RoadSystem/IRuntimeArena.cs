@@ -1,4 +1,4 @@
-﻿namespace PFE.Gameplay.Scripts.ArenaSystem
+﻿namespace PFE.Gameplay.Scripts.RoadSystem
 {
     public interface IRuntimeArena
     {

@@ -1,7 +1,7 @@
-﻿using PFE.Core.Scripts.Attacks;
+﻿using PFE.Core.Scripts.Enemy.Attacks;
 using UnityEngine;
 
-namespace PFE.Core.Scripts.Templates
+namespace PFE.Core.Scripts.Enemy.Templates
 {
     [CreateAssetMenu(menuName = "PFE/Enemy/AttackTemplate")]
     public class AttackDataTemplate : AttackData
