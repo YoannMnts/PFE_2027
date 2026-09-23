@@ -1,16 +1,11 @@
 using System;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
-using PFE.Core.Scripts.ComponentSystem;
-using PFE.Gameplay.Scripts.ComponentSystem;
 
 namespace PFE.Gameplay.Scripts.Players.Default
 {
     public class DefaultPlayer : IPlayer, IDisposable
     {
-        public event Action<ComponentData> OnComponentTrigger; 
-        public ComponentGroup ComponentGroup { get; private set; }
-        
         public Priority<bool> ShowUI { get; private set; }
 
         public DefaultPlayer()
@@ -18,14 +13,10 @@ namespace PFE.Gameplay.Scripts.Players.Default
             ShowUI = new Priority<bool>(false);
         }
 
-        public void SetupComponentGroup(ComponentGroupData data)
-        {
-            ComponentGroup = new ComponentGroup(data);
-        }
-
         public void CastAttack()
         {
-            ComponentGroup.TriggerAllComponents(this, OnComponentTrigger);
+            // TODO: systeme de component supprime, a reimplementer avec le nouveau systeme de combat
+            // ComponentGroup.TriggerAllComponents(this, OnComponentTrigger);
         }
 
         public void Dispose()

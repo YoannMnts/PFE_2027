@@ -9,7 +9,6 @@ namespace PFE.Core
     public class EnemyInstance
     {
         public event Action<int> OnTakeDamage;
-        public StageMetric<EnemyMetric> Metric => data.Metrics;
         
         public readonly EnemyData data;
 

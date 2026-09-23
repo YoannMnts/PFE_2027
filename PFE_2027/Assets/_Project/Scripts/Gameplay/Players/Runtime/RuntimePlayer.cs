@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using PFE.Core.Scripts.ComponentSystem;
-using PFE.Gameplay.Scripts.ComponentSystem;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Runtime

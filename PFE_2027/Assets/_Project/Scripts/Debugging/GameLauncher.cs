@@ -3,6 +3,7 @@ using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
 using PFE.Core;
 using PFE.Core.Scripts;
+using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.GameModes;
 using PFE.Gameplay.Scripts.ArenaSystem;
 using PFE.Gameplay.Scripts.GameModes;
@@ -15,47 +16,22 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 {
     public class GameLauncher : MonoBehaviour
     {
-        private class DebugGameMode : TrialGameMode
+        private class DebugGameMode : CrossRoadGameMode
         {
-            private readonly EnemyData enemyData;
+            private readonly IAreaData data;
 
-            public DebugGameMode(EnemyData enemyData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            public DebugGameMode(IAreaData data) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
-                this.enemyData = enemyData;
+                this.data = data;
             }
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
             {
-                var context = new TrialGameModeContext(this);
-                
-                await GameController.GameSceneController.HideLoadingScreen();
-
-                var startBuildPhase = new StartBuildPhase(context);
-                await startBuildPhase.Run();
-                
-                var battlePhase = new BattlePhase(context, enemyData);
-                var result = await battlePhase.Run();
-            
-                return result.value;
-            }
-        }
-        
-        private class DebugBattleGameMode : TrialGameMode
-        {
-            private readonly EnemyData enemyData;
-
-            public DebugBattleGameMode(EnemyData enemyData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
-            {
-                this.enemyData = enemyData;
-            }
-
-            protected override async Awaitable<bool> Execute(CancellationToken token)
-            {
-                var context = new TrialGameModeContext(this);
+                var context = new CrossRoadGameModeContext(this);
                 
                 await GameController.GameSceneController.HideLoadingScreen();
                 
-                var battlePhase = new BattlePhase(context, enemyData);
+                var battlePhase = new BattlePhase(context, data);
                 var result = await battlePhase.Run();
             
                 return result.value;
@@ -64,12 +40,9 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         
         [SerializeField]
         private bool launchOnStart = true;
-
-        [SerializeField] 
-        private bool startInBattle = true;
         
         [SerializeField]
-        private EnemyData enemyData;
+        private AreaData areaData;
         
         private void Start()
         {
@@ -83,11 +56,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            TrialGameMode gameMode = new DebugGameMode(enemyData);
-            if (startInBattle)
-            {
-                gameMode = new DebugBattleGameMode(enemyData);
-            }
+            CrossRoadGameMode gameMode = new DebugGameMode(areaData);
             
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();

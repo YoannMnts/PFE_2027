@@ -1,11 +1,8 @@
 using Helteix.Tools;
-using PFE.Core.Scripts.ComponentSystem;
-using PFE.Gameplay.Scripts.ComponentSystem;
 using PFE.Gameplay.Scripts.Players.Runtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
@@ -26,20 +23,15 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Attack")]
         private float spawnUpDistance = .5f;
 
-        [Button, HideInEditorMode]
-        public void DebugSpawnAttack(ComponentData componentData) => SpawnAttack(componentData);
-        
         protected override void OnConnected()
         {
-            rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
+            rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             Player.ShowUI.OnValueChanged += SetUIMode;
-            Player.OnComponentTrigger += SpawnAttack;
         }
 
         protected override void OnDisconnected()
         {
             Player.ShowUI.OnValueChanged -= SetUIMode;
-            Player.OnComponentTrigger -= SpawnAttack;
         }
 
         private void SetUIMode(bool showUI)
@@ -47,21 +39,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             playerInput.SwitchCurrentActionMap(showUI ? "UI" : "Player");
             Cursor.lockState = showUI ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = showUI;
-        }
-
-        private void SpawnAttack(ComponentData data)
-        {
-            Vector3 spawnPos = mesh.position + mesh.forward * spawnForwardDistance + Vector3.up * spawnUpDistance;
-            Quaternion spawnRot = Quaternion.LookRotation(mesh.forward);
-            var instance = data.AttackPrefab.InstantiatePrefab();
-            instance.rotation = spawnRot;
-            instance.position = spawnPos;
-            instance.SetParent(attackContainer);
-
-            if (instance.TryGetComponent<RuntimeComponent>(out var runtime))
-            {
-                runtime.Setup();
-            }
         }
     }
 }

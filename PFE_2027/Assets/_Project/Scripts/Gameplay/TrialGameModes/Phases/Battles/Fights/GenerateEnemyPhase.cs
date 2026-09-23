@@ -5,10 +5,8 @@ namespace PFE.Gameplay.Scripts.Phases
 {
     public class GenerateEnemyPhase : PhaseCompletionSource<bool>
     {
-        public readonly EnemyInstance currentEnemy;
-        public GenerateEnemyPhase(EnemyInstance currentEnemy)
+        public GenerateEnemyPhase()
         {
-            this.currentEnemy = currentEnemy;
         }
     }
 }

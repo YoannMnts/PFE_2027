@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Runtime
 {
-    public class RuntimePlayerManager : MonoPhaseListener<TrialGameMode>
+    public class RuntimePlayerManager : MonoPhaseListener<CrossRoadGameMode>
     {
         [Header("References"), SerializeField, ChildGameObjectsOnly]
         private Transform container;
@@ -23,7 +23,7 @@ namespace PFE.Gameplay.Scripts.Players.Runtime
             runtimePlayers = new ();
         }
 
-        protected override void OnPhaseBegin(TrialGameMode phase)
+        protected override void OnPhaseBegin(CrossRoadGameMode phase)
         {
             base.OnPhaseBegin(phase);
 
@@ -44,7 +44,7 @@ namespace PFE.Gameplay.Scripts.Players.Runtime
             }
         }
 
-        protected override void OnPhaseEnd(TrialGameMode phase)
+        protected override void OnPhaseEnd(CrossRoadGameMode phase)
         {
             foreach ((_, RuntimePlayer runtime) in runtimePlayers)
                 runtime.Disconnect();

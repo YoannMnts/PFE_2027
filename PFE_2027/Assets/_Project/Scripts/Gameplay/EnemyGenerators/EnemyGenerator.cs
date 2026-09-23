@@ -9,6 +9,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 {
     public class EnemyGenerator : MonoBehaviour, IPhaseListener<GenerateEnemyPhase>
     {
+        
         [SerializeField]
         private Transform enemyPrefab;
         
@@ -23,6 +24,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         
         public void OnPhaseBegin(GenerateEnemyPhase phase)
         {
+            /*
             enemyPrefab.ClearChildren();
 
             var currentEnemy = phase.currentEnemy;
@@ -37,6 +39,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             enemyPrefab.transform.localPosition = Vector3.zero;
             
             phase.SetResult(true);
+            */
         }
         
         public void OnPhaseEnd(GenerateEnemyPhase phase)
