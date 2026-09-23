@@ -14,7 +14,7 @@ namespace PFE.Core.Scripts.GameSettings
         [field: SerializeField, Range(1, 100), BoxGroup("Global")]
         public int StageCount { get; private set; } = 1;
 
-        [SerializeField, BoxGroup("Boss")]
+        [SerializeField, BoxGroup("Enemy")]
         private StageMetric<int> aggressiveness;
         public StageMetric<int> Aggressiveness => aggressiveness;
 

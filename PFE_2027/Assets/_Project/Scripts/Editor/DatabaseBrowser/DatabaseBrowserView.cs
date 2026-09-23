@@ -13,7 +13,7 @@ namespace PFE.Editor.DatabaseBrowser
     /// Vue réutilisable : liste (avec recherche) des assets d'un type ScriptableObject donné,
     /// trouvés sous Assets/_Project/Resources/Database, plus l'inspecteur de l'asset sélectionné.
     /// Si les assets implémentent IComponentEditor, une barre de familles (filtre exclusif) apparaît
-    /// en haut de la fenêtre ; sinon la liste reste plate (ex: BossData, qui n'a pas de famille).
+    /// en haut de la fenêtre ; sinon la liste reste plate (ex: EnemyData, qui n'a pas de famille).
     /// Un bouton de création optionnel peut être fourni par l'outil appelant.
     /// </summary>
     public sealed class DatabaseBrowserView<T> where T : ScriptableObject

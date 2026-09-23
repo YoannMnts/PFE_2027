@@ -3,11 +3,10 @@ using PFE.Core;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
-    public class GenerateArenaPhase : PhaseCompletionSource<bool>
+    public class GenerateEnemyPhase : PhaseCompletionSource<bool>
     {
         public readonly EnemyInstance currentEnemy;
-
-        public GenerateArenaPhase(EnemyInstance currentEnemy)
+        public GenerateEnemyPhase(EnemyInstance currentEnemy)
         {
             this.currentEnemy = currentEnemy;
         }

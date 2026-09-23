@@ -44,7 +44,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e746e909c71546cfac975e2512e8b7c7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyBoss.RuntimeDummy
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyEnemy.RuntimeDummy
 --- !u!1 &6084632612200884688
 GameObject:
   m_ObjectHideFlags: 0

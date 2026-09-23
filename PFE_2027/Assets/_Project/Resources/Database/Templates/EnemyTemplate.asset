@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2821af07431e48fe8fd0e41b9706bd30, type: 3}
-  m_Name: BossTemplate
-  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Templates.BossTemplate
+  m_Name: EnemyTemplate
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Templates.EnemyTemplate
   guidText: 073916c5-331f-444a-82c1-a6c00f0ee5ac
   <Name>k__BackingField: 
   metrics:

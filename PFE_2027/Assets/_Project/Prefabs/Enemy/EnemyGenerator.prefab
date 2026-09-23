@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6236297304791403235}
   - component: {fileID: 2604109656916759311}
   m_Layer: 0
-  m_Name: BossGenerator
+  m_Name: EnemyGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6a1769be434c22a260debb868f47ba, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.BossGenerators.BossGenerator
-  bossPrefab: {fileID: 713534648514942918}
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.EnemyGenerators.EnemyGenerator
+  enemyPrefab: {fileID: 713534648514942918}
 --- !u!1 &5973637954830947986
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 713534648514942918}
   m_Layer: 0
-  m_Name: BossPrefab
+  m_Name: EnemyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

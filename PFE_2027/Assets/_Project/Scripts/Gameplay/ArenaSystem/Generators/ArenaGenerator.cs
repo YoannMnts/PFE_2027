@@ -28,7 +28,7 @@ namespace PFE.Gameplay.Scripts.ArenaSystem
         {
             container.ClearChildren();
             
-            Transform runtime = phase.currentBoss.Metric.GetValue(0).ArenaPrefab.InstantiatePrefab();
+            Transform runtime = phase.currentEnemy.Metric.GetValue(0).ArenaPrefab.InstantiatePrefab();
             runtime.transform.SetParent(container);
             
             phase.SetResult(true);

@@ -5,7 +5,7 @@ using PFE.Core.Scripts.DataMapping.Interfaces;
 namespace PFE.Core
 {
     [GenerateContainer]
-    public interface IBoss<in TData> : IBehaviour<TData> where TData : IBossData
+    public interface IEnemy<in TData> : IBehaviour<TData> where TData : IEnemyData
     {
         [AddToContainer]
         //set the spawning => maybe into scene 

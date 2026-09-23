@@ -4,7 +4,7 @@ using PFE.Core.Scripts.GameSettings;
 
 namespace PFE.Core
 {
-    public interface IBossData : IData
+    public interface IEnemyData : IData
     {
         public string Name { get; }
     }

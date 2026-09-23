@@ -10,7 +10,7 @@ using UnityEditor;
 
 namespace PFE.Core
 {
-    public abstract class BossData : GameDatabaseObject, IBossData
+    public abstract class EnemyData : GameDatabaseObject, IEnemyData
     {
         [field : SerializeField, BoxGroup("Description")]
         public string Name { get; private set; }
@@ -19,8 +19,8 @@ namespace PFE.Core
         public Transform PrefabMesh { get; private set; }
 
         [SerializeField, BoxGroup]
-        private StageMetric<BossMetric> metrics;
-        public StageMetric<BossMetric> Metrics => metrics;
+        private StageMetric<EnemyMetric> metrics;
+        public StageMetric<EnemyMetric> Metrics => metrics;
         
 
 #if UNITY_EDITOR

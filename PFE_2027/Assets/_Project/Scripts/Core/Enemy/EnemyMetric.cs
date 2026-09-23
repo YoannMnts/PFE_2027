@@ -7,7 +7,7 @@ using UnityEngine;
 namespace PFE.Core.Scripts
 {
     [Serializable]
-    public struct BossMetric
+    public struct EnemyMetric
     {
         [field : SerializeField, Range(0, 100), BoxGroup("Parameters")]
         public int Health { get; private set; }

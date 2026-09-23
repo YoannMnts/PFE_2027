@@ -10,11 +10,11 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
-    public class FightPhase : Phase<BossData>
+    public class FightPhase : Phase<EnemyData>
     {
         private readonly BattleContext context;
         private ChannelKey key;
-        public BossInstance CurrentBoss => context.instance;
+        public EnemyInstance CurrentEnemy => context.instance;
 
         public FightPhase(BattleContext context)
         {
@@ -31,18 +31,18 @@ namespace PFE.Gameplay.Scripts.Phases
             return base.Initialize(token);
         }
 
-        protected override async Awaitable<BossData> Execute(CancellationToken token)
+        protected override async Awaitable<EnemyData> Execute(CancellationToken token)
         {
-            var generateArenaPhase = new GenerateArenaPhase(CurrentBoss);
+            var generateArenaPhase = new GenerateArenaPhase(CurrentEnemy);
             await generateArenaPhase.Run();
             
-            var generateBossPhase = new GenerateBossPhase(CurrentBoss);
-            await generateBossPhase.Run();
+            var generateEnemyPhase = new GenerateEnemyPhase(CurrentEnemy);
+            await generateEnemyPhase.Run();
             
-            AliveBossPhase aliveBossPhase = new AliveBossPhase();
-            PhaseResult<BossData> aliveBossResult = await aliveBossPhase.Run();
+            AliveEnemyPhase aliveEnemyPhase = new AliveEnemyPhase();
+            PhaseResult<EnemyData> aliveEnemyResult = await aliveEnemyPhase.Run();
 
-            return aliveBossResult.value;
+            return aliveEnemyResult.value;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

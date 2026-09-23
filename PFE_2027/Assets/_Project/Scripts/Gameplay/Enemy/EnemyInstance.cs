@@ -6,24 +6,24 @@ using UnityEngine;
 
 namespace PFE.Core
 {
-    public class BossInstance
+    public class EnemyInstance
     {
         public event Action<int> OnTakeDamage;
-        public StageMetric<BossMetric> Metric => data.Metrics;
+        public StageMetric<EnemyMetric> Metric => data.Metrics;
         
-        public readonly BossData data;
+        public readonly EnemyData data;
 
         private int damage;
         private int currentHealth;
 
-        public BossInstance(BossData data)
+        public EnemyInstance(EnemyData data)
         {
             this.data = data;
         }
 
         public void Spawn()
         {
-            if (data.TryGet(out IBossContainer container))
+            if (data.TryGet(out IEnemyContainer container))
             {
                 container.CanSpawn(data);
             }
@@ -31,7 +31,7 @@ namespace PFE.Core
 
         public void AddOrRemoveHealth()
         {
-            if (data.TryGet(out IBossContainer container))
+            if (data.TryGet(out IEnemyContainer container))
             {
                 container.TakeDamage(data, damage,  currentHealth);
                 OnTakeDamage?.Invoke(currentHealth);
