@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
-    public class AliveBossPhase : PhaseCompletionSource<BossData>
+    public class AliveEnemyPhase : PhaseCompletionSource<EnemyData>
     {
-       private BossData data;
+       private EnemyData data;
        
        //Pas sur du truc => a checker l'esprit tranquille
-       protected override Awaitable<BossData> Execute(CancellationToken token)
+       protected override Awaitable<EnemyData> Execute(CancellationToken token)
        {
            if (data != null)
            {

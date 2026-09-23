@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PFE.Core
 {
-    public abstract class Boss<TData> : IBoss<TData> where TData : BossData
+    public abstract class Enemy<TData> : IEnemy<TData> where TData : EnemyData
     {
         public bool CanSpawn(TData data)
         {
@@ -15,8 +15,8 @@ namespace PFE.Core
 
         public void TakeDamage(TData data, int damage, int currentHealth)
         {
-            var bossMetric = data.Metrics.GetValue(0);
-            var maxHealth = bossMetric.Health;
+            var enemyMetric = data.Metrics.GetValue(0);
+            var maxHealth = enemyMetric.Health;
 
             currentHealth = Mathf.Clamp(currentHealth + damage, 0, maxHealth);
             

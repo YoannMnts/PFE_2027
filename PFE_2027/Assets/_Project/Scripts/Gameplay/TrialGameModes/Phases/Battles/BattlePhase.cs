@@ -13,7 +13,7 @@ using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
 using UnityEngine;
 using UnityEngine.Pool;
-using BossData = PFE.Core.BossData;
+using EnemyData = PFE.Core.EnemyData;
 
 namespace PFE.Gameplay.Scripts.Phases
 {
@@ -24,13 +24,13 @@ namespace PFE.Gameplay.Scripts.Phases
         private readonly TrialGameModeContext gameModeContext;
         private readonly SceneReference sceneToLoad;
 
-        private BossData currentBoss;
+        private EnemyData currentEnemy;
 
 
-        //Only to force a boss spawn
-        public BattlePhase(TrialGameModeContext gameModeContext, BossData debugData) : this(gameModeContext)
+        //Only to force a enemy spawn
+        public BattlePhase(TrialGameModeContext gameModeContext, EnemyData debugData) : this(gameModeContext)
         {
-            currentBoss = debugData;
+            currentEnemy = debugData;
         }
         
         public BattlePhase(TrialGameModeContext gameModeContext)
@@ -40,28 +40,28 @@ namespace PFE.Gameplay.Scripts.Phases
 
         protected override Awaitable Initialize(CancellationToken token)
         {
-            currentBoss ??= GetRandomBoss();
+            currentEnemy ??= GetRandomEnemy();
             return base.Initialize(token);
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
             //TODO créer un context de battlePhase
-            while (currentBoss != null)
+            while (currentEnemy != null)
             {
                 var composeBuildPhase = new ComposeBuildPhase(gameModeContext);
                 await composeBuildPhase.Run();
                 
-                BossInstance instance = new BossInstance(currentBoss);
+                EnemyInstance instance = new EnemyInstance(currentEnemy);
                 var battleContext = new BattleContext(this, instance);
                 
                 var fightPhase = new FightPhase(battleContext);
                 var fightResult = await fightPhase.Run();
-                BossData previousBoss = fightResult.value;
+                EnemyData previousEnemy = fightResult.value;
                 
-                var selectBossPhase = new SelectBossPhase(previousBoss);
-                var selectBossResult = await selectBossPhase.Run();
-                currentBoss = selectBossResult.value;
+                var selectEnemyPhase = new SelectEnemyPhase(previousEnemy);
+                var selectEnemyResult = await selectEnemyPhase.Run();
+                currentEnemy = selectEnemyResult.value;
             }
 
             return false;
@@ -72,13 +72,13 @@ namespace PFE.Gameplay.Scripts.Phases
             return base.Dispose(token);
         }
 
-        private BossData GetRandomBoss()
+        private EnemyData GetRandomEnemy()
         {
-            var allBossData = GameController.GameDatabase.GetAll<BossData>();
-            var bossArray = allBossData.ToArray();
-            var randomIndex = Random.Range(0, bossArray.Length);
+            var allEnemyData = GameController.GameDatabase.GetAll<EnemyData>();
+            var enemyArray = allEnemyData.ToArray();
+            var randomIndex = Random.Range(0, enemyArray.Length);
             
-            return bossArray[randomIndex];
+            return enemyArray[randomIndex];
         }
     }
 }

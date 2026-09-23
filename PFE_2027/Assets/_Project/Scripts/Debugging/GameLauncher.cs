@@ -17,11 +17,11 @@ namespace PFE.Debugging._Project.Scripts.Debugging
     {
         private class DebugGameMode : TrialGameMode
         {
-            private readonly BossData bossData;
+            private readonly EnemyData enemyData;
 
-            public DebugGameMode(BossData bossData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            public DebugGameMode(EnemyData enemyData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
-                this.bossData = bossData;
+                this.enemyData = enemyData;
             }
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -33,7 +33,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                 var startBuildPhase = new StartBuildPhase(context);
                 await startBuildPhase.Run();
                 
-                var battlePhase = new BattlePhase(context, bossData);
+                var battlePhase = new BattlePhase(context, enemyData);
                 var result = await battlePhase.Run();
             
                 return result.value;
@@ -42,11 +42,11 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         
         private class DebugBattleGameMode : TrialGameMode
         {
-            private readonly BossData bossData;
+            private readonly EnemyData enemyData;
 
-            public DebugBattleGameMode(BossData bossData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            public DebugBattleGameMode(EnemyData enemyData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
-                this.bossData = bossData;
+                this.enemyData = enemyData;
             }
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -55,7 +55,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                 
                 await GameController.GameSceneController.HideLoadingScreen();
                 
-                var battlePhase = new BattlePhase(context, bossData);
+                var battlePhase = new BattlePhase(context, enemyData);
                 var result = await battlePhase.Run();
             
                 return result.value;
@@ -69,7 +69,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         private bool startInBattle = true;
         
         [SerializeField]
-        private BossData bossData;
+        private EnemyData enemyData;
         
         private void Start()
         {
@@ -83,10 +83,10 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            TrialGameMode gameMode = new DebugGameMode(bossData);
+            TrialGameMode gameMode = new DebugGameMode(enemyData);
             if (startInBattle)
             {
-                gameMode = new DebugBattleGameMode(bossData);
+                gameMode = new DebugBattleGameMode(enemyData);
             }
             
             gameModeController.StartGameMode(gameMode);
