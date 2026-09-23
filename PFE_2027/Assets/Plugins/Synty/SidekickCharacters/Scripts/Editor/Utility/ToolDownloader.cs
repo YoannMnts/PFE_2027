@@ -290,15 +290,11 @@ namespace Synty.SidekickCharacters
     /// <summary>
     ///     Creates an instance of the Downloader Tool, to allow checks for new versions on editor startup.
     /// </summary>
-    [InitializeOnLoad]
+    // [InitializeOnLoad] retire : desactive le check de version automatique a chaque reload de domaine.
+    // Le menu "Synty/Sidekick Tool Downloader" reste disponible pour un check manuel.
     public static class DownloaderBackgroundService
     {
         private static ToolDownloader _instance;
-
-        static DownloaderBackgroundService()
-        {
-            EditorApplication.update += CreateToolInstance;
-        }
 
         static void CreateToolInstance()
         {
