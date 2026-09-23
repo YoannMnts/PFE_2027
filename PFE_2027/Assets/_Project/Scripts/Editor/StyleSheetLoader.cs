@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PFE.Editor
+namespace PFE.Editor._Project.Scripts.Editor
 {
     /// <summary>
     /// Charge une feuille de style par son chemin d'asset exact

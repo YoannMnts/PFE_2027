@@ -1,7 +1,4 @@
-﻿using System;
-using PFE.Core;
-
-namespace PFE.Gameplay.Scripts.Phases
+﻿namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
     public interface IRuntimeEnemy
     {

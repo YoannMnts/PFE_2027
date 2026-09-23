@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.ArenaSystem
+namespace PFE.Gameplay.Scripts.RoadSystem
 {
     public class RuntimeArena : MonoBehaviour, IRuntimeArena
     {

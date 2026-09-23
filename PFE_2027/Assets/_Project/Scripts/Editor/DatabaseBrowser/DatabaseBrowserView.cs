@@ -6,7 +6,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PFE.Editor.DatabaseBrowser
+namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
 {
     /// <summary>
     /// Vue réutilisable : liste (avec recherche) des assets d'un type ScriptableObject donné,

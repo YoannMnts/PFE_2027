@@ -1,6 +1,6 @@
-﻿using PFE.Gameplay.Scripts.Phases;
+﻿using PFE.Gameplay.Scripts.Enemy.Runtime;
 
-namespace PFE.Core.DummyEnemy
+namespace PFE.Gameplay.Scripts.Enemy.DummyEnemy.Runtime
 {
     public class RuntimeDummy : RuntimeEnemy
     {

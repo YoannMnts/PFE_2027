@@ -1,10 +1,9 @@
 ﻿using System;
-using PFE.Core.Scripts.AIPattern;
+using PFE.Core.Scripts.Attitude;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
 
-namespace PFE.Core.Scripts
+namespace PFE.Core.Scripts.Enemy
 {
     [Serializable]
     public struct EnemyMetric

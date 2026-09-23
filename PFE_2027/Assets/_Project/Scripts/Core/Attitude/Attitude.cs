@@ -1,4 +1,4 @@
-﻿namespace PFE.Core.Scripts.AIPattern
+﻿namespace PFE.Core.Scripts.Attitude
 {
     public abstract class Attitude : IAttitude<AttitudeDataTemplate>
     {

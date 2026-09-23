@@ -1,7 +1,7 @@
-﻿using PFE.Core.Scripts.Attacks;
-using PFE.Core.Scripts.DataMapping.Interfaces;
+﻿using PFE.Core.Scripts.DataMapping.Interfaces;
+using PFE.Core.Scripts.Enemy.Attacks;
 
-namespace PFE.Core.Scripts.AIPattern
+namespace PFE.Core.Scripts.Attitude
 {
     public interface IAttitudeData : IData
     {

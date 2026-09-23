@@ -1,10 +1,7 @@
-﻿using System;
-using PFE.Core;
-using PFE.Core.DummyEnemy;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.Phases
+namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
     public abstract class RuntimeEnemy : MonoBehaviour, IRuntimeEnemy
     {

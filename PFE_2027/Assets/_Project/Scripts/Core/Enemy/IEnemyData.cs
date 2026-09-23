@@ -1,8 +1,6 @@
-﻿using PFE.Core.Scripts;
-using PFE.Core.Scripts.DataMapping.Interfaces;
-using PFE.Core.Scripts.GameSettings;
+﻿using PFE.Core.Scripts.DataMapping.Interfaces;
 
-namespace PFE.Core
+namespace PFE.Core.Scripts.Enemy
 {
     public interface IEnemyData : IData
     {

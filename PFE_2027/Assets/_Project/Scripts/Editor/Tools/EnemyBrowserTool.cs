@@ -1,7 +1,7 @@
-using PFE.Core;
-using PFE.Editor.DatabaseBrowser;
+using PFE.Core.Scripts.Enemy;
+using PFE.Editor._Project.Scripts.Editor.DatabaseBrowser;
 
-namespace PFE.Editor.Tools
+namespace PFE.Editor._Project.Scripts.Editor.Tools
 {
     public sealed class EnemyBrowserTool : DatabaseBrowserTool<EnemyData>
     {

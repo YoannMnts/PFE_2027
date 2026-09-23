@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PFE.Editor
+namespace PFE.Editor._Project.Scripts.Editor
 {
     public sealed class PfeEditorWindow : EditorWindow
     {

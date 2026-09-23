@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6a1769be434c22a260debb868f47ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.EnemyGenerators.EnemyGenerator
+  <OnPhaseBeginUnityEvent>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnPhaseEndUnityEvent>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   enemyPrefab: {fileID: 713534648514942918}
 --- !u!1 &5973637954830947986
 GameObject:
@@ -56,7 +62,7 @@ GameObject:
   m_Component:
   - component: {fileID: 713534648514942918}
   m_Layer: 0
-  m_Name: EnemyPrefab
+  m_Name: EnemyContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PFE.Editor.DatabaseBrowser
+namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
 {
     public abstract class DatabaseBrowserTool<T> : IEditorTool where T : ScriptableObject
     {

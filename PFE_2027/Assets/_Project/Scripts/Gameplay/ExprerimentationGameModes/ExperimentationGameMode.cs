@@ -2,7 +2,7 @@
 using PFE.Core.Scripts.GameModes;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.GameModes
+namespace PFE.Gameplay.Scripts.ExprerimentationGameModes
 {
     public class ExperimentationGameMode : GameMode<bool>
     {

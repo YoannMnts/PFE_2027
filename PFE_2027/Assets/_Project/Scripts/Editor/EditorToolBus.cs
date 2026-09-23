@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PFE.Editor
+namespace PFE.Editor._Project.Scripts.Editor
 {
     /// <summary>
     /// Bus pub/sub statique permettant à des onglets de PfeEditorWindow de communiquer

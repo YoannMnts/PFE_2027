@@ -5,20 +5,13 @@ using Eflatun.SceneReference;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
-using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
-using PFE.Core.Scripts.GameSettings;
-using PFE.Core.Scripts.Templates;
-using PFE.Gameplay.Scripts.ArenaSystem;
-using PFE.Gameplay.Scripts.GameModes;
 using PFE.Gameplay.Scripts.Players;
-using PFE.Gameplay.Scripts.Players.Default;
 using UnityEngine;
-using UnityEngine.Pool;
-using EnemyData = PFE.Core.EnemyData;
+using EnemyData = PFE.Core.Scripts.Enemy.EnemyData;
 
-namespace PFE.Gameplay.Scripts.Phases
+namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
     public class BattlePhase : Phase<bool>
     {

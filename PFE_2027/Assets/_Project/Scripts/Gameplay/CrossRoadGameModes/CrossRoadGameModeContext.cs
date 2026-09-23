@@ -1,4 +1,4 @@
-﻿namespace PFE.Gameplay.Scripts.GameModes
+﻿namespace PFE.Gameplay.Scripts.CrossRoadGameModes
 {
     public struct CrossRoadGameModeContext
     {

@@ -1,8 +1,8 @@
-﻿using PFE.Core.Scripts.AIPattern;
-using PFE.Core.Scripts.DataMapping.Attributes;
+﻿using PFE.Core.Scripts.DataMapping.Attributes;
 using PFE.Core.Scripts.DataMapping.Interfaces;
+using PFE.Core.Scripts.Enemy;
 
-namespace PFE.Core
+namespace PFE.Gameplay.Scripts.Enemy
 {
     [GenerateContainer]
     public interface IEnemy<in TData> : IBehaviour<TData> where TData : IEnemyData

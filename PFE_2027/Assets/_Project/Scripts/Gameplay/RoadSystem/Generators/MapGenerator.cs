@@ -1,11 +1,9 @@
-﻿using System;
-using Helteix.Tools;
+﻿using Helteix.Tools;
 using Helteix.Tools.Phases;
-using Helteix.Tools.Phases.Listeners;
-using PFE.Gameplay.Scripts.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.ArenaSystem
+namespace PFE.Gameplay.Scripts.RoadSystem
 {
     public class MapGenerator : MonoBehaviour, IPhaseListener<GenerateAreaPhase>, IPhaseListener<BattlePhase>
     {
