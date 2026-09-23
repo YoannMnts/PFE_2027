@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.GameSettings;
@@ -12,7 +12,6 @@ namespace PFE.Core
         
         public readonly EnemyData data;
 
-        private int damage;
         private int currentHealth;
 
         public EnemyInstance(EnemyData data)
@@ -28,14 +27,19 @@ namespace PFE.Core
             }
         }
 
-        public void AddOrRemoveHealth()
+        public void AddOrRemoveHealth(int damage)
         {
             if (data.TryGet(out IEnemyContainer container))
             {
+                currentHealth = 100;
+                
                 container.TakeDamage(data, damage,  currentHealth);
                 OnTakeDamage?.Invoke(currentHealth);
                 
+                
+                Debug.Log("Data :" + data);
                 Debug.Log("Health: " + currentHealth);
+                Debug.Log("Damage: " + damage);
             }
         }
     }
