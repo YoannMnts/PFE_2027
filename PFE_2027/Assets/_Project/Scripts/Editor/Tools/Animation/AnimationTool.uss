@@ -1,0 +1,76 @@
+.anim-tool {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.anim-tool__browser {
+    flex-grow: 1;
+}
+
+.anim-tool__create {
+    flex-direction: column;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    background-color: var(--pe-card);
+    border-radius: 6px;
+}
+
+.anim-tool__create-title {
+    font-size: 13px;
+    -unity-font-style: bold;
+    color: var(--pe-text-strong);
+    margin-bottom: 6px;
+}
+
+.anim-tool__create-error {
+    color: #E5716B;
+    font-size: 11px;
+    margin: 4px 0;
+}
+
+.anim-tool__create-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.anim-tool__primary-button {
+    margin: 0 0 0 6px;
+    background-color: var(--pe-accent);
+    color: var(--pe-text-strong);
+    border-width: 0;
+    border-radius: 4px;
+    padding: 6px 12px;
+    -unity-font-style: bold;
+}
+
+.anim-tool__primary-button:hover {
+    opacity: 0.9;
+}
+
+.anim-tool__secondary-button {
+    margin: 0 0 0 6px;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: var(--pe-hairline);
+    background-color: var(--pe-chrome);
+    color: var(--pe-text-soft);
+}
+
+.anim-tool__secondary-button:hover {
+    color: var(--pe-text-strong);
+}
+
+.anim-tool__settings {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top-width: 1px;
+    border-top-color: var(--pe-hairline);
+}
+
+.anim-tool__note {
+    font-size: 11px;
+    color: var(--pe-text-muted);
+    margin-top: 4px;
+    white-space: normal;
+}

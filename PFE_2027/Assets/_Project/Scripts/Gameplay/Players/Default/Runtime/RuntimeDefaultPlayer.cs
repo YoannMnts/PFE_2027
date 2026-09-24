@@ -1,4 +1,7 @@
 using Helteix.Tools;
+using PFE.Core.Scripts;
+using PFE.Core.Scripts.GameSettings;
+using PFE.Gameplay.Scripts.Enemy.Runtime;
 using PFE.Gameplay.Scripts.Players.Runtime;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,6 +26,18 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Attack")]
         private float spawnUpDistance = .5f;
 
+        [SerializeField, BoxGroup("Attack")]
+        private Vector3 hitBoxHalfExtents = new(.5f, .5f, .5f);
+
+        [SerializeField, BoxGroup("Attack")]
+        private LayerMask hitMask;
+        
+        [SerializeField, BoxGroup("Animation")]
+        private Animator animator;
+
+        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+        private readonly Collider[] hitResults = new Collider[16];
+
         protected override void OnConnected()
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
@@ -40,5 +55,40 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             Cursor.lockState = showUI ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = showUI;
         }
+
+        public void PlayAttack()
+        {
+            animator.SetTrigger(AttackTrigger);
+            CastBasicAttack();
+        }
+
+        private void CastBasicAttack()
+        {
+            int count = Physics.OverlapBoxNonAlloc(GetHitBoxCenter(), hitBoxHalfExtents, hitResults,
+                mesh.rotation, hitMask, QueryTriggerInteraction.Collide);
+
+            for (int i = 0; i < count; i++)
+            {
+                RuntimeEnemy enemy = hitResults[i].GetComponentInParent<RuntimeEnemy>();
+                if (enemy != null)
+                    enemy.Damage(GameMetricsSettings.Current.BasicAttackDamage);
+            }
+        }
+
+        private Vector3 GetHitBoxCenter()
+            => mesh.position + mesh.forward * spawnForwardDistance + Vector3.up * spawnUpDistance;
+
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (mesh == null)
+                return;
+
+            Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.8f);
+            Gizmos.matrix = Matrix4x4.TRS(GetHitBoxCenter(), mesh.rotation, Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, hitBoxHalfExtents * 2f);
+            Gizmos.matrix = Matrix4x4.identity;
+        }
+#endif
     }
 }

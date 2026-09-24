@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
@@ -11,9 +12,12 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             runtimePlayer = GetComponentInParent<RuntimeDefaultPlayer>();
         }
 
-        public void PerformAttack()
+        public void PerformAttack(InputAction.CallbackContext context)
         {
-            runtimePlayer.Player.CastAttack();
+            if (!context.performed)
+                return;
+            
+            runtimePlayer.PlayAttack();
         }
     }
 }

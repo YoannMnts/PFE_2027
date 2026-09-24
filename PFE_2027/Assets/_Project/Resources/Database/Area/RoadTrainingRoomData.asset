@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd155e160c2e46e4997b0a562ada0108, type: 3}
+  m_Name: RoadTrainingRoomData
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.RoadAreaData
+  guidText: a485392f-1635-479b-8190-b8416c0025a7
+  <Prefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
+  <SpawnPoints>k__BackingField:
+  - <AnchorId>k__BackingField: Anchor_0
+    <Enemy>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}

@@ -1,6 +1,7 @@
 using System;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default
 {
@@ -11,11 +12,6 @@ namespace PFE.Gameplay.Scripts.Players.Default
         public DefaultPlayer()
         {
             ShowUI = new Priority<bool>(false);
-        }
-
-        public void CastAttack()
-        {
-            // TODO: systeme de component supprime, a reimplementer avec le nouveau systeme de combat
         }
 
         public void Dispose()
