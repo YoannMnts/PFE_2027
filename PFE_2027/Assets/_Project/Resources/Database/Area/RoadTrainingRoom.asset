@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.RoadAreaData
   guidText: a485392f-1635-479b-8190-b8416c0025a7
   <Prefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
+  <SpawnPoints>k__BackingField:
+  - <Position>k__BackingField: {x: 0, y: 0, z: 0}
+    <Enemy>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}

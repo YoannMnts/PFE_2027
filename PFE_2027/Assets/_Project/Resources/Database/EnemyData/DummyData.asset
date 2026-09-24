@@ -14,16 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dummy.DummyData
   guidText: ee862df0-3ed8-4331-a767-f005f2db0c6b
   <Name>k__BackingField: Dummy
+  <MaxHealth>k__BackingField: 50
   <PrefabMesh>k__BackingField: {fileID: 4156158887259431200, guid: fdc6214816ad7344f83dd705ebdf1aee, type: 3}
-  metrics:
-    stages:
-    - <Health>k__BackingField: 50
-      <AttitudeData>k__BackingField:
-        rid: -2
-      <ArenaPrefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
-      <ArenaMusic>k__BackingField: {fileID: 0}
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
