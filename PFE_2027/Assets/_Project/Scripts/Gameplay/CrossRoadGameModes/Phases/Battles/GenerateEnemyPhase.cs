@@ -1,12 +1,15 @@
 ﻿using Helteix.Tools.Phases;
+using PFE.Core.Scripts.Area;
 
 namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
     public class GenerateEnemyPhase : PhaseCompletionSource<bool>
     {
-        public GenerateEnemyPhase()
+        public readonly IAreaData currentArea;
+
+        public GenerateEnemyPhase(IAreaData currentArea)
         {
-            //TODO utilisé la GenerateAreaPhase pour recup les enemies / leur pos et les transmettres au generator
+            this.currentArea = currentArea;
         }
     }
 }

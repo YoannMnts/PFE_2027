@@ -12,18 +12,15 @@ namespace PFE.Gameplay.Scripts.Enemy
 
         public abstract void Attack(TData data);
 
-        public void TakeDamage(TData data, int damage, int currentHealth)
+        public float ModifyHealth(TData data, int damage, float currentHealth)
         {
-            currentHealth = Mathf.Clamp(currentHealth + damage, 0, 100);
-            
-            if (currentHealth <= 0)
-            {
-                Dying(data);
-            }
+            var modifyHealth = Mathf.Clamp(currentHealth + damage, 0, data.MaxHealth);
+            return modifyHealth;
         }
 
         public void Dying(TData data)
         {
+            Debug.Log("Dying");
             //le runtime fera remonter l'info quand il faudra mourir
             return;
         }

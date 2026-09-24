@@ -8,8 +8,12 @@ namespace PFE.Core.Scripts.Enemy
     {
         [field : SerializeField, BoxGroup("Description")]
         public string Name { get; private set; }
+        [field :  SerializeField, Range(0f, 100f), BoxGroup ("Metric")]
+        public float MaxHealth { get; private set; }
         
-        [field : SerializeField, BoxGroup("Visual")]
+        
+        [field : SerializeField, BoxGroup("References")]
         public Transform PrefabMesh { get; private set; }
+        
     }
 }

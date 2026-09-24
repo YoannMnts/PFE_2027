@@ -1,9 +1,12 @@
-﻿using Transform = UnityEngine.Transform;
+﻿using System.Collections.Generic;
+using Transform = UnityEngine.Transform;
 
 namespace PFE.Core.Scripts.Area
 {
     public interface IAreaData
     {
         public Transform Prefab { get;  }
+        public List<SpawnPoint> SpawnPoints { get;  }
+
     }
 }
