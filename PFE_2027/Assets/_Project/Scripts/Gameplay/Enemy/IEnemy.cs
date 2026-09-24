@@ -17,7 +17,7 @@ namespace PFE.Gameplay.Scripts.Enemy
         
         [AddToContainer]
         //set taken damage
-        void TakeDamage(TData data, int damage, int  currentHealth);
+        float ModifyHealth(TData data, int damage, float  currentHealth);
         
         [AddToContainer]
         //set death

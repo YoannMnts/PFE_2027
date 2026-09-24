@@ -3,7 +3,12 @@ using Codice.CM.Common;
 using Helteix.Tools;
 using Helteix.Tools.Phases;
 using Helteix.Tools.Phases.Listeners;
+using PFE.Core.Scripts.Area;
+using PFE.Core.Scripts.Enemy;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.Enemy;
+using PFE.Gameplay.Scripts.Enemy.DummyEnemy.Runtime;
+using PFE.Gameplay.Scripts.Enemy.Runtime;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.EnemyGenerators
@@ -11,26 +16,31 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
     public class EnemyGenerator : MonoPhaseListener<GenerateEnemyPhase>
     {
         [SerializeField]
-        private Transform enemyPrefab;
+        private Transform container;
         
         protected override void OnPhaseBegin(GenerateEnemyPhase phase)
         {
-            //TODO spawn EnemyData.Prefab aux coord
-            /*
-            enemyPrefab.ClearChildren();
+            container.ClearChildren();
 
-            var currentEnemy = phase.currentEnemy;
-                
-            var runtime = currentEnemy.data.PrefabMesh.InstantiatePrefab();
-            if (runtime.TryGetComponent<RuntimeEnemy>(out var runtimeEnemy))
+            foreach (var spawnPoint in phase.currentArea.SpawnPoints)
             {
-                runtimeEnemy.Setup(currentEnemy);
+                EnemyData enemy = spawnPoint.Enemy;
+                Vector3 enemyPosition = spawnPoint.Position;
+
+                var runtimeEnemy = enemy.PrefabMesh.InstantiatePrefab();
+
+                if (runtimeEnemy.TryGetComponent(out RuntimeEnemy compatible))
+                {
+                    var enemyInstance = new EnemyInstance(enemy);
+                    
+                    runtimeEnemy.position = enemyPosition;
+                    runtimeEnemy.SetParent(container);
+                    
+                    compatible.Setup(enemyInstance);
+                }
+
             }
             
-            currentEnemy.Spawn();
-            enemyPrefab.transform.localPosition = Vector3.zero;
-            
-            */
             phase.SetResult(true);
         }
 

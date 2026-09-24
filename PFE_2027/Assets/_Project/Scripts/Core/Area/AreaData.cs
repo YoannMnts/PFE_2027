@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.Databases;
+﻿using System.Collections.Generic;
+using PFE.Core.Scripts.Databases;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Transform = UnityEngine.Transform;
@@ -9,5 +10,8 @@ namespace PFE.Core.Scripts.Area
     {
         [field: SerializeField, BoxGroup("References", true, false, 1f)]
         public Transform Prefab { get; private set; }
+
+        [field: SerializeField, BoxGroup("Base")]
+        public List<SpawnPoint> SpawnPoints { get; private set; }
     }
 }

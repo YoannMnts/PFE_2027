@@ -51,7 +51,7 @@ MonoBehaviour:
   <OnPhaseEndUnityEvent>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 713534648514942918}
+  container: {fileID: 713534648514942918}
 --- !u!1 &5973637954830947986
 GameObject:
   m_ObjectHideFlags: 0

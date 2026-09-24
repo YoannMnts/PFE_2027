@@ -8,38 +8,35 @@ namespace PFE.Gameplay.Scripts.Enemy
 {
     public class EnemyInstance
     {
-        public event Action<int> OnTakeDamage;
+        public event Action<float> OnModifyHealth;
+        public event Action OnDeath;
         
         public readonly EnemyData data;
 
-        private int currentHealth;
+        private float currentHealth;
 
         public EnemyInstance(EnemyData data)
         {
             this.data = data;
-        }
 
-        public void Spawn()
-        {
-            if (data.TryGet(out IEnemyContainer container))
-            {
-                container.CanSpawn(data);
-            }
+            currentHealth = this.data.MaxHealth;
         }
 
         public void AddOrRemoveHealth(int damage)
         {
             if (data.TryGet(out IEnemyContainer container))
             {
-                currentHealth = 100;
+                currentHealth = container.ModifyHealth(data, damage,  currentHealth);
+                OnModifyHealth?.Invoke(currentHealth);
+
+                if (currentHealth <= 0)
+                {
+                    container.Dying(data);
+                    OnDeath?.Invoke();
+                    
+                }
                 
-                container.TakeDamage(data, damage,  currentHealth);
-                OnTakeDamage?.Invoke(currentHealth);
-                
-                
-                Debug.Log("Data :" + data);
                 Debug.Log("Health: " + currentHealth);
-                Debug.Log("Damage: " + damage);
             }
         }
     }

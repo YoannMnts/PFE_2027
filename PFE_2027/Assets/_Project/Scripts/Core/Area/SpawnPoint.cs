@@ -7,7 +7,7 @@ namespace PFE.Core.Scripts.Area
     public struct SpawnPoint
     {
         [field: SerializeField]
-        public Transform Position { get; private set; }
+        public Vector3 Position { get; private set; }
         
         [field: SerializeField]
         public EnemyData Enemy  { get; private set; }
