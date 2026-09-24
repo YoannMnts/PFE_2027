@@ -91,6 +91,12 @@
     flex-grow: 1;
 }
 
+.db-browser__selection-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
 .db-browser__row {
     flex-direction: row;
     align-items: center;

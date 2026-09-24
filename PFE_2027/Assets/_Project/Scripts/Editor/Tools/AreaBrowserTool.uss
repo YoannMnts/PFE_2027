@@ -1,0 +1,72 @@
+.area-tool {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.area-tool__edit-button {
+    margin: 0;
+    background-color: var(--pe-accent);
+    color: var(--pe-text-strong);
+    border-width: 0;
+    border-radius: 4px;
+    padding: 6px 12px;
+    -unity-font-style: bold;
+}
+
+.area-tool__edit-button:hover {
+    opacity: 0.9;
+}
+
+.area-edit {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.area-edit__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    background-color: var(--pe-card);
+    border-radius: 6px;
+}
+
+.area-edit__titles {
+    flex-direction: column;
+    flex-shrink: 1;
+}
+
+.area-edit__title {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: var(--pe-text-strong);
+}
+
+.area-edit__subtitle {
+    font-size: 11px;
+    margin-top: 2px;
+    color: var(--pe-text-muted);
+}
+
+.area-edit__button {
+    margin: 0;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: var(--pe-hairline);
+    background-color: var(--pe-chrome);
+    color: var(--pe-text-soft);
+}
+
+.area-edit__button:hover {
+    color: var(--pe-text-strong);
+}
+
+.area-edit__dropdown {
+    margin: 0 0 12px 0;
+}
+
+.area-edit__inspector {
+    flex-grow: 1;
+}

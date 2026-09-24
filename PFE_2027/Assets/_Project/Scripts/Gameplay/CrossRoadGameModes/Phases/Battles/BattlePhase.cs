@@ -45,21 +45,16 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
             var generateArenaPhase = new GenerateAreaPhase(currentArea);
-            await generateArenaPhase.Run();
+            var arenaResult = await generateArenaPhase.Run();
         
-            var generateEnemyPhase = new GenerateEnemyPhase(currentArea);
+            var generateEnemyPhase = new GenerateEnemyPhase(currentArea, arenaResult.value);
             await generateEnemyPhase.Run();
             
-            //TODO créer un context de battlePhase
+            //TODO mettre ce qui se passe dans la battlephase
             while (true)
             {
-                AliveEnemyPhase aliveEnemyPhase = new AliveEnemyPhase();
-                PhaseResult<EnemyData> aliveEnemyResult = await aliveEnemyPhase.Run();
-
-                return aliveEnemyResult.value;
+                await Awaitable.NextFrameAsync(token);
             }
-
-            return false;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

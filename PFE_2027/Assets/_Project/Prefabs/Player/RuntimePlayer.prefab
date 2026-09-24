@@ -54,6 +54,10 @@ MonoBehaviour:
   playerInput: {fileID: 2770197915875695818}
   spawnForwardDistance: 1
   spawnUpDistance: 0.5
+  hitBoxHalfExtents: {x: 0.5, y: 0.5, z: 0.5}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &6484481080887354017
 GameObject:
   m_ObjectHideFlags: 0

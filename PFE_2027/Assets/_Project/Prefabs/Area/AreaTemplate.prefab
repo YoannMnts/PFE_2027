@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1043a79557b24086abf2307bb53b9153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.ArenaSystem.RuntimeArena
+  anchors: []
 --- !u!1 &8482844243831114491
 GameObject:
   m_ObjectHideFlags: 0

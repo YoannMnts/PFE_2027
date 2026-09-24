@@ -5,6 +5,5 @@ namespace PFE.Gameplay.Scripts.Players
     public interface IPlayer
     {
         public Priority<bool> ShowUI { get; }
-        public void CastAttack();
     }
 }
