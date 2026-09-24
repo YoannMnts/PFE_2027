@@ -31,7 +31,11 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         [SerializeField, BoxGroup("Attack")]
         private LayerMask hitMask;
+        
+        [SerializeField, BoxGroup("Animation")]
+        private Animator animator;
 
+        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
         private readonly Collider[] hitResults = new Collider[16];
 
         protected override void OnConnected()
@@ -52,7 +56,13 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             Cursor.visible = showUI;
         }
 
-        public void CastBasicAttack()
+        public void PlayAttack()
+        {
+            animator.SetTrigger(AttackTrigger);
+            CastBasicAttack();
+        }
+
+        private void CastBasicAttack()
         {
             int count = Physics.OverlapBoxNonAlloc(GetHitBoxCenter(), hitBoxHalfExtents, hitResults,
                 mesh.rotation, hitMask, QueryTriggerInteraction.Collide);

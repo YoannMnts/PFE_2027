@@ -17,7 +17,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (!context.performed)
                 return;
             
-            runtimePlayer.CastBasicAttack();
+            runtimePlayer.PlayAttack();
         }
     }
 }
