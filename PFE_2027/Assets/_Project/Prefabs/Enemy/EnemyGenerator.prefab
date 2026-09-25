@@ -31,6 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 713534648514942918}
+  - {fileID: 760818955370723047}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2604109656916759311
@@ -52,6 +53,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   container: {fileID: 713534648514942918}
+  currentPilgrim: {fileID: 4348189429493834471}
 --- !u!1 &5973637954830947986
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,3 +85,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6236297304791403235}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8464196087834311666
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6236297304791403235}
+    m_Modifications:
+    - target: {fileID: 4411764163297585043, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_Name
+      value: RuntimePilgrim
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+--- !u!4 &760818955370723047 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+  m_PrefabInstance: {fileID: 8464196087834311666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4348189429493834471 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5269495516081412373, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+  m_PrefabInstance: {fileID: 8464196087834311666}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b525921f2a1540179fef626572530aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Pilgrims.RuntimePilgrim

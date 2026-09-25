@@ -1,4 +1,5 @@
-﻿using Helteix.Tools;
+﻿using System;
+using Helteix.Tools;
 using Helteix.Tools.Phases;
 using Helteix.Tools.Phases.Listeners;
 using PFE.Core.Scripts.Area;
@@ -7,6 +8,7 @@ using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.Enemy;
 using PFE.Gameplay.Scripts.Enemy.DummyEnemy.Runtime;
 using PFE.Gameplay.Scripts.Enemy.Runtime;
+using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 
@@ -16,6 +18,9 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
     {
         [SerializeField]
         private Transform container;
+
+        //pour debug
+        [SerializeField] private RuntimePilgrim currentPilgrim;
         
         protected override void OnPhaseBegin(GenerateEnemyPhase phase)
         {
@@ -59,5 +64,14 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         {
         }
 
+        //pour debug
+        private void LateUpdate()
+        {
+            foreach (Transform child in container)
+            {
+                if (child.TryGetComponent(out RuntimeEnemy runtimeEnemy))
+                    runtimeEnemy.MoveTo(currentPilgrim.transform.position);
+            }
+        }
     }
 }
