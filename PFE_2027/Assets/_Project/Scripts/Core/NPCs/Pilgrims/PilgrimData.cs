@@ -6,9 +6,7 @@ using UnityEngine.Audio;
 namespace PFE.Core.Scripts.Pilgrims
 {
     [CreateAssetMenu(menuName = "PFE/Npc/Pilgrim")]
-    public class PilgrimData : GameDatabaseObject, INpcData
+    public class PilgrimData : NpcData
     {
-        [field: SerializeField]
-        public Transform Prefab { get; private set; }
     }
 }

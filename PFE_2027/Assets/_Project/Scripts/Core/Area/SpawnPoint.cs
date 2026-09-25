@@ -16,8 +16,8 @@ namespace PFE.Core.Scripts.Area
         [field: SerializeField, ValueDropdown("GetAnchorIds")]
         public string AnchorId { get; private set; }
 
-        [field: SerializeReference]
-        public INpcData Npc { get; private set; }
+        [field: SerializeField]
+        public NpcData Npc { get; private set; }
 
 #if UNITY_EDITOR
         // Liste les SpawnAnchor présents dans le prefab de l'AreaData qui contient ce SpawnPoint.
