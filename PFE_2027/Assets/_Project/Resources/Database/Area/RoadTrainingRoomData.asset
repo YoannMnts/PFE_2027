@@ -16,4 +16,10 @@ MonoBehaviour:
   <Prefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0
-    <Enemy>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Npc>k__BackingField:
+      rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

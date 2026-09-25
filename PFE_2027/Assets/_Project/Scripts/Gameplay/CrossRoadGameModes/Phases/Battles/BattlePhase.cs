@@ -48,7 +48,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             var generateArenaPhase = new GenerateAreaPhase(currentArea);
             var arenaResult = await generateArenaPhase.Run();
         
-            var generateEnemyPhase = new GenerateEnemyPhase(currentArea, arenaResult.value);
+            var generateEnemyPhase = new GenerateNpcPhase(currentArea, arenaResult.value);
             await generateEnemyPhase.Run();
 
             

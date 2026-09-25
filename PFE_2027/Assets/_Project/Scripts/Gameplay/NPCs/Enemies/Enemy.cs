@@ -1,4 +1,5 @@
 using PFE.Core.Scripts.Enemy;
+using PFE.Core.Scripts.NPCs;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy

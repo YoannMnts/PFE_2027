@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PFE.Core.Scripts.NPCs;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
