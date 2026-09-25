@@ -7,6 +7,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
+using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
 using EnemyData = PFE.Core.Scripts.Enemy.EnemyData;
@@ -47,14 +48,17 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             var generateArenaPhase = new GenerateAreaPhase(currentArea);
             var arenaResult = await generateArenaPhase.Run();
         
-            var generateEnemyPhase = new GenerateEnemyPhase(currentArea, arenaResult.value);
+            var generateEnemyPhase = new GenerateNpcPhase(currentArea, arenaResult.value);
             await generateEnemyPhase.Run();
+
+            
             
             //TODO mettre ce qui se passe dans la battlephase
             while (true)
             {
                 await Awaitable.NextFrameAsync(token);
             }
+            
         }
 
         protected override Awaitable Dispose(CancellationToken token)

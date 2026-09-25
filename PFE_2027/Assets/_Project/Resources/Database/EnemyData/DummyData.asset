@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DummyData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dummy.DummyData
   guidText: ee862df0-3ed8-4331-a767-f005f2db0c6b
+  <Prefab>k__BackingField: {fileID: 4156158887259431200, guid: fdc6214816ad7344f83dd705ebdf1aee, type: 3}
   <Name>k__BackingField: Dummy
   <MaxHealth>k__BackingField: 50
-  <PrefabMesh>k__BackingField: {fileID: 4156158887259431200, guid: fdc6214816ad7344f83dd705ebdf1aee, type: 3}

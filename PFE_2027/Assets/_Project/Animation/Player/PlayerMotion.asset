@@ -40,7 +40,7 @@ MonoBehaviour:
     FramesZoom:
       valueInternal: 0.5370321
     PropertiesScrollPosition:
-      valueInternal: 665
+      valueInternal: 0
     PropertiesZoom:
       valueInternal: 1
     CurveYScrollPosition:
@@ -80,7 +80,7 @@ MonoBehaviour:
     ImportLastBrowsedDir:
       valueInternal: Assets
     IKWizardInitialized:
-      valueInternal: 0
+      valueInternal: 1
     IKFrontDirConfigured:
       valueInternal: 0
     IKFrontDirAngle:
@@ -94,12 +94,12 @@ MonoBehaviour:
         valueInternal: 1
       LeftTarget:
         valueInternal:
-          Address: 
-          Length: 0
+          Address: 0200000013000000i
+          Length: 2
       RightTarget:
         valueInternal:
-          Address: 
-          Length: 0
+          Address: 0200000031000000i
+          Length: 2
       GenericTwistBoneMode:
         valueInternal: 0
       PoleTarget:
@@ -113,12 +113,12 @@ MonoBehaviour:
         valueInternal: 1
       LeftTarget:
         valueInternal:
-          Address: 
-          Length: 0
+          Address: 0200000005000000i
+          Length: 2
       RightTarget:
         valueInternal:
-          Address: 
-          Length: 0
+          Address: 020000000a000000i
+          Length: 2
       GenericTwistBoneMode:
         valueInternal: 0
       PoleTarget:

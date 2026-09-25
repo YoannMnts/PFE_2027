@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4411764163297585043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9221161675722067221}
+  - component: {fileID: 5269495516081412373}
+  m_Layer: 0
+  m_Name: RuntimePilgrim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9221161675722067221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411764163297585043}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6112478803908240534}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5269495516081412373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411764163297585043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b525921f2a1540179fef626572530aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Pilgrims.RuntimePilgrim
+--- !u!1001 &5939187319417417228
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9221161675722067221}
+    m_Modifications:
+    - target: {fileID: 136619726235208499, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 52629847537a6a34c9f031053a6781b9, type: 2}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_Name
+      value: Pilgrim
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+--- !u!4 &6112478803908240534 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+  m_PrefabInstance: {fileID: 5939187319417417228}
+  m_PrefabAsset: {fileID: 0}
