@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.RoadSystem
 {
-    public class AreaGenerator : MonoBehaviour, IPhaseListener<GenerateAreaPhase>, IPhaseListener<BattlePhase>
+    public class AreaGenerator : MonoBehaviour, IPhaseListener<GenerateAreaPhase>
     {
         [SerializeField]
         private Transform container;
@@ -13,13 +13,11 @@ namespace PFE.Gameplay.Scripts.RoadSystem
         private void OnEnable()
         {
             this.Register<GenerateAreaPhase>();
-            this.Register<BattlePhase>();
         }
 
         private void OnDisable()
         {
             this.Unregister<GenerateAreaPhase>();
-            this.Unregister<BattlePhase>();
         }
 
         void IPhaseListener<GenerateAreaPhase>.OnPhaseBegin(GenerateAreaPhase phase)
@@ -37,15 +35,6 @@ namespace PFE.Gameplay.Scripts.RoadSystem
 
         void IPhaseListener<GenerateAreaPhase>.OnPhaseEnd(GenerateAreaPhase phase)
         {
-        }
-
-        void IPhaseListener<BattlePhase>.OnPhaseBegin(BattlePhase phase)
-        {
-        }
-
-        void IPhaseListener<BattlePhase>.OnPhaseEnd(BattlePhase phase)
-        {
-            container.ClearChildren();
         }
     }
 }

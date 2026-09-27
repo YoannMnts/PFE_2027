@@ -1,40 +1,37 @@
 ﻿using System;
-using PrimeTween;
+using Helteix.Tools.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Pilgrims;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
-    public abstract class RuntimeEnemy : MonoBehaviour, IRuntimeEnemy
+    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance>, IPhaseListener<ProtectPilgrimPhase>
     {
-        private EnemyInstance enemyInstance;
-        
         [SerializeField]
         private NavMeshAgent navMeshAgent;
-        
-        public void Setup(EnemyInstance enemy)
+
+        private PilgrimInstance pilgrimInstance;
+
+        private void OnEnable()
         {
-            enemyInstance = enemy;
-            enemyInstance.OnDeath += OnDeath;
-            enemyInstance.OnModifyHealth += OnModifyHealth;
+            this.Register();
         }
 
-        public void OnDestroy()
+        private void OnDisable()
         {
-            enemyInstance.OnDeath -= OnDeath;
-            enemyInstance.OnModifyHealth -= OnModifyHealth;
+            this.Unregister();
         }
 
-        [Button, DisableInEditorMode]
-        public void DebugDamage(int damage)
+        private void LateUpdate()
         {
-            Damage(damage);
-        }
-        
-        private void OnModifyHealth(float currentHealth)
-        {
-            Tween.PunchScale(transform, Vector3.one * .2f, .3f);
+            if(pilgrimInstance == null)
+                return;
+            
+            MoveTo(pilgrimInstance.CurrentPosition);
         }
 
         public void MoveTo(Vector3 position)
@@ -45,21 +42,20 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
             }
         }
 
-        [Button, DisableInEditorMode] 
+        [Button, DisableInEditorMode]
         public void DebugMoveTo(Vector3 position)
         {
             MoveTo(position);
         }
-        
-        public void Damage(int value)
+
+        public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            enemyInstance.AddOrRemoveHealth(-value);
+            pilgrimInstance = phase.pilgrimInstance;
         }
 
-        private void OnDeath()
-        { 
-            Destroy(gameObject);
+        public void OnPhaseEnd(ProtectPilgrimPhase phase)
+        {
+            pilgrimInstance = null;
         }
-        
     }
 }

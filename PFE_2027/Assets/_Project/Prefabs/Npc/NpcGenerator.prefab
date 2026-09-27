@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6236297304791403235}
   - component: {fileID: 2604109656916759311}
   m_Layer: 0
-  m_Name: EnemyGenerator
+  m_Name: NpcGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ GameObject:
   m_Component:
   - component: {fileID: 713534648514942918}
   m_Layer: 0
-  m_Name: EnemyContainer
+  m_Name: NpcContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

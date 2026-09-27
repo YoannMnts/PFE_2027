@@ -7,6 +7,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
+using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         private readonly SceneReference sceneToLoad;
         private ChannelKey key;
         private IAreaData currentArea;
+        private NpcManager npcManager;
 
         public BattlePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
         {
@@ -40,6 +42,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             {
                 player.ShowUI.AddPriority(key, PriorityTags.Default, false);
             }
+            
+            npcManager = new NpcManager();
             return base.Initialize(token);
         }
 
@@ -48,17 +52,16 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             var generateArenaPhase = new GenerateAreaPhase(currentArea);
             var arenaResult = await generateArenaPhase.Run();
         
-            var generateEnemyPhase = new GenerateNpcPhase(currentArea, arenaResult.value);
+            var generateEnemyPhase = new GenerateNpcPhase(currentArea, arenaResult.value, npcManager);
             await generateEnemyPhase.Run();
 
+            if (!npcManager.TryGetFirst<PilgrimInstance>(out var pilgrimInstance)) 
+                return false;
             
-            
-            //TODO mettre ce qui se passe dans la battlephase
-            while (true)
-            {
-                await Awaitable.NextFrameAsync(token);
-            }
-            
+            var protectPilgrimPhase = new ProtectPilgrimPhase(pilgrimInstance);
+            var result = await protectPilgrimPhase.Run();
+
+            return result.value;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

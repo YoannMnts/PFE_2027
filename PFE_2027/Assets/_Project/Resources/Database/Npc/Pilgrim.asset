@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: Pilgrim
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Pilgrims.PilgrimData
   guidText: 85569184-5153-49e2-8fd7-f8ae296aef1e
+  <Name>k__BackingField: Le Vieux
+  <MaxHealth>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
