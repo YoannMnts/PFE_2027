@@ -1,22 +1,13 @@
-﻿using UnityEngine;
+﻿using PFE.Gameplay.Scripts.NPCs;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    public class RuntimePilgrim : MonoBehaviour
+    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance>
     {
-        private Pilgrim pilgrim;
-
-        public void Setup(Pilgrim currentPilgrim )
+        private void FixedUpdate()
         {
-            pilgrim = currentPilgrim;
-        }
-
-        public void FixedUpdate()
-        {
-            if (pilgrim != null)
-            {
-                pilgrim.UpdatePosition(transform.position);
-            }
+            if (instance != null)
+                instance.UpdatePosition(transform.position);
         }
     }
 }

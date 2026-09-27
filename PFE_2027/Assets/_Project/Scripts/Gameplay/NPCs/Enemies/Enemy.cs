@@ -1,29 +1,17 @@
 using PFE.Core.Scripts.Enemy;
-using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.NPCs;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy
 {
-    public abstract class Enemy<TData> : IEnemy<TData> where TData : EnemyData
+    public abstract class Enemy<TData> : Npc<TData, EnemyInstance> where TData : EnemyData
     {
-        public bool CanSpawn(TData data)
-        {
-             return true;
-        }
+        protected override EnemyInstance Create(TData data) => new EnemyInstance(data);
 
-        public abstract void Attack(TData data);
-
-        public float ModifyHealth(TData data, int damage, float currentHealth)
+        public override void Dying(TData data, INpcInstance instance)
         {
-            var modifyHealth = Mathf.Clamp(currentHealth + damage, 0, data.MaxHealth);
-            return modifyHealth;
-        }
-
-        public void Dying(TData data)
-        {
-            Debug.Log("Dying");
-            //le runtime fera remonter l'info quand il faudra mourir
-            return;
+            //le runtime gère la destruction via l'event OnDeath de l'instance
+            Debug.Log($"[Enemy] '{data.Name}' died.");
         }
     }
 }

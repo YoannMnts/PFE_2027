@@ -1,43 +1,13 @@
-using System;
-using PFE.Core;
-using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.Enemy;
-using UnityEngine;
+using PFE.Gameplay.Scripts.NPCs;
 
 namespace PFE.Gameplay.Scripts.Enemy
 {
-    public class EnemyInstance
+    // La vie et les events sont gérés par NpcInstance, ici uniquement l'état propre aux ennemis
+    public class EnemyInstance : NpcInstance<EnemyData>
     {
-        public event Action<float> OnModifyHealth;
-        public event Action OnDeath;
-        
-        public readonly EnemyData data;
-
-        private float currentHealth;
-
-        public EnemyInstance(EnemyData data)
+        public EnemyInstance(EnemyData data) : base(data)
         {
-            this.data = data;
-
-            currentHealth = this.data.MaxHealth;
-        }
-
-        public void AddOrRemoveHealth(int damage)
-        {
-            if (data.TryGet(out IEnemyContainer container))
-            {
-                currentHealth = container.ModifyHealth(data, damage,  currentHealth);
-                OnModifyHealth?.Invoke(currentHealth);
-
-                if (currentHealth <= 0)
-                {
-                    container.Dying(data);
-                    OnDeath?.Invoke();
-                    
-                }
-                
-                Debug.Log("Health: " + currentHealth);
-            }
         }
     }
 }
