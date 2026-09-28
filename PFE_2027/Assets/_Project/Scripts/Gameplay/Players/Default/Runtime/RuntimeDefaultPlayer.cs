@@ -1,9 +1,10 @@
-using Helteix.Tools;
+﻿using Helteix.Tools;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.Enemy.Runtime;
 using PFE.Gameplay.Scripts.Players.Runtime;
 using Sirenix.OdinInspector;
+using TraversalPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,18 +36,43 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Animation")]
         private Animator animator;
 
+        [SerializeField, BoxGroup("Movement")]
+        private CharacterMotor characterMotor;
+
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+        // nom de l'état d'attaque dans le layer 0 du PlayerAnimator
+        private static readonly int AttackStateHash = Animator.StringToHash("Attack");
         private readonly Collider[] hitResults = new Collider[16];
 
         protected override void OnConnected()
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             Player.ShowUI.OnValueChanged += SetUIMode;
+
+            if (characterMotor != null)
+                characterMotor.Moving += LockMovementDuringAttack;
+            else
+                Debug.LogError("[RuntimeDefaultPlayer] No CharacterMotor assigned, movement won't be locked during attacks.", this);
         }
 
         protected override void OnDisconnected()
         {
             Player.ShowUI.OnValueChanged -= SetUIMode;
+
+            if (characterMotor != null)
+                characterMotor.Moving -= LockMovementDuringAttack;
+        }
+
+        // Appelé par le CharacterMotor à chaque FixedUpdate, après que CharacterRun a écrit la vitesse voulue
+        // et avant que le motor ne l'applique : on l'écrase pendant l'attaque. CharacterRun reste actif
+        // pour continuer à recevoir l'input (sinon un relâchement de touche pendant l'attaque serait perdu).
+        private void LockMovementDuringAttack(ICharacterMotor motor)
+        {
+            if (!IsAttacking())
+                return;
+
+            motor.MoveInput = Vector3.zero;
+            motor.LocalVelocityGoal = Vector3.zero;
         }
 
         private void SetUIMode(bool showUI)
@@ -58,8 +84,21 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void PlayAttack()
         {
+            // évite que le trigger reste armé pendant l'anim et rejoue une 2e attaque (buffer prévu avec la tool hitbox)
+            if (IsAttacking())
+                return;
+
             animator.SetTrigger(AttackTrigger);
             CastBasicAttack();
+        }
+
+        // vrai pendant l'état Attack (fondu de sortie compris) et pendant la transition qui y entre
+        private bool IsAttacking()
+        {
+            if (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == AttackStateHash)
+                return true;
+
+            return animator.IsInTransition(0) && animator.GetNextAnimatorStateInfo(0).shortNameHash == AttackStateHash;
         }
 
         private void CastBasicAttack()
