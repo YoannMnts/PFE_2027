@@ -39,9 +39,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Movement")]
         private CharacterMotor characterMotor;
 
-        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+        private static readonly int AttackTrigger = Animator.StringToHash("OnAttack");
         // nom de l'état d'attaque dans le layer 0 du PlayerAnimator
-        private static readonly int AttackStateHash = Animator.StringToHash("Attack");
+        private static readonly int AttackStateHash = Animator.StringToHash("StaffAttack");
         private readonly Collider[] hitResults = new Collider[16];
 
         protected override void OnConnected()
