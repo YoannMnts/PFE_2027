@@ -10,9 +10,9 @@ namespace PFE.Gameplay.Scripts.NPCs
         where TData : NpcData
         where TInstance : class, INpcInstance
     {
-        protected abstract TInstance Create(TData data);
+        protected abstract TInstance Create(TData data, NpcInstanceContext context);
 
-        public INpcInstance CreateInstance(TData data, Transform runtime)
+        public INpcInstance CreateInstance(TData data, NpcInstanceContext context, Transform runtime)
         {
             if (!runtime.TryGetComponent(out IRuntimeNpc<TInstance> runtimeNpc))
             {
@@ -20,20 +20,23 @@ namespace PFE.Gameplay.Scripts.NPCs
                 return null;
             }
 
-            TInstance instance = Create(data);
+            TInstance instance = Create(data, context);
             runtimeNpc.Setup(instance);
             return instance;
         }
 
         public virtual bool CanSpawn(TData data) => true;
 
-        public abstract void Act(TData data, INpcInstance instance);
+        public void Act(TData data, INpcInstance instance) => Act(data, (TInstance)instance);
+
+        protected abstract void Act(TData data, TInstance instance);
 
         public virtual float ModifyHealth(TData data, int amount, float currentHealth)
             => Mathf.Clamp(currentHealth + amount, 0f, data.MaxHealth);
 
-        public virtual void Dying(TData data, INpcInstance instance)
+        public virtual void Dying(TData data)
         {
+            
         }
     }
 }

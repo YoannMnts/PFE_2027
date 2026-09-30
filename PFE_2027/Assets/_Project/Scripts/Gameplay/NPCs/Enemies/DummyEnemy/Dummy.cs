@@ -5,8 +5,10 @@ namespace PFE.Gameplay.Scripts.Enemy.DummyEnemy
 {
     public partial class Dummy : Enemy<DummyData>
     {
-        public override void Act(DummyData data, INpcInstance instance)
+
+        protected override void Act(DummyData data, EnemyInstance instance)
         {
+            throw new System.NotImplementedException();
         }
     }
 }

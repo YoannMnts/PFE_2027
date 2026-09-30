@@ -10,7 +10,7 @@ namespace PFE.Core.Scripts.NPCs
         [field: SerializeField, BoxGroup("Description")]
         public string Name { get; private set; }
 
-        [field: SerializeField, Range(0f, 100f), BoxGroup("Metric")]
+        [field: SerializeField, Range(0f, 100f), BoxGroup("Metrics")]
         public float MaxHealth { get; private set; }
 
         [field: SerializeField, BoxGroup("References")]

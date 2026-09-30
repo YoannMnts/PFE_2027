@@ -1,6 +1,7 @@
 ﻿using PFE.Core.Scripts.Area;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Splines;
 
 namespace PFE.Gameplay.Scripts.RoadSystem
 {
@@ -8,6 +9,9 @@ namespace PFE.Gameplay.Scripts.RoadSystem
     {
         [SerializeField, ReadOnly]
         private SpawnAnchor[] anchors;
+
+        [field: SerializeField]
+        public SplineContainer Path { get; private set; }
 
         public bool TryGetAnchor(string id, out Transform anchor)
         {

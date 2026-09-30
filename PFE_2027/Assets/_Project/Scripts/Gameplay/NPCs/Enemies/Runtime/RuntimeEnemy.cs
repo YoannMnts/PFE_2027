@@ -11,9 +11,6 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
     public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance>, IPhaseListener<ProtectPilgrimPhase>
     {
-        [SerializeField]
-        private NavMeshAgent navMeshAgent;
-
         private PilgrimInstance pilgrimInstance;
 
         private void OnEnable()
@@ -33,14 +30,7 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
             
             MoveTo(pilgrimInstance.CurrentPosition);
         }
-
-        public void MoveTo(Vector3 position)
-        {
-            if (NavMesh.SamplePosition(position, out var hit, 2f, NavMesh.AllAreas))
-            {
-                navMeshAgent.SetDestination(hit.position);
-            }
-        }
+        
 
         [Button, DisableInEditorMode]
         public void DebugMoveTo(Vector3 position)
@@ -48,12 +38,12 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
             MoveTo(position);
         }
 
-        public void OnPhaseBegin(ProtectPilgrimPhase phase)
+        void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
             pilgrimInstance = phase.pilgrimInstance;
         }
 
-        public void OnPhaseEnd(ProtectPilgrimPhase phase)
+        void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
             pilgrimInstance = null;
         }

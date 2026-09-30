@@ -1,6 +1,7 @@
 ﻿using PrimeTween;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
@@ -9,6 +10,9 @@ namespace PFE.Gameplay.Scripts.NPCs
     {
         protected TInstance instance;
         public TInstance Instance => instance;
+        
+        [field : SerializeField]
+        public NavMeshAgent NavMeshAgent { get; private set; }
 
         public void Setup(TInstance npcInstance)
         {
@@ -24,6 +28,14 @@ namespace PFE.Gameplay.Scripts.NPCs
             instance.OnDeath += OnDeath;
 
             OnSetup();
+        }
+
+        public virtual void MoveTo(Vector3 destination)
+        {
+            if (NavMesh.SamplePosition(destination, out var hit, 2f, NavMesh.AllAreas))
+            {
+                NavMeshAgent.SetDestination(hit.position);
+            }
         }
 
         protected virtual void OnDestroy()
@@ -44,7 +56,10 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         protected virtual void OnSetup()
         {
+            
         }
+        
+        
 
         protected virtual void OnModifyHealth(float currentHealth)
         {

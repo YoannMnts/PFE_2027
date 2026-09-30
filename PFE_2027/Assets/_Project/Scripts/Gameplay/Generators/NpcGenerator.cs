@@ -58,7 +58,8 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 runtimeNpc.SetParent(container);
 
                 //le behaviour crée l'instance et la branche sur le runtime (erreur déjà loguée si échec)
-                INpcInstance instance = npcContainer.CreateInstance(npcData, runtimeNpc);
+                var context = new NpcInstanceContext(area.Path);
+                INpcInstance instance = npcContainer.CreateInstance(npcData, context, runtimeNpc);
                 if (instance == null)
                 {
                     Destroy(runtimeNpc.gameObject);

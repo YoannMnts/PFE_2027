@@ -8,6 +8,8 @@ namespace PFE.Gameplay.Scripts.Enemy
     {
         public EnemyInstance(EnemyData data) : base(data)
         {
+            
+            
         }
     }
 }
