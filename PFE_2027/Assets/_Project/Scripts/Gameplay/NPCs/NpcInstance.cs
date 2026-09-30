@@ -39,7 +39,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             if (IsDead)
             {
-                container.Dying(data, this);
+                container.Dying(data);
                 OnDeath?.Invoke(this);
             }
         }

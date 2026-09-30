@@ -16,3 +16,4 @@ MonoBehaviour:
   <Name>k__BackingField: Le Vieux
   <MaxHealth>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+  <TargetPositionDistance>k__BackingField: 5

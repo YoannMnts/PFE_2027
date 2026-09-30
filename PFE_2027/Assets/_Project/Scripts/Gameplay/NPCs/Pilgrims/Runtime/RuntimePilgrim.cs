@@ -1,4 +1,7 @@
-﻿using PFE.Gameplay.Scripts.NPCs;
+﻿using System;
+using PFE.Gameplay.Scripts.NPCs;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
@@ -8,6 +11,14 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             if (instance != null)
                 instance.UpdatePosition(transform.position);
+        }
+
+        
+        
+        
+        private void LateUpdate()
+        {
+            MoveTo(instance.TargetDestination);
         }
     }
 }

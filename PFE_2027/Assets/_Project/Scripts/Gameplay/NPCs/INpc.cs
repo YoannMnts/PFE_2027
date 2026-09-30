@@ -12,7 +12,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         [AddToContainer]
         //crée l'instance (état runtime) propre à ce type de NPC et la branche sur son runtime spawné
         //renvoie null si le runtime ne correspond pas au type d'instance
-        INpcInstance CreateInstance(TData data, Transform runtime);
+        INpcInstance CreateInstance(TData data, NpcInstanceContext context, Transform runtime);
 
         [AddToContainer]
         //autorise ou non le spawn
@@ -20,7 +20,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         [AddToContainer]
         //comportement actif du NPC (ennemi => attaque, pèlerin => avance...)
-        void Act(TData data, INpcInstance instance);
+        void Act(TData data, INpcInstance context);
 
         [AddToContainer]
         //calcule la nouvelle vie (amount négatif = dégâts)
@@ -28,6 +28,6 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         [AddToContainer]
         //appelé quand la vie tombe à 0
-        void Dying(TData data, INpcInstance instance);
+        void Dying(TData data);
     }
 }

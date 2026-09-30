@@ -1,13 +1,17 @@
 ﻿using PFE.Core.Scripts.Area;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Splines;
 
 namespace PFE.Gameplay.Scripts.RoadSystem
 {
     public class RuntimeArea : MonoBehaviour, IRuntimeArea
     {
-        [SerializeField, ReadOnly]
+        [SerializeField, ReadOnly, BoxGroup("Spawn Anchors")]
         private SpawnAnchor[] anchors;
+
+        [field: SerializeField, BoxGroup("References")]
+        public SplineContainer Path { get; private set; }
 
         public bool TryGetAnchor(string id, out Transform anchor)
         {
@@ -27,7 +31,7 @@ namespace PFE.Gameplay.Scripts.RoadSystem
 #if UNITY_EDITOR
         private void OnValidate() => RefreshAnchors();
 
-        [Button("Refresh Anchors")]
+        [Button("Refresh Anchors"), BoxGroup("Spawn Anchors")]
         private void RefreshAnchors()
         {
             anchors = GetComponentsInChildren<SpawnAnchor>(true);
