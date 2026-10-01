@@ -11,7 +11,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         public readonly IRuntimeArea area;
         public readonly NpcManager npcManager;
 
-        // si aucun manager n'est fourni la phase en crée un, récupérable ensuite via npcManager
         public GenerateNpcPhase(IAreaData currentArea, IRuntimeArea area, NpcManager npcManager)
         {
             this.currentArea = currentArea;
