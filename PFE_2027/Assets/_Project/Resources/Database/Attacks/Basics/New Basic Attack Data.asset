@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506ed4621dc2442c8522935176533742, type: 3}
+  m_Name: New Basic Attack Data
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.BasicAttacks.BasicAttackData
+  guidText: 7a62d3e6-85a8-405b-ad92-6c6e2e494ed5
+  <Controller>k__BackingField: {fileID: 9100000, guid: 52629847537a6a34c9f031053a6781b9, type: 2}
+  <StateName>k__BackingField: StaffAttack
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: 9cd7d0a78e710664f8af08e603e2975b, type: 2}
+  hitboxes:
+  - <Window>k__BackingField:
+      <Start>k__BackingField: 0
+      <End>k__BackingField: 0
+    <Anchor>k__BackingField: {fileID: 0}
+    <Shape>k__BackingField: 0
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+    <Size>k__BackingField: {x: 0, y: 0, z: 0}
+    <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
+    <Damage>k__BackingField: 0
+  <MovementLock>k__BackingField:
+    <Start>k__BackingField: 0
+    <End>k__BackingField: 0
+  <ComboWindow>k__BackingField:
+    <Start>k__BackingField: 0
+    <End>k__BackingField: 0
+  <Next>k__BackingField: {fileID: 0}
