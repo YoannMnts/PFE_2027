@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 {
     // Attack tab: list of AttackData + "Edit" button. When an AttackStage is open, the tab switches
-    // to edit mode: window tracks (hitboxes, movement lock, combo) aligned with the playhead,
+    // to edit mode: window tracks (hitboxes, attack windows) aligned with the playhead,
     // then the useful data fields (the Animation group is hidden).
     public sealed class AttackTool : IEditorTool
     {
@@ -18,8 +18,16 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         private const string STYLE_PATH = "Assets/_Project/Scripts/Editor/Tools/Attack/AttackTool.uss";
         private const string SEARCH_ROOT = "Assets/_Project";
 
-        private static readonly Color MovementLockColor = new(0.6f, 0.6f, 0.65f);
-        private static readonly Color ComboColor = new(0.35f, 0.6f, 1f);
+        // Track color of an attack window, picked from its lowest flag bit
+        private static readonly Color[] FlagColors =
+        {
+            new(0.6f, 0.6f, 0.65f),   // bit 0 - MovementLock
+            new(0.35f, 0.6f, 1f),     // bit 1 - Combo
+            new(0.75f, 0.55f, 0.35f), // bit 2
+            new(0.4f, 0.8f, 0.45f),   // bit 3
+            new(0.95f, 0.85f, 0.3f),  // bit 4
+        };
+        private static readonly Color NoFlagColor = new(0.35f, 0.35f, 0.35f);
 
         public string DisplayName => "Attack";
         public string Icon => "⚔";
@@ -36,6 +44,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         private readonly List<TimeWindowTrack> tracks = new();
         private readonly List<VisualElement> hitboxRows = new();
         private int trackedHitboxCount;
+        // Flags of every attack window when the tracks were built: a change rebuilds them (title, color)
+        private readonly List<int> trackedWindowFlags = new();
         private int totalFrames;
 
         // Playhead
@@ -136,6 +146,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             editPanel.Clear();
             tracks.Clear();
             hitboxRows.Clear();
+            trackedWindowFlags.Clear();
             serializedAttack = null;
             frameSlider = null;
             timeLabel = null;
@@ -248,8 +259,18 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                 AddTrackRow($"Hitbox #{i}", window, HitboxDrawer.GetColor(i), i);
             }
 
-            AddTrackRow("Movement Lock", serializedAttack.FindProperty(AttackPropertyPaths.MovementLock), MovementLockColor, -1);
-            AddTrackRow("Combo", serializedAttack.FindProperty(AttackPropertyPaths.ComboWindow), ComboColor, -1);
+            SerializedProperty windows = serializedAttack.FindProperty(AttackPropertyPaths.Windows);
+            trackedWindowFlags.Clear();
+
+            for (int i = 0; i < windows.arraySize; i++)
+            {
+                SerializedProperty element = windows.GetArrayElementAtIndex(i);
+                int flags = element.FindPropertyRelative(AttackPropertyPaths.Flags).intValue;
+                trackedWindowFlags.Add(flags);
+
+                AddTrackRow(GetWindowTitle((AttackFlags)flags),
+                    element.FindPropertyRelative(AttackPropertyPaths.Window), GetWindowColor((AttackFlags)flags), -1);
+            }
 
             OnSelectionChanged(AttackStage.Current != null ? AttackStage.Current.SelectedHitbox : -1);
 
@@ -264,7 +285,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             VisualElement row = new();
             row.AddToClassList("attack-track-row");
 
-            Label label = new(title);
+            Label label = new(title) { tooltip = title };
             label.AddToClassList("attack-track-row__label");
             row.Add(label);
 
@@ -293,8 +314,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             scroll.AddToClassList("attack-edit__inspector");
 
             scroll.Add(new PropertyField(serializedAttack.FindProperty(AttackPropertyPaths.Hitboxes), "Hitboxes"));
-            scroll.Add(new PropertyField(serializedAttack.FindProperty(AttackPropertyPaths.MovementLock), "Movement Lock"));
-            scroll.Add(new PropertyField(serializedAttack.FindProperty(AttackPropertyPaths.ComboWindow), "Combo Window"));
+            scroll.Add(new PropertyField(serializedAttack.FindProperty(AttackPropertyPaths.Windows), "Windows"));
             scroll.Add(new PropertyField(serializedAttack.FindProperty(AttackPropertyPaths.Next), "Next"));
 
             scroll.Bind(serializedAttack);
@@ -306,14 +326,48 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             if (serializedAttack == null || trackContainer == null)
                 return;
 
-            // A hitbox was added or removed: rebuild the tracks; otherwise just refresh the bars
-            if (serializedAttack.FindProperty(AttackPropertyPaths.Hitboxes).arraySize != trackedHitboxCount)
+            // Structure changed (hitbox/window added or removed, flags edited): rebuild; otherwise just refresh the bars
+            if (HasTrackLayoutChanged())
                 BuildTracks();
             else
                 foreach (TimeWindowTrack track in tracks)
                     track.Refresh();
 
             SceneView.RepaintAll();
+        }
+
+        private bool HasTrackLayoutChanged()
+        {
+            if (serializedAttack.FindProperty(AttackPropertyPaths.Hitboxes).arraySize != trackedHitboxCount)
+                return true;
+
+            SerializedProperty windows = serializedAttack.FindProperty(AttackPropertyPaths.Windows);
+            if (windows.arraySize != trackedWindowFlags.Count)
+                return true;
+
+            for (int i = 0; i < windows.arraySize; i++)
+            {
+                if (windows.GetArrayElementAtIndex(i).FindPropertyRelative(AttackPropertyPaths.Flags).intValue != trackedWindowFlags[i])
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static string GetWindowTitle(AttackFlags flags) =>
+            flags == AttackFlags.None ? "(no flag)" : flags.ToString();
+
+        private static Color GetWindowColor(AttackFlags flags)
+        {
+            int value = (int)flags;
+            if (value == 0)
+                return NoFlagColor;
+
+            int bit = 0;
+            while ((value & (1 << bit)) == 0)
+                bit++;
+
+            return FlagColors[bit % FlagColors.Length];
         }
 
         private void OnSelectionChanged(int selected)

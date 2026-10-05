@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 413556157854819725}
   - component: {fileID: 9060992912559484308}
   - component: {fileID: 1574247452383815244}
+  - component: {fileID: 655795999937531939}
   m_Layer: 0
   m_Name: Cinemachine Camera
   m_TagString: Untagged
@@ -46,21 +47,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 10
   OutputChannel: 1
   StandbyUpdate: 1
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 9221161675722067221}
+    TrackingTarget: {fileID: 6645778236875527220}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 75
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 20
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -89,12 +90,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
   TrackerSettings:
-    BindingMode: 3
+    BindingMode: 4
     PositionDamping: {x: 1, y: 1, z: 1}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   FollowOffset: {x: 0, y: 6.35, z: -4.05}
+--- !u!114 &655795999937531939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284475497988555852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb4843bae7d24943842ea23130dcd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineGroupFraming
+  FramingMode: 2
+  FramingSize: 0.4
+  CenterOffset: {x: 0, y: 0}
+  Damping: 2
+  SizeAdjustment: 1
+  LateralAdjustment: 0
+  FovRange: {x: 1, y: 100}
+  DollyRange: {x: -10, y: 0}
+  OrthoSizeRange: {x: 1, y: 1000}
 --- !u!1 &4411764163297585043
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +150,7 @@ Transform:
   m_Children:
   - {fileID: 413556157854819725}
   - {fileID: 6112478803908240534}
-  - {fileID: 7284246938734621736}
+  - {fileID: 6645778236875527220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5269495516081412373
@@ -145,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Pilgrims.RuntimePilgrim
   <NavMeshAgent>k__BackingField: {fileID: 6418137833618079926}
   <Mesh>k__BackingField: {fileID: 6112478803908240534}
+  targetGroup: {fileID: 4302976639527426466}
 --- !u!195 &6418137833618079926
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,7 +178,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -163,11 +186,11 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!1 &5216074406472367700
+--- !u!1 &5286826434198837952
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,21 +198,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7284246938734621736}
+  - component: {fileID: 6645778236875527220}
+  - component: {fileID: 4302976639527426466}
   m_Layer: 0
-  m_Name: PlayerLeash
+  m_Name: TargetGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7284246938734621736
+--- !u!4 &6645778236875527220
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5216074406472367700}
+  m_GameObject: {fileID: 5286826434198837952}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -198,6 +222,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9221161675722067221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4302976639527426466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286826434198837952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineTargetGroup
+  PositionMode: 1
+  RotationMode: 0
+  UpdateMethod: 2
+  Targets:
+  - Object: {fileID: 6112478803908240534}
+    Weight: 1
+    Radius: 1
+  m_LegacyTargets: []
 --- !u!1001 &5939187319417417228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -210,6 +254,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 52629847537a6a34c9f031053a6781b9, type: 2}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7499999
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8008499
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8008499
+      objectReference: {fileID: 0}
     - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -249,6 +305,10 @@ PrefabInstance:
     - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
       propertyPath: m_Name

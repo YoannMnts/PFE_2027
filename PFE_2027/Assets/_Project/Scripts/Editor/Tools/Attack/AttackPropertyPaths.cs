@@ -7,12 +7,13 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
     internal static class AttackPropertyPaths
     {
         public const string Hitboxes = "hitboxes";
+        public const string Windows = "windows";
 
-        public static readonly string MovementLock = Backing(nameof(AttackData.MovementLock));
-        public static readonly string ComboWindow = Backing(nameof(AttackData.ComboWindow));
         public static readonly string Next = Backing(nameof(AttackData.Next));
 
+        // Shared by HitboxWindow.Window and AttackWindow.Window (same property name, same backing field)
         public static readonly string Window = Backing(nameof(HitboxWindow.Window));
+        public static readonly string Flags = Backing(nameof(AttackWindow.Flags));
         public static readonly string Shape = Backing(nameof(HitboxWindow.Shape));
         public static readonly string Offset = Backing(nameof(HitboxWindow.Offset));
         public static readonly string Rotation = Backing(nameof(HitboxWindow.Rotation));

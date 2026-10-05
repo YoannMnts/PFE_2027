@@ -25,7 +25,13 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
         public bool IsRunning => current != null;
 
-        public bool IsMovementLocked => IsRunning && hasEntered && current.MovementLock.Contains(currentTime);
+        public AttackData Current => current;
+
+        // Union of the flags of every window containing the current time (None while no attack runs)
+        public AttackFlags ActiveFlags { get; private set; }
+
+        // True if at least one of the given flags is active
+        public bool Has(AttackFlags flags) => (ActiveFlags & flags) != 0;
 
         public AttackRunner(Animator animator, HitboxAnchors anchors, IDamageable owner, LayerMask hitMask)
         {
@@ -42,6 +48,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             currentTime = 0f;
             hasEntered = false;
             alreadyHit.Clear();
+            ActiveFlags = AttackFlags.None;
 
             ResolveAnchors(data);
 
@@ -76,6 +83,15 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             hasEntered = true;
             currentTime = time;
 
+            AttackFlags active = AttackFlags.None;
+            ReadOnlySpan<AttackWindow> windows = current.Windows;
+            for (int i = 0; i < windows.Length; i++)
+            {
+                if (windows[i].Window.Contains(time))
+                    active |= windows[i].Flags;
+            }
+            ActiveFlags = active;
+
             ReadOnlySpan<HitboxWindow> hitboxes = current.Hitboxes;
             for (int i = 0; i < hitboxes.Length; i++)
             {
@@ -90,6 +106,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         public void End()
         {
             current = null;
+            ActiveFlags = AttackFlags.None;
         }
         
         private void Query(in HitboxWindow hitbox, Transform anchor)

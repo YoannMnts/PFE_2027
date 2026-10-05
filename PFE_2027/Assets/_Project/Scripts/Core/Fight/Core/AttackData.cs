@@ -22,16 +22,15 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         [SerializeField, BoxGroup("Hitboxes")]
         private HitboxWindow[] hitboxes = Array.Empty<HitboxWindow>();
         
-        [field: SerializeField, BoxGroup("Windows")]
-        public TimeWindow MovementLock { get; private set; }
-
-        [field: SerializeField, BoxGroup("Combo")]
-        public TimeWindow ComboWindow { get; private set; }
+        [SerializeField, BoxGroup("Windows")]
+        private AttackWindow[] windows = Array.Empty<AttackWindow>();
 
         [field: SerializeField, BoxGroup("Combo")]
         public AttackData Next { get; private set; }
         
         public ReadOnlySpan<HitboxWindow> Hitboxes => hitboxes;
+
+        public ReadOnlySpan<AttackWindow> Windows => windows;
         
         public int StateHash { get; private set; }
 
