@@ -4,7 +4,7 @@ using PFE.Gameplay.Scripts.RoadSystem;
 
 namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
-    // Le résultat est la map instanciée, transmise ensuite à la GenerateEnemyPhase.
+    // The result is the instantiated map, then passed to the GenerateNpcPhase.
     public class GenerateAreaPhase : PhaseCompletionSource<IRuntimeArea>
     {
         public readonly IAreaData areaData;

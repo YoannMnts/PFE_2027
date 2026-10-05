@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // Registre des NPC vivants de la bataille, s'abonne à leur mort pour se tenir à jour
+    // Registry of the battle's living NPCs, subscribes to their death to stay up to date
     public class NpcManager
     {
         public event Action<INpcInstance> OnNpcAdded;

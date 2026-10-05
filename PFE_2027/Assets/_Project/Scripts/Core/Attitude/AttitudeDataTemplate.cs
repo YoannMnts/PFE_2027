@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Attitude
 {
-    //si abstract => contenu semblable à l'interface = duplicate into interface
+    // if abstract => same content as the interface = duplicate into interface
     [Serializable]
     public class AttitudeDataTemplate : IAttitudeData
     {
-        //Contenu général et universel de toutes les attitudes
+        // General content shared by every attitude
 
         [field : SerializeField]
         public AttackData[] AttacksDatas {get ; private set;}

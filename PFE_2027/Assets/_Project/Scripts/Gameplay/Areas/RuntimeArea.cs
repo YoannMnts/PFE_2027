@@ -36,7 +36,7 @@ namespace PFE.Gameplay.Scripts.RoadSystem
         {
             anchors = GetComponentsInChildren<SpawnAnchor>(true);
 
-            // Renommer un GameObject ne déclenche pas le OnValidate de ses composants : on resynchronise ici.
+            // Renaming a GameObject doesn't trigger its components' OnValidate: resync here.
             for (int i = 0; i < anchors.Length; i++)
                 anchors[i].SyncIdWithName();
 

@@ -12,7 +12,7 @@ namespace PFE.Core.Scripts.Area
     [System.Serializable]
     public struct SpawnPoint
     {
-        // Nom de méthode en string (pas nameof) : GetAnchorIds n'existe qu'en éditeur.
+        // Method name as a string (not nameof): GetAnchorIds only exists in the editor.
         [field: SerializeField, ValueDropdown("GetAnchorIds")]
         public string AnchorId { get; private set; }
 
@@ -20,7 +20,7 @@ namespace PFE.Core.Scripts.Area
         public NpcData Npc { get; private set; }
 
 #if UNITY_EDITOR
-        // Liste les SpawnAnchor présents dans le prefab de l'AreaData qui contient ce SpawnPoint.
+        // Lists the SpawnAnchors found in the prefab of the AreaData that owns this SpawnPoint.
         private static IEnumerable<string> GetAnchorIds(InspectorProperty property)
         {
             var targets = property.Tree.WeakTargets;

@@ -15,8 +15,8 @@ namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
         public virtual int Order => 50;
 
         /// <summary>
-        /// Callback appelé quand l'utilisateur clique sur le bouton de création (masqué si null).
-        /// À surcharger dans les outils qui proposent une création guidée (ex: ComponentBrowserTool).
+        /// Callback invoked when the user clicks the create button (hidden if null).
+        /// Override in tools that offer a guided creation (e.g. ComponentBrowserTool).
         /// </summary>
         protected virtual Action OnCreateRequested => null;
 

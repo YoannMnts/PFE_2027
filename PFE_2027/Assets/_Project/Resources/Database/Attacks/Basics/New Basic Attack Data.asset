@@ -18,7 +18,7 @@ MonoBehaviour:
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: 9cd7d0a78e710664f8af08e603e2975b, type: 2}
   hitboxes:
   - <Window>k__BackingField:
-      <Start>k__BackingField: 0.35
+      <Start>k__BackingField: 0.33333334
       <End>k__BackingField: 0.517
     <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
     <Shape>k__BackingField: 0

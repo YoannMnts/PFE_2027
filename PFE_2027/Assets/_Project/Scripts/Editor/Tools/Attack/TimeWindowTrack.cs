@@ -4,17 +4,18 @@ using UnityEngine.UIElements;
 
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 {
-    // Une piste de timeline : la barre d'une TimeWindow (début/fin normalisés), déplaçable et étirable à la souris.
+    // A timeline track: the bar of a TimeWindow (normalized start/end).
+    // Dragging the bar moves it, dragging one of the edge handles stretches or shortens it.
     public sealed class TimeWindowTrack : VisualElement
     {
-        private const float EDGE_GRAB_PIXELS = 6f;
-
         private enum DragMode { None, Move, Start, End }
 
         private readonly SerializedProperty start;
         private readonly SerializedProperty end;
         private readonly int totalFrames;
         private readonly VisualElement bar;
+        private readonly VisualElement startGrip;
+        private readonly VisualElement endGrip;
         private readonly VisualElement playhead;
 
         private DragMode dragMode;
@@ -32,8 +33,13 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             bar = new VisualElement();
             bar.AddToClassList("attack-track__bar");
             bar.style.backgroundColor = color;
-            bar.pickingMode = PickingMode.Ignore; // les clics traversent la barre jusqu'à la piste
             Add(bar);
+
+            // Edge handles, children of the bar: they follow both of its ends
+            startGrip = CreateGrip("attack-track__grip--start");
+            endGrip = CreateGrip("attack-track__grip--end");
+            bar.Add(startGrip);
+            bar.Add(endGrip);
 
             playhead = new VisualElement();
             playhead.AddToClassList("attack-track__playhead");
@@ -45,6 +51,15 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             RegisterCallback<PointerUpEvent>(OnPointerUp);
 
             Refresh();
+        }
+
+        private static VisualElement CreateGrip(string sideClass)
+        {
+            VisualElement grip = new();
+            grip.AddToClassList("attack-track__grip");
+            grip.AddToClassList(sideClass);
+            grip.tooltip = "Drag to resize";
+            return grip;
         }
 
         public void Refresh()
@@ -67,18 +82,15 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
             start.serializedObject.Update();
 
-            float x = evt.localPosition.x;
-            float startX = start.floatValue * layout.width;
-            float endX = end.floatValue * layout.width;
-
-            if (Mathf.Abs(x - startX) <= EDGE_GRAB_PIXELS)
+            // Clicks on the bar and its handles bubble up to the track: evt.target tells what was clicked
+            if (evt.target == startGrip)
                 dragMode = DragMode.Start;
-            else if (Mathf.Abs(x - endX) <= EDGE_GRAB_PIXELS)
+            else if (evt.target == endGrip)
                 dragMode = DragMode.End;
-            else if (x > startX && x < endX)
+            else if (evt.target == bar)
             {
                 dragMode = DragMode.Move;
-                grabOffset = ToTime(x) - start.floatValue;
+                grabOffset = ToTime(evt.localPosition.x) - start.floatValue;
             }
             else
                 return;
@@ -128,7 +140,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
             this.ReleasePointer(evt.pointerId);
             dragMode = DragMode.None;
-            Undo.CollapseUndoOperations(undoGroup); // tout le glisser = un seul Ctrl+Z
+            Undo.CollapseUndoOperations(undoGroup); // the whole drag = a single Ctrl+Z
         }
     }
 }

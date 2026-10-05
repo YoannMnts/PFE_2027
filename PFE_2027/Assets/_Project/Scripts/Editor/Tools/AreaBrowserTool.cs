@@ -10,9 +10,9 @@ using UnityEngine.UIElements;
 namespace PFE.Editor._Project.Scripts.Editor.Tools
 {
     /// <summary>
-    /// Onglet Area : liste des AreaData (comme l'onglet Enemy) + bouton "Edit Prefab" sur l'area sélectionnée.
-    /// Quand le prefab d'une area est ouvert (via le bouton ou n'importe comment), l'onglet passe en mode édition
-    /// et affiche l'inspecteur de la data : on place les SpawnAnchor dans la SceneView et on assigne les ennemis ici.
+    /// Area tab: list of AreaData (like the Enemy tab) + "Edit Prefab" button on the selected area.
+    /// When an area prefab is open (through the button or any other way), the tab switches to edit mode
+    /// and shows the data inspector: SpawnAnchors are placed in the SceneView and enemies are assigned here.
     /// </summary>
     public sealed class AreaBrowserTool : IEditorTool
     {
@@ -32,7 +32,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
         private VisualElement editPanel;
         private UnityEditor.Editor cachedEditor;
 
-        // Area choisie via "Edit Prefab" : prioritaire quand plusieurs datas partagent le même prefab.
+        // Area picked through "Edit Prefab": takes priority when several datas share the same prefab.
         private AreaData requestedArea;
         private AreaData editedArea;
 
@@ -50,8 +50,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
             editPanel.AddToClassList("area-edit");
             root.Add(editPanel);
 
-            // On n'écoute les prefab stages que tant que l'onglet est affiché (le contenu est détaché
-            // au changement d'onglet et à la fermeture de la fenêtre). OnActivated resynchronise au retour.
+            // Prefab stages are only listened to while the tab is displayed (the content is detached
+            // when switching tab and when closing the window). OnActivated resyncs on return.
             root.RegisterCallback<AttachToPanelEvent>(_ => Subscribe());
             root.RegisterCallback<DetachFromPanelEvent>(_ => Unsubscribe());
 
@@ -82,8 +82,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
         private void OnPrefabStageOpened(PrefabStage stage) => RefreshMode(stage);
 
-        // Au moment du "closing", le stage est encore le stage courant : on attend la frame suivante pour
-        // savoir où on revient (scène principale, ou prefab parent si on était dans un prefab imbriqué).
+        // During "closing", the stage is still the current stage: wait for the next frame to know
+        // where we return to (main scene, or parent prefab when editing a nested prefab).
         private void OnPrefabStageClosing(PrefabStage stage)
             => root.schedule.Execute(() => RefreshMode(PrefabStageUtility.GetCurrentPrefabStage()));
 
@@ -197,7 +197,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
                     editedArea = editableAreas[dropdown.index];
                     requestedArea = editedArea;
-                    // Reconstruit le panneau après le callback, pas pendant.
+                    // Rebuilds the panel after the callback, not during it.
                     editPanel.schedule.Execute(ShowEditPanel);
                 });
                 editPanel.Add(dropdown);

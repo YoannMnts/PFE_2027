@@ -16,7 +16,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
         [SerializeField] private int selectedHitbox = -1;
 
-        // Un seul SerializedObject partagé par l'onglet et les poignées de la scène (recréé après un recompilage)
+        // A single SerializedObject shared by the tab and the scene handles (recreated after a recompile)
         [NonSerialized] private SerializedObject serializedAttack;
 
         public static event Action<AttackStage> OnOpened;
@@ -30,7 +30,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         public float CurrentSeconds => currentSeconds;
         public SerializedObject SerializedAttack => serializedAttack ??= new SerializedObject(attack);
 
-        // Index de la hitbox éditée avec les poignées de la scène (-1 = aucune)
+        // Index of the hitbox edited with the scene handles (-1 = none)
         public int SelectedHitbox
         {
             get => selectedHitbox;
@@ -89,7 +89,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
             OnClosed?.Invoke();
 
-            // Réglage global de l'éditeur : on rend à Unity ses poignées de transform
+            // Global editor setting: give Unity its transform handles back
             UnityEditor.Tools.hidden = false;
 
             serializedAttack?.Dispose();
@@ -120,7 +120,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             SceneView.RepaintAll();
         }
 
-        // Cherche un perso de preview automatiquement : le profil d'animation dont l'Animator utilise le même controller que l'attaque
+        // Finds a preview character automatically: the animation profile whose Animator uses the same controller as the attack
         public static GameObject FindPreviewCharacter(AttackData attack)
         {
             if (attack == null || attack.Controller == null)

@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 {
-    // Poignées d'édition de la hitbox sélectionnée, selon l'outil actif de Unity (W / E / R),
-    // en respectant le réglage Local/Global de la barre d'outils.
+    // Edit handles of the selected hitbox, following Unity's active tool (W / E / R),
+    // and the Local/Global setting of the toolbar.
     public static class HitboxHandles
     {
-        // Réutilisées : elles gardent leur état interne (face attrapée) pendant le glisser
+        // Reused: they keep their internal state (grabbed face) during the drag
         private static readonly BoxBoundsHandle BoxHandle = new();
         private static readonly SphereBoundsHandle SphereHandle = new();
         private static readonly CapsuleBoundsHandle CapsuleHandle = new() { heightAxis = CapsuleBoundsHandle.HeightAxis.Y };
@@ -24,7 +24,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             SerializedProperty rotationProperty = hitbox.FindPropertyRelative(AttackPropertyPaths.Rotation);
             SerializedProperty sizeProperty = hitbox.FindPropertyRelative(AttackPropertyPaths.Size);
 
-            // Même géométrie que le runtime
+            // Same geometry as the runtime
             HitboxWindow data = stage.Attack.Hitboxes[index];
             HitboxMath.GetPose(anchor, in data, out Vector3 center, out Quaternion rotation);
             Quaternion toAnchorSpace = Quaternion.Inverse(anchor.rotation);
@@ -61,7 +61,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                 {
                     Vector3 size = data.Size;
                     Vector3 newSize = size;
-                    Vector3 centerShift = Vector3.zero; // déplacement du centre, dans le repère de la hitbox
+                    Vector3 centerShift = Vector3.zero; // center shift, in the hitbox space
 
                     using (new Handles.DrawingScope(Matrix4x4.TRS(center, rotation, Vector3.one)))
                     {
@@ -97,7 +97,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                         if (EditorGUI.EndChangeCheck())
                         {
                             sizeProperty.vector3Value = newSize;
-                            // une face tirée déplace le centre : on le répercute sur l'offset
+                            // a dragged face moves the center: apply it to the offset
                             Vector3 newCenter = center + rotation * centerShift;
                             offsetProperty.vector3Value = toAnchorSpace * (newCenter - anchor.position);
                             so.ApplyModifiedProperties();

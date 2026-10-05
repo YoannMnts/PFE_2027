@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
 {
     /// <summary>
-    /// SEUL point de contact avec l'API UMotion. Les fenêtres UMotion s'initialisent sur plusieurs frames,
-    /// donc l'assignation se fait en plusieurs étapes pilotées par EditorApplication.update :
-    /// ouvrir les fenêtres → attendre leur init → charger le projet → assigner le personnage.
+    /// ONLY point of contact with the UMotion API. UMotion windows initialize over several frames,
+    /// so the assignment happens in several steps driven by EditorApplication.update:
+    /// open the windows → wait for their init → load the project → assign the character.
     /// </summary>
     internal static class UMotionBridge
     {
@@ -53,7 +53,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
             EditorApplication.update += Tick;
         }
 
-        /// <summary>Retire le personnage d'UMotion (à appeler avant que la scène de preview disparaisse).</summary>
+        /// <summary>Removes the character from UMotion (call before the preview scene goes away).</summary>
         public static void Detach()
         {
             Cancel();
@@ -78,7 +78,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
 
         private static void Tick()
         {
-            // Cible détruite entre-temps (stage fermée) : on abandonne silencieusement.
+            // Target destroyed in the meantime (stage closed): give up silently.
             if (pendingTarget == null)
             {
                 Cancel();
@@ -98,7 +98,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
             {
                 if (!ClipEditor.IsWindowOpened || !PoseEditor.IsWindowOpened)
                 {
-                    // D'après le manuel UMotion, une fenêtre peut avoir besoin du focus pour s'initialiser.
+                    // According to the UMotion manual, a window may need focus to initialize.
                     if (!refocused && elapsed > RefocusDelaySeconds)
                     {
                         refocused = true;
@@ -133,9 +133,9 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
             Cancel();
         }
 
-        // UMotion anime une COPIE de l'objet (l'original est caché) et la crée dans la scène active,
-        // donc dans la scène principale et pas dans la scène en mémoire de la stage : invisible dans
-        // la SceneView, seuls les gizmos des os restent. On la ramène à côté de l'original.
+        // UMotion animates a COPY of the object (the original is hidden) and creates it in the active scene,
+        // so in the main scene rather than in the stage's in-memory scene: invisible in
+        // the SceneView, only the bone gizmos remain. We move it back next to the original.
         private static void MoveDuplicateToTargetScene(GameObject target)
         {
             GameObject duplicate = PoseEditor.AnimatedPreviewGameObject;

@@ -3,8 +3,8 @@ using UnityEngine;
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
 {
     /// <summary>
-    /// Asset éditeur : un personnage à animer + son projet UMotion (qui contient tous ses clips).
-    /// Un profil par personnage, rangé dans son propre dossier sous Assets/_Project/Animation.
+    /// Editor asset: a character to animate + its UMotion project (holding all its clips).
+    /// One profile per character, stored in its own folder under Assets/_Project/Animation.
     /// </summary>
     public sealed class AnimationProfile : ScriptableObject
     {

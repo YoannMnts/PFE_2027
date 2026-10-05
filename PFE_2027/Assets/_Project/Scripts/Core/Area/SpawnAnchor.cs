@@ -4,10 +4,10 @@ using UnityEngine;
 namespace PFE.Core.Scripts.Area
 {
     /// <summary>
-    /// Marqueur de spawn posé dans le prefab d'une map (le "où"). Aucune logique runtime :
-    /// les SpawnPoint de l'AreaData y associent un ennemi (le "quoi") via son Id.
-    /// L'Id est une copie du nom du GameObject, synchronisée en éditeur : sérialisée pour éviter
-    /// l'allocation de gameObject.name au runtime. Renommer le marqueur casse le lien côté data.
+    /// Spawn marker placed in a map prefab (the "where"). No runtime logic:
+    /// the AreaData SpawnPoints map an enemy (the "what") to it through its Id.
+    /// The Id is a copy of the GameObject name, synced in the editor: serialized to avoid
+    /// allocating gameObject.name at runtime. Renaming the marker breaks the link on the data side.
     /// </summary>
     public class SpawnAnchor : MonoBehaviour
     {
