@@ -43,15 +43,15 @@ namespace PFE.Gameplay.Scripts.NPCs
             Unsubscribe();
         }
 
-        public void Damage(int value)
-        {
-            instance?.AddOrRemoveHealth(-value);
-        }
-
         [Button, DisableInEditorMode]
         public void DebugDamage(int damage)
         {
-            Damage(damage);
+            TakeDamage(damage);
+        }
+        
+        public void TakeDamage(int amount)
+        {
+            instance?.AddOrRemoveHealth(-amount);
         }
 
         protected virtual void OnSetup()
