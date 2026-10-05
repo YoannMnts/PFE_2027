@@ -3,7 +3,7 @@ using PFE.Core.Scripts.NPCs;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // Handle non générique pour pouvoir stocker toutes les instances ensemble (NpcManager)
+    // Non-generic handle so every instance can be stored together (NpcManager)
     public interface INpcInstance
     {
         public event Action<float> OnModifyHealth;

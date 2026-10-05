@@ -50,7 +50,7 @@
     border-radius: 6px;
 }
 
-/* Une ligne = titre de largeur fixe + zone extensible : pistes et slider sont alignés */
+/* One row = fixed-width title + stretching area: tracks and slider are aligned */
 .attack-track-row {
     flex-direction: row;
     align-items: center;
@@ -94,8 +94,37 @@
     position: absolute;
     top: 0;
     bottom: 0;
+    min-width: 12px; /* a very short window stays grabbable by both handles */
     border-radius: 2px;
     opacity: 0.85;
+    cursor: move-arrow;
+}
+
+.attack-track__bar:hover {
+    opacity: 1;
+}
+
+/* Edge handles: small light bars at both ends, resize cursor */
+.attack-track__grip {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    width: 5px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.55);
+    cursor: resize-horizontal;
+}
+
+.attack-track__grip:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.attack-track__grip--start {
+    left: 0;
+}
+
+.attack-track__grip--end {
+    right: 0;
 }
 
 .attack-track__playhead {

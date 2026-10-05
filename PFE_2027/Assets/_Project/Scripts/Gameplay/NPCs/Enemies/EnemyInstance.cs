@@ -3,7 +3,7 @@ using PFE.Gameplay.Scripts.NPCs;
 
 namespace PFE.Gameplay.Scripts.Enemy
 {
-    // La vie et les events sont gérés par NpcInstance, ici uniquement l'état propre aux ennemis
+    // Health and events are handled by NpcInstance, only enemy-specific state goes here
     public class EnemyInstance : NpcInstance<EnemyData>
     {
         public EnemyInstance(EnemyData data) : base(data)

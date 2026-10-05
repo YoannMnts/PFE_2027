@@ -10,7 +10,7 @@ namespace PFE.Gameplay.Scripts.Enemy
 
         public override void Dying(TData data)
         {
-            //le runtime gère la destruction via l'event OnDeath de l'instance
+            // the runtime handles destruction through the instance's OnDeath event
             Debug.Log($"[Enemy] '{data.Name}' died.");
         }
     }

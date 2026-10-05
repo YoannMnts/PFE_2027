@@ -2,8 +2,8 @@ using PFE.Core.Scripts.NPCs;
 
 namespace PFE.Core.Scripts.Enemy
 {
-    // Les champs communs (Name, MaxHealth, Prefab) sont dans NpcData,
-    // ici on ne met que ce qui est propre aux ennemis
+    // Shared fields (Name, MaxHealth, Prefab) live in NpcData,
+    // only enemy-specific data goes here
     public abstract class EnemyData : NpcData
     {
     }

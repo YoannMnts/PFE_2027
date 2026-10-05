@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // État runtime d'un NPC, TData typé pour accéder aux champs spécifiques sans cast
+    // Runtime state of an NPC, TData typed to access specific fields without casting
     public abstract class NpcInstance<TData> : INpcInstance where TData : NpcData
     {
         public event Action<float> OnModifyHealth;
@@ -17,7 +17,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public float CurrentHealth { get; private set; }
         public bool IsDead => CurrentHealth <= 0f;
 
-        // résolu une seule fois ici plutôt qu'un lookup à chaque appel
+        // resolved once here rather than a lookup on every call
         private readonly INpcContainer container;
 
         protected NpcInstance(TData data)

@@ -85,7 +85,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private void SyncClipFromState()
         {
             var state = FindState();
-            AnimationClip = state != null ? state.motion as AnimationClip : null;   // null si l'état joue un Blend Tree
+            AnimationClip = state != null ? state.motion as AnimationClip : null;   // null if the state plays a Blend Tree
         }
 #endif
     }

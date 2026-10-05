@@ -5,29 +5,29 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // Domaine unique du mapper pour tous les NPC -> génère INpcContainer
+    // Single mapper domain for every NPC -> generates INpcContainer
     [GenerateContainer]
     public interface INpc<in TData> : IBehaviour<TData> where TData : INpcData
     {
         [AddToContainer]
-        //crée l'instance (état runtime) propre à ce type de NPC et la branche sur son runtime spawné
-        //renvoie null si le runtime ne correspond pas au type d'instance
+        // creates the instance (runtime state) specific to this NPC type and plugs it into its spawned runtime
+        // returns null if the runtime doesn't match the instance type
         INpcInstance CreateInstance(TData data, NpcInstanceContext context, Transform runtime);
 
         [AddToContainer]
-        //autorise ou non le spawn
+        // allows the spawn or not
         bool CanSpawn(TData data);
 
         [AddToContainer]
-        //comportement actif du NPC (ennemi => attaque, pèlerin => avance...)
+        // active behaviour of the NPC (enemy => attacks, pilgrim => walks...)
         void Act(TData data, INpcInstance context);
 
         [AddToContainer]
-        //calcule la nouvelle vie (amount négatif = dégâts)
+        // computes the new health (negative amount = damage)
         float ModifyHealth(TData data, int amount, float currentHealth);
 
         [AddToContainer]
-        //appelé quand la vie tombe à 0
+        // called when health reaches 0
         void Dying(TData data);
     }
 }

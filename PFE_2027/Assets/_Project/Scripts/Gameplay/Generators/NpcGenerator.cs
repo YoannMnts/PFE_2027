@@ -57,7 +57,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 runtimeNpc.SetPositionAndRotation(anchor.position, anchor.rotation);
                 runtimeNpc.SetParent(container);
 
-                //le behaviour crée l'instance et la branche sur le runtime (erreur déjà loguée si échec)
+                // the behaviour creates the instance and plugs it into the runtime (error already logged on failure)
                 var context = new NpcInstanceContext(area.Path);
                 INpcInstance instance = npcContainer.CreateInstance(npcData, context, runtimeNpc);
                 if (instance == null)

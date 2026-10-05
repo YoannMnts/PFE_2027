@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // Comportement par défaut partagé par tous les NPC (stateless : l'état est dans l'instance)
-    // TInstance est connu à la compilation ici, c'est donc le behaviour qui branche l'instance
-    // sur son IRuntimeNpc<TInstance>, sans aucun cast
+    // Default behaviour shared by every NPC (stateless: the state lives in the instance)
+    // TInstance is known at compile time here, so the behaviour is the one plugging the instance
+    // into its IRuntimeNpc<TInstance>, without any cast
     public abstract class Npc<TData, TInstance> : INpc<TData>
         where TData : NpcData
         where TInstance : class, INpcInstance

@@ -56,18 +56,18 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
             ReadOnlySpan<HitboxWindow> hitboxes = stage.Attack.Hitboxes;
 
-            // La hitbox sélectionnée a été supprimée du tableau
+            // The selected hitbox was removed from the array
             if (stage.SelectedHitbox >= hitboxes.Length)
                 stage.SelectedHitbox = -1;
 
-            // Echap : on arrête d'éditer la hitbox
+            // Escape: stop editing the hitbox
             if (current.type == EventType.KeyDown && current.keyCode == KeyCode.Escape && stage.SelectedHitbox >= 0)
             {
                 stage.SelectedHitbox = -1;
                 current.Use();
             }
 
-            // Nos poignées remplacent celles de Unity tant qu'une hitbox est sélectionnée
+            // Our handles replace Unity's while a hitbox is selected
             UnityEditor.Tools.hidden = stage.SelectedHitbox >= 0;
 
             float time = stage.NormalizedTime;
@@ -89,7 +89,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                 HitboxMath.GetPose(bone, in hitbox, out Vector3 center, out Quaternion rotation);
                 bool selected = i == stage.SelectedHitbox;
 
-                // Le dessin : seulement au Repaint
+                // Drawing: on Repaint only
                 if (isRepaint)
                 {
                     bool active = hitbox.Window.Contains(time);
@@ -97,7 +97,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                     Handles.Label(center, $"#{i}");
                 }
 
-                // Le point cliquable au centre : sur tous les événements (il doit recevoir le clic)
+                // Clickable dot at the center: on every event (it must receive the click)
                 if (!selected)
                 {
                     float dotSize = HandleUtility.GetHandleSize(center) * 0.06f;
@@ -144,7 +144,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                     if (active)
                     {
                         using (new Handles.DrawingScope(fill))
-                            Handles.SphereHandleCap(0, center, rotation, radius * 2f, EventType.Repaint);   // taille = diamètre
+                            Handles.SphereHandleCap(0, center, rotation, radius * 2f, EventType.Repaint);   // size = diameter
                     }
                     break;
 

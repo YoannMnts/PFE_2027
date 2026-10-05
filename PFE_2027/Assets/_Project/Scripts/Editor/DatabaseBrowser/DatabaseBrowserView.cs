@@ -9,10 +9,10 @@ using UnityEngine.UIElements;
 namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
 {
     /// <summary>
-    /// Vue réutilisable : liste (avec recherche) des assets d'un type ScriptableObject donné,
-    /// trouvés sous Assets/_Project/Resources/Database (ou un autre dossier fourni), plus l'inspecteur de l'asset sélectionné.
-    /// Un bouton de création optionnel peut être fourni par l'outil appelant, ainsi qu'une barre
-    /// d'actions optionnelle affichée au-dessus de l'inspecteur de l'asset sélectionné.
+    /// Reusable view: searchable list of the assets of a given ScriptableObject type,
+    /// found under Assets/_Project/Resources/Database (or another provided folder), plus the inspector of the selected asset.
+    /// An optional create button can be provided by the calling tool, as well as an optional actions bar
+    /// displayed above the inspector of the selected asset.
     /// </summary>
     public sealed class DatabaseBrowserView<T> where T : ScriptableObject
     {
@@ -91,7 +91,7 @@ namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
         {
             assets.Clear();
 
-            // Dossier pas encore créé (ex: aucun profil d'animation) : liste vide plutôt qu'une erreur.
+            // Folder not created yet (e.g. no animation profile): empty list rather than an error.
             if (!AssetDatabase.IsValidFolder(searchRoot))
             {
                 BuildList();
@@ -130,7 +130,7 @@ namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
         }
 
         /// <summary>
-        /// Sélectionne un asset depuis l'extérieur (ex: retour du mode édition d'un outil).
+        /// Selects an asset from outside (e.g. when a tool leaves its edit mode).
         /// </summary>
         public void SetSelection(T asset)
         {
@@ -139,8 +139,8 @@ namespace PFE.Editor._Project.Scripts.Editor.DatabaseBrowser
         }
 
         /// <summary>
-        /// Si la sélection courante n'est plus visible (recherche, asset supprimé), sélectionne
-        /// automatiquement le premier élément de la liste visible.
+        /// If the current selection is no longer visible (search, deleted asset), automatically
+        /// selects the first item of the visible list.
         /// </summary>
         private void ReconcileSelection()
         {

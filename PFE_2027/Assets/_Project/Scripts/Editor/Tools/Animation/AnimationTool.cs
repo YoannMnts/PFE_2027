@@ -8,8 +8,8 @@ using UnityEngine.UIElements;
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
 {
     /// <summary>
-    /// Onglet Animation : liste des profils d'animation, création d'un profil (copie du template UMotion)
-    /// et ouverture de la stage d'animation qui branche automatiquement le perso dans UMotion.
+    /// Animation tab: list of animation profiles, profile creation (copy of the UMotion template)
+    /// and opening of the animation stage, which automatically plugs the character into UMotion.
     /// </summary>
     public sealed class AnimationTool : IEditorTool
     {
@@ -49,7 +49,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
         public void OnActivated() => browser?.Reload();
         public void OnDeactivated() { }
 
-        // ---- sélection ------------------------------------------------------
+        // ---- selection ------------------------------------------------------
 
         private static void BuildSelectionActions(AnimationProfile profile, VisualElement container)
         {
@@ -75,7 +75,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
             stage.ReconnectUMotion();
         }
 
-        // ---- création -------------------------------------------------------
+        // ---- creation -------------------------------------------------------
 
         private VisualElement BuildCreatePanel()
         {

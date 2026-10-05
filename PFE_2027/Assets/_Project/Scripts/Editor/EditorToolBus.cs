@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace PFE.Editor._Project.Scripts.Editor
 {
     /// <summary>
-    /// Bus pub/sub statique permettant à des onglets de PfeEditorWindow de communiquer
-    /// sans se référencer directement entre eux. Aucun event n'est défini pour l'instant :
-    /// ajoute des structs d'event dédiées le jour où un onglet a réellement besoin d'en publier/écouter une.
+    /// Static pub/sub bus letting PfeEditorWindow tabs talk to each other
+    /// without referencing each other directly. No event is defined yet:
+    /// add dedicated event structs once a tab actually needs to publish/listen to one.
     /// </summary>
     public static class EditorToolBus
     {

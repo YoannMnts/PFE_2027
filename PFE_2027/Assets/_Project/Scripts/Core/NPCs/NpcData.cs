@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.NPCs
 {
-    // Base commune pour pouvoir référencer n'importe quelle data de NPC dans un champ sérialisé (SpawnPoint...)
+    // Common base so any NPC data can be referenced from a serialized field (SpawnPoint...)
     public abstract class NpcData : GameDatabaseObject, INpcData
     {
         [field: SerializeField, BoxGroup("Description")]

@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
 {
     /// <summary>
-    /// Scène d'animation isolée, dans l'esprit du mode Prefab (et de la CutsceneStage d'Antros) : une scène
-    /// en mémoire (aucun .unity) avec un environnement de test + le personnage du profil, assigné
-    /// automatiquement à UMotion. Rien n'y est sauvegardé : UMotion gère son propre projet.
+    /// Isolated animation scene, in the spirit of Prefab mode (and Antros' CutsceneStage): an in-memory
+    /// scene (no .unity file) with a test environment + the profile's character, automatically
+    /// assigned to UMotion. Nothing is saved there: UMotion handles its own project.
     /// </summary>
     public sealed class AnimationStage : PreviewSceneStage
     {
         [SerializeField] private AnimationProfile profile;
-        [SerializeField] private GameObject characterInstance; // survit au domain reload
+        [SerializeField] private GameObject characterInstance; // survives domain reload
 
         public static AnimationStage Current => StageUtility.GetCurrentStage() as AnimationStage;
         public AnimationProfile Profile => profile;
@@ -48,7 +48,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
 
         protected override void OnCloseStage()
         {
-            // Avant la destruction de la scène : UMotion ne doit pas garder une référence vers le perso.
+            // Before the scene is destroyed: UMotion must not keep a reference to the character.
             UMotionBridge.Detach();
             base.OnCloseStage();
         }
@@ -57,7 +57,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
             => new(profile != null ? $"Animation: {profile.name}" : "Animation",
                 EditorGUIUtility.IconContent("AnimationClip Icon").image);
 
-        /// <summary>(Re)charge le projet UMotion du profil et lui assigne le personnage de la stage.</summary>
+        /// <summary>(Re)loads the profile's UMotion project and assigns the stage character to it.</summary>
         public void ReconnectUMotion()
         {
             if (characterInstance == null)
@@ -82,7 +82,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Animation
                 return;
             }
 
-            // Environnement par défaut : juste de quoi voir le perso.
+            // Default environment: just enough to see the character.
             GameObject light = new("Directional Light");
             SceneManager.MoveGameObjectToScene(light, scene);
             Light lightComponent = light.AddComponent<Light>();

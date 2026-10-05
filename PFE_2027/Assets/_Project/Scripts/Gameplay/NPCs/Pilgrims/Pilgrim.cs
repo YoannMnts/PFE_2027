@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    // Behaviour stateless du pèlerin, son état (position...) est dans PilgrimInstance
+    // Stateless pilgrim behaviour, its state (position...) lives in PilgrimInstance
     public partial class Pilgrim : Npc<PilgrimData, PilgrimInstance>
     {
         protected override PilgrimInstance Create(PilgrimData data, NpcInstanceContext context) => new PilgrimInstance(data, context.splineContainer);

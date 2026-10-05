@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyEnemy.RuntimeDummy
   <NavMeshAgent>k__BackingField: {fileID: 4704124325524143594}
+  <Mesh>k__BackingField: {fileID: 7212681994409287930}
 --- !u!1001 &2651031986084264237
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,9 +9,9 @@ using UnityEngine.UIElements;
 
 namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 {
-    // Onglet Attack : liste des AttackData + bouton "Edit". Quand une AttackStage est ouverte, l'onglet passe
-    // en mode édition : pistes des fenêtres (hitboxes, movement lock, combo) alignées sur la tête de lecture,
-    // puis les champs utiles de la data (le groupe Animation est masqué).
+    // Attack tab: list of AttackData + "Edit" button. When an AttackStage is open, the tab switches
+    // to edit mode: window tracks (hitboxes, movement lock, combo) aligned with the playhead,
+    // then the useful data fields (the Animation group is hidden).
     public sealed class AttackTool : IEditorTool
     {
         private const string BROWSER_STYLE_PATH = "Assets/_Project/Scripts/Editor/DatabaseBrowser/DatabaseBrowser.uss";
@@ -30,7 +30,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         private VisualElement browserContent;
         private VisualElement editPanel;
 
-        // Edition
+        // Editing
         private SerializedObject serializedAttack;
         private VisualElement trackContainer;
         private readonly List<TimeWindowTrack> tracks = new();
@@ -38,7 +38,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         private int trackedHitboxCount;
         private int totalFrames;
 
-        // Tête de lecture
+        // Playhead
         private SliderInt frameSlider;
         private Label timeLabel;
         private Button playButton;
@@ -98,8 +98,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
         private void OnStageOpened(AttackStage stage) => RefreshMode();
 
-        // Le SerializedObject de la stage va être libéré : on vide tout de suite le panneau (sinon le suivi de
-        // modifications lirait un objet libéré), puis on regarde où on revient à la frame suivante.
+        // The stage SerializedObject is about to be released: clear the panel right away (otherwise change
+        // tracking would read a released object), then check where we return to on the next frame.
         private void OnStageClosed()
         {
             ClearEditPanel();
@@ -150,7 +150,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             serializedAttack = stage.SerializedAttack;
             serializedAttack.Update();
 
-            // Conteneur neuf à chaque reconstruction : son suivi de modifications disparaît avec lui
+            // Fresh container on every rebuild: its change tracking goes away with it
             VisualElement content = new();
             content.AddToClassList("attack-edit");
             editPanel.Add(content);
@@ -159,7 +159,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             content.Add(BuildTimeline(stage));
             content.Add(BuildFields());
 
-            // Appelé à chaque modification de l'asset, d'où qu'elle vienne (champs, poignées, pistes, Undo...)
+            // Called on every change of the asset, wherever it comes from (fields, handles, tracks, Undo...)
             content.TrackSerializedObjectValue(serializedAttack, OnAttackChanged);
         }
 
@@ -197,7 +197,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             timeline.Add(trackContainer);
             BuildTracks();
 
-            // Ligne du slider : même structure qu'une piste (titre fixe + zone extensible) pour l'alignement
+            // Slider row: same structure as a track (fixed title + stretching area) for alignment
             VisualElement sliderRow = new();
             sliderRow.AddToClassList("attack-track-row");
 
@@ -270,7 +270,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
             if (hitboxIndex >= 0)
             {
-                // Cliquer sur le titre d'une hitbox la sélectionne pour les poignées de la scène
+                // Clicking a hitbox title selects it for the scene handles
                 label.AddToClassList("attack-track-row__label--selectable");
                 label.RegisterCallback<ClickEvent>(_ =>
                 {
@@ -286,7 +286,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             trackContainer.Add(row);
         }
 
-        // Uniquement les champs utiles en édition : controller, état et clip restent dans l'inspecteur normal
+        // Only the fields useful while editing: controller, state and clip stay in the regular inspector
         private VisualElement BuildFields()
         {
             ScrollView scroll = new(ScrollViewMode.Vertical);
@@ -306,7 +306,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             if (serializedAttack == null || trackContainer == null)
                 return;
 
-            // Une hitbox ajoutée ou supprimée : il faut reconstruire les pistes ; sinon on rafraîchit les barres
+            // A hitbox was added or removed: rebuild the tracks; otherwise just refresh the bars
             if (serializedAttack.FindProperty(AttackPropertyPaths.Hitboxes).arraySize != trackedHitboxCount)
                 BuildTracks();
             else
@@ -405,7 +405,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             lastTickTime = now;
 
             float length = stage.Attack.AnimationClip.length;
-            stage.Sample(Mathf.Repeat(stage.CurrentSeconds + delta, length)); // boucle
+            stage.Sample(Mathf.Repeat(stage.CurrentSeconds + delta, length)); // loop
 
             frameSlider.SetValueWithoutNotify(GetFrame(stage));
             UpdateTimeLabel();

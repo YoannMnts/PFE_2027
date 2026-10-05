@@ -32,7 +32,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             
             spline.GetPointAtLinearDistance(nearestPoint, distance, out float localTargetPosition);
             
-            return path.EvaluatePosition(spline, localTargetPosition);
+            return path.EvaluatePosition(spline, localTargetPosition);;
         }
     }
 }

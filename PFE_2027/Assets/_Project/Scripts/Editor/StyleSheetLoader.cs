@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 namespace PFE.Editor._Project.Scripts.Editor
 {
     /// <summary>
-    /// Charge une feuille de style par son chemin d'asset exact
-    /// (ex: "Assets/_Project/Scripts/Editor/PfeEditorWindow.uss").
-    /// Nommé StyleSheetLoader plutôt que EditorStyles pour éviter toute ambiguïté avec UnityEditor.EditorStyles.
+    /// Loads a style sheet from its exact asset path
+    /// (e.g. "Assets/_Project/Scripts/Editor/PfeEditorWindow.uss").
+    /// Named StyleSheetLoader rather than EditorStyles to avoid any ambiguity with UnityEditor.EditorStyles.
     /// </summary>
     public static class StyleSheetLoader
     {
