@@ -1,0 +1,131 @@
+.attack-tool,
+.attack-edit {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.attack-tool__edit-button {
+    margin: 0;
+    background-color: var(--pe-accent);
+    color: var(--pe-text-strong);
+    border-width: 0;
+    border-radius: 4px;
+    padding: 6px 12px;
+    -unity-font-style: bold;
+}
+
+.attack-tool__edit-button:hover {
+    opacity: 0.9;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.attack-edit__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background-color: var(--pe-card);
+    border-radius: 6px;
+}
+
+.attack-edit__title {
+    -unity-font-style: bold;
+    font-size: 14px;
+    color: var(--pe-text-strong);
+    flex-shrink: 1;
+}
+
+.attack-edit__header-buttons {
+    flex-direction: row;
+}
+
+/* ---------------------------------------------------------------- timeline */
+
+.attack-timeline {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background-color: var(--pe-card);
+    border-radius: 6px;
+}
+
+/* Une ligne = titre de largeur fixe + zone extensible : pistes et slider sont alignés */
+.attack-track-row {
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+    margin-bottom: 3px;
+}
+
+.attack-track-row__label {
+    width: 110px;
+    min-width: 110px;
+    -unity-text-align: middle-left;
+    color: var(--pe-text-soft);
+    overflow: hidden;
+}
+
+.attack-track-row__label--selectable:hover {
+    color: var(--pe-text-strong);
+}
+
+.attack-track-row--selected > .attack-track-row__label {
+    color: var(--pe-accent);
+    -unity-font-style: bold;
+}
+
+.attack-track-row--selected > .attack-track {
+    border-color: var(--pe-accent);
+}
+
+.attack-track {
+    flex-grow: 1;
+    height: 16px;
+    position: relative;
+    background-color: var(--pe-canvas);
+    border-width: 1px;
+    border-color: var(--pe-hairline);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.attack-track__bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 2px;
+    opacity: 0.85;
+}
+
+.attack-track__playhead {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--pe-text-strong);
+}
+
+.attack-timeline__slider {
+    flex-grow: 1;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.attack-timeline__controls {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.attack-timeline__label {
+    margin-left: 12px;
+    color: var(--pe-text-muted);
+    -unity-font-style: italic;
+}
+
+/* ---------------------------------------------------------------- fields */
+
+.attack-edit__inspector {
+    flex-grow: 1;
+}

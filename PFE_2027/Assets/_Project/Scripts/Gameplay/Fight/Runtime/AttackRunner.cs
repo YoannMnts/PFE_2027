@@ -97,9 +97,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             if (anchor == null)
                 return;
 
-            Quaternion rotation = anchor.rotation * Quaternion.Euler(hitbox.Rotation);
-            Vector3 center = anchor.position + anchor.rotation * hitbox.Offset;
-
+            HitboxMath.GetPose(anchor, hitbox, out Vector3 center, out Quaternion rotation);
+            
             int count = hitbox.Shape switch
             {
                 HitboxShape.Box => Physics.OverlapBoxNonAlloc(center, hitbox.Size * 0.5f, overlapResults, rotation, hitMask, QueryTriggerInteraction.Collide),
@@ -121,11 +120,11 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
         private int OverlapCapsule(Vector3 center, Quaternion rotation, Vector3 size)
         {
-            float radius = size.x;
-            float halfSegment = Mathf.Max(0f, size.y * 0.5f - radius);
-            Vector3 axis = rotation * Vector3.up * halfSegment;
-
-            return Physics.OverlapCapsuleNonAlloc(center - axis, center + axis, radius, overlapResults, hitMask, QueryTriggerInteraction.Collide);
+            HitboxMath.GetCapsule(center, rotation, size, 
+                out Vector3 point0, out Vector3 point1, out var radius);
+            
+            return Physics.OverlapCapsuleNonAlloc
+                (point0, point1, radius, overlapResults, hitMask, QueryTriggerInteraction.Collide);
         }
     }
 }

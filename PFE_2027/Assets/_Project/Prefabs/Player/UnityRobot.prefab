@@ -1586,6 +1586,7 @@ GameObject:
   - component: {fileID: 7198358142960060037}
   - component: {fileID: 3613105988870299437}
   - component: {fileID: 3849569262097166658}
+  - component: {fileID: 4874183184640388744}
   m_Layer: 0
   m_Name: UnityRobot
   m_TagString: Untagged
@@ -1914,6 +1915,21 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000000059604645, y: -0.09214255, z: 0.026248634}
     m_Extent: {x: 0.52818453, y: 0.88092995, z: 0.22050177}
   m_DirtyAABB: 0
+--- !u!114 &4874183184640388744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919868635067743845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aba86a10b643f3af1cfec23fe5cb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.HitboxAnchors
+  entries:
+  - <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
+    <Bone>k__BackingField: {fileID: 5066327368973534635}
 --- !u!1 &5965795078211804496
 GameObject:
   m_ObjectHideFlags: 0
