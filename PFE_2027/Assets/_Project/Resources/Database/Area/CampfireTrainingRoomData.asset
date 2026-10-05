@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.CampfireAreaData
   guidText: e19f538e-8aaf-4a2d-99c3-3c6e04d3dd93
   <Prefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
-  <SpawnPoints>k__BackingField: []
+  <SpawnPoints>k__BackingField:
+  - <AnchorId>k__BackingField: Anchor_2
+    <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}

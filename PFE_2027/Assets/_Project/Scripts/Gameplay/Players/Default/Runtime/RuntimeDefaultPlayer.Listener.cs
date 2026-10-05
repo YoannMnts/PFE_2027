@@ -49,11 +49,15 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
             leashedPilgrim = phase.pilgrimInstance;
+            var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
+            runtimePilgrim.AddMemberToCmGroup(rigidBody.transform, 0.5f, 1);
         }
 
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
         {
             leashedPilgrim = null;
+            var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
+            runtimePilgrim.RemoveMemberFromCmGroup(rigidBody.transform);
         }
     }
 }

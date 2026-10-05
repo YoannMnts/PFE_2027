@@ -24,6 +24,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Attack")]
         private LayerMask hitMask;
 
+        // How long (in seconds) an attack press stays valid while waiting for the combo window to open
+        [SerializeField, BoxGroup("Attack"), Min(0f)]
+        private float attackInputBuffer = 0.25f;
+
         [SerializeField, BoxGroup("References", true, false, 1f)]
         private Rigidbody rigidBody;
 
@@ -35,9 +39,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         [SerializeField, BoxGroup("References")]
         private Animator animator;
-        
-        [SerializeField, BoxGroup("References")]
-        private CinemachineTargetGroup targetGroup;
 
         [SerializeField, BoxGroup("References")]
         private CharacterMotor characterMotor;
@@ -50,6 +51,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private float leashPullBackSpeed = 4f;
         
         private AttackRunner attackRunner;
+        private float attackRequestTime = float.NegativeInfinity;
         
         protected override void OnConnected()
         {
@@ -75,7 +77,11 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         private void LateUpdate()
         {
-            attackRunner?.LateTick();
+            if (attackRunner == null)
+                return;
+
+            attackRunner.LateTick();
+            TryConsumeAttackRequest();
         }
 
         // Called by the CharacterMotor every FixedUpdate, after CharacterRun wrote the velocity goal
@@ -86,19 +92,11 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             ApplyPilgrimLeash(motor);
         }
 
-        public void AddMemberToCmGroup(Transform member, float weight = 0, float radius = 0)
-        {
-            targetGroup.AddMember(member, weight, radius);
-        }
-
-        public void RemoveMemberFromCmGroup(Transform member)
-        {
-            targetGroup.RemoveMember(member);
-        }
+        
 
         private void LockMovementDuringAttack(ICharacterMotor motor)
         {
-            if (attackRunner == null || !attackRunner.IsMovementLocked)
+            if (attackRunner == null || !attackRunner.Has(AttackFlags.MovementLock))
                 return;
 
             motor.MoveInput = Vector3.zero;
@@ -142,10 +140,23 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void PlayAttack()
         {
-            if (attackRunner.IsRunning)
+            attackRequestTime = Time.time;
+            TryConsumeAttackRequest();
+        }
+
+        private void TryConsumeAttackRequest()
+        {
+            if (Time.time - attackRequestTime > attackInputBuffer)
                 return;
 
-            attackRunner.Begin(basicAttack);
+            if (!attackRunner.IsRunning)
+                attackRunner.Begin(basicAttack);
+            else if (attackRunner.Has(AttackFlags.Combo) && attackRunner.Current.Next != null)
+                attackRunner.Begin(attackRunner.Current.Next);
+            else
+                return; // Keep the request buffered until the combo window opens or it expires
+
+            attackRequestTime = float.NegativeInfinity;
         }
 
 #if UNITY_EDITOR

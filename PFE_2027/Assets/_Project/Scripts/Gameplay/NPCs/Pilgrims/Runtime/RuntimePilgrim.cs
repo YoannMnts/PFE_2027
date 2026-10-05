@@ -1,39 +1,34 @@
 ﻿using System;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players.Default.Runtime;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
     public class RuntimePilgrim : RuntimeNpc<PilgrimInstance>
     {
-        private RuntimeDefaultPlayer runtimePlayer;
-
-        protected override void Awake()
+        [SerializeField]
+        private CinemachineTargetGroup targetGroup;
+        
+        public void AddMemberToCmGroup(Transform member, float weight = 0, float radius = 0)
         {
-            base.Awake();
-            runtimePlayer = GetComponentInParent<RuntimeDefaultPlayer>();
+            targetGroup.AddMember(member, weight, radius);
         }
 
-        private void OnEnable()
+        public void RemoveMemberFromCmGroup(Transform member)
         {
-            runtimePlayer?.AddMemberToCmGroup(transform);
+            targetGroup.RemoveMember(member);
         }
-
-        private void OnDisable()
-        {
-            runtimePlayer?.RemoveMemberFromCmGroup(transform);
-        }
-
+        
         private void FixedUpdate()
         {
             if (instance != null)
                 instance.UpdatePosition(transform.position);
         }
 
-        
-        
         
         private void LateUpdate()
         {
