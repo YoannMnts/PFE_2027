@@ -8,6 +8,7 @@ namespace PFE.Core.Scripts.NPCs
     {
         public string Name { get; }
         public float MaxHealth { get; }
+        public float KnockbackDamping { get; }
         public Transform Prefab { get; }
     }
 }

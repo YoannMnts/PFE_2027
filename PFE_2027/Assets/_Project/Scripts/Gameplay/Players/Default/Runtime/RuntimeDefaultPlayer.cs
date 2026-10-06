@@ -4,6 +4,7 @@ using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.Enemy.Attacks.BasicAttacks;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.Enemy.Runtime;
+using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players.Runtime;
 using Sirenix.OdinInspector;
 using TraversalPro;
@@ -66,7 +67,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             else
                 Debug.LogError("[RuntimeDefaultPlayer] No CharacterMotor assigned, movement won't be locked during attacks.", this);
 
-            attackRunner = new AttackRunner(animator, hitboxAnchors, mesh.transform, hitMask);
+            // The player is not IDamageable yet: no owner to exclude
+            attackRunner = new AttackRunner(animator, hitboxAnchors, null, hitMask, OnAttackHit);
         }
         
 
@@ -162,13 +164,23 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             attackRequestTime = float.NegativeInfinity;
         }
 
+        // What the player's attacks do to what they touch
+        private void OnAttackHit(in AttackHit hit)
+        {
+            if (hit.target is not IRuntimeNpc npc)
+                return;
+
+            Vector3 direction = PushBackExtension.GetPushBackDirection(mesh.forward, hit.hitbox.PushBackMultiplier);
+            npc.PushBackWithDamage(hit.hitbox.Damage, direction);
+        }
+
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             if (leashedPilgrim == null)
                 return;
 
-            UnityEditor.Handles.color = new Color(1f, 0f, 0.07f, 1f);
+            UnityEditor.Handles.color = new Color(1f,  0f, 0.07f, 1f);
             UnityEditor.Handles.DrawWireDisc(leashedPilgrim.CurrentPosition, Vector3.up * 2, leashRadius);
         }
 #endif

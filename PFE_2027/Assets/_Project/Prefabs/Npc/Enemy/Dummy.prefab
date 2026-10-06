@@ -124,6 +124,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyEnemy.RuntimeDummy
   <NavMeshAgent>k__BackingField: {fileID: 4704124325524143594}
   <Mesh>k__BackingField: {fileID: 7212681994409287930}
+  <Animator>k__BackingField: {fileID: 8215799090203110474}
+  runSpeedToValue:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 4.012169
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2651031986084264237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -172,10 +197,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6255000935652169063, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 52629847537a6a34c9f031053a6781b9, type: 2}
     - target: {fileID: 6819327862645414425, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -183,10 +204,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6819327862645414425, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8533441346840730960}
   m_SourcePrefab: {fileID: 100100000, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
 --- !u!4 &7212681994409287930 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4671010737661876695, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
   m_PrefabInstance: {fileID: 2651031986084264237}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &8215799090203110474 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6255000935652169063, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
+  m_PrefabInstance: {fileID: 2651031986084264237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8820657229220242228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6819327862645414425, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
+  m_PrefabInstance: {fileID: 2651031986084264237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8533441346840730960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8820657229220242228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec37ca6a3992be49a47b280145177ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.NPCs.NpcAnimationEvents
