@@ -26,5 +26,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         
         [field: SerializeField]
         public int Damage { get; private set; }
+        
+        [field: SerializeField, Range(0f, 10f)]
+        public float PushBackMultiplier { get; private set; }
     }
 }
