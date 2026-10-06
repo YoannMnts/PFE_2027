@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using PFE.Gameplay.Scripts.NPCs;
 using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
@@ -12,8 +11,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         
         private readonly Animator animator;
         private readonly HitboxAnchors anchors;
-        private readonly Transform owner;     
+        private readonly IDamageable owner;         // The attacker itself, never hit by its own attack (can be null)
         private readonly LayerMask hitMask;
+        private readonly AttackHitHandler onHit;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
         private readonly List<IDamageable> alreadyHit = new(MAX_COLLIDERS);
@@ -34,12 +34,13 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         // True if at least one of the given flags is active
         public bool Has(AttackFlags flags) => (ActiveFlags & flags) != 0;
 
-        public AttackRunner(Animator animator, HitboxAnchors anchors, Transform owner, LayerMask hitMask)
+        public AttackRunner(Animator animator, HitboxAnchors anchors, IDamageable owner, LayerMask hitMask, AttackHitHandler onHit)
         {
             this.animator = animator;
             this.anchors = anchors;
             this.owner = owner;
             this.hitMask = hitMask;
+            this.onHit = onHit;
         }
         
         public void Begin(AttackData data)
@@ -111,6 +112,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             ActiveFlags = AttackFlags.None;
         }
         
+        // Detection only: finds what the hitbox touches and hands each new target to the owner's callback
         private void Query(in HitboxWindow hitbox, Transform anchor)
         {
             if (anchor == null)
@@ -128,15 +130,13 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
             for (int i = 0; i < count; i++)
             {
-                var collider = overlapResults[i];
-                IRuntimeNpc target = collider.GetComponentInParent<IRuntimeNpc>();
+                Collider collider = overlapResults[i];
+                IDamageable target = collider.GetComponentInParent<IDamageable>();
                 if (target == null || ReferenceEquals(target, owner) || alreadyHit.Contains(target))
                     continue;
 
                 alreadyHit.Add(target);
-                
-                var direction = PushBackExtension.GetPushBackDirection(owner.transform.forward, hitbox.PushBackMultiplier);
-                target.PushBackWithDamage(hitbox.Damage, direction);
+                onHit?.Invoke(new AttackHit(target, collider, in hitbox, center));
             }
         }
 

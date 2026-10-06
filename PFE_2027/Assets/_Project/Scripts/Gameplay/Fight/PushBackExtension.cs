@@ -13,16 +13,17 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             PushBackNoDamage(target, direction);
         }
         
+        // "direction" length = total knockback distance; the NPC spreads it over several frames
         public static void PushBackNoDamage<T>(this T target, Vector3 direction)
             where T : IRuntimeNpc
         {
-            target.NavMeshAgent.Move(direction);
+            target.ApplyKnockback(direction);
         }
 
         
-        public static Vector3 GetPushBackDirection(Vector3 direction, float strength)
+        public static Vector3 GetPushBackDirection(Vector3 direction, float multiplier)
         {
-            return direction.normalized * strength;
+            return direction.normalized * multiplier;
         }
     }
 }
