@@ -28,7 +28,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         [field: SerializeField, BoxGroup("Metrics", false, false, -1f)]
         public int Damage { get; private set; }
         
-        [field: SerializeField, Range(0f, 10f)]
+        [field: SerializeField, Range(0f, 10f), BoxGroup("Metrics", false, false, -1f)]
         public float PushBackMultiplier { get; private set; }
     }
 }
