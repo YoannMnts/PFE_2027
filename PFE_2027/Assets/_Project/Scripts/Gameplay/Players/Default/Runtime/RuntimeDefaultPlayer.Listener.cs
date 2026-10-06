@@ -50,7 +50,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             leashedPilgrim = phase.pilgrimInstance;
             var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
-            runtimePilgrim.AddMemberToCmGroup(rigidBody.transform, 0.5f, 1);
+            runtimePilgrim.AddMemberToCmGroup(rigidBody.transform, targetGroupWeight, 1);
         }
 
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
