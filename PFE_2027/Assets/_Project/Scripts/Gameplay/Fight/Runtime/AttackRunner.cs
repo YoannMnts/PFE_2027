@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PFE.Gameplay.Scripts.NPCs;
 using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
@@ -11,7 +12,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         
         private readonly Animator animator;
         private readonly HitboxAnchors anchors;
-        private readonly IDamageable owner;     
+        private readonly Transform owner;     
         private readonly LayerMask hitMask;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
@@ -33,7 +34,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         // True if at least one of the given flags is active
         public bool Has(AttackFlags flags) => (ActiveFlags & flags) != 0;
 
-        public AttackRunner(Animator animator, HitboxAnchors anchors, IDamageable owner, LayerMask hitMask)
+        public AttackRunner(Animator animator, HitboxAnchors anchors, Transform owner, LayerMask hitMask)
         {
             this.animator = animator;
             this.anchors = anchors;
@@ -126,12 +127,15 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
             for (int i = 0; i < count; i++)
             {
-                IDamageable target = overlapResults[i].GetComponentInParent<IDamageable>();
+                var collider = overlapResults[i];
+                IRuntimeNpc target = collider.GetComponentInParent<IRuntimeNpc>();
                 if (target == null || ReferenceEquals(target, owner) || alreadyHit.Contains(target))
                     continue;
 
                 alreadyHit.Add(target);
-                target.TakeDamage(hitbox.Damage);
+                
+                var direction = PushBackExtension.GetPushBackDirection(owner.transform.forward, hitbox.PushBackMultiplier);
+                target.PushBackWithDamage(hitbox.Damage, direction);
             }
         }
 

@@ -26,6 +26,7 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 0.21790457, y: 1.6144749, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
+    <PushBackMultiplier>k__BackingField: 0
   windows:
   - <Flags>k__BackingField: 1
     <Window>k__BackingField:

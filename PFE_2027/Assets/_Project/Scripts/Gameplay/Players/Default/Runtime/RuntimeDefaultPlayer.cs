@@ -63,7 +63,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             else
                 Debug.LogError("[RuntimeDefaultPlayer] No CharacterMotor assigned, movement won't be locked during attacks.", this);
 
-            attackRunner = new AttackRunner(animator, hitboxAnchors, null, hitMask);
+            attackRunner = new AttackRunner(animator, hitboxAnchors, mesh.transform, hitMask);
         }
         
 

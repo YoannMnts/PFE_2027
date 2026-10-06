@@ -5,21 +5,18 @@ using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance> : MonoBehaviour, IRuntimeNpc<TInstance> where TInstance : class, INpcInstance
+    public abstract class RuntimeNpc : MonoBehaviour
     {
-        protected TInstance instance;
-        public TInstance Instance => instance;
-        
         [field : SerializeField]
         public NavMeshAgent NavMeshAgent { get; private set; }
-
+        
         // NPC visual: it faces the movement direction, the root never rotates
         // (its children, like a camera or a UI above the head, keep their orientation).
         // Empty = previous behaviour: the agent rotates the whole root.
         [field : SerializeField]
         public Transform Mesh { get; private set; }
-
+        
+        
         // Unity messages are protected virtual: a child class declaring one must override and call base.X(),
         // otherwise it would silently hide this one.
         protected virtual void Awake()
@@ -27,7 +24,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (NavMeshAgent != null)
                 NavMeshAgent.updateRotation = Mesh == null;
         }
-
+        
+        
         protected virtual void Update()
         {
             FaceMovement();
@@ -47,7 +45,34 @@ namespace PFE.Gameplay.Scripts.NPCs
             Quaternion targetRotation = Quaternion.LookRotation(velocity);
             Mesh.rotation = Quaternion.RotateTowards(Mesh.rotation, targetRotation, NavMeshAgent.angularSpeed * Time.deltaTime);
         }
-
+        
+        public virtual void MoveTo(Vector3 destination)
+        {
+            if (NavMesh.SamplePosition(destination, out var hit, 2f, NavMesh.AllAreas))
+            {
+                NavMeshAgent.SetDestination(hit.position);
+            }
+        }
+        
+        protected virtual void OnModifyHealth(float currentHealth)
+        {
+            Tween.PunchScale(transform, Vector3.one * .2f, .3f);
+        }
+        
+        protected virtual void OnDeath(INpcInstance deadInstance)
+        {
+            Tween.StopAll(onTarget: transform);
+            Destroy(gameObject);
+        }
+    }
+    
+    
+    // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
+    public abstract class RuntimeNpc<TInstance> : RuntimeNpc, IRuntimeNpc<TInstance> where TInstance : class, INpcInstance
+    {
+        protected TInstance instance;
+        public TInstance Instance => instance;
+        
         public void Setup(TInstance npcInstance)
         {
             if (npcInstance == null)
@@ -63,15 +88,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             OnSetup();
         }
-
-        public virtual void MoveTo(Vector3 destination)
-        {
-            if (NavMesh.SamplePosition(destination, out var hit, 2f, NavMesh.AllAreas))
-            {
-                NavMeshAgent.SetDestination(hit.position);
-            }
-        }
-
+        
         protected virtual void OnDestroy()
         {
             Unsubscribe();
@@ -93,19 +110,6 @@ namespace PFE.Gameplay.Scripts.NPCs
             
         }
         
-        
-
-        protected virtual void OnModifyHealth(float currentHealth)
-        {
-            Tween.PunchScale(transform, Vector3.one * .2f, .3f);
-        }
-
-        protected virtual void OnDeath(INpcInstance deadInstance)
-        {
-            Tween.StopAll(onTarget: transform);
-            Destroy(gameObject);
-        }
-
         private void Unsubscribe()
         {
             if (instance == null)
