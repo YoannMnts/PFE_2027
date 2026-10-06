@@ -88,8 +88,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             ReadOnlySpan<AttackWindow> windows = current.Windows;
             for (int i = 0; i < windows.Length; i++)
             {
-                if (windows[i].Window.Contains(time))
-                    active |= windows[i].Flags;
+                var attackWindow = windows[i];
+                if (attackWindow.Window.Contains(time))
+                    active |= attackWindow.Flags;
             }
             ActiveFlags = active;
 

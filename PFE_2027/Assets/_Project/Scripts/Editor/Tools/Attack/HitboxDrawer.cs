@@ -17,7 +17,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         };
 
         private const float INACTIVE_ALPHA = 0.25f;
-        private const float FILL_ALPHA = 0.2f;
+        private const float FILL_ALPHA = 0.5f;
 
         [InitializeOnLoadMethod]
         private static void Initialize()

@@ -50,6 +50,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Pilgrim Leash"), Min(0f)]
         private float leashPullBackSpeed = 4f;
         
+        [SerializeField, BoxGroup("Pilgrim Leash"), Min(0f)]
+        private float targetGroupWeight = .5f;
+        
         private AttackRunner attackRunner;
         private float attackRequestTime = float.NegativeInfinity;
         

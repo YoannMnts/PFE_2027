@@ -19,7 +19,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         [field: SerializeField, BoxGroup("Animation"), ReadOnly]
         public AnimationClip AnimationClip { get; private set; }
         
-        [SerializeField, BoxGroup("Hitboxes")]
+        [SerializeField, BoxGroup("Windows")]
         private HitboxWindow[] hitboxes = Array.Empty<HitboxWindow>();
         
         [SerializeField, BoxGroup("Windows")]
@@ -86,6 +86,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             var state = FindState();
             AnimationClip = state != null ? state.motion as AnimationClip : null;   // null if the state plays a Blend Tree
         }
+        
 #endif
     }
 }
