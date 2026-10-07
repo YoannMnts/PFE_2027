@@ -48,18 +48,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32448867103d49f484ea34c538232e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Players.Local.Runtime.RuntimeLocalPlayer
-  basicAttack: {fileID: 11400000, guid: 3d366dab21af43043877e7bda598769b, type: 2}
   hitboxAnchors: {fileID: 7430174897199406233}
   hitMask:
     serializedVersion: 2
     m_Bits: 8
+  facingSmoothTime: 0.08
+  targetGroupWeight: 0.5
   rigidBody: {fileID: 6309114705494582719}
   mesh: {fileID: 6974115727959124562}
   playerInput: {fileID: 2770197915875695818}
   animator: {fileID: 5142107935045366932}
   characterMotor: {fileID: 7686079220379662983}
-  leashRadius: 8
-  leashPullBackSpeed: 4
 --- !u!1 &6484481080887354017
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +121,10 @@ PrefabInstance:
     - target: {fileID: 2945000400180187562, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
       propertyPath: m_LocalPosition.z
       value: -4.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5704816076556864520, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7825836861991397684, guid: 316b0ed7a7072f342b41681c0b17830a, type: 3}
       propertyPath: Priority.Enabled

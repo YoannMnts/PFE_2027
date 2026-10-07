@@ -33,7 +33,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
 
             players = DictionaryPool<int, IPlayer>.Get();
             
-            players.Add(0, new DefaultPlayer());
+            players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)

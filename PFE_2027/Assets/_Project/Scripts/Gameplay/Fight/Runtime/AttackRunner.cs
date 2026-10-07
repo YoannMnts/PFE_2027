@@ -34,13 +34,13 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         // True if at least one of the given flags is active
         public bool Has(AttackFlags flags) => (ActiveFlags & flags) != 0;
 
-        public AttackRunner(Animator animator, HitboxAnchors anchors, IDamageable owner, LayerMask hitMask, AttackHitHandler onHit)
+        public AttackRunner(AttackContext context)
         {
-            this.animator = animator;
-            this.anchors = anchors;
-            this.owner = owner;
-            this.hitMask = hitMask;
-            this.onHit = onHit;
+            animator = context.animator;
+            anchors = context.anchors;
+            owner = context.owner;
+            hitMask = context.hitMask;
+            onHit = context.onHit;
         }
         
         public void Begin(AttackData data)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PFE.Core.Scripts.Enemy.Attacks;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Runtime
@@ -8,7 +9,7 @@ namespace PFE.Gameplay.Scripts.Players.Runtime
         public abstract void Disconnect();
     }
 
-    public abstract class RuntimePlayer<T> : RuntimePlayer, IRuntimePlayer<T> where T : class, IPlayer
+    public abstract class RuntimePlayer<T> : RuntimePlayer, IDamageable, IRuntimePlayer<T> where T : class, IPlayer
     {
         protected static readonly List<RuntimePlayer<T>> RuntimeBattlePlayers = new();
         
@@ -30,6 +31,11 @@ namespace PFE.Gameplay.Scripts.Players.Runtime
                 OnDisconnected();
                 Player = null;
             }
+        }
+        
+        public void TakeDamage(int amount)
+        {
+            Player.AddOrRemoveHealth(-amount);
         }
 
         protected abstract void OnConnected();

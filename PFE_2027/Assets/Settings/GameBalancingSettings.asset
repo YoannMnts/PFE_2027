@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44803db0d4f446bbede7fafd8490192, type: 3}
   m_Name: GameBalancingSettings
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.GameSettings.GameBalancingSettings
-  <StatisticMultiplier>k__BackingField: 0
-  <StageCount>k__BackingField: 1
-  aggressiveness:
-    stages: 00000000i
+  <PlayerData>k__BackingField: {fileID: 11400000, guid: 159f070e6542041469795a5f890d789b, type: 2}
+  <PilgrimData>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
+  <LeashRadius>k__BackingField: 8
+  <LeashPullBackSpeed>k__BackingField: 4

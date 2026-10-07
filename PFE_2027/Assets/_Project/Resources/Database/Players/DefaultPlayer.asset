@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec27d0557720784cafd6ee0823836dd, type: 3}
+  m_Name: DefaultPlayer
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Players.PlayerData
+  guidText: 12f3dca8-85c2-4226-a058-241f4e8511ea
+  <MaxHealth>k__BackingField: 100
+  <BasicAttack>k__BackingField: {fileID: 11400000, guid: 3d366dab21af43043877e7bda598769b, type: 2}
+  <AttackInputBuffer>k__BackingField: 0.25

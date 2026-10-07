@@ -10,9 +10,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<GenerateAreaPhase>,
         IPhaseListener<ProtectPilgrimPhase>
     {
-        // Pilgrim the player is leashed to, only set during the ProtectPilgrimPhase
-        private PilgrimInstance leashedPilgrim;
-
         private void OnEnable()
         {
             this.Register<BattlePhase>();
@@ -48,14 +45,14 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            leashedPilgrim = phase.pilgrimInstance;
+            pilgrim = phase.pilgrimInstance;
             var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
             runtimePilgrim.AddMemberToCmGroup(rigidBody.transform, targetGroupWeight, 1);
         }
 
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            leashedPilgrim = null;
+            pilgrim = null;
             var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
             runtimePilgrim.RemoveMemberFromCmGroup(rigidBody.transform);
         }
