@@ -22,7 +22,7 @@ MonoBehaviour:
       <Start>k__BackingField: 0.39344263
       <End>k__BackingField: 0.5081967
     <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
-    <Shape>k__BackingField: 0
+    <Shape>k__BackingField: 2
     <Offset>k__BackingField: {x: 0.012638658, y: -0.28418347, z: 0.012023391}
     <Size>k__BackingField: {x: 0.21790457, y: 1.4984536, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
