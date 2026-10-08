@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd155e160c2e46e4997b0a562ada0108, type: 3}
+  m_Name: BlockingTemplate
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.RoadAreaData
+  guidText: 7672b5ef-3e22-458d-87fa-43b56cf8d5cd
+  <Prefab>k__BackingField: {fileID: 84559660442880120, guid: b155bcefa559654459dfff3353b3eeff, type: 3}
+  <SpawnPoints>k__BackingField: []
