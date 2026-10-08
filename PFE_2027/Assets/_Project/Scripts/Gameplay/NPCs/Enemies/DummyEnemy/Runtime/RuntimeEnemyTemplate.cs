@@ -2,7 +2,7 @@
 
 namespace PFE.Gameplay.Scripts.Enemy.DummyEnemy.Runtime
 {
-    public class RuntimeDummy : RuntimeEnemy
+    public class RuntimeEnemyTemplate : RuntimeEnemy
     {
         
     }

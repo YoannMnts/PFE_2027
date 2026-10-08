@@ -27,9 +27,19 @@ MonoBehaviour:
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
     <PushBackMultiplier>k__BackingField: 5
+  - <Window>k__BackingField:
+      <Start>k__BackingField: 0.25925925
+      <End>k__BackingField: 0.6296296
+    <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
+    <Shape>k__BackingField: 2
+    <Offset>k__BackingField: {x: 0.012635488, y: -0.10394949, z: 0.012038123}
+    <Size>k__BackingField: {x: 0.21790457, y: 1.8778783, z: 0.23149475}
+    <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
+    <Damage>k__BackingField: 0
+    <PushBackMultiplier>k__BackingField: 5
   windows:
   - <Flags>k__BackingField: 1
     <Window>k__BackingField:
-      <Start>k__BackingField: 0
+      <Start>k__BackingField: 0.074074075
       <End>k__BackingField: 1
   <Next>k__BackingField: {fileID: 0}

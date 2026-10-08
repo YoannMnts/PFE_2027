@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2de9ead7905d4b54b996999af20dce5a, type: 3}
-  m_Name: DummyData
+  m_Name: EnemyTemplateData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dummy.DummyData
   guidText: ee862df0-3ed8-4331-a767-f005f2db0c6b
-  <Name>k__BackingField: Dummy
+  <Name>k__BackingField: Enemy Template
   <MaxHealth>k__BackingField: 50
   <KnockbackDamping>k__BackingField: 10
-  <Prefab>k__BackingField: {fileID: 4156158887259431200, guid: fdc6214816ad7344f83dd705ebdf1aee, type: 3}
+  <Prefab>k__BackingField: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
