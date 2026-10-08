@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.GameSettings.GameBalancingSettings
   <PlayerData>k__BackingField: {fileID: 11400000, guid: 159f070e6542041469795a5f890d789b, type: 2}
   <PilgrimData>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
-  <LeashRadius>k__BackingField: 8
+  <LeashRadius>k__BackingField: 10
   <LeashPullBackSpeed>k__BackingField: 4

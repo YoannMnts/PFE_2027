@@ -15,5 +15,6 @@ MonoBehaviour:
   guidText: 85569184-5153-49e2-8fd7-f8ae296aef1e
   <Name>k__BackingField: Le Vieux
   <MaxHealth>k__BackingField: 3
-  <Prefab>k__BackingField: {fileID: 9221161675722067221, guid: ad29c1d3d29a3a947a344d5e3d8252bd, type: 3}
+  <KnockbackDamping>k__BackingField: 0
+  <Prefab>k__BackingField: {fileID: 1606105754538817475, guid: f4c1b18d0c05645429923c02179173ff, type: 3}
   <TargetPositionDistance>k__BackingField: 2
