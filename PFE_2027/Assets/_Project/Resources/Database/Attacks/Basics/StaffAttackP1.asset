@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StaffAttackP1
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.BasicAttacks.BasicAttackData
   guidText: 7a62d3e6-85a8-405b-ad92-6c6e2e494ed5
+  <AttackRange>k__BackingField: 2
   <Controller>k__BackingField: {fileID: 9100000, guid: 52629847537a6a34c9f031053a6781b9, type: 2}
   <StateName>k__BackingField: StaffAttackP1
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: bcd561b86e5ae054794d178f3d5668e0, type: 2}

@@ -9,22 +9,27 @@ using Unity.Properties;
 [NodeDescription(name: "PerformAttack", story: "[Agent] performs [attack]", category: "Action", id: "6e49305e06b28095e7731698dd4f2e08")]
 public partial class PerformAttackAction : Unity.Behavior.Action
 {
-    [SerializeReference] public BlackboardVariable<RuntimeNpc> Agent;
-    [SerializeReference] public BlackboardVariable<AttackData> Attack;
+    [SerializeReference] public BlackboardVariable<RuntimeNpc> agent;
+    [SerializeReference] public BlackboardVariable<AttackData> attack;
 
-    protected override Node.Status OnStart()
+    protected override Status OnStart()
     {
+        Debug.Log("Start Attack");
         
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
+        Debug.Log("Update Attack");
+
         return Status.Success;
     }
 
     protected override void OnEnd()
     {
+        Debug.Log("End Attack");
+
     }
 }
 
