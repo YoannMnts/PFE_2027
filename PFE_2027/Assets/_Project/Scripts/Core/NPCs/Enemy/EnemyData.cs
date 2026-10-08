@@ -1,4 +1,8 @@
+using System;
+using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy
 {
@@ -6,5 +10,7 @@ namespace PFE.Core.Scripts.Enemy
     // only enemy-specific data goes here
     public abstract class EnemyData : NpcData
     {
+        [field: SerializeField, BoxGroup("Attack")]
+        public AttackData AttackData { get;  private set; }
     }
 }

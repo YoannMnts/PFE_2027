@@ -9,6 +9,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 {
     public abstract class AttackData : GameDatabaseObject, IData
     {
+        [field : SerializeField, BoxGroup("Metrics")]
+        public float AttackRange  { get; private set; } 
+        
         [field: SerializeField, BoxGroup("Animation")]
         public RuntimeAnimatorController Controller { get; private set; }
 

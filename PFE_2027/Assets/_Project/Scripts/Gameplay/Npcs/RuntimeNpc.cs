@@ -114,7 +114,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         // Below this speed (m/s) the knockback is considered over
         private const float KNOCKBACK_STOP_SPEED = 0.05f;
 
-        protected TInstance instance;
+        private TInstance instance;
         public TInstance Instance => instance;
         
         protected float knockbackDamping;

@@ -4,14 +4,26 @@ using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using Sirenix.OdinInspector;
+using Unity.Behavior;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
+    [RequireComponent(typeof(BehaviorGraphAgent))]
     public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance>, IPhaseListener<ProtectPilgrimPhase>
     {
-        private PilgrimInstance pilgrimInstance;
+        private const string BEHAVIOR_SELF_NPC = "SelfNpc";
+        private const string BEHAVIOR_PILGRIM_POSITION = "PilgrimPosition";
+        private const string BEHAVIOR_ATTACK_DATA = "AttackData";
+            
+        private BehaviorGraphAgent behaviorGraphAgent;
+        private Vector3 pilgrimPosition;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+        }
 
         private void OnEnable()
         {
@@ -23,29 +35,27 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
             this.Unregister();
         }
 
+        protected override void OnSetup()
+        {
+            base.OnSetup();
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
+        }
+
         private void LateUpdate()
         {
-            if(pilgrimInstance == null)
-                return;
-            
-            MoveTo(pilgrimInstance.CurrentPosition);
-        }
-        
-
-        [Button, DisableInEditorMode]
-        public void DebugMoveTo(Vector3 position)
-        {
-            MoveTo(position);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_PILGRIM_POSITION, pilgrimPosition);
+            MoveTo(pilgrimPosition);
         }
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            pilgrimInstance = phase.pilgrimInstance;
+            pilgrimPosition = phase.pilgrimInstance.CurrentPosition;
         }
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            pilgrimInstance = null;
+            pilgrimPosition = Vector3.zero;
         }
     }
 }

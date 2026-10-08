@@ -12,7 +12,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public event Action<INpcInstance> OnDeath;
 
         public readonly TData data;
-        public INpcData Data => data;
+        INpcData INpcInstance.Data => data;
 
         public float CurrentHealth { get; private set; }
         public bool IsDead => CurrentHealth <= 0f;
