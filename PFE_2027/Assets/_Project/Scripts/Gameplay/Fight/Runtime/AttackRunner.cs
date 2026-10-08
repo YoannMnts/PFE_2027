@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    public sealed class AttackRunner
+    public class AttackRunner
     {
         private const int MAX_COLLIDERS = 16;
         private const float CROSS_FADE_DURATION = 0.05f;
