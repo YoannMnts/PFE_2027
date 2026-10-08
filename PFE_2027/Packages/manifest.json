@@ -6,6 +6,7 @@
     "com.kyrylokuzyk.primetween": "file:../Packages/com.kyrylokuzyk.primetween.tgz",
     "com.singularitygroup.hotreload": "git+https://gitlab.hotreload.net/root/hot-reload-releases.git#1.13.23",
     "com.unity.ai.navigation": "2.0.14",
+    "com.unity.behavior": "1.0.16",
     "com.unity.collab-proxy": "2.13.6",
     "com.unity.formats.fbx": "5.1.6",
     "com.unity.ide.rider": "3.0.38",
