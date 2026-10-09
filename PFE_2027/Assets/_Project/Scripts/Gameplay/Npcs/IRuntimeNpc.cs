@@ -8,7 +8,6 @@ namespace PFE.Gameplay.Scripts.NPCs
     {
         public NavMeshAgent NavMeshAgent { get; }
         public bool IsKnockedBack { get; }
-        public void MoveTo(Vector3 destination);
         public void ApplyKnockback(Vector3 offset);
     }
     

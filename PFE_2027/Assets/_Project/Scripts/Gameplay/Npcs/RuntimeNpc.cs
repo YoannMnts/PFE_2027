@@ -1,12 +1,21 @@
-﻿using PrimeTween;
+﻿using System;
+using PFE.Core.Scripts.Enemy.Attacks;
+using PFE.Core.Scripts.NPCs;
+using PrimeTween;
 using Sirenix.OdinInspector;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
+    [RequireComponent(typeof(BehaviorGraphAgent))]
     public abstract class RuntimeNpc : MonoBehaviour
     {
+        protected const string BEHAVIOR_SELF_NPC = "SelfNpc";
+        protected const string BEHAVIOR_TARGET_POSITION = "TargetPosition";
+        protected const string BEHAVIOR_ATTACK_DATA = "AttackData";
+        
         // Same parameters as the player controller (filled by Traversal Pro's CharacterAnimator on the player).
         // Hashed once: SetFloat with an int never builds or compares strings.
         private static readonly int VELOCITY_Y_ID = Animator.StringToHash("VelocityY");
@@ -33,25 +42,43 @@ namespace PFE.Gameplay.Scripts.NPCs
         [SerializeField] 
         private AnimationCurve runSpeedToValue;
         
+        protected abstract Vector3 TargetPosition { get;  }
+        public AttackRunner AttackRunner { get; protected set;}
+        
         private float animatedSpeed;
         private float animatedSpeedVelocity;
+        protected BehaviorGraphAgent behaviorGraphAgent;
         
         
         // Unity messages are protected virtual: a child class declaring one must override and call base.X(),
         // otherwise it would silently hide this one.
         protected virtual void Awake()
         {
+            behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+            
             if (NavMeshAgent != null)
                 NavMeshAgent.updateRotation = Mesh == null;
         }
-        
         
         protected virtual void Update()
         {
             FaceMovement();
             UpdateAnimator();
         }
-
+        
+        protected virtual void LateUpdate()
+        {
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, TargetPosition);
+        }
+        
+        public virtual void MoveTo(Vector3 destination)
+        {
+            if (NavMesh.SamplePosition(destination, out var hit, 2f, NavMesh.AllAreas))
+            {
+                NavMeshAgent.SetDestination(hit.position);
+            }
+        }
+        
         // Rotates the mesh towards the walking direction, at the turn speed set on the agent (Angular Speed)
         private void FaceMovement()
         {
@@ -84,17 +111,6 @@ namespace PFE.Gameplay.Scripts.NPCs
             Animator.SetFloat(ANIMATION_SPEED_ID, Mathf.Max(runValue, 1f));
         }
         
-        // Pushes the NPC by "offset" (its length is the total distance), spread over several frames.
-        // Several hits add up.
-        
-        public virtual void MoveTo(Vector3 destination)
-        {
-            if (NavMesh.SamplePosition(destination, out var hit, 2f, NavMesh.AllAreas))
-            {
-                NavMeshAgent.SetDestination(hit.position);
-            }
-        }
-        
         protected virtual void OnModifyHealth(float currentHealth)
         {
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
@@ -109,11 +125,19 @@ namespace PFE.Gameplay.Scripts.NPCs
     
     
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance> : RuntimeNpc, IRuntimeNpc<TInstance> where TInstance : class, INpcInstance
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> 
+        where TInstance : NpcInstance<TData>
+        where TData : NpcData 
     {
         // Below this speed (m/s) the knockback is considered over
         private const float KNOCKBACK_STOP_SPEED = 0.05f;
 
+        [SerializeField, BoxGroup("Attacks")]
+        private HitboxAnchors hitboxAnchors;
+        
+        [SerializeField, BoxGroup("Attacks")]
+        private LayerMask hitMask;
+        
         private TInstance instance;
         public TInstance Instance => instance;
         
@@ -136,24 +160,42 @@ namespace PFE.Gameplay.Scripts.NPCs
             instance.OnModifyHealth += OnModifyHealth;
             instance.OnDeath += OnDeath;
 
-            knockbackDamping = instance.Data.KnockbackDamping;
+            knockbackDamping = instance.data.KnockbackDamping;
 
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
+
+            var attackContext = new AttackContext(Animator, hitboxAnchors, this, hitMask, OnAttackHit);
+            AttackRunner = new AttackRunner(attackContext);
+            
             OnSetup();
         }
 
         protected override void Update()
         {
             UpdateKnockback();
+            LockMovementDuringAttack();
             base.Update();
         }
 
-        public override void MoveTo(Vector3 destination)
+        protected override void LateUpdate()
         {
-            // No path request while being pushed: the agent would steer against the knockback
-            if (IsKnockedBack)
+            base.LateUpdate();
+            
+            Debug.Log($"[Runtime Npc] {name} runner {AttackRunner}");
+            AttackRunner?.LateTick();
+        }
+        
+        private void LockMovementDuringAttack()
+        {
+            if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
 
-            base.MoveTo(destination);
+            bool isLocked = AttackRunner != null && AttackRunner.Has(AttackFlags.MovementLock);
+            NavMeshAgent.isStopped = isLocked;
+
+            if (isLocked)
+                NavMeshAgent.velocity = Vector3.zero;
         }
 
         protected virtual void OnDestroy()
@@ -210,6 +252,16 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             if (!IsKnockedBack)
                 knockbackVelocity = Vector3.zero;
+        }
+        
+        private void OnAttackHit(in AttackHit hit)
+        {
+            if (hit.target is not IRuntimeNpc npc)
+                return;
+
+            Transform facing = Mesh != null ? Mesh : transform;
+            Vector3 direction = PushBackExtension.GetPushBackDirection(facing.forward, hit.hitbox.PushBackMultiplier);
+            npc.PushBackWithDamage(hit.hitbox.Damage, direction);
         }
 
         protected virtual void OnSetup()

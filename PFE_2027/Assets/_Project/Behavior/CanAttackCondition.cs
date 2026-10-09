@@ -8,20 +8,22 @@ using UnityEngine;
 [Serializable, Unity.Properties.GeneratePropertyBag]
 [Condition
     (name: "CanAttack", 
-        story: "distance between [agent] and [pilgrimPosition] <= [attackData]", 
+        story: "distance between [agent] and [targetPosition] <= [attackData]", 
         category: "Conditions", 
         id: "3ab75e3132b4712113ae6454343dc370")]
 public partial class CanAttackCondition : Condition
 {
     [SerializeReference] public BlackboardVariable<RuntimeNpc> agent;
     [SerializeReference] public BlackboardVariable<AttackData> attackData;
-    [SerializeReference] public BlackboardVariable<Vector3> pilgrimPosition;
-    
+    [SerializeReference] public BlackboardVariable<Vector3> targetPosition;
     
     private float sqrDistance;
 
     public override bool IsTrue()
     {
+        if(attackData.Value == null)
+            return false;
+        
         bool isInRange = sqrDistance <= attackData.Value.AttackRange * attackData.Value.AttackRange;
         return isInRange;
     }
@@ -30,7 +32,7 @@ public partial class CanAttackCondition : Condition
     public override void OnStart()
     {
         var agentPosition = agent.Value.transform.position;
-        var offsetDistance = pilgrimPosition.Value - agentPosition;
+        var offsetDistance = targetPosition.Value - agentPosition;
 
         sqrDistance = offsetDistance.sqrMagnitude;
     }

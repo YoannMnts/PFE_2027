@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.Pilgrims;
+﻿using System;
+using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using Unity.Mathematics;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         private readonly SplineContainer path;
         public Vector3 CurrentPosition { get; private set; }
         public Vector3 TargetDestination { get;  private set; }
+        
+        public event Action<Vector3> OnPositionChanged;
 
         public PilgrimInstance(PilgrimData data, SplineContainer path) : base(data)
         {
@@ -22,6 +25,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             CurrentPosition = newPosition;
 
             TargetDestination = GetPositionFromSpline(newPosition, data.TargetPositionDistance);
+            
+            OnPositionChanged?.Invoke(CurrentPosition);
         }
 
         private float3 GetPositionFromSpline(Vector3 newPosition, float distance)

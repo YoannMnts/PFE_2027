@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5713387920011691646}
   - component: {fileID: 4256211554114645916}
+  - component: {fileID: -6393297291772686472}
   m_Layer: 0
   m_Name: RuntimeNpc
   m_TagString: Untagged
@@ -55,6 +56,35 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-6393297291772686472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976033839827954936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
+  m_Graph: {fileID: -2367527785642127089, guid: 5203fa36f997f984eab13bfbdaa2aa43, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 2040359541226602590
+  m_OriginalGraph: {fileID: 0}
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 2040359541226602590
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 976033839827954936}
 --- !u!1 &4803410152992274193
 GameObject:
   m_ObjectHideFlags: 0

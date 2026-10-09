@@ -10,7 +10,6 @@ namespace PFE.Core.Scripts.Enemy
     // only enemy-specific data goes here
     public abstract class EnemyData : NpcData
     {
-        [field: SerializeField, BoxGroup("Attack")]
-        public AttackData AttackData { get;  private set; }
+        
     }
 }
