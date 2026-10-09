@@ -1,5 +1,6 @@
 ﻿using System;
 using Helteix.Tools.Phases;
+using PFE.Core.Scripts.Enemy;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
@@ -9,10 +10,12 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
-    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance>, IPhaseListener<ProtectPilgrimPhase>
+    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IPhaseListener<ProtectPilgrimPhase>
     {
-        private Vector3 pilgrimPosition;
+        protected override Vector3 TargetPosition => targetPosition;
 
+        private Vector3 targetPosition;
+        
         private void OnEnable()
         {
             this.Register();
@@ -25,12 +28,18 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            pilgrimPosition = phase.pilgrimInstance.CurrentPosition;
+            phase.pilgrimInstance.OnPositionChanged += UpdateTargetPosition;
         }
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            pilgrimPosition = Vector3.zero;
+            phase.pilgrimInstance.OnPositionChanged -=  UpdateTargetPosition;
+        }
+
+
+        private void UpdateTargetPosition(Vector3 position)
+        {
+            targetPosition = position;
         }
     }
 }

@@ -16,20 +16,19 @@ public partial class PerformAttackAction : Unity.Behavior.Action
     {
         Debug.Log("Start Attack");
         
-        return Status.Running;
+        return Status.Success;
     }
 
     protected override Status OnUpdate()
     {
         Debug.Log("Update Attack");
 
-        return Status.Success;
+        return Status.Waiting;
     }
 
     protected override void OnEnd()
     {
         Debug.Log("End Attack");
-
     }
 }
 

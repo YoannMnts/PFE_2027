@@ -1,4 +1,5 @@
 ﻿using System;
+using PFE.Core.Scripts.NPCs;
 using PrimeTween;
 using Sirenix.OdinInspector;
 using Unity.Behavior;
@@ -11,7 +12,7 @@ namespace PFE.Gameplay.Scripts.NPCs
     public abstract class RuntimeNpc : MonoBehaviour
     {
         protected const string BEHAVIOR_SELF_NPC = "SelfNpc";
-        protected const string BEHAVIOR_PILGRIM_POSITION = "PilgrimPosition";
+        protected const string BEHAVIOR_TARGET_POSITION = "TargetPosition";
         protected const string BEHAVIOR_ATTACK_DATA = "AttackData";
         
         protected BehaviorGraphAgent behaviorGraphAgent;
@@ -45,6 +46,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         private float animatedSpeed;
         private float animatedSpeedVelocity;
+        protected abstract Vector3 TargetPosition { get;  }
         
         
         // Unity messages are protected virtual: a child class declaring one must override and call base.X(),
@@ -63,7 +65,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             FaceMovement();
             UpdateAnimator();
         }
-
+        
+        private void LateUpdate()
+        {
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, TargetPosition);
+        }
+        
         // Rotates the mesh towards the walking direction, at the turn speed set on the agent (Angular Speed)
         private void FaceMovement()
         {
@@ -110,7 +117,9 @@ namespace PFE.Gameplay.Scripts.NPCs
     
     
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance> : RuntimeNpc, IRuntimeNpc<TInstance> where TInstance : class, INpcInstance
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> 
+        where TInstance : NpcInstance<TData>
+        where TData : NpcData 
     {
         // Below this speed (m/s) the knockback is considered over
         private const float KNOCKBACK_STOP_SPEED = 0.05f;
@@ -137,7 +146,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             instance.OnModifyHealth += OnModifyHealth;
             instance.OnDeath += OnDeath;
 
-            knockbackDamping = instance.Data.KnockbackDamping;
+            knockbackDamping = instance.data.KnockbackDamping;
 
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
@@ -150,11 +159,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             UpdateKnockback();
             base.Update();
-        }
-
-        private void LateUpdate()
-        {
-            behaviorGraphAgent.SetVariableValue(BEHAVIOR_PILGRIM_POSITION, TargetPosition);
         }
 
         protected virtual void OnDestroy()

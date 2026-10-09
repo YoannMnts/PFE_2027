@@ -1,4 +1,5 @@
 ﻿using PFE.Core.Scripts.Databases;
+using PFE.Core.Scripts.Enemy.Attacks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ namespace PFE.Core.Scripts.NPCs
         [field: SerializeField, Range(0f, 50f), BoxGroup("Metrics")]
         public float KnockbackDamping { get; private set; }
 
+        [field: SerializeField, BoxGroup("Attack")]
+        public AttackData AttackData { get;  private set; }
+        
         [field: SerializeField, BoxGroup("References")]
         public Transform Prefab { get; private set; }
     }

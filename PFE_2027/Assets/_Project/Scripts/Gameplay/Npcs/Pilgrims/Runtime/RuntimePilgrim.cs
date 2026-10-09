@@ -1,4 +1,5 @@
 ﻿using System;
+using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players.Default.Runtime;
 using Unity.Cinemachine;
@@ -8,10 +9,12 @@ using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance>
+    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>
     {
         [SerializeField]
         private CinemachineTargetGroup targetGroup;
+
+        protected override Vector3 TargetPosition => Instance?.TargetDestination ?? transform.position;
         
         public void AddMemberToCmGroup(Transform member, float weight = 0, float radius = 0)
         {
@@ -28,5 +31,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
         }
+
     }
 }
