@@ -17,7 +17,6 @@ public partial class CanAttackCondition : Condition
     [SerializeReference] public BlackboardVariable<AttackData> attackData;
     [SerializeReference] public BlackboardVariable<Vector3> targetPosition;
     
-    
     private float sqrDistance;
 
     public override bool IsTrue()

@@ -11,24 +11,32 @@ public partial class PerformAttackAction : Unity.Behavior.Action
 {
     [SerializeReference] public BlackboardVariable<RuntimeNpc> agent;
     [SerializeReference] public BlackboardVariable<AttackData> attack;
+    
+    private AttackRunner runner;
 
     protected override Status OnStart()
     {
-        Debug.Log("Start Attack");
-        
-        return Status.Success;
+        RuntimeNpc npc = agent.Value;
+        if (npc == null || npc.AttackRunner == null || attack.Value == null)
+            return Status.Failure;
+
+        runner = npc.AttackRunner;
+
+        runner.Begin(attack.Value);
+        return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        Debug.Log("Update Attack");
-
-        return Status.Waiting;
+        return runner.IsRunning ? Status.Running : Status.Success;
     }
 
     protected override void OnEnd()
     {
-        Debug.Log("End Attack");
+        if (runner != null && runner.IsRunning)
+            runner.End();
+
+        runner = null;
     }
 }
 
