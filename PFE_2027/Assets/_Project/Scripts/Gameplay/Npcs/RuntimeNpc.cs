@@ -1,12 +1,22 @@
-﻿using PrimeTween;
+﻿using System;
+using PrimeTween;
 using Sirenix.OdinInspector;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
+    [RequireComponent(typeof(BehaviorGraphAgent))]
     public abstract class RuntimeNpc : MonoBehaviour
     {
+        protected const string BEHAVIOR_SELF_NPC = "SelfNpc";
+        protected const string BEHAVIOR_PILGRIM_POSITION = "PilgrimPosition";
+        protected const string BEHAVIOR_ATTACK_DATA = "AttackData";
+        
+        protected BehaviorGraphAgent behaviorGraphAgent;
+
+        
         // Same parameters as the player controller (filled by Traversal Pro's CharacterAnimator on the player).
         // Hashed once: SetFloat with an int never builds or compares strings.
         private static readonly int VELOCITY_Y_ID = Animator.StringToHash("VelocityY");
@@ -41,6 +51,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         // otherwise it would silently hide this one.
         protected virtual void Awake()
         {
+            behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+            
             if (NavMeshAgent != null)
                 NavMeshAgent.updateRotation = Mesh == null;
         }
@@ -82,17 +94,6 @@ namespace PFE.Gameplay.Scripts.NPCs
             float runValue = runSpeedToValue.Evaluate(animatedSpeed);
             Animator.SetFloat(VELOCITY_Y_ID, runValue);
             Animator.SetFloat(ANIMATION_SPEED_ID, Mathf.Max(runValue, 1f));
-        }
-        
-        // Pushes the NPC by "offset" (its length is the total distance), spread over several frames.
-        // Several hits add up.
-        
-        public virtual void MoveTo(Vector3 destination)
-        {
-            if (NavMesh.SamplePosition(destination, out var hit, 2f, NavMesh.AllAreas))
-            {
-                NavMeshAgent.SetDestination(hit.position);
-            }
         }
         
         protected virtual void OnModifyHealth(float currentHealth)
@@ -138,6 +139,10 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             knockbackDamping = instance.Data.KnockbackDamping;
 
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
+
+            
             OnSetup();
         }
 
@@ -147,13 +152,9 @@ namespace PFE.Gameplay.Scripts.NPCs
             base.Update();
         }
 
-        public override void MoveTo(Vector3 destination)
+        private void LateUpdate()
         {
-            // No path request while being pushed: the agent would steer against the knockback
-            if (IsKnockedBack)
-                return;
-
-            base.MoveTo(destination);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_PILGRIM_POSITION, TargetPosition);
         }
 
         protected virtual void OnDestroy()

@@ -28,11 +28,5 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
         }
-
-        
-        private void LateUpdate()
-        {
-            MoveTo(Instance.TargetDestination);
-        }
     }
 }
