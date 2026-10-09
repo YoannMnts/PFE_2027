@@ -21,6 +21,9 @@ namespace PFE.Gameplay.Scripts.NPCs
         private static readonly int VELOCITY_Y_ID = Animator.StringToHash("VelocityY");
         private static readonly int ANIMATION_SPEED_ID = Animator.StringToHash("AnimationSpeed");
         
+        
+        // Below this speed (m/s) the knockback is considered over
+        private const float KNOCKBACK_STOP_SPEED = 0.05f;
         // Time for the animated speed to catch up with the real one (same default as Traversal Pro)
         private const float ANIMATION_SPEED_SMOOTH_TIME = 0.15f;
         
@@ -48,6 +51,10 @@ namespace PFE.Gameplay.Scripts.NPCs
         private float animatedSpeed;
         private float animatedSpeedVelocity;
         protected BehaviorGraphAgent behaviorGraphAgent;
+
+        protected Vector3 knockbackVelocity;
+        
+        public bool IsKnockedBack => knockbackVelocity.sqrMagnitude > KNOCKBACK_STOP_SPEED * KNOCKBACK_STOP_SPEED;
         
         
         // Unity messages are protected virtual: a child class declaring one must override and call base.X(),
@@ -129,9 +136,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         where TInstance : NpcInstance<TData>
         where TData : NpcData 
     {
-        // Below this speed (m/s) the knockback is considered over
-        private const float KNOCKBACK_STOP_SPEED = 0.05f;
-
         [SerializeField, BoxGroup("Attacks")]
         private HitboxAnchors hitboxAnchors;
         
@@ -143,9 +147,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         protected float knockbackDamping;
         
-        private Vector3 knockbackVelocity;
-        
-        public bool IsKnockedBack => knockbackVelocity.sqrMagnitude > KNOCKBACK_STOP_SPEED * KNOCKBACK_STOP_SPEED;
         
         public void Setup(TInstance npcInstance)
         {
