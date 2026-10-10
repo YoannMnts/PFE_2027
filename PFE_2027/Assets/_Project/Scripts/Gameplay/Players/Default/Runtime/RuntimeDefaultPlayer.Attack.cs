@@ -36,6 +36,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void TryConsumeAttackRequest()
         {
+            // An attack pressed during a dash stays buffered and starts when the dash ends
+            if (IsDashing)
+                return;
+
             // Moveset and input buffer come from the character data
             PlayerData data = Player?.Data;
             if (data == null || data.BasicAttack == null)

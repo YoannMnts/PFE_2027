@@ -39,8 +39,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void UpdateFacing()
         {
-            // The swing keeps the direction chosen when the attack started
-            bool isLocked = attackRunner != null && attackRunner.Has(AttackFlags.MovementLock);
+            // The swing and the dash keep the direction chosen when they started
+            bool isLocked = IsDashing || (attackRunner != null && attackRunner.Has(AttackFlags.MovementLock));
             if (!isLocked && TryGetIntentYaw(out float intentYaw))
                 facingYawGoal = intentYaw;
 

@@ -63,6 +63,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             // Read the player's intent before the constraints modify it
             CaptureMoveIntent(motor);
+            ApplyDash(motor);
             LockMovementDuringAttack(motor);
             ApplyPilgrimLeash(motor);
         }

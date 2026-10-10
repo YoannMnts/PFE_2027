@@ -12,7 +12,7 @@ namespace PFE.Gameplay.Scripts.Players.Default
         public event Action OnHealthModified;
         public event Action OnDeath;
         
-        public PlayerData Data { get; }
+        public PlayerData Data { get; private set; }
         public float Health { get; private set; }
         public float MaxHealth => Data != null ? Data.MaxHealth : 0f;
         public bool IsDead { get; private set; }
