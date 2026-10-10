@@ -19,5 +19,13 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             
             runtimePlayer.PlayAttack();
         }
+
+        public void PerformDash(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+                return;
+            
+            runtimePlayer.Dash();
+        }
     }
 }

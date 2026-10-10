@@ -2,6 +2,7 @@
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players.Default.Runtime;
+using Sirenix.OdinInspector;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +12,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 {
     public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>
     {
-        [SerializeField]
+        [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
 
         protected override Vector3 TargetPosition => Instance?.TargetDestination ?? transform.position;
