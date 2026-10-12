@@ -4,10 +4,10 @@ using UnityEngine;
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
     [Serializable]
-    public struct AttackWindow
+    public struct AdditionalWindow
     {
         [field: SerializeField]
-        public AttackFlags Flags { get; private set; }
+        public WindowFlags Flags { get; private set; }
 
         [field: SerializeField]
         public TimeWindow Window { get; private set; }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036dcd0aac824ef99c93f5bd87dc77c1, type: 3}
+  m_Name: New Default Pushback Data
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Pushbacks.DefaultPushbackData
+  guidText: c167e559-18ae-4b50-8f54-69d4800ceece
+  <Controller>k__BackingField: {fileID: 0}
+  <StateName>k__BackingField: 
+  <AnimationClip>k__BackingField: {fileID: 0}
+  hitboxes: []
+  windows: []

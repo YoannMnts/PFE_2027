@@ -70,7 +70,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void LockMovementDuringAttack(ICharacterMotor motor)
         {
-            if (attackRunner == null || !attackRunner.Has(AttackFlags.MovementLock))
+            if (attackRunner == null || !attackRunner.Has(WindowFlags.MovementLock))
                 return;
 
             motor.MoveInput = Vector3.zero;

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
+namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 {
     // Edit handles of the selected hitbox, following Unity's active tool (W / E / R),
     // and the Local/Global setting of the toolbar.
@@ -14,18 +14,18 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         private static readonly SphereBoundsHandle SphereHandle = new();
         private static readonly CapsuleBoundsHandle CapsuleHandle = new() { heightAxis = CapsuleBoundsHandle.HeightAxis.Y };
 
-        public static void Edit(AttackStage stage, int index, Transform anchor)
+        public static void Edit(HitboxStage stage, int index, Transform anchor)
         {
-            SerializedObject so = stage.SerializedAttack;
+            SerializedObject so = stage.SerializedData;
             so.Update();
 
-            SerializedProperty hitbox = so.FindProperty(AttackPropertyPaths.Hitboxes).GetArrayElementAtIndex(index);
-            SerializedProperty offsetProperty = hitbox.FindPropertyRelative(AttackPropertyPaths.Offset);
-            SerializedProperty rotationProperty = hitbox.FindPropertyRelative(AttackPropertyPaths.Rotation);
-            SerializedProperty sizeProperty = hitbox.FindPropertyRelative(AttackPropertyPaths.Size);
+            SerializedProperty hitbox = so.FindProperty(HitboxPropertyPaths.Hitboxes).GetArrayElementAtIndex(index);
+            SerializedProperty offsetProperty = hitbox.FindPropertyRelative(HitboxPropertyPaths.Offset);
+            SerializedProperty rotationProperty = hitbox.FindPropertyRelative(HitboxPropertyPaths.Rotation);
+            SerializedProperty sizeProperty = hitbox.FindPropertyRelative(HitboxPropertyPaths.Size);
 
             // Same geometry as the runtime
-            HitboxWindow data = stage.Attack.Hitboxes[index];
+            HitboxWindow data = stage.Data.Hitboxes[index];
             HitboxMath.GetPose(anchor, in data, out Vector3 center, out Quaternion rotation);
             Quaternion toAnchorSpace = Quaternion.Inverse(anchor.rotation);
 

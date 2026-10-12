@@ -158,3 +158,37 @@
 .attack-edit__inspector {
     flex-grow: 1;
 }
+
+/* ---------------------------------------------------------------- sub-tabs */
+
+.hitbox-browsers,
+.hitbox-category {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.hitbox-tabs {
+    flex-direction: row;
+    padding: 6px 12px 0 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--pe-card);
+}
+
+.hitbox-tabs__tab {
+    margin: 0 4px 0 0;
+    padding: 4px 12px;
+    border-width: 0;
+    border-radius: 4px 4px 0 0;
+    background-color: transparent;
+    color: var(--pe-text-soft);
+}
+
+.hitbox-tabs__tab:hover {
+    color: var(--pe-text-strong);
+}
+
+.hitbox-tabs__tab--active {
+    background-color: var(--pe-card);
+    color: var(--pe-text-strong);
+    -unity-font-style: bold;
+}

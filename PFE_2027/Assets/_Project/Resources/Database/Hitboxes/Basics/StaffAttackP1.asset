@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: StaffAttackP1
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.BasicAttacks.BasicAttackData
   guidText: 7a62d3e6-85a8-405b-ad92-6c6e2e494ed5
-  <AttackRange>k__BackingField: 2
   <Controller>k__BackingField: {fileID: 9100000, guid: 52629847537a6a34c9f031053a6781b9, type: 2}
   <StateName>k__BackingField: StaffAttackP1
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: bcd561b86e5ae054794d178f3d5668e0, type: 2}
@@ -37,7 +36,7 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 0.21790457, y: 1.8481385, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
-    <PushBackMultiplier>k__BackingField: 0.2
+    <PushBackMultiplier>k__BackingField: 1
   windows:
   - <Flags>k__BackingField: 1
     <Window>k__BackingField:
@@ -47,4 +46,5 @@ MonoBehaviour:
     <Window>k__BackingField:
       <Start>k__BackingField: 0.5081967
       <End>k__BackingField: 0.5409836
+  <AttackRange>k__BackingField: 2
   <Next>k__BackingField: {fileID: 11400000, guid: 270ed6c3be65c314fb2b14c5ee4f5f99, type: 2}

@@ -29,10 +29,10 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         public AttackData Current => current;
 
         // Union of the flags of every window containing the current time (None while no attack runs)
-        public AttackFlags ActiveFlags { get; private set; }
+        public WindowFlags ActiveFlags { get; private set; }
 
         // True if at least one of the given flags is active
-        public bool Has(AttackFlags flags) => (ActiveFlags & flags) != 0;
+        public bool Has(WindowFlags flags) => (ActiveFlags & flags) != 0;
 
         public AttackRunner(AttackContext context)
         {
@@ -50,7 +50,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             currentTime = 0f;
             hasEntered = false;
             alreadyHit.Clear();
-            ActiveFlags = AttackFlags.None;
+            ActiveFlags = WindowFlags.None;
 
             ResolveAnchors(data);
 
@@ -85,8 +85,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             hasEntered = true;
             currentTime = time;
 
-            AttackFlags active = AttackFlags.None;
-            ReadOnlySpan<AttackWindow> windows = current.Windows;
+            WindowFlags active = WindowFlags.None;
+            ReadOnlySpan<AdditionalWindow> windows = current.Windows;
             for (int i = 0; i < windows.Length; i++)
             {
                 var attackWindow = windows[i];
@@ -109,7 +109,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         public void End()
         {
             current = null;
-            ActiveFlags = AttackFlags.None;
+            ActiveFlags = WindowFlags.None;
         }
         
         // Detection only: finds what the hitbox touches and hands each new target to the owner's callback

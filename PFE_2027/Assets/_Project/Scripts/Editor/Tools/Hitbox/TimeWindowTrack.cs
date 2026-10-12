@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
+namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 {
     // A timeline track: the bar of a TimeWindow (normalized start/end).
     // Dragging the bar moves it, dragging one of the edge handles stretches or shortens it.
@@ -24,8 +24,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
         public TimeWindowTrack(SerializedProperty window, Color color, int totalFrames)
         {
-            start = window.FindPropertyRelative(AttackPropertyPaths.Start);
-            end = window.FindPropertyRelative(AttackPropertyPaths.End);
+            start = window.FindPropertyRelative(HitboxPropertyPaths.Start);
+            end = window.FindPropertyRelative(HitboxPropertyPaths.End);
             this.totalFrames = Mathf.Max(1, totalFrames);
 
             AddToClassList("attack-track");

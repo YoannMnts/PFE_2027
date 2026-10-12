@@ -5,11 +5,12 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
+namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 {
-    public sealed class AttackStage : PreviewSceneStage
+    // Preview scene used to edit any HitboxData (attack, pushback...) on its animation
+    public sealed class HitboxStage : PreviewSceneStage
     {
-        [SerializeField] private AttackData attack;
+        [SerializeField] private HitboxData data;
         [SerializeField] private GameObject characterPrefab;
         [SerializeField] private GameObject characterInstance;
         [SerializeField] private float currentSeconds;
@@ -17,18 +18,18 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
         [SerializeField] private int selectedHitbox = -1;
 
         // A single SerializedObject shared by the tab and the scene handles (recreated after a recompile)
-        [NonSerialized] private SerializedObject serializedAttack;
+        [NonSerialized] private SerializedObject serializedData;
 
-        public static event Action<AttackStage> OnOpened;
+        public static event Action<HitboxStage> OnOpened;
         public static event Action OnClosed;
         public static event Action<int> OnSelectionChanged;
         
-        public static AttackStage Current => StageUtility.GetCurrentStage() as AttackStage;
+        public static HitboxStage Current => StageUtility.GetCurrentStage() as HitboxStage;
 
-        public AttackData Attack => attack;
+        public HitboxData Data => data;
         public GameObject Character => characterInstance;
         public float CurrentSeconds => currentSeconds;
-        public SerializedObject SerializedAttack => serializedAttack ??= new SerializedObject(attack);
+        public SerializedObject SerializedData => serializedData ??= new SerializedObject(data);
 
         // Index of the hitbox edited with the scene handles (-1 = none)
         public int SelectedHitbox
@@ -44,26 +45,26 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                 SceneView.RepaintAll();
             }
         }
-        public float NormalizedTime => attack != null && attack.AnimationClip != null
-            ? currentSeconds / attack.AnimationClip.length
+        public float NormalizedTime => data != null && data.AnimationClip != null
+            ? currentSeconds / data.AnimationClip.length
             : 0f;
 
-        public static void Open(AttackData attack, GameObject characterPrefab)
+        public static void Open(HitboxData data, GameObject characterPrefab)
         {
-            if (attack == null || attack.AnimationClip == null)
+            if (data == null || data.AnimationClip == null)
             {
-                Debug.LogWarning("[AttackStage] The attack has no animation clip.");
+                Debug.LogWarning("[HitboxStage] The data has no animation clip.");
                 return;
             }
 
             if (characterPrefab == null)
             {
-                Debug.LogWarning($"[AttackStage] No preview character found for '{attack.name}'.");
+                Debug.LogWarning($"[HitboxStage] No preview character found for '{data.name}'.");
                 return;
             }
 
-            AttackStage stage = CreateInstance<AttackStage>();
-            stage.attack = attack;
+            HitboxStage stage = CreateInstance<HitboxStage>();
+            stage.data = data;
             stage.characterPrefab = characterPrefab;
             StageUtility.GoToStage(stage, true);
         }
@@ -92,19 +93,19 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             // Global editor setting: give Unity its transform handles back
             UnityEditor.Tools.hidden = false;
 
-            serializedAttack?.Dispose();
-            serializedAttack = null;
+            serializedData?.Dispose();
+            serializedData = null;
 
             base.OnCloseStage();
         }
 
         protected override GUIContent CreateHeaderContent()
-            => new(attack != null ? $"Attack: {attack.name}" : "Attack",
+            => new(data != null ? $"Hitbox: {data.name}" : "Hitbox",
                 EditorGUIUtility.IconContent("AnimationClip Icon").image);
 
         public void Sample(float seconds)
         {
-            AnimationClip clip = attack != null ? attack.AnimationClip : null;
+            AnimationClip clip = data != null ? data.AnimationClip : null;
             if (clip == null || characterInstance == null)
                 return;
 
@@ -120,10 +121,10 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
             SceneView.RepaintAll();
         }
 
-        // Finds a preview character automatically: the animation profile whose Animator uses the same controller as the attack
-        public static GameObject FindPreviewCharacter(AttackData attack)
+        // Finds a preview character automatically: the animation profile whose Animator uses the same controller as the data
+        public static GameObject FindPreviewCharacter(HitboxData data)
         {
-            if (attack == null || attack.Controller == null)
+            if (data == null || data.Controller == null)
                 return null;
 
             foreach (string guid in AssetDatabase.FindAssets("t:AnimationProfile"))
@@ -133,7 +134,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                     continue;
 
                 Animator animator = profile.Character.GetComponentInChildren<Animator>();
-                if (animator != null && animator.runtimeAnimatorController == attack.Controller)
+                if (animator != null && animator.runtimeAnimatorController == data.Controller)
                     return profile.Character;
             }
 

@@ -3,7 +3,7 @@ using PFE.Core.Scripts.Enemy.Attacks;
 using UnityEditor;
 using UnityEngine;
 
-namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
+namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 {
     public static class HitboxDrawer
     {
@@ -31,7 +31,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
         private static void OnChangesPublished(ref ObjectChangeEventStream stream)
         {
-            if (AttackStage.Current != null)
+            if (HitboxStage.Current != null)
                 SceneView.RepaintAll();
         }
 
@@ -39,8 +39,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
 
         private static void OnSceneGUI(SceneView sceneView)
         {
-            AttackStage stage = AttackStage.Current;
-            if (stage == null || stage.Attack == null || stage.Character == null)
+            HitboxStage stage = HitboxStage.Current;
+            if (stage == null || stage.Data == null || stage.Character == null)
                 return;
 
             Event current = Event.current;
@@ -54,7 +54,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Attack
                 return;
             }
 
-            ReadOnlySpan<HitboxWindow> hitboxes = stage.Attack.Hitboxes;
+            ReadOnlySpan<HitboxWindow> hitboxes = stage.Data.Hitboxes;
 
             // The selected hitbox was removed from the array
             if (stage.SelectedHitbox >= hitboxes.Length)

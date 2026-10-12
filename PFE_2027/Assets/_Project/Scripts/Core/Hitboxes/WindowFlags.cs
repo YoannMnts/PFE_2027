@@ -6,7 +6,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
     // Serialized as an int: every value is explicit. A new flag takes the next free bit,
     // an existing value never changes and a removed bit is never reused.
     [Flags]
-    public enum AttackFlags
+    public enum WindowFlags
     {
         None = 0,
         MovementLock = 1 << 0,
