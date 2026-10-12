@@ -19,6 +19,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         private void LateUpdate()
         {
+            UpdateLocomotionAnimation();
             UpdateFacing();
 
             if (attackRunner == null)

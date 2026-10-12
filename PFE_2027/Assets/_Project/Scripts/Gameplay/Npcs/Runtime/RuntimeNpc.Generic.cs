@@ -37,7 +37,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
 
-            var attackContext = new AttackContext(Animator, hitboxAnchors, this, hitMask, OnAttackHit);
+            var attackContext = new AttackContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
             AttackRunner = new AttackRunner(attackContext);
             
             OnSetup();

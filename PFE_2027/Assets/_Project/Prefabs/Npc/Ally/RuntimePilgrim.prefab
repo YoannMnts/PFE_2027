@@ -247,6 +247,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5759751950871256796}
+    - targetCorrespondingSourceObject: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6385996815229502514}
   m_SourcePrefab: {fileID: 100100000, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
 --- !u!4 &3404103301378106749 stripped
 Transform:
@@ -297,6 +300,18 @@ MonoBehaviour:
     <Bone>k__BackingField: {fileID: 3404103301378106749}
   - <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
     <Bone>k__BackingField: {fileID: 6851884399960643674}
+--- !u!114 &6385996815229502514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6584424271493264204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f1b2e600d432c488283da32b850049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Animations.ActionAnimator
 --- !u!4 &6851884399960643674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8000391009079512598, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
@@ -409,8 +424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b525921f2a1540179fef626572530aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Pilgrims.RuntimePilgrim
-  <NavMeshAgent>k__BackingField: {fileID: 7066457318964829729}
-  <Mesh>k__BackingField: {fileID: 3940097458557099222}
   <Animator>k__BackingField: {fileID: 3599659618857885055}
   runSpeedToValue:
     serializedVersion: 2
@@ -436,6 +449,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <NavMeshAgent>k__BackingField: {fileID: 7066457318964829729}
+  <Mesh>k__BackingField: {fileID: 3940097458557099222}
   hitboxAnchors: {fileID: 5759751950871256796}
   hitMask:
     serializedVersion: 2

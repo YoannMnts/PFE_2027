@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PFE.Gameplay.Scripts.Animations;
 using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
@@ -7,9 +8,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
     public class AttackRunner
     {
         private const int MAX_COLLIDERS = 16;
-        private const float CROSS_FADE_DURATION = 0.05f;
         
-        private readonly Animator animator;
+        private readonly ActionAnimator actionAnimator;
         private readonly HitboxAnchors anchors;
         private readonly IDamageable owner;         // The attacker itself, never hit by its own attack (can be null)
         private readonly LayerMask hitMask;
@@ -20,9 +20,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private Transform[] resolvedAnchors = new Transform[4];
         
         private AttackData current;
+        private int playId = -1;
         private float previousTime;
-        private float currentTime;
-        private bool hasEntered;
 
         public bool IsRunning => current != null;
 
@@ -36,7 +35,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
         public AttackRunner(AttackContext context)
         {
-            animator = context.animator;
+            actionAnimator = context.actionAnimator;
             anchors = context.anchors;
             owner = context.owner;
             hitMask = context.hitMask;
@@ -45,16 +44,20 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         
         public void Begin(AttackData data)
         {
+            playId = actionAnimator.Play(data.AnimationClip);
+            if (playId < 0)
+            {
+                Debug.LogError($"[AttackRunner] Attack '{data.name}' has no animation clip.", data);
+                End();
+                return;
+            }
+
             current = data;
             previousTime = -1f;
-            currentTime = 0f;
-            hasEntered = false;
             alreadyHit.Clear();
             ActiveFlags = WindowFlags.None;
 
             ResolveAnchors(data);
-
-            animator.CrossFadeInFixedTime(data.StateHash, CROSS_FADE_DURATION, 0, 0f);
         }
 
         private void ResolveAnchors(AttackData data)
@@ -75,15 +78,12 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             if (current == null)
                 return;
 
-            if (!animator.TryGetStateTime(0, current.StateHash, out float time))
+            // The clip ended, or another action (dash, pushback, next attack...) took its place
+            if (!actionAnimator.TryGetNormalizedTime(playId, out float time))
             {
-                if (hasEntered)
-                    End();
+                End();
                 return;
             }
-
-            hasEntered = true;
-            currentTime = time;
 
             WindowFlags active = WindowFlags.None;
             ReadOnlySpan<AdditionalWindow> windows = current.Windows;
@@ -106,8 +106,11 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             previousTime = time;
         }
 
+        // Also cancels the animation when the attack is interrupted before its end
         public void End()
         {
+            actionAnimator.Stop(playId);
+            playId = -1;
             current = null;
             ActiveFlags = WindowFlags.None;
         }

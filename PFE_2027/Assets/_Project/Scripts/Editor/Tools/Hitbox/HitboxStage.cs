@@ -1,6 +1,5 @@
 ﻿using System;
 using PFE.Core.Scripts.Enemy.Attacks;
-using PFE.Editor._Project.Scripts.Editor.Tools.Animation;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -119,26 +118,6 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             AnimationMode.EndSampling();
 
             SceneView.RepaintAll();
-        }
-
-        // Finds a preview character automatically: the animation profile whose Animator uses the same controller as the data
-        public static GameObject FindPreviewCharacter(HitboxData data)
-        {
-            if (data == null || data.Controller == null)
-                return null;
-
-            foreach (string guid in AssetDatabase.FindAssets("t:AnimationProfile"))
-            {
-                var profile = AssetDatabase.LoadAssetAtPath<AnimationProfile>(AssetDatabase.GUIDToAssetPath(guid));
-                if (profile == null || profile.Character == null)
-                    continue;
-
-                Animator animator = profile.Character.GetComponentInChildren<Animator>();
-                if (animator != null && animator.runtimeAnimatorController == data.Controller)
-                    return profile.Character;
-            }
-
-            return null;
         }
     }
 }

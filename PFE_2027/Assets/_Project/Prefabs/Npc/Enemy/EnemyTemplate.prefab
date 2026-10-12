@@ -66,6 +66,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6819327862645414425, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6213146447437940320}
+    - targetCorrespondingSourceObject: {fileID: 6819327862645414425, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5364475496950709312}
   m_SourcePrefab: {fileID: 100100000, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
 --- !u!95 &4821112770820456299 stripped
 Animator:
@@ -106,6 +109,18 @@ MonoBehaviour:
     <Bone>k__BackingField: {fileID: 7742323342054927579}
   - <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
     <Bone>k__BackingField: {fileID: 8275188309034477415}
+--- !u!114 &5364475496950709312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5369746783603126293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f1b2e600d432c488283da32b850049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Animations.ActionAnimator
 --- !u!4 &6121783003334947803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4671010737661876695, guid: 4755e3232c7cd894591a6eb2d0ccd9b5, type: 3}
@@ -215,8 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e746e909c71546cfac975e2512e8b7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyEnemy.RuntimeDummy
-  <NavMeshAgent>k__BackingField: {fileID: 5301264351556348081}
-  <Mesh>k__BackingField: {fileID: 6121783003334947803}
   <Animator>k__BackingField: {fileID: 4821112770820456299}
   runSpeedToValue:
     serializedVersion: 2
@@ -242,6 +255,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <NavMeshAgent>k__BackingField: {fileID: 5301264351556348081}
+  <Mesh>k__BackingField: {fileID: 6121783003334947803}
   hitboxAnchors: {fileID: 6213146447437940320}
   hitMask:
     serializedVersion: 2

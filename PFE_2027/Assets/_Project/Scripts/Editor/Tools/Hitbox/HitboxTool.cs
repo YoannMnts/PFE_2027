@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PFE.Core.Scripts.Enemy.Attacks;
+using PFE.Editor._Project.Scripts.Editor.Tools.Animation;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.UIElements;
@@ -17,6 +18,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         private const string STYLE_PATH = "Assets/_Project/Scripts/Editor/Tools/Hitbox/HitboxTool.uss";
         private const string SEARCH_ROOT = "Assets/_Project";
         private const string SELECTED_CATEGORY_SESSION_KEY = "PFE.Editor.Hitbox.SelectedCategory";
+        private const string PREVIEW_PROFILE_PREFS_KEY = "PFE.Editor.Hitbox.PreviewProfile.";
 
         // Track color of an additional window, picked from its lowest flag bit
         private static readonly Color[] FlagColors =
@@ -170,12 +172,41 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             root.schedule.Execute(RefreshMode);
         }
 
+        // Preview character chosen per asset (editor preference: the runtime data knows nothing about it)
         private void BuildSelectionActions(HitboxData data, VisualElement container)
         {
-            Button editButton = new(() => HitboxStage.Open(data, HitboxStage.FindPreviewCharacter(data)))
-                { text = "Edit" };
+            List<AnimationProfile> profiles = FindAnimationProfiles();
+            if (profiles.Count == 0)
+            {
+                container.Add(new Label("No AnimationProfile: create one to preview this animation."));
+                return;
+            }
+
+            string prefsKey = PREVIEW_PROFILE_PREFS_KEY + AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(data));
+            string savedGuid = EditorPrefs.GetString(prefsKey, string.Empty);
+            AnimationProfile selected = profiles.Find(p => AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(p)) == savedGuid)
+                                        ?? profiles[0];
+
+            PopupField<AnimationProfile> previewField = new("Preview", profiles, selected, p => p.name, p => p.name);
+            previewField.RegisterValueChangedCallback(evt =>
+                EditorPrefs.SetString(prefsKey, AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(evt.newValue))));
+            container.Add(previewField);
+
+            Button editButton = new(() => HitboxStage.Open(data, previewField.value.Character)) { text = "Edit" };
             editButton.AddToClassList("attack-tool__edit-button");
             container.Add(editButton);
+        }
+
+        private static List<AnimationProfile> FindAnimationProfiles()
+        {
+            List<AnimationProfile> profiles = new();
+            foreach (string guid in AssetDatabase.FindAssets("t:AnimationProfile"))
+            {
+                var profile = AssetDatabase.LoadAssetAtPath<AnimationProfile>(AssetDatabase.GUIDToAssetPath(guid));
+                if (profile != null && profile.Character != null)
+                    profiles.Add(profile);
+            }
+            return profiles;
         }
 
         private void RefreshMode()
