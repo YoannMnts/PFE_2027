@@ -6,6 +6,7 @@ using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
 
         private Dictionary<int, IPlayer> players;
         
+        public NpcManager NpcManager { get; private set; }
+        
         public CrossRoadGameMode(SceneReference sceneToLoad)
         {
             this.sceneToLoad = sceneToLoad;
@@ -34,11 +37,13 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             players = DictionaryPool<int, IPlayer>.Get();
             
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
+            
+            NpcManager = new NpcManager();
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var context = new CrossRoadGameModeContext(this);
+            CrossRoadGameModeContext context = new CrossRoadGameModeContext(this);
             
             await GameController.GameSceneController.HideLoadingScreen();
             

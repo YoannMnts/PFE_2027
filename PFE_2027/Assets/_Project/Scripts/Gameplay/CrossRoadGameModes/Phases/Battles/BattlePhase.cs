@@ -23,7 +23,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         private readonly SceneReference sceneToLoad;
         private ChannelKey key;
         private IAreaData currentArea;
-        private NpcManager npcManager;
 
         public BattlePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
         {
@@ -43,19 +42,18 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
                 player.ShowUI.AddPriority(key, PriorityTags.Default, false);
             }
             
-            npcManager = new NpcManager();
             return base.Initialize(token);
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var generateArenaPhase = new GenerateAreaPhase(currentArea);
-            var arenaResult = await generateArenaPhase.Run();
+            var generateAreaPhase = new GenerateAreaPhase(currentArea);
+            var arenaResult = await generateAreaPhase.Run();
         
-            var generateEnemyPhase = new GenerateNpcPhase(currentArea, arenaResult.value, npcManager);
-            await generateEnemyPhase.Run();
+            var generateNpcPhase = new GenerateNpcPhase(currentArea, arenaResult.value, gameModeContext.NpcManager);
+            await generateNpcPhase.Run();
 
-            if (!npcManager.TryGetFirst<PilgrimInstance>(out var pilgrimInstance)) 
+            if (!gameModeContext.NpcManager.TryGetFirst<PilgrimInstance>(out var pilgrimInstance)) 
                 return false;
             
             var protectPilgrimPhase = new ProtectPilgrimPhase(pilgrimInstance);
@@ -71,15 +69,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
                 player.ShowUI.RemovePriority(key);
             }
             return base.Dispose(token);
-        }
-
-        private EnemyData GetRandomEnemy()
-        {
-            var allEnemyData = GameController.GameDatabase.GetAll<EnemyData>();
-            var enemyArray = allEnemyData.ToArray();
-            var randomIndex = Random.Range(0, enemyArray.Length);
-            
-            return enemyArray[randomIndex];
         }
     }
 }

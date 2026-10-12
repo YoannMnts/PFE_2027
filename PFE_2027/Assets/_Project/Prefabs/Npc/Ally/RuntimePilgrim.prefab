@@ -409,8 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b525921f2a1540179fef626572530aa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Pilgrims.RuntimePilgrim
-  <NavMeshAgent>k__BackingField: {fileID: 7066457318964829729}
-  <Mesh>k__BackingField: {fileID: 3940097458557099222}
   <Animator>k__BackingField: {fileID: 3599659618857885055}
   runSpeedToValue:
     serializedVersion: 2
@@ -436,6 +434,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <NavMeshAgent>k__BackingField: {fileID: 7066457318964829729}
+  <Mesh>k__BackingField: {fileID: 3940097458557099222}
   hitboxAnchors: {fileID: 5759751950871256796}
   hitMask:
     serializedVersion: 2
