@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: New Default Pushback Data
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Pushbacks.DefaultPushbackData
   guidText: c167e559-18ae-4b50-8f54-69d4800ceece
-  <Controller>k__BackingField: {fileID: 0}
-  <StateName>k__BackingField: 
-  <AnimationClip>k__BackingField: {fileID: 0}
-  hitboxes: []
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: ce0f42c9c3da61b409403ae249e41472, type: 2}
+  hitboxes:
+  - <Window>k__BackingField:
+      <Start>k__BackingField: 0
+      <End>k__BackingField: 1
+    <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
+    <Shape>k__BackingField: 0
+    <Offset>k__BackingField: {x: -0.20468266, y: -0.31272012, z: 0.03260656}
+    <Size>k__BackingField: {x: 1.4093635, y: 0.5148009, z: 0.6252793}
+    <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
+    <Damage>k__BackingField: 0
+    <PushBackMultiplier>k__BackingField: 0
   windows: []

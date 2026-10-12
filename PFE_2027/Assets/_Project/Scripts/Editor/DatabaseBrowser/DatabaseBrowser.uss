@@ -1,6 +1,8 @@
 .db-browser {
     flex-direction: column;
     flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
 }
 
 .db-browser__family-bar {
@@ -52,10 +54,14 @@
 .db-browser__body {
     flex-direction: row;
     flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    min-height: 0;
 }
 
 .db-browser__list-pane {
     width: 240px;
+    flex-shrink: 0;
     flex-direction: column;
     border-right-width: 1px;
     border-right-color: var(--pe-hairline);
@@ -89,6 +95,9 @@
 
 .db-browser__inspector {
     flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    min-width: 0;
 }
 
 .db-browser__selection-actions {

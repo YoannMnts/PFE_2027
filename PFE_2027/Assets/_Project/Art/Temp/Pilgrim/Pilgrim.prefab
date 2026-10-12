@@ -2924,6 +2924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486345261945129626}
   - component: {fileID: 136619726235208499}
+  - component: {fileID: 9223211856986065040}
   m_Layer: 0
   m_Name: Pilgrim
   m_TagString: Untagged
@@ -2970,6 +2971,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9223211856986065040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7742043236931790080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aba86a10b643f3af1cfec23fe5cb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.HitboxAnchors
+  entries:
+  - <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
+    <Bone>k__BackingField: {fileID: 2246201485089600305}
+  - <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
+    <Bone>k__BackingField: {fileID: 8000391009079512598}
 --- !u!1 &7924284596888635594
 GameObject:
   m_ObjectHideFlags: 0

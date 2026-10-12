@@ -2702,6 +2702,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4671010737661876695}
   - component: {fileID: 6255000935652169063}
+  - component: {fileID: 4764726449470336108}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2748,6 +2749,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4764726449470336108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819327862645414425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aba86a10b643f3af1cfec23fe5cb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.HitboxAnchors
+  entries:
+  - <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
+    <Bone>k__BackingField: {fileID: 9175082308430235351}
+  - <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
+    <Bone>k__BackingField: {fileID: 7417830303980686699}
+  - <Anchor>k__BackingField: {fileID: 11400000, guid: e14f83f13711efc41b6136bbf8c26707, type: 2}
+    <Bone>k__BackingField: {fileID: 6071890355345542236}
 --- !u!1 &6849545924238116101
 GameObject:
   m_ObjectHideFlags: 0

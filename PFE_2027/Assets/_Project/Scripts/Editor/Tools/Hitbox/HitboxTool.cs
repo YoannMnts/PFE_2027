@@ -17,6 +17,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         private const string BROWSER_STYLE_PATH = "Assets/_Project/Scripts/Editor/DatabaseBrowser/DatabaseBrowser.uss";
         private const string STYLE_PATH = "Assets/_Project/Scripts/Editor/Tools/Hitbox/HitboxTool.uss";
         private const string SEARCH_ROOT = "Assets/_Project";
+        private const string ATTACK_FOLDER = "Assets/_Project/Resources/Database/Hitboxes/Basics";
+        private const string PUSHBACK_FOLDER = "Assets/_Project/Resources/Database/Hitboxes/Pushbacks";
         private const string SELECTED_CATEGORY_SESSION_KEY = "PFE.Editor.Hitbox.SelectedCategory";
         private const string PREVIEW_PROFILE_PREFS_KEY = "PFE.Editor.Hitbox.PreviewProfile.";
 
@@ -38,8 +40,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         // One sub-tab per HitboxData type: add a line here for a new type
         private readonly HitboxCategory[] categories =
         {
-            new HitboxCategory<AttackData>("Attack"),
-            new HitboxCategory<PushbackData>("Pushback"),
+            new HitboxCategory<AttackData>("Attack", ATTACK_FOLDER),
+            new HitboxCategory<PushbackData>("Pushback", PUSHBACK_FOLDER),
         };
 
         private readonly VisualElement root = new();

@@ -10,6 +10,9 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         public const string Hitboxes = "hitboxes";
         public const string Windows = "windows";
 
+        // Private field of GameDatabaseObject: nameof() is not usable from the editor assembly
+        public const string GuidText = "guidText";
+
         public static readonly string AnimationClip = Backing(nameof(HitboxData.AnimationClip));
 
         // Shared by HitboxWindow.Window and AdditionalWindow.Window (same property name, same backing field)
@@ -27,7 +30,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         // declared by a child type (AttackData, PushbackData...) and shown automatically in edit mode
         private static readonly HashSet<string> BaseFields = new()
         {
-            "m_Script", "guidText", Hitboxes, Windows, AnimationClip,
+            "m_Script", GuidText, Hitboxes, Windows, AnimationClip,
         };
 
         public static bool IsBaseField(string propertyPath) => BaseFields.Contains(propertyPath);

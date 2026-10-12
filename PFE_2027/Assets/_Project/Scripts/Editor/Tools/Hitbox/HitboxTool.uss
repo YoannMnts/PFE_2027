@@ -165,10 +165,13 @@
 .hitbox-category {
     flex-direction: column;
     flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
 }
 
 .hitbox-tabs {
     flex-direction: row;
+    flex-shrink: 0;
     padding: 6px 12px 0 12px;
     border-bottom-width: 1px;
     border-bottom-color: var(--pe-card);

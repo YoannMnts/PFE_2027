@@ -3,10 +3,10 @@ using PFE.Gameplay.Scripts.NPCs;
 
 namespace PFE.Gameplay.Scripts.Enemy.DummyEnemy
 {
-    public partial class Dummy : Enemy<DummyData>
+    public partial class Dummy : Enemy<EnemyTemplateData>
     {
 
-        protected override void Act(DummyData data, EnemyInstance instance)
+        protected override void Act(EnemyTemplateData data, EnemyInstance instance)
         {
             throw new System.NotImplementedException();
         }
