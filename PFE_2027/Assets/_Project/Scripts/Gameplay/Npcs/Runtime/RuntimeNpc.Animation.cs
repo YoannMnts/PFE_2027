@@ -1,3 +1,4 @@
+using PFE.Gameplay.Scripts.Animations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -16,8 +17,22 @@ namespace PFE.Gameplay.Scripts.NPCs
         [SerializeField, BoxGroup("GameFeel")] 
         private AnimationCurve runSpeedToValue;
 
+        // On the Animator's GameObject: plays the locomotion controller and the action clips
+        public ActionAnimator ActionAnimator { get; private set; }
+
         private float animatedSpeed;
         private float animatedSpeedVelocity;
+
+        private void InitializeAnimation()
+        {
+            if (Animator == null)
+                return;
+
+            if (Animator.TryGetComponent(out ActionAnimator actionAnimator))
+                ActionAnimator = actionAnimator;
+            else
+                Debug.LogError($"[RuntimeNpc] '{name}': no ActionAnimator next to its Animator.", this);
+        }
         
         private void FaceMovement()
         {
@@ -33,9 +48,10 @@ namespace PFE.Gameplay.Scripts.NPCs
             Mesh.rotation = Quaternion.RotateTowards(Mesh.rotation, targetRotation, NavMeshAgent.angularSpeed * Time.deltaTime);
         }
         
+        // Feeds the locomotion blend tree (through the ActionAnimator graph) with the agent's horizontal speed
         private void UpdateAnimator()
         {
-            if (Animator == null || NavMeshAgent == null)
+            if (ActionAnimator == null || NavMeshAgent == null)
                 return;
 
             Vector3 velocity = NavMeshAgent.velocity;
@@ -44,8 +60,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             animatedSpeed = Mathf.SmoothDamp(animatedSpeed, velocity.magnitude, ref animatedSpeedVelocity, ANIMATION_SPEED_SMOOTH_TIME);
 
             float runValue = runSpeedToValue.Evaluate(animatedSpeed);
-            Animator.SetFloat(VELOCITY_Y_ID, runValue);
-            Animator.SetFloat(ANIMATION_SPEED_ID, Mathf.Max(runValue, 1f));
+            ActionAnimator.SetFloat(VELOCITY_Y_ID, runValue);
+            ActionAnimator.SetFloat(ANIMATION_SPEED_ID, Mathf.Max(runValue, 1f));
         }
     }
 }

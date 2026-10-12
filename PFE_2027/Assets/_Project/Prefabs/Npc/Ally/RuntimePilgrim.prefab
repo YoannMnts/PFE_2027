@@ -242,17 +242,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 4943321706690969177}
     - targetCorrespondingSourceObject: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5759751950871256796}
+      addedObject: {fileID: 6385996815229502514}
   m_SourcePrefab: {fileID: 100100000, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
---- !u!4 &3404103301378106749 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2246201485089600305, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
-  m_PrefabInstance: {fileID: 3463780156057327180}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3599659618857885055 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 136619726235208499, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
@@ -263,6 +258,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 486345261945129626, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
   m_PrefabInstance: {fileID: 3463780156057327180}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5759751950871256796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9223211856986065040, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
+  m_PrefabInstance: {fileID: 3463780156057327180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6584424271493264204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aba86a10b643f3af1cfec23fe5cb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.HitboxAnchors
 --- !u!1 &6584424271493264204 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7742043236931790080, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
@@ -280,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ec37ca6a3992be49a47b280145177ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.NPCs.NpcAnimationEvents
---- !u!114 &5759751950871256796
+--- !u!114 &6385996815229502514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -289,19 +295,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6584424271493264204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2aba86a10b643f3af1cfec23fe5cb11, type: 3}
+  m_Script: {fileID: 11500000, guid: f6f1b2e600d432c488283da32b850049, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.HitboxAnchors
-  entries:
-  - <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
-    <Bone>k__BackingField: {fileID: 3404103301378106749}
-  - <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
-    <Bone>k__BackingField: {fileID: 6851884399960643674}
---- !u!4 &6851884399960643674 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8000391009079512598, guid: f8037ecdab9236d4581d0f6eee254527, type: 3}
-  m_PrefabInstance: {fileID: 3463780156057327180}
-  m_PrefabAsset: {fileID: 0}
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Animations.ActionAnimator
 --- !u!1001 &6413126583526175165
 PrefabInstance:
   m_ObjectHideFlags: 0

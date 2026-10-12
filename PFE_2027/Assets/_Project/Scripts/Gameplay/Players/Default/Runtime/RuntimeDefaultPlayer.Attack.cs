@@ -19,6 +19,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         private void LateUpdate()
         {
+            UpdateLocomotionAnimation();
             UpdateFacing();
 
             if (attackRunner == null)
@@ -51,7 +52,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             AttackData attack;
             if (!attackRunner.IsRunning)
                 attack = data.BasicAttack;
-            else if (attackRunner.Has(AttackFlags.Combo) && attackRunner.Current.Next != null)
+            else if (attackRunner.Has(WindowFlags.Combo) && attackRunner.Current.Next != null)
                 attack = attackRunner.Current.Next;
             else
                 return; // Keep the request buffered until the combo window opens or it expires

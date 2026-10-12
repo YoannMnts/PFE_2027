@@ -37,7 +37,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
 
-            var attackContext = new AttackContext(Animator, hitboxAnchors, this, hitMask, OnAttackHit);
+            var attackContext = new AttackContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
             AttackRunner = new AttackRunner(attackContext);
             
             OnSetup();
@@ -89,7 +89,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
 
-            bool isLocked = !IsKnockedBack && AttackRunner != null && AttackRunner.Has(AttackFlags.MovementLock);
+            bool isLocked = !IsKnockedBack && AttackRunner != null && AttackRunner.Has(WindowFlags.MovementLock);
             NavMeshAgent.isStopped = isLocked;
 
             if (isLocked)

@@ -30,6 +30,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         protected virtual void Awake()
         {
             behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+            InitializeAnimation();
             
             if (NavMeshAgent != null)
                 NavMeshAgent.updateRotation = Mesh == null;

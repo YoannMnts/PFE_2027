@@ -1,0 +1,197 @@
+.attack-tool,
+.attack-edit {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.attack-tool__edit-button {
+    margin: 0;
+    background-color: var(--pe-accent);
+    color: var(--pe-text-strong);
+    border-width: 0;
+    border-radius: 4px;
+    padding: 6px 12px;
+    -unity-font-style: bold;
+}
+
+.attack-tool__edit-button:hover {
+    opacity: 0.9;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.attack-edit__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background-color: var(--pe-card);
+    border-radius: 6px;
+}
+
+.attack-edit__title {
+    -unity-font-style: bold;
+    font-size: 14px;
+    color: var(--pe-text-strong);
+    flex-shrink: 1;
+}
+
+.attack-edit__header-buttons {
+    flex-direction: row;
+}
+
+/* ---------------------------------------------------------------- timeline */
+
+.attack-timeline {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background-color: var(--pe-card);
+    border-radius: 6px;
+}
+
+/* One row = fixed-width title + stretching area: tracks and slider are aligned */
+.attack-track-row {
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+    margin-bottom: 3px;
+}
+
+.attack-track-row__label {
+    width: 110px;
+    min-width: 110px;
+    -unity-text-align: middle-left;
+    color: var(--pe-text-soft);
+    overflow: hidden;
+}
+
+.attack-track-row__label--selectable:hover {
+    color: var(--pe-text-strong);
+}
+
+.attack-track-row--selected > .attack-track-row__label {
+    color: var(--pe-accent);
+    -unity-font-style: bold;
+}
+
+.attack-track-row--selected > .attack-track {
+    border-color: var(--pe-accent);
+}
+
+.attack-track {
+    flex-grow: 1;
+    height: 16px;
+    position: relative;
+    background-color: var(--pe-canvas);
+    border-width: 1px;
+    border-color: var(--pe-hairline);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.attack-track__bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    min-width: 12px; /* a very short window stays grabbable by both handles */
+    border-radius: 2px;
+    opacity: 0.85;
+    cursor: move-arrow;
+}
+
+.attack-track__bar:hover {
+    opacity: 1;
+}
+
+/* Edge handles: small light bars at both ends, resize cursor */
+.attack-track__grip {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    width: 5px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.55);
+    cursor: resize-horizontal;
+}
+
+.attack-track__grip:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.attack-track__grip--start {
+    left: 0;
+}
+
+.attack-track__grip--end {
+    right: 0;
+}
+
+.attack-track__playhead {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--pe-text-strong);
+}
+
+.attack-timeline__slider {
+    flex-grow: 1;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.attack-timeline__controls {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.attack-timeline__label {
+    margin-left: 12px;
+    color: var(--pe-text-muted);
+    -unity-font-style: italic;
+}
+
+/* ---------------------------------------------------------------- fields */
+
+.attack-edit__inspector {
+    flex-grow: 1;
+}
+
+/* ---------------------------------------------------------------- sub-tabs */
+
+.hitbox-browsers,
+.hitbox-category {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.hitbox-tabs {
+    flex-direction: row;
+    flex-shrink: 0;
+    padding: 6px 12px 0 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--pe-card);
+}
+
+.hitbox-tabs__tab {
+    margin: 0 4px 0 0;
+    padding: 4px 12px;
+    border-width: 0;
+    border-radius: 4px 4px 0 0;
+    background-color: transparent;
+    color: var(--pe-text-soft);
+}
+
+.hitbox-tabs__tab:hover {
+    color: var(--pe-text-strong);
+}
+
+.hitbox-tabs__tab--active {
+    background-color: var(--pe-card);
+    color: var(--pe-text-strong);
+    -unity-font-style: bold;
+}

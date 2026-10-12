@@ -1,19 +1,19 @@
-using UnityEngine;
+using PFE.Gameplay.Scripts.Animations;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
     public struct AttackContext
     {
-        public readonly Animator animator;
+        public readonly ActionAnimator actionAnimator;
         public readonly HitboxAnchors anchors;
         public readonly IDamageable owner;
-        public readonly LayerMask hitMask;
+        public readonly UnityEngine.LayerMask hitMask;
         public readonly AttackHitHandler onHit;
 
         public AttackContext(
-            Animator animator, HitboxAnchors anchors, IDamageable owner, LayerMask hitMask, AttackHitHandler onHit)
+            ActionAnimator actionAnimator, HitboxAnchors anchors, IDamageable owner, UnityEngine.LayerMask hitMask, AttackHitHandler onHit)
         {
-            this.animator = animator;
+            this.actionAnimator = actionAnimator;
             this.anchors = anchors;
             this.owner = owner;
             this.hitMask = hitMask;

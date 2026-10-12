@@ -42,7 +42,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             else
                 Debug.LogError("[RuntimeDefaultPlayer] No CharacterMotor assigned, movement won't be locked during attacks.", this);
 
-            var attackContext = new AttackContext(animator, hitboxAnchors, this, hitMask, OnAttackHit);
+            InitializeAnimation();
+
+            var attackContext = new AttackContext(actionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
             // The player is not IDamageable yet: no owner to exclude
             attackRunner = new AttackRunner(attackContext);
 
@@ -70,7 +72,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void LockMovementDuringAttack(ICharacterMotor motor)
         {
-            if (attackRunner == null || !attackRunner.Has(AttackFlags.MovementLock))
+            if (attackRunner == null || !attackRunner.Has(WindowFlags.MovementLock))
                 return;
 
             motor.MoveInput = Vector3.zero;
