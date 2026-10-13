@@ -2,7 +2,7 @@ using PFE.Gameplay.Scripts.Animations;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    public struct AttackContext
+    public struct HitboxContext
     {
         public readonly ActionAnimator actionAnimator;
         public readonly HitboxAnchors anchors;
@@ -10,7 +10,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         public readonly UnityEngine.LayerMask hitMask;
         public readonly AttackHitHandler onHit;
 
-        public AttackContext(
+        public HitboxContext(
             ActionAnimator actionAnimator, HitboxAnchors anchors, IDamageable owner, UnityEngine.LayerMask hitMask, AttackHitHandler onHit)
         {
             this.actionAnimator = actionAnimator;

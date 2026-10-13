@@ -45,7 +45,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             dashDirection = direction.normalized;
 
             // A dash cancels the current attack
-            attackRunner?.End();
+            hitboxRunner?.End();
 
             dashElapsed = 0f;
             IsDashing = true;

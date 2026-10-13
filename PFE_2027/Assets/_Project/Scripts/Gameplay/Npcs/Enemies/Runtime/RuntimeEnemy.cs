@@ -37,7 +37,7 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
         }
 
 
-        private void UpdateTargetPosition(Vector3 position)
+        protected virtual void UpdateTargetPosition(Vector3 position)
         {
             targetPosition = position;
         }

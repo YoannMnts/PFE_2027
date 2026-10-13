@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    public class AttackRunner
+    public class HitboxRunner
     {
         private const int MAX_COLLIDERS = 16;
         
@@ -19,13 +19,13 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private readonly List<IDamageable> alreadyHit = new(MAX_COLLIDERS);
         private Transform[] resolvedAnchors = new Transform[4];
         
-        private AttackData current;
+        private HitboxData current;
         private int playId = -1;
         private float previousTime;
 
         public bool IsRunning => current != null;
 
-        public AttackData Current => current;
+        public HitboxData Current => current;
 
         // Union of the flags of every window containing the current time (None while no attack runs)
         public WindowFlags ActiveFlags { get; private set; }
@@ -33,7 +33,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         // True if at least one of the given flags is active
         public bool Has(WindowFlags flags) => (ActiveFlags & flags) != 0;
 
-        public AttackRunner(AttackContext context)
+        public HitboxRunner(HitboxContext context)
         {
             actionAnimator = context.actionAnimator;
             anchors = context.anchors;
@@ -42,9 +42,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             onHit = context.onHit;
         }
         
-        public void Begin(AttackData data)
+        public void Begin(HitboxData data)
         {
-            playId = actionAnimator.Play(data.AnimationClip);
+            playId = actionAnimator.Play(data.AnimationClip, duration: data.PlayDuration);
             if (playId < 0)
             {
                 Debug.LogError($"[AttackRunner] Attack '{data.name}' has no animation clip.", data);
@@ -60,7 +60,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             ResolveAnchors(data);
         }
 
-        private void ResolveAnchors(AttackData data)
+        private void ResolveAnchors(HitboxData data)
         {
             ReadOnlySpan<HitboxWindow> hitboxes = data.Hitboxes;
             if (resolvedAnchors.Length < hitboxes.Length)
@@ -139,7 +139,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                     continue;
 
                 alreadyHit.Add(target);
-                onHit?.Invoke(new AttackHit(target, collider, in hitbox, center));
+                onHit?.Invoke(new HitboxHit(target, collider, in hitbox, center));
             }
         }
 

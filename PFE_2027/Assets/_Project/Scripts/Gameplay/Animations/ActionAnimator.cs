@@ -26,6 +26,7 @@ namespace PFE.Gameplay.Scripts.Animations
             public float targetWeight;
             public float fadeSpeed;         // Weight change per second
             public float fadeOutDuration;
+            public float speed;             // Playback speed of the clip (1 = its own length)
             public int playId;
         }
 
@@ -110,7 +111,9 @@ namespace PFE.Gameplay.Scripts.Animations
 
         // Starts the clip in the free slot. Returns the id of this play (or -1 without clip): pass it to
         // TryGetNormalizedTime / Stop to know whether this play is still the current action.
-        public int Play(AnimationClip clip, float fadeIn = DEFAULT_FADE_IN, float fadeOut = DEFAULT_FADE_OUT)
+        // duration: real duration in seconds (the clip is sped up or slowed down), negative for the clip length.
+        public int Play(AnimationClip clip, float fadeIn = DEFAULT_FADE_IN, float fadeOut = DEFAULT_FADE_OUT,
+            float duration = -1f)
         {
             EnsureInitialized();
             if (clip == null)
@@ -119,6 +122,7 @@ namespace PFE.Gameplay.Scripts.Animations
             int slotIndex = activeSlot == 0 ? 1 : 0;
             int input = slotIndex + 1;
             float fadeSpeed = fadeIn > 0f ? 1f / fadeIn : float.MaxValue;
+            float speed = duration > 0f && clip.length > 0f ? clip.length / duration : 1f;
 
             ref Slot slot = ref slots[slotIndex];
             if (slot.playable.IsValid())
@@ -129,10 +133,12 @@ namespace PFE.Gameplay.Scripts.Animations
 
             slot.playable = AnimationClipPlayable.Create(graph, clip);
             slot.playable.SetTime(0d);
+            slot.playable.SetSpeed(speed);
             graph.Connect(slot.playable, 0, mixer, input);
             mixer.SetInputWeight(input, 0f);
 
             slot.clip = clip;
+            slot.speed = speed;
             slot.weight = 0f;
             slot.targetWeight = 1f;
             slot.fadeSpeed = fadeSpeed;
@@ -202,7 +208,9 @@ namespace PFE.Gameplay.Scripts.Animations
             double length = active.clip.length;
 
             // The fade out starts before the end, so the locomotion is fully back when the clip finishes
-            if (active.targetWeight > 0f && length - time <= active.fadeOutDuration)
+            // (remaining clip time converted to real seconds with the playback speed)
+            double remaining = (length - time) / active.speed;
+            if (active.targetWeight > 0f && remaining <= active.fadeOutDuration)
             {
                 active.targetWeight = 0f;
                 active.fadeSpeed = active.fadeOutDuration > 0f ? 1f / active.fadeOutDuration : float.MaxValue;

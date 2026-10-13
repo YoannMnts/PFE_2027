@@ -12,11 +12,25 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 {
     public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>
     {
+        [SerializeField, BoxGroup("Debugs")]
+        private bool isCameraOnPilgrim = true;
+        
+        [SerializeField, BoxGroup("Debugs")]
+        private CinemachineCamera targetCamera;
+        
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
 
         protected override Vector3 TargetPosition => Instance?.TargetDestination ?? transform.position;
-        
+
+        protected override void OnSetup()
+        {
+            base.OnSetup();
+
+            if (!isCameraOnPilgrim)
+                targetCamera.Priority.Value = -1;
+        }
+
         public void AddMemberToCmGroup(Transform member, float weight = 0, float radius = 0)
         {
             targetGroup.AddMember(member, weight, radius);

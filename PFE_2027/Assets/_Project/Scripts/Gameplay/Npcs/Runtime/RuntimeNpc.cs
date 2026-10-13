@@ -10,7 +10,7 @@ using UnityEngine.AI;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     [RequireComponent(typeof(BehaviorGraphAgent))]
-    public abstract partial class RuntimeNpc : MonoBehaviour
+    public abstract partial class RuntimeNpc : MonoBehaviour, IRuntimeNpc
     {
         protected const string BEHAVIOR_SELF_NPC = "SelfNpc";
         protected const string BEHAVIOR_TARGET_POSITION = "TargetPosition";
@@ -23,8 +23,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         public Transform Mesh { get; private set; }
         
         protected abstract Vector3 TargetPosition { get;  }
-        public AttackRunner AttackRunner { get; protected set;}
-        
+        public HitboxRunner HitboxRunner { get; protected set;}
+
         protected BehaviorGraphAgent behaviorGraphAgent;
         
         protected virtual void Awake()
@@ -69,5 +69,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             Tween.StopAll(onTarget: transform);
             Destroy(gameObject);
         }
+
+        public abstract void ApplyKnockback(Vector3 offset);
+        public abstract void TakeDamage(int amount);
     }
 }

@@ -5,11 +5,16 @@ using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.GameModes;
+using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
+using PFE.Gameplay.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Players;
+using PFE.Gameplay.Scripts.Players.Default;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 

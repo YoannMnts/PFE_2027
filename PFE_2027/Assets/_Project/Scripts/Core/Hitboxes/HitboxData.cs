@@ -21,5 +21,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         public ReadOnlySpan<HitboxWindow> Hitboxes => hitboxes;
 
         public ReadOnlySpan<AdditionalWindow> Windows => windows;
+
+        // Real duration of the animation in seconds; negative = length of the clip
+        public virtual float PlayDuration => -1f;
     }
 }
