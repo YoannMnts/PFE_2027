@@ -32,13 +32,11 @@ namespace PFE.Gameplay.Scripts.NPCs
             instance.OnModifyHealth += OnModifyHealth;
             instance.OnDeath += OnDeath;
 
-            KnockbackDamping = instance.data.KnockbackDamping;
-
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
 
-            var attackContext = new AttackContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
-            AttackRunner = new AttackRunner(attackContext);
+            var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
+            HitboxRunner = new HitboxRunner(attackContext);
             
             OnSetup();
         }
@@ -64,7 +62,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             base.LateUpdate();
             
-            AttackRunner?.LateTick();
+            HitboxRunner?.LateTick();
         }
         
         protected virtual void OnDestroy() => Unsubscribe();
@@ -72,15 +70,25 @@ namespace PFE.Gameplay.Scripts.NPCs
         [Button, DisableInEditorMode]
         public void DebugDamage(int damage) => TakeDamage(damage);
 
-        public void TakeDamage(int amount) => instance?.AddOrRemoveHealth(-amount);
+        public override void TakeDamage(int amount) => instance?.AddOrRemoveHealth(-amount);
 
-        private void OnAttackHit(in AttackHit hit)
+        private void OnAttackHit(in HitboxHit hit)
         {
             if (hit.target is not IRuntimeNpc npc)
                 return;
 
             Transform facing = Mesh != null ? Mesh : transform;
-            Vector3 direction = PushBackExtension.GetPushBackDirection(facing.forward, hit.hitbox.PushBackMultiplier);
+            float strength = hit.hitbox.PushBackMultiplier;
+            Vector3 fallback = facing.forward;
+
+            // Hit dealt by the pushback: as hard as this NPC slides (PushBackMultiplier converts its speed into a strength)
+            if (IsKnockedBack && HitboxRunner != null && HitboxRunner.Current is PushbackData)
+            {
+                strength *= KnockbackVelocity.magnitude;
+                fallback = KnockbackVelocity;
+            }
+
+            Vector3 direction = PushBackExtension.GetPushBackDirection(transform.position, hit.TargetPosition, fallback, strength);
             npc.PushBackWithDamage(hit.hitbox.Damage, direction);
         }
         
@@ -89,26 +97,32 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
 
-            bool isLocked = !IsKnockedBack && AttackRunner != null && AttackRunner.Has(WindowFlags.MovementLock);
+            bool isLocked = !IsKnockedBack && HitboxRunner != null && HitboxRunner.Has(WindowFlags.MovementLock);
             NavMeshAgent.isStopped = isLocked;
 
             if (isLocked)
                 NavMeshAgent.velocity = Vector3.zero;
         }
         
-        public void ApplyKnockback(Vector3 offset)
+        public override void ApplyKnockback(Vector3 offset)
         {
             if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
 
-            offset.y = 0f;
-            KnockbackVelocity += offset * KnockbackDamping;
-
-            if (!IsKnockedBack)
-            {
-                KnockbackVelocity = Vector3.zero;
+            // No PushbackData: this NPC can't be pushed (e.g. the pilgrim)
+            PushbackData pushback = instance.data.PushbackData;
+            if (pushback == null)
                 return;
-            }
+
+            // offset: direction of the hit, its length is the strength (hitbox PushBackMultiplier)
+            offset.y = 0f;
+            float duration = StartKnockback(offset, offset.magnitude, pushback.DistanceInTime);
+            if (duration <= 0f)
+                return;
+
+            // Replaces the current attack; its animation lasts as long as the curve (PlayDuration),
+            // a new hit restarts both
+            HitboxRunner?.Begin(pushback);
 
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;

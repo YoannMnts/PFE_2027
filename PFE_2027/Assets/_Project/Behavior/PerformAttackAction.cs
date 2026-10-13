@@ -12,31 +12,39 @@ public partial class PerformAttackAction : Unity.Behavior.Action
     [SerializeReference] public BlackboardVariable<RuntimeNpc> agent;
     [SerializeReference] public BlackboardVariable<AttackData> attack;
     
-    private AttackRunner runner;
+    private HitboxRunner runner;
+    private AttackData started;
 
     protected override Status OnStart()
     {
         RuntimeNpc npc = agent.Value;
-        if (npc == null || npc.AttackRunner == null || attack.Value == null)
+        if (npc == null || npc.HitboxRunner == null || attack.Value == null)
             return Status.Failure;
 
-        runner = npc.AttackRunner;
+        runner = npc.HitboxRunner;
+        started = attack.Value;
 
-        runner.Begin(attack.Value);
+        runner.Begin(started);
         return Status.Running;
     }
 
+    // Success as soon as the runner no longer plays this attack (finished, or replaced by a pushback...)
     protected override Status OnUpdate()
     {
-        return runner.IsRunning ? Status.Running : Status.Success;
+        return IsPlayingStartedAttack() ? Status.Running : Status.Success;
     }
 
+    // Only cancels its own attack: the runner may already be playing something else (pushback)
     protected override void OnEnd()
     {
-        if (runner != null && runner.IsRunning)
+        if (IsPlayingStartedAttack())
             runner.End();
 
         runner = null;
+        started = null;
     }
+
+    private bool IsPlayingStartedAttack() =>
+        runner != null && runner.IsRunning && runner.Current == started;
 }
 

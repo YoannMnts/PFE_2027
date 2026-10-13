@@ -436,6 +436,8 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 8
+  isCameraOnPilgrim: 1
+  targetCamera: {fileID: 2315395614688979884}
   targetGroup: {fileID: 4366569995308566924}
 --- !u!195 &7066457318964829729 stripped
 NavMeshAgent:

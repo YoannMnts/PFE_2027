@@ -20,9 +20,42 @@ MonoBehaviour:
       <End>k__BackingField: 1
     <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
     <Shape>k__BackingField: 0
-    <Offset>k__BackingField: {x: -0.20468266, y: -0.31272012, z: 0.03260656}
-    <Size>k__BackingField: {x: 1.4093635, y: 0.5148009, z: 0.6252793}
+    <Offset>k__BackingField: {x: -0.20468277, y: -0.25956365, z: 0.032606557}
+    <Size>k__BackingField: {x: 1.4093635, y: 0.74453175, z: 0.6252793}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
-    <PushBackMultiplier>k__BackingField: 0
+    <PushBackMultiplier>k__BackingField: 0.1
   windows: []
+  <DistanceInTime>k__BackingField:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.04421205
+      value: 0.4872873
+      inSlope: 3.6643312
+      outSlope: 3.6643312
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.4
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

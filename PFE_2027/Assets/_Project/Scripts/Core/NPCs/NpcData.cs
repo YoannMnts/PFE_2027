@@ -14,11 +14,11 @@ namespace PFE.Core.Scripts.NPCs
         [field: SerializeField, Range(0f, 100f), BoxGroup("Metrics")]
         public float MaxHealth { get; private set; }
 
-        [field: SerializeField, Range(0f, 50f), BoxGroup("Metrics")]
-        public float KnockbackDamping { get; private set; }
-
-        [field: SerializeField, BoxGroup("Attack")]
+        [field: SerializeField, BoxGroup("Hitboxes")]
         public AttackData AttackData { get;  private set; }
+        
+        [field: SerializeField, BoxGroup("Hitboxes")]
+        public PushbackData PushbackData { get; private set; }
         
         [field: SerializeField, BoxGroup("References")]
         public Transform Prefab { get; private set; }

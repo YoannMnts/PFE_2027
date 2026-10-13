@@ -14,7 +14,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Attack")]
         private LayerMask hitMask;
 
-        private AttackRunner attackRunner;
+        private HitboxRunner hitboxRunner;
         private float attackRequestTime = float.NegativeInfinity;
         
         private void LateUpdate()
@@ -22,10 +22,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             UpdateLocomotionAnimation();
             UpdateFacing();
 
-            if (attackRunner == null)
+            if (hitboxRunner == null)
                 return;
 
-            attackRunner.LateTick();
+            hitboxRunner.LateTick();
             TryConsumeAttackRequest();
         }
         
@@ -50,26 +50,31 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 return;
 
             AttackData attack;
-            if (!attackRunner.IsRunning)
+            if (!hitboxRunner.IsRunning)
                 attack = data.BasicAttack;
-            else if (attackRunner.Has(WindowFlags.Combo) && attackRunner.Current.Next != null)
-                attack = attackRunner.Current.Next;
+            
+            else if (hitboxRunner.Has(WindowFlags.Combo) 
+                     && hitboxRunner.Current is AttackData attackData 
+                     && attackData.Next != null)
+                attack = attackData.Next;
+            
             else
                 return; // Keep the request buffered until the combo window opens or it expires
 
             // Every hit (first one and combo ones) goes where the player is aiming
             SnapFacingToIntent();
-            attackRunner.Begin(attack);
+            hitboxRunner.Begin(attack);
             attackRequestTime = float.NegativeInfinity;
         }
 
-        // What the player's attacks do to what they touch
-        private void OnAttackHit(in AttackHit hit)
+        // What the player's attacks do to what they touch: pushed away from the player
+        private void OnAttackHit(in HitboxHit hit)
         {
             if (hit.target is not IRuntimeNpc npc)
                 return;
 
-            Vector3 direction = PushBackExtension.GetPushBackDirection(mesh.forward, hit.hitbox.PushBackMultiplier);
+            Vector3 direction = PushBackExtension.GetPushBackDirection(mesh.transform.position, hit.TargetPosition,
+                mesh.forward, hit.hitbox.PushBackMultiplier);
             npc.PushBackWithDamage(hit.hitbox.Damage, direction);
         }
     }

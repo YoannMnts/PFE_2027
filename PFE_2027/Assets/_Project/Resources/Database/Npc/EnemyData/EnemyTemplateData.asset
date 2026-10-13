@@ -17,4 +17,5 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 50
   <KnockbackDamping>k__BackingField: 10
   <AttackData>k__BackingField: {fileID: 11400000, guid: f90c272645181764f80f66b48a8957c8, type: 2}
+  <PushbackData>k__BackingField: {fileID: 11400000, guid: c362cca2ebdf5664ebc1a31471213512, type: 2}
   <Prefab>k__BackingField: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}

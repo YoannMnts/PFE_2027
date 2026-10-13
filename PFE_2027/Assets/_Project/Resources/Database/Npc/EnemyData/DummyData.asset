@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de9ead7905d4b54b996999af20dce5a, type: 3}
+  m_Name: DummyData
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Dummy.EnemyTemplateData
+  guidText: 89869d16-81c9-4502-9e28-00e79db6ed0b
+  <Name>k__BackingField: Dummy
+  <MaxHealth>k__BackingField: 100
+  <AttackData>k__BackingField: {fileID: 11400000, guid: f90c272645181764f80f66b48a8957c8, type: 2}
+  <PushbackData>k__BackingField: {fileID: 11400000, guid: c362cca2ebdf5664ebc1a31471213512, type: 2}
+  <Prefab>k__BackingField: {fileID: 4452597708138578259, guid: c9bbce026a3dc574aa3a39f107031a1e, type: 3}
