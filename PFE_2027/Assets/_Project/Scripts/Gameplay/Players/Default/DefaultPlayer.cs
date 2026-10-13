@@ -13,6 +13,8 @@ namespace PFE.Gameplay.Scripts.Players.Default
         public event Action OnDeath;
         
         public PlayerData Data { get; private set; }
+        public Inventory Inventory { get;  private set; }
+        
         public float Health { get; private set; }
         public float MaxHealth => Data != null ? Data.MaxHealth : 0f;
         public bool IsDead { get; private set; }
@@ -24,6 +26,7 @@ namespace PFE.Gameplay.Scripts.Players.Default
                 Debug.LogError("[DefaultPlayer] Created without PlayerData: assign one in the Game Metrics settings.");
 
             Data = data;
+            Inventory = new Inventory();
             Health = MaxHealth;
             ShowUI = new Priority<bool>(false);
         }

@@ -6,6 +6,7 @@ using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
@@ -49,6 +50,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             
             var battlePhase = new BattlePhase(context);
             var result = await battlePhase.Run();
+
+            var restingPhase = new RestingPhase(context);
+            await restingPhase.Run();
             
             return result.value;
         }

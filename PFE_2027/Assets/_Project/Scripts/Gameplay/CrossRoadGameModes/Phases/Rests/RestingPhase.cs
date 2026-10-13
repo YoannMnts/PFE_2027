@@ -12,23 +12,21 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 {
-    public class CampfirePhase : Phase<bool>
+    public class RestingPhase : Phase<bool>
     { 
-        public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
-        
         private readonly CrossRoadGameModeContext gameModeContext;
-        
         private ChannelKey key;
-        private SceneReference sceneToLoad;
+        
+        public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
         private readonly IAreaData currentArea;
         
         
-        public CampfirePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
+        public RestingPhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
         {
             this.currentArea = currentArea;
         }
-        private CampfirePhase(CrossRoadGameModeContext gameModeContext)
+        public RestingPhase(CrossRoadGameModeContext gameModeContext)
         {
             this.gameModeContext = gameModeContext;
         }
@@ -49,17 +47,17 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
             //generate campfire zone
-            var generateCampfirePhase = new GenerateAreaPhase(currentArea);
-            var campfireResult = await generateCampfirePhase.Run();
-            
-            var generateNpcPhase = new GenerateNpcPhase(currentArea, campfireResult.value, gameModeContext.NpcManager);
-            await generateNpcPhase.Run();
+            var generateCampfireAreaPhase = new GenerateAreaPhase(currentArea);
+            var campfireResult = await generateCampfireAreaPhase.Run();
+            //generate pilgrim
+            var generatePilgrimPhase = new GenerateNpcPhase(currentArea, campfireResult.value, gameModeContext.NpcManager);
+            await generatePilgrimPhase.Run();
 
-            //pilgrim + chests
-            var explorationPhase = new ExplorationPhase(currentArea, gameModeContext.NpcManager);
-            await explorationPhase.Run();
+            //exploration + chest 
+            var campfirePhase = new CampfirePhase(gameModeContext, currentArea);
+            await campfirePhase.Run();
 
-            //start dialogue phase ( question / answer)
+            // dialogue phase ( question / response)
             var dialoguePhase = new DialoguePhase();
             var dialogueResult = await dialoguePhase.Run();
 

@@ -39,7 +39,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                     var battleResult = await battlePhase.Run();
                     
                 }
-                var campfirePhase = new CampfirePhase(context, data);
+                var campfirePhase = new RestingPhase(context, data);
                 var campfireResult = await campfirePhase.Run();
 
                 return true;
