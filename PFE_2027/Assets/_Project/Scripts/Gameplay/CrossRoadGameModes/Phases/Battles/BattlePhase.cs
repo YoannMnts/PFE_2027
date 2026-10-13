@@ -17,12 +17,13 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
     public class BattlePhase : Phase<bool>
     {
+        private readonly CrossRoadGameModeContext gameModeContext;
+        private ChannelKey key;
+        
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
-        private readonly CrossRoadGameModeContext gameModeContext;
         private readonly SceneReference sceneToLoad;
-        private ChannelKey key;
-        private IAreaData currentArea;
+        private readonly IAreaData currentArea;
 
         public BattlePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
         {

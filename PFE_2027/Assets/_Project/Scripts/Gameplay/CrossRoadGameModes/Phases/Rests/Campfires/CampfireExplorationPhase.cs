@@ -2,9 +2,9 @@
 using Helteix.Tools.Phases;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
+namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 {
-    public class DialoguePhase : Phase<bool>
+    public class CampfireExplorationPhase : Phase<bool>
     {
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
