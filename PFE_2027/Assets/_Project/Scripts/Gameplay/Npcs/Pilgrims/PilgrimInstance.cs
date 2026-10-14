@@ -25,6 +25,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             CurrentPosition = newPosition;
 
             TargetDestination = GetPositionFromSpline(newPosition, data.TargetPositionDistance);
+            SetGoal(TargetDestination);
             
             OnPositionChanged?.Invoke(CurrentPosition);
         }

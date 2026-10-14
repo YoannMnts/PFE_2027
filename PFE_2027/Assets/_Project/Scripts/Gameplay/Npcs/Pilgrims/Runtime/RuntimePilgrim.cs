@@ -20,9 +20,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
-
-        protected override Vector3 TargetPosition => Instance?.TargetDestination ?? transform.position;
-
+        
         protected override void OnSetup()
         {
             base.OnSetup();

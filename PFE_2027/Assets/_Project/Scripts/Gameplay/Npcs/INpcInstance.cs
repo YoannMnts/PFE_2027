@@ -1,5 +1,6 @@
 ﻿using System;
 using PFE.Core.Scripts.NPCs;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
@@ -11,9 +12,11 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         public INpcData Data { get; }
         public float CurrentHealth { get; }
+        public Vector3 Goal { get; }
+        public Vector3 TargetPosition { get; }
+        public void SetGoal(Vector3 goal);
+        public void AddOrRemoveHealth(int amount);
         public bool IsDead { get; }
 
-        public void AddOrRemoveHealth(int amount);
-        public void Act();
     }
 }

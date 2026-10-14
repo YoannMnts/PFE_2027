@@ -25,12 +25,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             return instance;
         }
 
-        public virtual bool CanSpawn(TData data) => true;
+        public Vector3 RedirectTargetPosition(TData data, INpcInstance instance, Vector3 goal)
+            => RedirectTargetPosition(data, (TInstance)instance, goal);
 
-        public void Act(TData data, INpcInstance instance) => Act(data, (TInstance)instance);
-
-        protected abstract void Act(TData data, TInstance instance);
-
+        // Default: straight to the goal. Override to change where this NPC type actually goes.
+        protected virtual Vector3 RedirectTargetPosition(TData data, TInstance instance, Vector3 goal) => goal;
+        
         public virtual float ModifyHealth(TData data, int amount, float currentHealth)
             => Mathf.Clamp(currentHealth + amount, 0f, data.MaxHealth);
 
