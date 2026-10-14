@@ -15,6 +15,12 @@ namespace PFE.Gameplay.Scripts.NPCs
         INpcData INpcInstance.Data => data;
 
         public float CurrentHealth { get; private set; }
+        
+        // Raw destination given by the game (pilgrim position, spline point...)
+        public Vector3 Goal { get; private set; }
+
+        // Where the NPC actually goes: the goal after its behaviour redirected it
+        public Vector3 TargetPosition { get; private set; }
         public bool IsDead => CurrentHealth <= 0f;
 
         // resolved once here rather than a lookup on every call
@@ -44,12 +50,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             }
         }
 
-        public void Act()
+        public void SetGoal(Vector3 goal)
         {
-            if (IsDead || container == null)
-                return;
-
-            container.Act(data, this);
+            Goal = goal;
+            TargetPosition = container != null && !IsDead
+                ? container.RedirectTargetPosition(data, this, goal)
+                : goal;
         }
     }
 }

@@ -21,8 +21,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         [field : SerializeField, BoxGroup("References")]
         public Transform Mesh { get; private set; }
-        
-        protected abstract Vector3 TargetPosition { get;  }
         public HitboxRunner HitboxRunner { get; protected set;}
 
         protected BehaviorGraphAgent behaviorGraphAgent;
@@ -45,7 +43,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         protected virtual void LateUpdate()
         {
-            behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, TargetPosition);
         }
         
         public virtual void MoveTo(Vector3 destination)

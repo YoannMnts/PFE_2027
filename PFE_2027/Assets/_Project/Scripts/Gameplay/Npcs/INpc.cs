@@ -13,14 +13,11 @@ namespace PFE.Gameplay.Scripts.NPCs
         // creates the instance (runtime state) specific to this NPC type and plugs it into its spawned runtime
         // returns null if the runtime doesn't match the instance type
         INpcInstance CreateInstance(TData data, NpcInstanceContext context, Transform runtime);
-
+        
         [AddToContainer]
-        // allows the spawn or not
-        bool CanSpawn(TData data);
-
-        [AddToContainer]
-        // active behaviour of the NPC (enemy => attacks, pilgrim => walks...)
-        void Act(TData data, INpcInstance context);
+        // final destination of the NPC from the goal given by the game (pilgrim position, spline point...):
+        // lets each NPC type go somewhere else than straight to it (flank, keep its distance, stay home...)
+        Vector3 RedirectTargetPosition(TData data, INpcInstance instance, Vector3 goal);
 
         [AddToContainer]
         // computes the new health (negative amount = damage)

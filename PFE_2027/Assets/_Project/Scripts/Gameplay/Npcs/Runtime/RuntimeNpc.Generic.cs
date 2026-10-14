@@ -61,10 +61,13 @@ namespace PFE.Gameplay.Scripts.NPCs
         protected override void LateUpdate()
         {
             base.LateUpdate();
-            
+
+            if (instance != null)
+                behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, instance.TargetPosition);
+
             HitboxRunner?.LateTick();
         }
-        
+
         protected virtual void OnDestroy() => Unsubscribe();
 
         [Button, DisableInEditorMode]

@@ -43,10 +43,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                     Debug.LogError($"[NpcGenerator] No INpc behaviour registered for '{npcData.GetType().Name}'.", this);
                     continue;
                 }
-
-                if (!npcContainer.CanSpawn(npcData))
-                    continue;
-
+                
                 if (!area.TryGetAnchor(spawnPoint.AnchorId, out Transform anchor))
                 {
                     Debug.LogWarning($"[NpcGenerator] Spawn anchor '{spawnPoint.AnchorId}' not found in the current area.", this);

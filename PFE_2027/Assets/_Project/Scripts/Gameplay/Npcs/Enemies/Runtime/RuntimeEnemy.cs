@@ -12,10 +12,6 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
     public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IPhaseListener<ProtectPilgrimPhase>
     {
-        protected override Vector3 TargetPosition => targetPosition;
-
-        private Vector3 targetPosition;
-        
         private void OnEnable()
         {
             this.Register();
@@ -28,18 +24,15 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            phase.pilgrimInstance.OnPositionChanged += UpdateTargetPosition;
+            phase.pilgrimInstance.OnPositionChanged += OnPilgrimMoved;
         }
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            phase.pilgrimInstance.OnPositionChanged -=  UpdateTargetPosition;
+            phase.pilgrimInstance.OnPositionChanged -= OnPilgrimMoved;
         }
 
-
-        protected virtual void UpdateTargetPosition(Vector3 position)
-        {
-            targetPosition = position;
-        }
+        // The runtime only forwards what happens in the world; the instance and its behaviour pick the target
+        protected virtual void OnPilgrimMoved(Vector3 pilgrimPosition) => Instance?.SetGoal(pilgrimPosition);
     }
 }

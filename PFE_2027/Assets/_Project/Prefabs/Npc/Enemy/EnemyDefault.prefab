@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3493876115498441425
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452597708138578259, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821112770820456299, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 0597784635d6a8c4aaa6cfa98fdc0306, type: 2}
+    - target: {fileID: 9154506976475687893, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      propertyPath: m_Name
+      value: EnemyDefault
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9154506976475687893, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5902197498553411857}
+  m_SourcePrefab: {fileID: 100100000, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+--- !u!1 &5726303043954848004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9154506976475687893, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+  m_PrefabInstance: {fileID: 3493876115498441425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5902197498553411857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5726303043954848004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e746e909c71546cfac975e2512e8b7c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Gameplay::PFE.Core.DummyEnemy.RuntimeDummy
+  <Animator>k__BackingField: {fileID: 8256423395153651130}
+  runSpeedToValue:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  <NavMeshAgent>k__BackingField: {fileID: 8785786234425619040}
+  <Mesh>k__BackingField: {fileID: 7244124543437777162}
+  hitboxAnchors: {fileID: 7369360234252688561}
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!4 &7244124543437777162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6121783003334947803, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+  m_PrefabInstance: {fileID: 3493876115498441425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7369360234252688561 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6213146447437940320, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+  m_PrefabInstance: {fileID: 3493876115498441425}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2aba86a10b643f3af1cfec23fe5cb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.HitboxAnchors
+--- !u!95 &8256423395153651130 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4821112770820456299, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+  m_PrefabInstance: {fileID: 3493876115498441425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &8785786234425619040 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 5301264351556348081, guid: 1feeafec36291e34081cf2e234487898, type: 3}
+  m_PrefabInstance: {fileID: 3493876115498441425}
+  m_PrefabAsset: {fileID: 0}
