@@ -2,13 +2,16 @@
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    public struct NpcInstanceContext
+    // What a behaviour may need to create the instance of its NPC
+    public readonly struct NpcInstanceContext
     {
         public readonly SplineContainer splineContainer;
+        public readonly NpcManager npcManager;
 
-        public NpcInstanceContext(SplineContainer splineContainer)
+        public NpcInstanceContext(SplineContainer splineContainer, NpcManager npcManager)
         {
             this.splineContainer = splineContainer;
+            this.npcManager = npcManager;
         }
     }
 }

@@ -17,21 +17,31 @@ MonoBehaviour:
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 5cc99684b0251c549a04fff526da9ed4, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_1
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Progression>k__BackingField: 0.4
   - <AnchorId>k__BackingField: Anchor_2
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_3
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_4
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_5
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_6
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_7
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_8
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_9
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
+    <Progression>k__BackingField: 0

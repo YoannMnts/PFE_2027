@@ -3,19 +3,17 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy
 {
+    // Training dummy: always goes back to its spawn point, whatever the pilgrim does
     public class RuntimeDummyEnemy : RuntimeEnemy
     {
-        private Vector3 startPosition;
-
+        // Setup runs while the NPC stands on its anchor (before it is hidden): that's its home
         protected override void OnSetup()
         {
             base.OnSetup();
-            startPosition = transform.position;
+            Instance.SetGoal(transform.position);
         }
 
-        protected override void OnPilgrimMoved(Vector3 pilgrimPosition)
-        {
-            base.OnPilgrimMoved(startPosition);
-        }
+        // Ignores the pilgrim: its goal never changes
+        protected override void OnPilgrimMoved(Vector3 pilgrimPosition) { }
     }
 }

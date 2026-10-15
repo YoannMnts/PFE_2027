@@ -1,35 +1,41 @@
-﻿using System;
-using Helteix.Tools.Phases;
-using PFE.Core.Scripts.Enemy;
-using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+﻿using PFE.Core.Scripts.Enemy;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
-using Sirenix.OdinInspector;
-using Unity.Behavior;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
-    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IPhaseListener<ProtectPilgrimPhase>
+    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>
     {
-        private void OnEnable()
+        // Pilgrim followed while this enemy is active (given by its instance)
+        private PilgrimInstance followedPilgrim;
+
+        // Also runs when the NpcGenerator reveals the enemy (SetActive(true)), the instance exists by then
+        private void OnEnable() => Follow(Instance?.Pilgrim);
+        private void OnDisable() => Follow(null);
+
+        // The first OnEnable runs during the instantiation, before the instance is plugged
+        protected override void OnSetup()
         {
-            this.Register();
+            base.OnSetup();
+
+            if (isActiveAndEnabled)
+                Follow(Instance.Pilgrim);
         }
 
-        private void OnDisable()
+        private void Follow(PilgrimInstance pilgrim)
         {
-            this.Unregister();
-        }
+            if (followedPilgrim != null)
+                followedPilgrim.OnPositionChanged -= OnPilgrimMoved;
 
-        void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
-        {
-            phase.pilgrimInstance.OnPositionChanged += OnPilgrimMoved;
-        }
+            followedPilgrim = pilgrim;
+            if (followedPilgrim == null)
+                return;
 
-        void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
-        {
-            phase.pilgrimInstance.OnPositionChanged -= OnPilgrimMoved;
+            followedPilgrim.OnPositionChanged += OnPilgrimMoved;
+
+            // Goal given right away instead of waiting for the next pilgrim move
+            OnPilgrimMoved(followedPilgrim.CurrentPosition);
         }
 
         // The runtime only forwards what happens in the world; the instance and its behaviour pick the target

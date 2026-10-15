@@ -18,6 +18,9 @@ namespace PFE.Core.Scripts.Area
 
         [field: SerializeField]
         public NpcData Npc { get; private set; }
+        
+        [field: SerializeField, Range(0,1)]
+        public float Progression { get; private set; }
 
 #if UNITY_EDITOR
         // Lists the SpawnAnchors found in the prefab of the AreaData that owns this SpawnPoint.
