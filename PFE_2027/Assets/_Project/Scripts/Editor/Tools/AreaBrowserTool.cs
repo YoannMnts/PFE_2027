@@ -53,7 +53,11 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
             // Prefab stages are only listened to while the tab is displayed (the content is detached
             // when switching tab and when closing the window). OnActivated resyncs on return.
             root.RegisterCallback<AttachToPanelEvent>(_ => Subscribe());
-            root.RegisterCallback<DetachFromPanelEvent>(_ => Unsubscribe());
+            root.RegisterCallback<DetachFromPanelEvent>(_ =>
+            {
+                Unsubscribe();
+                AreaSpawnGizmos.Hide();
+            });
 
             ShowBrowser();
             return root;
@@ -156,6 +160,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
         private void ShowBrowser()
         {
+            AreaSpawnGizmos.Hide();
             browserContent.style.display = DisplayStyle.Flex;
             editPanel.style.display = DisplayStyle.None;
         }
@@ -212,6 +217,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
             browserContent.style.display = DisplayStyle.None;
             editPanel.style.display = DisplayStyle.Flex;
+
+            AreaSpawnGizmos.Show(editedArea);
         }
     }
 }

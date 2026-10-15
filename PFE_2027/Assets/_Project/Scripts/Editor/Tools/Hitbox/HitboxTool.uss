@@ -195,3 +195,16 @@
     color: var(--pe-text-strong);
     -unity-font-style: bold;
 }
+
+.attack-edit__section {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top-width: 1px;
+    border-top-color: var(--pe-hairline);
+}
+
+.attack-edit__section-title {
+    -unity-font-style: bold;
+    color: var(--pe-text-strong);
+    margin-bottom: 4px;
+}

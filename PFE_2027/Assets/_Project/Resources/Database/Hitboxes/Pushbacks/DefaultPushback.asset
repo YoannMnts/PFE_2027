@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 036dcd0aac824ef99c93f5bd87dc77c1, type: 3}
-  m_Name: New Default Pushback Data
+  m_Name: DefaultPushback
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Pushbacks.DefaultPushbackData
   guidText: c167e559-18ae-4b50-8f54-69d4800ceece
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: ce0f42c9c3da61b409403ae249e41472, type: 2}
@@ -39,8 +39,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.04421205
-      value: 0.4872873
+      time: 0.22215241
+      value: 0.8095224
       inSlope: 3.6643312
       outSlope: 3.6643312
       tangentMode: 0
@@ -59,3 +59,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  <Redirect>k__BackingField: {fileID: 11400000, guid: f576e294449e47c4c8b8d479d7a05a68, type: 2}

@@ -21,7 +21,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         [field : SerializeField, BoxGroup("References")]
         public Transform Mesh { get; private set; }
-        public HitboxRunner HitboxRunner { get; protected set;}
+        
+        public abstract HitboxRunner HitboxRunner { get; protected set;}
 
         protected BehaviorGraphAgent behaviorGraphAgent;
         

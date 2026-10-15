@@ -1,3 +1,4 @@
+using PFE.Core.Scripts.Enemy.Attacks;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -70,6 +71,52 @@ namespace PFE.Gameplay.Scripts.NPCs
             IsKnockedBack = false;
             KnockbackVelocity = Vector3.zero;
             knockbackCurve = null;
+        }
+
+        private const int MAX_REDIRECT_CANDIDATES = 16;
+
+        // Shared by every NPC: the queries run one at a time on the main thread
+        private static readonly Collider[] RedirectResults = new Collider[MAX_REDIRECT_CANDIDATES];
+
+        // Aim assist for "knockback into knockback": bends the knockback toward the NPC closest to the axis of a
+        // cone around its direction. Returns the original direction when nobody is in the cone.
+        protected Vector3 RedirectKnockback(Vector3 direction, KnockbackRedirectData redirect, LayerMask mask)
+        {
+            direction.y = 0f;
+            if (direction.sqrMagnitude < 0.0001f)
+                return direction;
+
+            Vector3 origin = transform.position;
+            Vector3 axis = direction.normalized;
+
+            // Only targets inside the cone can beat it; then the highest dot wins (smallest angle to the axis)
+            float bestDot = Mathf.Cos(redirect.HalfAngle * Mathf.Deg2Rad);
+            Vector3 bestDirection = direction;
+
+            int count = Physics.OverlapSphereNonAlloc(origin, redirect.Range, RedirectResults, mask, QueryTriggerInteraction.Collide);
+            for (int i = 0; i < count; i++)
+            {
+                RuntimeNpc other = RedirectResults[i].GetComponentInParent<RuntimeNpc>();
+                if (other == null || other == this)
+                    continue;
+
+                Vector3 toOther = other.transform.position - origin;
+                toOther.y = 0f;
+
+                float distance = toOther.magnitude;
+                if (distance < 0.01f)
+                    continue;
+
+                Vector3 toOtherDirection = toOther / distance;
+                float dot = Vector3.Dot(axis, toOtherDirection);
+                if (dot < bestDot)
+                    continue;
+
+                bestDot = dot;
+                bestDirection = toOtherDirection;
+            }
+
+            return bestDirection;
         }
     }
 }

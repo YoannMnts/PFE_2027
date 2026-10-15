@@ -18,6 +18,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         private TInstance instance;
         public TInstance Instance => instance;
+
+        public override HitboxRunner HitboxRunner { get; protected set; }
         
         public void Setup(TInstance npcInstance)
         {
@@ -79,7 +81,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             if (hit.target is not IRuntimeNpc npc)
                 return;
-
+            
             Transform facing = Mesh != null ? Mesh : transform;
             float strength = hit.hitbox.PushBackMultiplier;
             Vector3 fallback = facing.forward;
@@ -119,7 +121,8 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             // offset: direction of the hit, its length is the strength (hitbox PushBackMultiplier)
             offset.y = 0f;
-            float duration = StartKnockback(offset, offset.magnitude, pushback.DistanceInTime);
+            Vector3 direction = pushback.Redirect != null ? RedirectKnockback(offset, pushback.Redirect, hitMask) : offset;
+            float duration = StartKnockback(direction, offset.magnitude, pushback.DistanceInTime);
             if (duration <= 0f)
                 return;
 

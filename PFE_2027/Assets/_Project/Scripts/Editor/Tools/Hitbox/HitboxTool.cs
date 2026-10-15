@@ -63,6 +63,10 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         private readonly List<int> trackedWindowFlags = new();
         private int totalFrames;
 
+        // Knockback redirect section (PushbackData only)
+        private VisualElement redirectSection;
+        private KnockbackRedirectData shownRedirect;
+
         // Playhead
         private SliderInt frameSlider;
         private Label timeLabel;
@@ -238,6 +242,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             frameSlider = null;
             timeLabel = null;
             playButton = null;
+            redirectSection = null;
+            shownRedirect = null;
         }
 
         // ---------------------------------------------------------------- edit panel
@@ -415,6 +421,15 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
                 scroll.Add(new PropertyField(iterator.Copy()));
             }
 
+            // The cone is a separate shared asset: its inspector is shown under the pushback fields
+            if (serializedData.targetObject is PushbackData)
+            {
+                redirectSection = new VisualElement();
+                redirectSection.AddToClassList("attack-edit__section");
+                scroll.Add(redirectSection);
+                RefreshRedirectSection();
+            }
+
             scroll.Bind(serializedData);
             return scroll;
         }
@@ -431,7 +446,38 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
                 foreach (TimeWindowTrack track in tracks)
                     track.Refresh();
 
+            RefreshRedirectSection();
             SceneView.RepaintAll();
+        }
+
+        // Rebuilt only when another cone asset is assigned (or removed)
+        private void RefreshRedirectSection()
+        {
+            if (redirectSection == null || serializedData.targetObject is not PushbackData pushback)
+                return;
+
+            KnockbackRedirectData redirect = pushback.Redirect;
+            if (redirect == shownRedirect && redirectSection.childCount > 0)
+                return;
+
+            shownRedirect = redirect;
+            redirectSection.Clear();
+
+            Label title = new("Knockback Redirect");
+            title.AddToClassList("attack-edit__section-title");
+            redirectSection.Add(title);
+
+            if (redirect == null)
+            {
+                redirectSection.Add(new HelpBox(
+                    "No cone assigned: the knockback goes straight. Assign a Knockback Redirect asset in the Redirect field above to edit it here and in the Scene view.",
+                    HelpBoxMessageType.Info));
+                return;
+            }
+
+            redirectSection.Add(new HelpBox(
+                $"Shared asset '{redirect.name}': changes apply to every pushback using it.", HelpBoxMessageType.None));
+            redirectSection.Add(new InspectorElement(redirect));
         }
 
         private bool HasTrackLayoutChanged()

@@ -10,6 +10,10 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         [field: SerializeField, BoxGroup("Knockback")]
         public AnimationCurve DistanceInTime { get; private set; }
 
+        // Optional: bends the knockback toward the NPC closest to the axis of this cone (none = straight)
+        [field: SerializeField, BoxGroup("Knockback")]
+        public KnockbackRedirectData Redirect { get; private set; }
+
         // The animation lasts exactly as long as the knockback curve
         public override float PlayDuration =>
             DistanceInTime != null && DistanceInTime.length > 0 ? DistanceInTime[DistanceInTime.length - 1].time : -1f;
