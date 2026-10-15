@@ -2,6 +2,7 @@
 using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.RoadSystem;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -9,22 +10,28 @@ using UnityEngine.Splines;
 
 namespace PFE.Editor._Project.Scripts.Editor.Tools
 {
-    // Scene view preview of the progressive spawn: for each spawn point of the edited area, a marker on the
-    // pilgrim's path where it gets revealed (SpawnPoint.Progression), linked to the anchor it spawns on.
+    // Scene view preview of the progressive spawn: for each spawn point of the edited area, a handle on the
+    // pilgrim's path where it gets revealed (SpawnPoint.Progression). Dragging it moves the progression along
+    // the path (projected on the nearest point of the spline, like PilgrimInstance does at runtime).
     public static class AreaSpawnGizmos
     {
+        private const string SPAWN_POINTS_PATH = "<SpawnPoints>k__BackingField";
+        private const string PROGRESSION_PATH = "<Progression>k__BackingField";
+
         private const float MARKER_RADIUS = 0.25f;
+        private const float HANDLE_SIZE = 0.08f;
         private const float LABEL_HEIGHT = 0.8f;
         private const float LABEL_SPACING = 0.35f;
-        private const float DASH_SIZE = 4f;
 
         private static readonly Color MarkerColor = new(0.35f, 0.8f, 1f);
-        private static readonly Color LinkColor = new(0.35f, 0.8f, 1f, 0.5f);
 
         // Spawn points sharing a progression: their labels are stacked instead of overlapping
         private static readonly Dictionary<float, int> StackCounts = new();
 
         private static AreaData area;
+
+        // SerializedObject of the edited area, recreated when another area is shown (supports Undo)
+        private static SerializedObject serializedArea;
 
         public static void Show(AreaData editedArea)
         {
@@ -53,20 +60,32 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
         private static void OnSceneGUI(SceneView sceneView)
         {
-            if (Event.current.type != EventType.Repaint || area == null || area.SpawnPoints == null)
+            if (area == null || area.SpawnPoints == null)
                 return;
 
             PrefabStage stage = PrefabStageUtility.GetCurrentPrefabStage();
             if (stage == null)
                 return;
 
+            bool isRepaint = Event.current.type == EventType.Repaint;
+
             RuntimeArea runtimeArea = stage.prefabContentsRoot.GetComponentInChildren<RuntimeArea>(true);
             SplineContainer path = runtimeArea != null ? runtimeArea.Path : null;
             if (path == null || path.Spline == null)
             {
-                Handles.Label(stage.prefabContentsRoot.transform.position, "No RuntimeArea path: spawn progression can't be shown");
+                if (isRepaint)
+                    Handles.Label(stage.prefabContentsRoot.transform.position, "No RuntimeArea path: spawn progression can't be shown");
                 return;
             }
+
+            if (serializedArea == null || serializedArea.targetObject != area)
+            {
+                serializedArea?.Dispose();
+                serializedArea = new SerializedObject(area);
+            }
+
+            serializedArea.Update();
+            SerializedProperty spawnPointsProperty = serializedArea.FindProperty(SPAWN_POINTS_PATH);
 
             StackCounts.Clear();
             List<SpawnPoint> spawnPoints = area.SpawnPoints;
@@ -81,25 +100,47 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
                 Vector3 marker = path.EvaluatePosition(spawnPoint.Progression);
 
+                if (isRepaint)
+                    DrawMarker(spawnPoint, marker);
+
+                // Handle: on every event (it must receive the mouse)
+                float handleSize = HandleUtility.GetHandleSize(marker) * HANDLE_SIZE;
                 using (new Handles.DrawingScope(MarkerColor))
                 {
-                    Handles.DrawWireDisc(marker, Vector3.up, MARKER_RADIUS);
-                    Handles.DrawSolidDisc(marker, Vector3.up, MARKER_RADIUS * 0.4f);
+                    EditorGUI.BeginChangeCheck();
+                    Vector3 moved = Handles.FreeMoveHandle(marker, handleSize, Vector3.zero, Handles.DotHandleCap);
+                    if (EditorGUI.EndChangeCheck() && spawnPointsProperty != null)
+                    {
+                        SerializedProperty progression = spawnPointsProperty
+                            .GetArrayElementAtIndex(i)
+                            .FindPropertyRelative(PROGRESSION_PATH);
+
+                        progression.floatValue = GetProgression(path, moved);
+                        serializedArea.ApplyModifiedProperties();
+                    }
                 }
-
-                if (runtimeArea.TryGetAnchor(spawnPoint.AnchorId, out Transform anchor))
-                {
-                    using (new Handles.DrawingScope(LinkColor))
-                        Handles.DrawDottedLine(marker, anchor.position, DASH_SIZE);
-                }
-
-                StackCounts.TryGetValue(spawnPoint.Progression, out int stack);
-                StackCounts[spawnPoint.Progression] = stack + 1;
-
-                string npcName = spawnPoint.Npc != null ? spawnPoint.Npc.name : "(no NPC)";
-                Vector3 labelPosition = marker + Vector3.up * (LABEL_HEIGHT + stack * LABEL_SPACING);
-                Handles.Label(labelPosition, $"{spawnPoint.AnchorId} · {npcName} · {spawnPoint.Progression:P0}");
             }
+        }
+
+        // Same projection as PilgrimInstance: normalized position of the nearest point of the spline
+        private static float GetProgression(SplineContainer path, Vector3 worldPosition)
+        {
+            float3 localPosition = path.transform.InverseTransformPoint(worldPosition);
+            SplineUtility.GetNearestPoint(path.Spline, localPosition, out float3 _, out float t);
+            return Mathf.Clamp01(t);
+        }
+
+        private static void DrawMarker(SpawnPoint spawnPoint, Vector3 marker)
+        {
+            using (new Handles.DrawingScope(MarkerColor))
+                Handles.DrawWireDisc(marker, Vector3.up, MARKER_RADIUS);
+
+            StackCounts.TryGetValue(spawnPoint.Progression, out int stack);
+            StackCounts[spawnPoint.Progression] = stack + 1;
+
+            string npcName = spawnPoint.Npc != null ? spawnPoint.Npc.name : "(no NPC)";
+            Vector3 labelPosition = marker + Vector3.up * (LABEL_HEIGHT + stack * LABEL_SPACING);
+            Handles.Label(labelPosition, $"{spawnPoint.AnchorId} · {npcName} · {spawnPoint.Progression:P0}");
         }
     }
 }

@@ -61,8 +61,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             else
                 return; // Keep the request buffered until the combo window opens or it expires
 
-            // Every hit (first one and combo ones) goes where the player is aiming
-            SnapFacingToIntent();
             hitboxRunner.Begin(attack);
             attackRequestTime = float.NegativeInfinity;
         }

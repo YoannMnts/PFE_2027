@@ -1,4 +1,5 @@
-﻿using Helteix.Tools;
+﻿using Helteix.ChanneledProperties.Priorities;
+using Helteix.Tools;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.Enemy.Attacks.BasicAttacks;

@@ -39,7 +39,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 return;
 
             // The dash goes where the player is aiming, otherwise straight ahead
-            SnapFacingToIntent();
             Vector3 direction = mesh.forward;
             direction.y = 0f;
             dashDirection = direction.normalized;

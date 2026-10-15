@@ -1,6 +1,7 @@
 ﻿using System;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Interactions;
 using PrimeTween;
 using Sirenix.OdinInspector;
 using Unity.Behavior;

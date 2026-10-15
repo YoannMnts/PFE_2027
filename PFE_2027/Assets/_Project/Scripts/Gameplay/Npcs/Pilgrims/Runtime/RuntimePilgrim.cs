@@ -1,5 +1,6 @@
 ﻿using System;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.Interactions;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players.Default.Runtime;
 using Sirenix.OdinInspector;
@@ -10,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>
+    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable<RuntimePilgrim>
     {
         [SerializeField, BoxGroup("Debugs")]
         private bool isCameraOnPilgrim = true;
@@ -21,6 +22,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
         
+        public RuntimePilgrim Interactable => this;
+
         protected override void OnSetup()
         {
             base.OnSetup();
@@ -44,6 +47,5 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
         }
-
     }
 }

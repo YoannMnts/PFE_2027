@@ -20,7 +20,7 @@ MonoBehaviour:
     <Progression>k__BackingField: 0
   - <AnchorId>k__BackingField: Anchor_1
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.4
+    <Progression>k__BackingField: 0.40056983
   - <AnchorId>k__BackingField: Anchor_2
     <Npc>k__BackingField: {fileID: 11400000, guid: 2a828251229189c4aaf5a3719ed23868, type: 2}
     <Progression>k__BackingField: 0

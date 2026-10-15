@@ -1,12 +1,15 @@
 ﻿using PFE.Core.Scripts.Enemy;
+using PFE.Gameplay.Scripts.Interactions;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
-    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>
+    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IInteractable<RuntimeEnemy>
     {
+        public RuntimeEnemy Interactable => this;
+
         // Pilgrim followed while this enemy is active (given by its instance)
         private PilgrimInstance followedPilgrim;
 
