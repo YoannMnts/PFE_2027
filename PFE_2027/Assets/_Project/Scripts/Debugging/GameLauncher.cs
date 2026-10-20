@@ -41,11 +41,10 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                 if (isBattlePhaseLaunch)
                 {
                     var battlePhase = new BattlePhase(context, data);
-                    var battleResult = await battlePhase.Run();
-                    
+                    await battlePhase.Run();
                 }
-                var campfirePhase = new RestingPhase(context, data);
-                var campfireResult = await campfirePhase.Run();
+                var campfirePhase = new CampfirePhase(context, data);
+                await campfirePhase.Run();
 
                 return true;
             }
@@ -55,8 +54,8 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         
         [SerializeField]
         private bool launchOnStart = true;
-        [SerializeField]
-        private bool isBattlePhase;
+
+        [SerializeField] private bool isBattlePhase;
         
         [SerializeField]
         private AreaData areaData;

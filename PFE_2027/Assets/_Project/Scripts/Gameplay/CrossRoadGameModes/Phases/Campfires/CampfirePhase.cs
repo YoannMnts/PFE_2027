@@ -1,28 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
+using Eflatun.SceneReference;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
-using PFE.Gameplay.Scripts.CrossRoadGameModes;
-using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
+using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
 
-namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
+namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 {
-    public class CampfirePhase : PhaseCompletionSource<bool>
-    {
+    public class CampfirePhase : Phase<bool>
+    { 
         private readonly CrossRoadGameModeContext gameModeContext;
         private ChannelKey key;
         
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
-        public  CampfirePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea)
+        private readonly IAreaData currentArea;
+        
+        
+        public CampfirePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
+        {
+            this.currentArea = currentArea;
+        }
+        public CampfirePhase(CrossRoadGameModeContext gameModeContext)
         {
             this.gameModeContext = gameModeContext;
         }
+
 
         protected override Awaitable Initialize(CancellationToken token)
         {
@@ -34,18 +42,26 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
             
             return base.Initialize(token);
         }
-
+        
+        
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var explorationPhase = new CampfireExplorationPhase();
-            explorationPhase.RunAndForget();
-            
-            var openChestPhase =  new OpenChestPhase();
-            var isChestOpen = await openChestPhase.Run();
+            //generate campfire zone
+            var generateCampfireAreaPhase = new GenerateAreaPhase(currentArea);
+            var campfireResult = await generateCampfireAreaPhase.Run();
+            //generate pilgrim
+            var generatePilgrimPhase = new GenerateNpcPhase(currentArea, campfireResult.value, gameModeContext.NpcManager);
+            await generatePilgrimPhase.Run();
 
-            return isChestOpen.value;
+            //TODO initialiser phase explo
+
+            // dialogue phase ( question / response)
+            var dialoguePhase = new DialoguePhase();
+            var dialogueResult = await dialoguePhase.Run();
+
+            return dialogueResult.value;
         }
-
+        
         protected override Awaitable Dispose(CancellationToken token)
         {
             foreach (var player in Players)
