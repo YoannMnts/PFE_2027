@@ -3,53 +3,44 @@ using System.Threading;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
+using PFE.Core.Scripts.Dialogues;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
+using PFE.Gameplay.Scripts.Dialogues.Talks;
 using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 {
-    public class DialoguePhase : Phase<bool>
-    {
-        private readonly DialogueData dialogueData;
-        private readonly CrossRoadGameModeContext gameModeContext;
-        private ChannelKey key;
-        
-        public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
+    public class TalkPhase : Phase<bool>
+    { 
+        public TalkData TalkData { get; private set; }
 
-        public DialoguePhase()
-        {
-            
-        }
+        private readonly CrossRoadGameModeContext gameModeContext;
+        private ChannelKey key; 
+        public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
+        
         
         protected override Awaitable Initialize(CancellationToken token)
         {
             key = ChannelKey.GetUniqueChannelKey();
             foreach (var player in Players)
             {
-                player.ShowUI.AddPriority(key, PriorityTags.Default, false);
+                player.ShowUI.AddPriority(key, PriorityTags.Default, true);
             }
-            
             return base.Initialize(token);
         }
-        
-        protected override async Awaitable<bool> Execute(CancellationToken token)
-        {
-            while (true)
-            {
-                var responsePhase =  new ResponsePhase();
-                var talkResult = await responsePhase.Run();
-                
-                if(talkResult == false)
-                    break;
-                
-                var questionPhase = new QuestionPhase();
-                await questionPhase.Run();
-            }
 
+        protected override async Awaitable<bool> Execute(CancellationToken token)
+        { 
+            await Awaitable.MainThreadAsync();
+            
+            if (TalkData.Choice == null)
+            {
+                return false;
+            }
             return true;
         }
-        
+
         protected override Awaitable Dispose(CancellationToken token)
         {
             foreach (var player in Players)
