@@ -1,12 +1,14 @@
+using PFE.Core.Scripts.Curves;
 using PFE.Core.Scripts.Players;
 using TraversalPro;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    // Dash driven by PlayerData.DashDistanceInTime (distance travelled over time).
+    // Dash of PlayerData.DashDistance meters, shaped by PlayerData.DashProgressOverTime.
     // The CharacterMotor keeps moving the rigidbody (walls, slopes and steps are handled), the dash only
-    // replaces its velocity goal while it lasts.
+    // replaces its velocity goal while it lasts. MoveInput is never touched: it is the player's intent, and
+    // CharacterRun doesn't clear it while no input is held (a dash direction left in it would keep running).
     public partial class RuntimeDefaultPlayer
     {
         // Acceleration given to the motor during the dash: high enough to reach the dash speed in one step
@@ -14,10 +16,13 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public bool IsDashing { get; private set; }
 
+        private AnimationCurve dashCurve;
         private Vector3 dashDirection;
+        private float dashDistance;
         private float dashDuration;
         private float dashElapsed;
         private float dashReadyTime;
+        private bool isEndingDash;      // The step right after the dash hands the velocity back to the input
 
         // Called by the input (CharacterControllerExtension)
         public void Dash()
@@ -30,16 +35,11 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (characterMotor == null || !characterMotor.IsGrounded)
                 return;
 
-            AnimationCurve curve = data.DashDistanceInTime;
-            if (curve == null || curve.length == 0)
-                return;
-
-            dashDuration = curve[curve.length - 1].time;
-            if (dashDuration <= 0f)
+            float duration = data.DashProgressOverTime.GetProgressDuration();
+            if (duration <= 0f || data.DashDistance <= 0f)
                 return;
 
             // The dash goes where the player is aiming, otherwise straight ahead
-            SnapFacingToIntent();
             Vector3 direction = mesh.forward;
             direction.y = 0f;
             dashDirection = direction.normalized;
@@ -47,28 +47,37 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             // A dash cancels the current attack
             hitboxRunner?.End();
 
+            dashCurve = data.DashProgressOverTime;
+            dashDistance = data.DashDistance;
+            dashDuration = duration;
             dashElapsed = 0f;
+            isEndingDash = false;
             IsDashing = true;
         }
 
         // Called every FixedUpdate from OnCharacterMoving, before the other constraints
         private void ApplyDash(ICharacterMotor motor)
         {
+            if (isEndingDash)
+            {
+                // CharacterRun already wrote the goal from the current input (run speed if a direction is held,
+                // zero otherwise): reach it at once, so the dash neither stops the player dead nor lets it slide
+                isEndingDash = false;
+                motor.AccelerationGoal = DASH_ACCELERATION;
+                return;
+            }
+
             if (!IsDashing)
                 return;
 
-            AnimationCurve curve = Player.Data.DashDistanceInTime;
             float step = Time.fixedDeltaTime;
-
             float previousTime = dashElapsed;
             dashElapsed = Mathf.Min(dashElapsed + step, dashDuration);
 
             // Distance to cover during this step, turned into the velocity the motor must reach:
-            // the total always ends exactly on the last key of the curve
-            float distance = curve.Evaluate(dashElapsed) - curve.Evaluate(previousTime);
-            float speed = distance / step;
+            // the total always ends exactly on DashDistance
+            float speed = dashCurve.EvaluateProgressDelta(previousTime, dashElapsed) * dashDistance / step;
 
-            motor.MoveInput = dashDirection;
             motor.LocalVelocityGoal = dashDirection * speed;
             motor.AccelerationGoal = DASH_ACCELERATION;
             motor.MaxLocalSpeed = Mathf.Max(motor.MaxLocalSpeed, speed);
@@ -77,6 +86,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 return;
 
             IsDashing = false;
+            isEndingDash = true;
+            dashCurve = null;
             dashReadyTime = Time.time + Player.Data.DashCooldown;
         }
     }

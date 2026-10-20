@@ -35,11 +35,17 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var responsePhase =  new ResponsePhase();
-            await responsePhase.Run();
-            
-            var questionPhase = new QuestionPhase();
-            await questionPhase.Run();
+            while (true)
+            {
+                var responsePhase =  new ResponsePhase();
+                var talkResult = await responsePhase.Run();
+                
+                if(talkResult == false)
+                    break;
+                
+                var questionPhase = new QuestionPhase();
+                await questionPhase.Run();
+            }
 
             return true;
         }

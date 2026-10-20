@@ -15,7 +15,8 @@ MonoBehaviour:
   guidText: a83904ee-2458-40ab-be1a-51c805b7e723
   <Name>k__BackingField: DummyPilgrim
   <MaxHealth>k__BackingField: 100
+  <IsPlayerAlly>k__BackingField: 1
   <AttackData>k__BackingField: {fileID: 0}
-  <PushbackData>k__BackingField: {fileID: 11400000, guid: c362cca2ebdf5664ebc1a31471213512, type: 2}
+  <PushbackData>k__BackingField: {fileID: 0}
   <Prefab>k__BackingField: {fileID: 1606105754538817475, guid: be95dbc22c6c6104cac3b89f4ddfa13d, type: 3}
   <TargetPositionDistance>k__BackingField: 2

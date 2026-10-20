@@ -1,4 +1,7 @@
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Priorities;
 using PFE.Core.Scripts.Enemy.Attacks;
+using PrimeTween;
 using Sirenix.OdinInspector;
 using TraversalPro;
 using UnityEngine;
@@ -10,69 +13,64 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     // Replaces Traversal Pro's VelocityYawAnimation, which must be disabled on the prefab.
     public partial class RuntimeDefaultPlayer
     {
-        // Below this input length the facing is kept (stick dead zone)
         private const float FACING_INPUT_DEAD_ZONE = 0.1f;
+        private const float FACING_RETARGET_ANGLE = 2f;
 
-        // Time for the mesh to reach its target yaw: higher = smoother, lower = snappier
-        [SerializeField, BoxGroup("Facing"), Min(0f)]
-        private float facingSmoothTime = 0.08f;
+        [SerializeField, BoxGroup("Facing")]
+        private TweenSettings facingTweenSettings;
 
-        // Move input captured before the movement constraints (the attack lock zeroes MoveInput)
-        private Vector3 moveIntent;
+        private ChannelKey inputChannel;
 
-        private float facingYaw;
-        private float facingYawGoal;
-        private float facingYawVelocity;
+        private Priority<Vector3> targetFacingDirection;
 
+        private Tween facingTween;
+        private Quaternion facingGoal;
+        
         private void InitializeFacing()
         {
-            facingYaw = mesh.eulerAngles.y;
-            facingYawGoal = facingYaw;
-            facingYawVelocity = 0f;
+            targetFacingDirection = new Priority<Vector3>();
+            inputChannel = ChannelKey.GetUniqueChannelKey();
+            targetFacingDirection.AddPriority(inputChannel, PriorityTags.Smallest, Vector3.zero);
+
+            // Current orientation as the first goal: a direction already faced doesn't start a turn
+            facingGoal = mesh.rotation;
+            
+            targetFacingDirection.OnValueChanged += TargetFacingDirectionValueChanged;
         }
 
+        private void DisposeFacing()
+        {
+            targetFacingDirection.OnValueChanged -= TargetFacingDirectionValueChanged;
+            targetFacingDirection.RemovePriority(inputChannel);
+            targetFacingDirection = null;
+
+            if (facingTween.isAlive)
+                facingTween.Stop();
+        }
+        
         // Called every FixedUpdate from OnCharacterMoving, before the constraints
         private void CaptureMoveIntent(ICharacterMotor motor)
         {
-            moveIntent = motor.MoveInput;
+            targetFacingDirection.Write(inputChannel, motor.MoveInput);
         }
 
-        private void UpdateFacing()
+        private void TargetFacingDirectionValueChanged(Vector3 direction)
         {
-            // The swing and the dash keep the direction chosen when they started
-            bool isLocked = IsDashing || (hitboxRunner != null && hitboxRunner.Has(WindowFlags.MovementLock));
-            if (!isLocked && TryGetIntentYaw(out float intentYaw))
-                facingYawGoal = intentYaw;
+            direction.y = 0f;
 
-            facingYaw = Mathf.SmoothDampAngle(facingYaw, facingYawGoal, ref facingYawVelocity, facingSmoothTime);
-            mesh.rotation = Quaternion.Euler(0f, facingYaw, 0f);
-        }
-
-        // Turns the mesh at once towards the move input: the attack goes where the stick points
-        private void SnapFacingToIntent()
-        {
-            if (!TryGetIntentYaw(out float intentYaw))
+            if (direction.sqrMagnitude < FACING_INPUT_DEAD_ZONE * FACING_INPUT_DEAD_ZONE)
                 return;
 
-            facingYaw = intentYaw;
-            facingYawGoal = intentYaw;
-            facingYawVelocity = 0f;
-            mesh.rotation = Quaternion.Euler(0f, facingYaw, 0f);
-        }
+            Quaternion goal = Quaternion.LookRotation(direction);
+            if (Quaternion.Angle(goal, facingGoal) < FACING_RETARGET_ANGLE)
+                return;
 
-        private bool TryGetIntentYaw(out float yaw)
-        {
-            Vector3 intent = moveIntent;
-            intent.y = 0f;
+            facingGoal = goal;
 
-            if (intent.sqrMagnitude < FACING_INPUT_DEAD_ZONE * FACING_INPUT_DEAD_ZONE)
-            {
-                yaw = 0f;
-                return false;
-            }
+            if (facingTween.isAlive)
+                facingTween.Stop();
 
-            yaw = Mathf.Atan2(intent.x, intent.z) * Mathf.Rad2Deg;
-            return true;
+            facingTween = Tween.Rotation(mesh, new TweenSettings<Quaternion>(goal, facingTweenSettings));
         }
     }
 }

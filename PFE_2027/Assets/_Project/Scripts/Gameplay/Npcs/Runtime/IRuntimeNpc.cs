@@ -1,5 +1,4 @@
 ﻿using PFE.Core.Scripts.Enemy.Attacks;
-using UnityEngine;
 using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -9,7 +8,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public NavMeshAgent NavMeshAgent { get; }
         public bool IsKnockedBack { get; }
         public HitboxRunner HitboxRunner { get; }
-        public void ApplyKnockback(Vector3 offset);
+        public void ApplyKnockback(in KnockbackRequest request);
     }
     
     public interface IRuntimeNpc<TInstance> : IRuntimeNpc

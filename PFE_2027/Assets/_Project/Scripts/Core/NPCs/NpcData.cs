@@ -13,6 +13,9 @@ namespace PFE.Core.Scripts.NPCs
 
         [field: SerializeField, Range(0f, 100f), BoxGroup("Metrics")]
         public float MaxHealth { get; private set; }
+        
+        [field: SerializeField, BoxGroup("Metrics")]
+        public bool IsPlayerAlly { get; private set; }
 
         [field: SerializeField, BoxGroup("Hitboxes")]
         public AttackData AttackData { get;  private set; }

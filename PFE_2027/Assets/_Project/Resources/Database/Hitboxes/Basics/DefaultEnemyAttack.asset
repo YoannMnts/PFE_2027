@@ -24,7 +24,7 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 0.9174472, y: 0.25799608, z: 0.2460024}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
-    <PushBackMultiplier>k__BackingField: 0
+    <Strength>k__BackingField: 1
   windows: []
   <AttackRange>k__BackingField: 1
   <Next>k__BackingField: {fileID: 0}

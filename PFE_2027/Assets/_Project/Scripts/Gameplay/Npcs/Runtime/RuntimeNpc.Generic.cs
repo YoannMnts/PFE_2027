@@ -1,3 +1,4 @@
+using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
 using Sirenix.OdinInspector;
@@ -18,6 +19,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         private TInstance instance;
         public TInstance Instance => instance;
+
+        public override HitboxRunner HitboxRunner { get; protected set; }
         
         public void Setup(TInstance npcInstance)
         {
@@ -37,6 +40,10 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
             HitboxRunner = new HitboxRunner(attackContext);
+
+            // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
+            PushbackData pushback = instance.data.PushbackData;
+            KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
             
             OnSetup();
         }
@@ -77,22 +84,11 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         private void OnAttackHit(in HitboxHit hit)
         {
-            if (hit.target is not IRuntimeNpc npc)
+            if (hit.target is not IRuntimeNpc npc || IsKnockbackSource(npc))
                 return;
 
-            Transform facing = Mesh != null ? Mesh : transform;
-            float strength = hit.hitbox.PushBackMultiplier;
-            Vector3 fallback = facing.forward;
-
-            // Hit dealt by the pushback: as hard as this NPC slides (PushBackMultiplier converts its speed into a strength)
-            if (IsKnockedBack && HitboxRunner != null && HitboxRunner.Current is PushbackData)
-            {
-                strength *= KnockbackVelocity.magnitude;
-                fallback = KnockbackVelocity;
-            }
-
-            Vector3 direction = PushBackExtension.GetPushBackDirection(transform.position, hit.TargetPosition, fallback, strength);
-            npc.PushBackWithDamage(hit.hitbox.Damage, direction);
+            KnockbackRequest request = PushBackExtension.FromHit(transform.position, hit, HitFallbackDirection, StrengthScale, this);
+            npc.PushBackWithDamage(hit.hitbox.Damage, request);
         }
         
         private void LockMovementDuringAttack()
@@ -107,7 +103,7 @@ namespace PFE.Gameplay.Scripts.NPCs
                 NavMeshAgent.velocity = Vector3.zero;
         }
         
-        public override void ApplyKnockback(Vector3 offset)
+        public override void ApplyKnockback(in KnockbackRequest request)
         {
             if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
@@ -117,9 +113,13 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (pushback == null)
                 return;
 
-            // offset: direction of the hit, its length is the strength (hitbox PushBackMultiplier)
-            offset.y = 0f;
-            float duration = StartKnockback(offset, offset.magnitude, pushback.DistanceInTime);
+            KnockbackRequest final = pushback.Redirect != null
+                ? request.WithDirection(RedirectKnockback(request.direction, pushback.Redirect, hitMask))
+                : request;
+
+            // The whole computation: what the hitter sends * how far this NPC goes for a strength of 1
+            float distance = final.strength * KnockbackDistance.Value;
+            float duration = StartKnockback(final, distance, pushback.ProgressOverTime);
             if (duration <= 0f)
                 return;
 

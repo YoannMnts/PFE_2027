@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Pilgrims.PilgrimData
   guidText: 85569184-5153-49e2-8fd7-f8ae296aef1e
   <Name>k__BackingField: Le Vieux
-  <MaxHealth>k__BackingField: 3
+  <MaxHealth>k__BackingField: 100
+  <IsPlayerAlly>k__BackingField: 1
   <AttackData>k__BackingField: {fileID: 0}
-  <PushbackData>k__BackingField: {fileID: 11400000, guid: c362cca2ebdf5664ebc1a31471213512, type: 2}
+  <PushbackData>k__BackingField: {fileID: 0}
   <Prefab>k__BackingField: {fileID: 1606105754538817475, guid: f4c1b18d0c05645429923c02179173ff, type: 3}
   <TargetPositionDistance>k__BackingField: 2

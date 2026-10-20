@@ -2,7 +2,10 @@
     "name": "PFE.Editor",
     "rootNamespace": "PFE.Editor",
     "references": [
-        "GUID:73dc112201320564299160a8a979c10f"
+        "GUID:73dc112201320564299160a8a979c10f",
+        "GUID:3c0fcd646ee1ed44ca0ebce7f0e6b47b",
+        "GUID:21d1eb854b91ade49bc69a263d12bee2",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
     "includePlatforms": [
         "Editor"

@@ -17,18 +17,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private HitboxRunner hitboxRunner;
         private float attackRequestTime = float.NegativeInfinity;
         
-        private void LateUpdate()
-        {
-            UpdateLocomotionAnimation();
-            UpdateFacing();
-
-            if (hitboxRunner == null)
-                return;
-
-            hitboxRunner.LateTick();
-            TryConsumeAttackRequest();
-        }
-        
         public void PlayAttack()
         {
             attackRequestTime = Time.time;
@@ -61,21 +49,18 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             else
                 return; // Keep the request buffered until the combo window opens or it expires
 
-            // Every hit (first one and combo ones) goes where the player is aiming
-            SnapFacingToIntent();
             hitboxRunner.Begin(attack);
             attackRequestTime = float.NegativeInfinity;
         }
 
-        // What the player's attacks do to what they touch: pushed away from the player
+        // What the player's attacks do to what they touch: pushed away from the player, base strength
         private void OnAttackHit(in HitboxHit hit)
         {
             if (hit.target is not IRuntimeNpc npc)
                 return;
 
-            Vector3 direction = PushBackExtension.GetPushBackDirection(mesh.transform.position, hit.TargetPosition,
-                mesh.forward, hit.hitbox.PushBackMultiplier);
-            npc.PushBackWithDamage(hit.hitbox.Damage, direction);
+            KnockbackRequest request = PushBackExtension.FromHit(mesh.transform.position, hit, mesh.forward);
+            npc.PushBackWithDamage(hit.hitbox.Damage, request);
         }
     }
 }
