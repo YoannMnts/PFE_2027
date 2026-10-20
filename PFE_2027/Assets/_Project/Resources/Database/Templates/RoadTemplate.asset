@@ -14,3 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.RoadAreaData
   guidText: 7672b5ef-3e22-458d-87fa-43b56cf8d5cd
   <Prefab>k__BackingField: {fileID: 5907981834685816019, guid: dfde2e244c448294797c3dac6d1658ea, type: 3}
+  <SpawnPoints>k__BackingField:
+  - <AnchorId>k__BackingField: Anchor_0
+    <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
+    <Progression>k__BackingField: 0
+  - <AnchorId>k__BackingField: Anchor_1
+    <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Progression>k__BackingField: 0.13416065
+  - <AnchorId>k__BackingField: Anchor_2
+    <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Progression>k__BackingField: 0.36792997
+  - <AnchorId>k__BackingField: Anchor_3
+    <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Progression>k__BackingField: 0.42519236

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dummy.DummyData
   guidText: ee862df0-3ed8-4331-a767-f005f2db0c6b
   <Name>k__BackingField: Enemy Template
-  <MaxHealth>k__BackingField: 50
+  <MaxHealth>k__BackingField: 3
+  <IsPlayerAlly>k__BackingField: 0
   <AttackData>k__BackingField: {fileID: 11400000, guid: f90c272645181764f80f66b48a8957c8, type: 2}
   <PushbackData>k__BackingField: {fileID: 11400000, guid: c362cca2ebdf5664ebc1a31471213512, type: 2}
   <Prefab>k__BackingField: {fileID: 988104533375720322, guid: d7d5fea745c40e742951c5dcaaf33a79, type: 3}

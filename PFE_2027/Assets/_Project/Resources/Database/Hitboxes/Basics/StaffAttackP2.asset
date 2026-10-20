@@ -24,7 +24,7 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 0.21790457, y: 1.507931, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
-    <PushBackMultiplier>k__BackingField: 5
+    <Strength>k__BackingField: 1.75
   - <Window>k__BackingField:
       <Start>k__BackingField: 0
       <End>k__BackingField: 1
@@ -34,7 +34,7 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 0.21790457, y: 1.8778783, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
-    <PushBackMultiplier>k__BackingField: 5
+    <Strength>k__BackingField: 1.75
   windows:
   - <Flags>k__BackingField: 1
     <Window>k__BackingField:

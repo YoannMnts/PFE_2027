@@ -58,6 +58,19 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
             if (characterMotor != null)
                 characterMotor.Moving -= OnCharacterMoving;
+            
+            DisposeFacing();
+        }
+        
+        private void LateUpdate()
+        {
+            UpdateLocomotionAnimation();
+            
+            if (hitboxRunner == null)
+                return;
+
+            hitboxRunner.LateTick();
+            TryConsumeAttackRequest();
         }
 
         // Called by the CharacterMotor every FixedUpdate, after CharacterRun wrote the velocity goal

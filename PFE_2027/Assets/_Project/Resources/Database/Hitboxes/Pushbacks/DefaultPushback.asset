@@ -24,31 +24,32 @@ MonoBehaviour:
     <Size>k__BackingField: {x: 1.4093635, y: 0.74453175, z: 0.6252793}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 0
-    <PushBackMultiplier>k__BackingField: 0.1
+    <Strength>k__BackingField: 1
   windows: []
-  <DistanceInTime>k__BackingField:
+  <Distance>k__BackingField: 3
+  <ProgressOverTime>k__BackingField:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.22215241
-      value: 0.8095224
-      inSlope: 3.6643312
-      outSlope: 3.6643312
+      time: 0.1788282
+      value: 0.5749717
+      inSlope: 1.820944
+      outSlope: 1.820944
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.407946
+      outWeight: 0.06263354
     - serializedVersion: 3
-      time: 0.4
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0

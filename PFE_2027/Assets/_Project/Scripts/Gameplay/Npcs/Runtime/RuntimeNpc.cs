@@ -1,4 +1,5 @@
 ﻿using System;
+using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Interactions;
@@ -24,6 +25,10 @@ namespace PFE.Gameplay.Scripts.NPCs
         public Transform Mesh { get; private set; }
         
         public abstract HitboxRunner HitboxRunner { get; protected set;}
+
+        // Meters travelled for a knockback of strength 1. Starts at PushbackData.Distance (built in Setup), lasting
+        // modifiers (armor, stun, buffs) are channels: Multiply(key, value, orderInGroup: unique >= 1).
+        public Formula<float> KnockbackDistance { get; protected set; }
 
         protected BehaviorGraphAgent behaviorGraphAgent;
         
@@ -69,7 +74,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             Destroy(gameObject);
         }
 
-        public abstract void ApplyKnockback(Vector3 offset);
+        public abstract void ApplyKnockback(in KnockbackRequest request);
         public abstract void TakeDamage(int amount);
     }
 }

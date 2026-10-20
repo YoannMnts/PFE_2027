@@ -1,5 +1,7 @@
+using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using PFE.Core.Scripts.Enemy.Attacks;
+using PrimeTween;
 using Sirenix.OdinInspector;
 using TraversalPro;
 using UnityEngine;
@@ -11,33 +13,64 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     // Replaces Traversal Pro's VelocityYawAnimation, which must be disabled on the prefab.
     public partial class RuntimeDefaultPlayer
     {
-        // Below this input length the facing is kept (stick dead zone)
         private const float FACING_INPUT_DEAD_ZONE = 0.1f;
+        private const float FACING_RETARGET_ANGLE = 2f;
 
-        // Time for the mesh to reach its target yaw: higher = smoother, lower = snappier
-        [SerializeField, BoxGroup("Facing"), Min(0f)]
-        private float facingSmoothTime = 0.08f;
+        [SerializeField, BoxGroup("Facing")]
+        private TweenSettings facingTweenSettings;
 
-        // Move input captured before the movement constraints (the attack lock zeroes MoveInput)
-        private Vector3 moveIntent;
+        private ChannelKey inputChannel;
 
-        private Priority<Vector3> facingDirection;
+        private Priority<Vector3> targetFacingDirection;
+
+        private Tween facingTween;
+        private Quaternion facingGoal;
         
         private void InitializeFacing()
         {
-            facingDirection = new Priority<Vector3>();
+            targetFacingDirection = new Priority<Vector3>();
+            inputChannel = ChannelKey.GetUniqueChannelKey();
+            targetFacingDirection.AddPriority(inputChannel, PriorityTags.Smallest, Vector3.zero);
+
+            // Current orientation as the first goal: a direction already faced doesn't start a turn
+            facingGoal = mesh.rotation;
+            
+            targetFacingDirection.OnValueChanged += TargetFacingDirectionValueChanged;
+        }
+
+        private void DisposeFacing()
+        {
+            targetFacingDirection.OnValueChanged -= TargetFacingDirectionValueChanged;
+            targetFacingDirection.RemovePriority(inputChannel);
+            targetFacingDirection = null;
+
+            if (facingTween.isAlive)
+                facingTween.Stop();
         }
         
         // Called every FixedUpdate from OnCharacterMoving, before the constraints
         private void CaptureMoveIntent(ICharacterMotor motor)
         {
-            moveIntent = motor.MoveInput;
+            targetFacingDirection.Write(inputChannel, motor.MoveInput);
         }
 
-        private void UpdateFacing()
+        private void TargetFacingDirectionValueChanged(Vector3 direction)
         {
-            var facing = facingDirection.Value;
-            mesh.rotation.SetLookRotation(facing);
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude < FACING_INPUT_DEAD_ZONE * FACING_INPUT_DEAD_ZONE)
+                return;
+
+            Quaternion goal = Quaternion.LookRotation(direction);
+            if (Quaternion.Angle(goal, facingGoal) < FACING_RETARGET_ANGLE)
+                return;
+
+            facingGoal = goal;
+
+            if (facingTween.isAlive)
+                facingTween.Stop();
+
+            facingTween = Tween.Rotation(mesh, new TweenSettings<Quaternion>(goal, facingTweenSettings));
         }
     }
 }
