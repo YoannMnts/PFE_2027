@@ -1,7 +1,7 @@
 namespace PFE.Gameplay.Scripts.Interactions
 {
-    public interface IInteractable<out T>
+    public interface IInteractable
     {
-        public T Interactable { get; }
+        public bool TryLaunchInteractable();
     }
 }

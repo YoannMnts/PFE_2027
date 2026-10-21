@@ -193,6 +193,9 @@ MonoBehaviour:
     useUnscaledTime: 0
     _useFixedUpdate: 0
     _updateType: 0
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 64
   targetGroupWeight: 0.5
   rigidBody: {fileID: 6309114705494582719}
   mesh: {fileID: 6974115727959124562}

@@ -55,9 +55,15 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 
             //TODO initialiser phase explo
 
+            while (true)
+            {
+                await Awaitable.NextFrameAsync(token);
+            }
+            
             // dialogue phase ( question / response)
-            var dialoguePhase = new DialoguePhase();
+            var dialoguePhase = new DialoguePhase(gameModeContext);
             var dialogueResult = await dialoguePhase.Run();
+            
 
             return dialogueResult.value;
         }

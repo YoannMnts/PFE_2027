@@ -51,8 +51,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             var battlePhase = new BattlePhase(context);
             var result = await battlePhase.Run();
 
-            var restingPhase = new CampfirePhase(context);
-            await restingPhase.Run();
+            var campfirePhase = new CampfirePhase(context);
+            await campfirePhase.Run();
             
             return result.value;
         }
