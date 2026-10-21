@@ -16,47 +16,4 @@ MonoBehaviour:
   <MaxHealth>k__BackingField: 100
   <BasicAttack>k__BackingField: {fileID: 11400000, guid: 3d366dab21af43043877e7bda598769b, type: 2}
   <AttackInputBuffer>k__BackingField: 0.25
-  <DashDistance>k__BackingField: 4
-  <DashProgressOverTime>k__BackingField:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 9.871662
-      outSlope: 9.871662
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.041394692
-    - serializedVersion: 3
-      time: 0.06880253
-      value: 0.40867603
-      inSlope: 3.3275585
-      outSlope: 3.3275585
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.6236527
-      outWeight: 0.23667029
-    - serializedVersion: 3
-      time: 0.2349543
-      value: 0.7729216
-      inSlope: 1.37603
-      outSlope: 1.37603
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.18425523
-      outWeight: 0.33088273
-    - serializedVersion: 3
-      time: 0.4
-      value: 1
-      inSlope: 1.5129092
-      outSlope: 1.5129092
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.17968604
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  <DashCooldown>k__BackingField: 0.4
+  <Dash>k__BackingField: {fileID: 11400000, guid: d1c9795ea2ab4d641a328b1172a9bd81, type: 2}

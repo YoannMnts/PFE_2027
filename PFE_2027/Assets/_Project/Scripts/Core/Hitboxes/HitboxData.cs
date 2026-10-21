@@ -24,5 +24,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
         // Real duration of the animation in seconds; negative = length of the clip
         public virtual float PlayDuration => -1f;
+
+        // Real duration of the animation in seconds: PlayDuration, or the clip length
+        public float PlaySeconds => PlayDuration > 0f ? PlayDuration : AnimationClip != null ? AnimationClip.length : 0f;
     }
 }

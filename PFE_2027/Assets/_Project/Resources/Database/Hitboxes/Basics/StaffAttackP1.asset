@@ -36,13 +36,24 @@ MonoBehaviour:
     <Damage>k__BackingField: 0
     <Strength>k__BackingField: 0.2
   windows:
-  - <Flags>k__BackingField: 1
+  - <Flag>k__BackingField:
+      rid: 8017306121691201626
     <Window>k__BackingField:
-      <Start>k__BackingField: 0.39344263
+      <Start>k__BackingField: 0.14754099
       <End>k__BackingField: 1
-  - <Flags>k__BackingField: 2
+  - <Flag>k__BackingField:
+      rid: 8017306121691201627
     <Window>k__BackingField:
       <Start>k__BackingField: 0.5081967
       <End>k__BackingField: 0.5409836
   <AttackRange>k__BackingField: 1
-  <Next>k__BackingField: {fileID: 11400000, guid: 270ed6c3be65c314fb2b14c5ee4f5f99, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8017306121691201626
+      type: {class: MovementLock, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data: 
+    - rid: 8017306121691201627
+      type: {class: Combo, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <NextAttack>k__BackingField: {fileID: 11400000, guid: 270ed6c3be65c314fb2b14c5ee4f5f99, type: 2}

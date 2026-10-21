@@ -96,7 +96,11 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
 
-            bool isLocked = !IsKnockedBack && HitboxRunner != null && HitboxRunner.Has(WindowFlags.MovementLock);
+            bool isLocked = 
+                !IsKnockedBack 
+                && HitboxRunner != null 
+                && HitboxRunner.Has<MovementLock>(out _);
+            
             NavMeshAgent.isStopped = isLocked;
 
             if (isLocked)

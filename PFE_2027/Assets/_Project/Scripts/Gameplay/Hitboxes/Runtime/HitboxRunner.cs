@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PFE.Gameplay.Scripts.Animations;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
@@ -14,6 +15,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private readonly IDamageable owner;         // The attacker itself, never hit by its own attack (can be null)
         private readonly LayerMask hitMask;
         private readonly AttackHitHandler onHit;
+        private readonly WindowEnterHandler onWindowEnter;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
         private readonly List<IDamageable> alreadyHit = new(MAX_COLLIDERS);
@@ -22,16 +24,32 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private HitboxData current;
         private int playId = -1;
         private float previousTime;
+        private float currentSeconds;       // Real duration of the current action, converts windows into seconds
 
         public bool IsRunning => current != null;
 
         public HitboxData Current => current;
 
-        // Union of the flags of every window containing the current time (None while no attack runs)
-        public WindowFlags ActiveFlags { get; private set; }
+        // Flags of every window containing the current time, rebuilt each tick (empty while no attack runs)
+        private readonly List<IWindowFlag> activeFlags = new();
 
-        // True if at least one of the given flags is active
-        public bool Has(WindowFlags flags) => (ActiveFlags & flags) != 0;
+        public IReadOnlyList<IWindowFlag> ActiveFlags => activeFlags;
+
+        // True if a flag of this type is active; gives it back to read its values
+        public bool Has<TFlag>(out TFlag flag) where TFlag : IWindowFlag
+        {
+            for (int i = 0; i < activeFlags.Count; i++)
+            {
+                if (activeFlags[i] is not TFlag compatible)
+                    continue;
+
+                flag = compatible;
+                return true;
+            }
+
+            flag = default;
+            return false;
+        }
 
         public HitboxRunner(HitboxContext context)
         {
@@ -40,6 +58,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             owner = context.owner;
             hitMask = context.hitMask;
             onHit = context.onHit;
+            onWindowEnter = context.onWindowEnter;
         }
         
         public void Begin(HitboxData data)
@@ -53,9 +72,10 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             }
 
             current = data;
+            currentSeconds = data.PlaySeconds;
             previousTime = -1f;
             alreadyHit.Clear();
-            ActiveFlags = WindowFlags.None;
+            activeFlags.Clear();
 
             ResolveAnchors(data);
         }
@@ -85,15 +105,22 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                 return;
             }
 
-            WindowFlags active = WindowFlags.None;
+            // Rebuilt every tick: a flag only lives while the time is inside its window
+            activeFlags.Clear();
             ReadOnlySpan<AdditionalWindow> windows = current.Windows;
             for (int i = 0; i < windows.Length; i++)
             {
-                var attackWindow = windows[i];
-                if (attackWindow.Window.Contains(time))
-                    active |= attackWindow.Flags;
+                ref readonly AdditionalWindow window = ref windows[i];
+                if (window.Flag == null)
+                    continue;
+
+                if (window.Window.Contains(time))
+                    activeFlags.Add(window.Flag);
+
+                // Opened since the last tick (also catches a window shorter than a frame)
+                if (window.Window.Overlaps(previousTime, time) && !window.Window.Contains(previousTime))
+                    onWindowEnter?.Invoke(window.Flag, (window.Window.End - window.Window.Start) * currentSeconds);
             }
-            ActiveFlags = active;
 
             ReadOnlySpan<HitboxWindow> hitboxes = current.Hitboxes;
             for (int i = 0; i < hitboxes.Length; i++)
@@ -112,7 +139,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             actionAnimator.Stop(playId);
             playId = -1;
             current = null;
-            ActiveFlags = WindowFlags.None;
+            activeFlags.Clear();
         }
         
         // Detection only: finds what the hitbox touches and hands each new target to the owner's callback

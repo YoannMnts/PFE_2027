@@ -208,3 +208,19 @@
     color: var(--pe-text-strong);
     margin-bottom: 4px;
 }
+
+.attack-edit__window {
+    padding: 6px 8px;
+    margin-bottom: 6px;
+    background-color: var(--pe-card);
+    border-radius: 4px;
+}
+
+.attack-edit__window-header {
+    flex-direction: row;
+    align-items: center;
+}
+
+.attack-edit__window-type {
+    flex-grow: 1;
+}

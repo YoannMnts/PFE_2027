@@ -36,9 +36,48 @@ MonoBehaviour:
     <Damage>k__BackingField: 0
     <Strength>k__BackingField: 1.75
   windows:
-  - <Flags>k__BackingField: 1
+  - <Flag>k__BackingField:
+      rid: 8017306121691201628
     <Window>k__BackingField:
       <Start>k__BackingField: 0.074074075
       <End>k__BackingField: 1
+  - <Flag>k__BackingField:
+      rid: 8017306121691201637
+    <Window>k__BackingField:
+      <Start>k__BackingField: 0.14814815
+      <End>k__BackingField: 1
   <AttackRange>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8017306121691201628
+      type: {class: MovementLock, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data: 
+    - rid: 8017306121691201637
+      type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Distance>k__BackingField: 1
+        <ProgressOverWindow>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
