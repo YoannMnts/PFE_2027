@@ -3,19 +3,24 @@ using System.Collections.Generic;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
+    // PAS DE SINGLETON
     // Registry of the battle's living NPCs, subscribes to their death to stay up to date
     public class NpcManager
     {
         public event Action<INpcInstance> OnNpcAdded;
         public event Action<INpcInstance> OnNpcDied;
 
+        //créer une liste vide (à la création du Manager) des NpcInstance qui ne peut etre effacer mais peut etre modifier 
         private readonly List<INpcInstance> npcs = new();
-
+        
+        //associe la liste au dessus mais en "vu seulement" pour que les autres scripts voient mais n'y touche pas 
         public IReadOnlyList<INpcInstance> Npcs => npcs;
         public int Count => npcs.Count;
-
+        
+        
         public void Add(INpcInstance instance)
         {
+            //si instance donné est null OU si la liste contient deja d'instance
             if (instance == null || npcs.Contains(instance))
                 return;
 

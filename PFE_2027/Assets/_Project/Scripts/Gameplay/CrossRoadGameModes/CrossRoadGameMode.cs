@@ -39,18 +39,25 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
+            //creation du manager npc unique au jeu 
             NpcManager = new NpcManager();
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
+            // créer un context propre au gamemode
+            // ici le NpcManager rempli est mit dans le context 
             CrossRoadGameModeContext context = new CrossRoadGameModeContext(this);
             
+            //fading screen
             await GameController.GameSceneController.HideLoadingScreen();
             
+            //création de la phase de combat
             var battlePhase = new BattlePhase(context);
             var result = await battlePhase.Run();
 
+            //cration de la phase de feu de camp
+            //TODO déplacer ceci dans un script qui active la phase quand on arrive au feu de camp 
             var campfirePhase = new CampfirePhase(context);
             await campfirePhase.Run();
             

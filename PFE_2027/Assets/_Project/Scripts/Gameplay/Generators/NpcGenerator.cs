@@ -31,6 +31,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             }
         }
 
+        
         [SerializeField]
         private Transform container;
 
@@ -54,9 +55,11 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
         {
+            //on nettoie au cas où au START
             container.ClearChildren();
             pendingNpcs.Clear();
 
+            //Propre au area
             IRuntimeArea runtimeArea = phase.area;
             if (runtimeArea == null)
             {
@@ -67,6 +70,8 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
             var context = new NpcInstanceContext(runtimeArea.Path, phase.npcManager);
             var spawnPoints = phase.currentArea.SpawnPoints;
+            
+            
 
             // Pass 1: pilgrims, present from the start and needed by the enemies' instances
             for (int i = 0; i < spawnPoints.Count; i++)
@@ -137,7 +142,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             runtimeNpc.SetParent(container);
 
             // the behaviour creates the instance and plugs it into the runtime (error already logged on failure)
-            INpcInstance instance = npcContainer.CreateInstance(npcData, context, runtimeNpc);
+            INpcInstance instance = npcContainer.CreateInstance(npcData, context);
             if (instance == null)
             {
                 Destroy(runtimeNpc.gameObject);
