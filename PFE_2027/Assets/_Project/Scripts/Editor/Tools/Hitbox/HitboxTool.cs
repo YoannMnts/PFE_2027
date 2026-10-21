@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PFE.Core.Scripts.Enemy.Attacks;
+using PFE.Core.Scripts.Fight.Dashes;
 using PFE.Editor._Project.Scripts.Editor.Tools.Animation;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -19,17 +21,24 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         private const string SEARCH_ROOT = "Assets/_Project";
         private const string ATTACK_FOLDER = "Assets/_Project/Resources/Database/Hitboxes/Basics";
         private const string PUSHBACK_FOLDER = "Assets/_Project/Resources/Database/Hitboxes/Pushbacks";
+        private const string DASH_FOLDER = "Assets/_Project/Resources/Database/Hitboxes/Dashes";
         private const string SELECTED_CATEGORY_SESSION_KEY = "PFE.Editor.Hitbox.SelectedCategory";
         private const string PREVIEW_PROFILE_PREFS_KEY = "PFE.Editor.Hitbox.PreviewProfile.";
 
-        // Track color of an additional window, picked from its lowest flag bit
-        private static readonly Color[] FlagColors =
+        // Track color of an additional window, picked from the type of its flag
+        private static readonly Dictionary<string, Color> FlagColors = new()
         {
-            new(0.6f, 0.6f, 0.65f),   // bit 0 - MovementLock
-            new(0.35f, 0.6f, 1f),     // bit 1 - Combo
-            new(0.75f, 0.55f, 0.35f), // bit 2
-            new(0.4f, 0.8f, 0.45f),   // bit 3
-            new(0.95f, 0.85f, 0.3f),  // bit 4
+            { nameof(MovementLock), new Color(0.6f, 0.6f, 0.65f) },
+            { nameof(Combo), new Color(0.35f, 0.6f, 1f) },
+            { nameof(Displacement), new Color(0.85f, 0.45f, 0.75f) },
+        };
+
+        // Flags without a color of their own (VFX, SFX...) get one of these, always the same for a given type
+        private static readonly Color[] FallbackFlagColors =
+        {
+            new(0.75f, 0.55f, 0.35f),
+            new(0.4f, 0.8f, 0.45f),
+            new(0.95f, 0.85f, 0.3f),
         };
         private static readonly Color NoFlagColor = new(0.35f, 0.35f, 0.35f);
 
@@ -42,6 +51,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         {
             new HitboxCategory<AttackData>("Attack", ATTACK_FOLDER),
             new HitboxCategory<PushbackData>("Pushback", PUSHBACK_FOLDER),
+            new HitboxCategory<DashData>("Dash", DASH_FOLDER),
         };
 
         private readonly VisualElement root = new();
@@ -59,8 +69,8 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         private readonly List<TimeWindowTrack> tracks = new();
         private readonly List<VisualElement> hitboxRows = new();
         private int trackedHitboxCount;
-        // Flags of every additional window when the tracks were built: a change rebuilds them (title, color)
-        private readonly List<int> trackedWindowFlags = new();
+        // Flag type of every additional window when the tracks were built: a change rebuilds them (title, color)
+        private readonly List<string> trackedWindowFlags = new();
         private int totalFrames;
 
         // Knockback redirect section (PushbackData only)
@@ -244,6 +254,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             playButton = null;
             redirectSection = null;
             shownRedirect = null;
+            windowsSection = null;
         }
 
         // ---------------------------------------------------------------- edit panel
@@ -254,8 +265,9 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             serializedData = stage.SerializedData;
             serializedData.Update();
 
-            // Fresh container on every rebuild: its change tracking goes away with it
-            VisualElement content = new();
+            // Fresh container on every rebuild: its change tracking goes away with it.
+            // The whole panel scrolls (header, timeline and fields).
+            ScrollView content = new(ScrollViewMode.Vertical);
             content.AddToClassList("attack-edit");
             editPanel.Add(content);
 
@@ -358,11 +370,11 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             for (int i = 0; i < windows.arraySize; i++)
             {
                 SerializedProperty element = windows.GetArrayElementAtIndex(i);
-                int flags = element.FindPropertyRelative(HitboxPropertyPaths.Flags).intValue;
-                trackedWindowFlags.Add(flags);
+                string flagType = GetFlagTypeName(element);
+                trackedWindowFlags.Add(flagType);
 
-                AddTrackRow(GetWindowTitle((WindowFlags)flags),
-                    element.FindPropertyRelative(HitboxPropertyPaths.Window), GetWindowColor((WindowFlags)flags), -1);
+                AddTrackRow(GetWindowTitle(flagType),
+                    element.FindPropertyRelative(HitboxPropertyPaths.Window), GetWindowColor(flagType), -1);
             }
 
             OnSelectionChanged(HitboxStage.Current != null ? HitboxStage.Current.SelectedHitbox : -1);
@@ -404,11 +416,15 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
         // The Animation group (controller, state, clip) stays in the regular inspector.
         private VisualElement BuildFields()
         {
-            ScrollView scroll = new(ScrollViewMode.Vertical);
-            scroll.AddToClassList("attack-edit__inspector");
+            VisualElement fields = new();
+            fields.AddToClassList("attack-edit__inspector");
 
-            scroll.Add(new PropertyField(serializedData.FindProperty(HitboxPropertyPaths.Hitboxes), "Hitboxes"));
-            scroll.Add(new PropertyField(serializedData.FindProperty(HitboxPropertyPaths.Windows), "Windows"));
+            fields.Add(new PropertyField(serializedData.FindProperty(HitboxPropertyPaths.Hitboxes), "Hitboxes"));
+
+            windowsSection = new VisualElement();
+            windowsSection.AddToClassList("attack-edit__section");
+            fields.Add(windowsSection);
+            RebuildWindowsSection();
 
             SerializedProperty iterator = serializedData.GetIterator();
             bool enterChildren = true;
@@ -418,7 +434,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
                 if (HitboxPropertyPaths.IsBaseField(iterator.propertyPath))
                     continue;
 
-                scroll.Add(new PropertyField(iterator.Copy()));
+                fields.Add(new PropertyField(iterator.Copy()));
             }
 
             // The cone is a separate shared asset: its inspector is shown under the pushback fields
@@ -426,12 +442,12 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             {
                 redirectSection = new VisualElement();
                 redirectSection.AddToClassList("attack-edit__section");
-                scroll.Add(redirectSection);
+                fields.Add(redirectSection);
                 RefreshRedirectSection();
             }
 
-            scroll.Bind(serializedData);
-            return scroll;
+            fields.Bind(serializedData);
+            return fields;
         }
 
         private void OnDataChanged(SerializedObject _)
@@ -441,12 +457,21 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 
             // Structure changed (hitbox/window added or removed, flags edited): rebuild; otherwise just refresh the bars
             if (HasTrackLayoutChanged())
+            {
                 BuildTracks();
+                RebuildWindowsSection();
+            }
             else
                 foreach (TimeWindowTrack track in tracks)
                     track.Refresh();
 
             RefreshRedirectSection();
+
+            // Distances, curves or windows may have changed: put the character back where the playhead says
+            HitboxStage stage = HitboxStage.Current;
+            if (stage != null)
+                stage.Sample(stage.CurrentSeconds);
+
             SceneView.RepaintAll();
         }
 
@@ -491,27 +516,181 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 
             for (int i = 0; i < windows.arraySize; i++)
             {
-                if (windows.GetArrayElementAtIndex(i).FindPropertyRelative(HitboxPropertyPaths.Flags).intValue != trackedWindowFlags[i])
+                if (GetFlagTypeName(windows.GetArrayElementAtIndex(i)) != trackedWindowFlags[i])
                     return true;
             }
 
             return false;
         }
 
-        private static string GetWindowTitle(WindowFlags flags) =>
-            flags == WindowFlags.None ? "(no flag)" : flags.ToString();
+        // Windows section: built by hand because the default PropertyField has no type picker for the
+        // [SerializeReference] flag (Odin draws one in the regular inspector, not in UI Toolkit)
+        private VisualElement windowsSection;
 
-        private static Color GetWindowColor(WindowFlags flags)
+        // Every concrete IWindowFlag type (found once per domain reload), offered by the flag dropdown
+        private static List<Type> flagTypes;
+        private static List<string> flagChoices;
+
+        private static List<Type> FlagTypes => flagTypes ??= FindFlagTypes();
+
+        private static List<string> FlagChoices
         {
-            int value = (int)flags;
-            if (value == 0)
+            get
+            {
+                if (flagChoices != null)
+                    return flagChoices;
+
+                flagChoices = new List<string> { "(no flag)" };
+                foreach (Type type in FlagTypes)
+                    flagChoices.Add(ObjectNames.NicifyVariableName(type.Name));
+
+                return flagChoices;
+            }
+        }
+
+        private static List<Type> FindFlagTypes()
+        {
+            List<Type> types = new();
+            foreach (Type type in TypeCache.GetTypesDerivedFrom<IWindowFlag>())
+            {
+                if (type.IsAbstract || type.IsInterface || type.IsGenericTypeDefinition
+                    || typeof(UnityEngine.Object).IsAssignableFrom(type))
+                    continue;
+
+                // Activator needs a parameterless constructor (always there for a struct)
+                if (!type.IsValueType && type.GetConstructor(Type.EmptyTypes) == null)
+                    continue;
+
+                types.Add(type);
+            }
+
+            types.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
+            return types;
+        }
+
+        // Same format as SerializedProperty.managedReferenceFullTypename: "Assembly Namespace.Type"
+        private static string GetManagedReferenceName(Type type) =>
+            $"{type.Assembly.GetName().Name} {type.FullName?.Replace('+', '/')}";
+
+        private void RebuildWindowsSection()
+        {
+            if (windowsSection == null || serializedData == null)
+                return;
+
+            windowsSection.Clear();
+
+            Label title = new("Windows");
+            title.AddToClassList("attack-edit__section-title");
+            windowsSection.Add(title);
+
+            SerializedProperty windows = serializedData.FindProperty(HitboxPropertyPaths.Windows);
+            for (int i = 0; i < windows.arraySize; i++)
+                windowsSection.Add(BuildWindowElement(windows.GetArrayElementAtIndex(i), i));
+
+            windowsSection.Add(new Button(AddWindow) { text = "Add window" });
+            windowsSection.Bind(serializedData);
+        }
+
+        private VisualElement BuildWindowElement(SerializedProperty element, int index)
+        {
+            VisualElement box = new();
+            box.AddToClassList("attack-edit__window");
+
+            SerializedProperty flag = element.FindPropertyRelative(HitboxPropertyPaths.Flag);
+            string flagPath = flag.propertyPath;
+            string currentType = flag.managedReferenceFullTypename;
+
+            // Header: type of the flag (a change creates a fresh instance) and remove button
+            VisualElement header = new();
+            header.AddToClassList("attack-edit__window-header");
+
+            int currentIndex = FlagTypes.FindIndex(type => GetManagedReferenceName(type) == currentType) + 1;
+            DropdownField typeField = new($"Window #{index}", FlagChoices, currentIndex);
+            typeField.AddToClassList("attack-edit__window-type");
+            typeField.RegisterValueChangedCallback(_ => SetFlagType(flagPath, typeField.index));
+            header.Add(typeField);
+            header.Add(new Button(() => RemoveWindow(index)) { text = "✕", tooltip = "Remove this window." });
+            box.Add(header);
+
+            box.Add(new PropertyField(element.FindPropertyRelative(HitboxPropertyPaths.Window)));
+
+            // Values of the flag (Combo.NextAttack, Displacement.Distance...)
+            if (!string.IsNullOrEmpty(currentType))
+            {
+                SerializedProperty child = flag.Copy();
+                SerializedProperty end = flag.GetEndProperty();
+                bool enterChildren = true;
+                while (child.NextVisible(enterChildren) && !SerializedProperty.EqualContents(child, end))
+                {
+                    enterChildren = false;
+                    box.Add(new PropertyField(child.Copy()));
+                }
+            }
+
+            return box;
+        }
+
+        // A new flag type = a fresh instance with default values; "(no flag)" clears it
+        private void SetFlagType(string flagPath, int choiceIndex)
+        {
+            SerializedProperty flag = serializedData?.FindProperty(flagPath);
+            if (flag == null)
+                return;
+
+            flag.managedReferenceValue = choiceIndex > 0 ? Activator.CreateInstance(FlagTypes[choiceIndex - 1]) : null;
+            serializedData.ApplyModifiedProperties();
+        }
+
+        private void AddWindow()
+        {
+            SerializedProperty windows = serializedData.FindProperty(HitboxPropertyPaths.Windows);
+            int index = windows.arraySize;
+            windows.InsertArrayElementAtIndex(index);
+
+            // The new element copies the previous one: give it no flag instead of sharing the same reference
+            windows.GetArrayElementAtIndex(index).FindPropertyRelative(HitboxPropertyPaths.Flag).managedReferenceValue = null;
+            serializedData.ApplyModifiedProperties();
+        }
+
+        private void RemoveWindow(int index)
+        {
+            SerializedProperty windows = serializedData.FindProperty(HitboxPropertyPaths.Windows);
+            if (index < 0 || index >= windows.arraySize)
+                return;
+
+            windows.DeleteArrayElementAtIndex(index);
+            serializedData.ApplyModifiedProperties();
+        }
+
+        // Short class name of the flag held by a window (empty when none), read from its managed reference type
+        // ("Assembly Namespace.Type"): no instance is created
+        private static string GetFlagTypeName(SerializedProperty window)
+        {
+            string fullName = window.FindPropertyRelative(HitboxPropertyPaths.Flag).managedReferenceFullTypename;
+            if (string.IsNullOrEmpty(fullName))
+                return string.Empty;
+
+            int separator = Mathf.Max(fullName.LastIndexOf('.'), fullName.LastIndexOf(' '));
+            return fullName.Substring(separator + 1);
+        }
+
+        private static string GetWindowTitle(string flagType) =>
+            string.IsNullOrEmpty(flagType) ? "(no flag)" : ObjectNames.NicifyVariableName(flagType);
+
+        private static Color GetWindowColor(string flagType)
+        {
+            if (string.IsNullOrEmpty(flagType))
                 return NoFlagColor;
 
-            int bit = 0;
-            while ((value & (1 << bit)) == 0)
-                bit++;
+            if (FlagColors.TryGetValue(flagType, out Color color))
+                return color;
 
-            return FlagColors[bit % FlagColors.Length];
+            // Stable across sessions (string.GetHashCode isn't guaranteed to be)
+            int hash = 0;
+            foreach (char character in flagType)
+                hash = hash * 31 + character;
+
+            return FallbackFlagColors[(hash & int.MaxValue) % FallbackFlagColors.Length];
         }
 
         private void OnSelectionChanged(int selected)

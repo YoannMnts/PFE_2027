@@ -45,7 +45,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
             InitializeAnimation();
 
-            var attackContext = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
+            var attackContext = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnAttackHit, OnWindowEnter);
             // The player is not IDamageable yet: no owner to exclude
             hitboxRunner = new HitboxRunner(attackContext);
 
@@ -79,14 +79,15 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             // Read the player's intent before the constraints modify it
             CaptureMoveIntent(motor);
-            ApplyDash(motor);
             LockMovementDuringAttack(motor);
+            // After the lock: a displacement window (dash, lunge) moves the player even when its input is locked
+            ApplyDisplacement(motor);
             ApplyPilgrimLeash(motor);
         }
 
         private void LockMovementDuringAttack(ICharacterMotor motor)
         {
-            if (hitboxRunner == null || !hitboxRunner.Has(WindowFlags.MovementLock))
+            if (hitboxRunner == null || !hitboxRunner.Has<MovementLock>(out _))
                 return;
 
             motor.MoveInput = Vector3.zero;

@@ -6,8 +6,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
     [Serializable]
     public struct AdditionalWindow
     {
-        [field: SerializeField]
-        public WindowFlags Flags { get; private set; }
+        [field: SerializeReference]
+        public IWindowFlag Flag { get; private set; }
 
         [field: SerializeField]
         public TimeWindow Window { get; private set; }

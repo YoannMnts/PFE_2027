@@ -17,7 +17,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
 
         // Shared by HitboxWindow.Window and AdditionalWindow.Window (same property name, same backing field)
         public static readonly string Window = Backing(nameof(HitboxWindow.Window));
-        public static readonly string Flags = Backing(nameof(AdditionalWindow.Flags));
+        public static readonly string Flag = Backing(nameof(AdditionalWindow.Flag));
         public static readonly string Shape = Backing(nameof(HitboxWindow.Shape));
         public static readonly string Offset = Backing(nameof(HitboxWindow.Offset));
         public static readonly string Rotation = Backing(nameof(HitboxWindow.Rotation));

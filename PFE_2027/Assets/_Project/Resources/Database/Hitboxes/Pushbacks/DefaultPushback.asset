@@ -61,3 +61,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   <Redirect>k__BackingField: {fileID: 11400000, guid: f576e294449e47c4c8b8d479d7a05a68, type: 2}
+  references:
+    version: 2
+    RefIds: []

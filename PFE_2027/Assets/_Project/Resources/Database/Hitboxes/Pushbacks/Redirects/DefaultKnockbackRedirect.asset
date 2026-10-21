@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef9582ca81af2724c8e2a39c14158689, type: 3}
   m_Name: DefaultKnockbackRedirect
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Enemy.Attacks.KnockbackRedirectData
-  <Range>k__BackingField: 4
+  <Range>k__BackingField: 4.979495
   <HalfAngle>k__BackingField: 14.990355

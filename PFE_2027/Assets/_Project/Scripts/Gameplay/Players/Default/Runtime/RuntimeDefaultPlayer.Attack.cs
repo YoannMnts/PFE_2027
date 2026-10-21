@@ -25,10 +25,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void TryConsumeAttackRequest()
         {
-            // An attack pressed during a dash stays buffered and starts when the dash ends
-            if (IsDashing)
-                return;
-
             // Moveset and input buffer come from the character data
             PlayerData data = Player?.Data;
             if (data == null || data.BasicAttack == null)
@@ -41,10 +37,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (!hitboxRunner.IsRunning)
                 attack = data.BasicAttack;
             
-            else if (hitboxRunner.Has(WindowFlags.Combo) 
-                     && hitboxRunner.Current is AttackData attackData 
-                     && attackData.Next != null)
-                attack = attackData.Next;
+            else if (hitboxRunner.Has<Combo>(out var combo) 
+                     && combo.NextAttack != null)
+                attack = combo.NextAttack;
             
             else
                 return; // Keep the request buffered until the combo window opens or it expires

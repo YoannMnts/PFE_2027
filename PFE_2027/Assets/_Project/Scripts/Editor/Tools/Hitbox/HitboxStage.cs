@@ -117,6 +117,9 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
             AnimationMode.SampleAnimationClip(characterInstance, clip, currentSeconds);
             AnimationMode.EndSampling();
 
+            // Like in game, the character slides along its Displacement windows (preview: along +Z)
+            characterInstance.transform.position = Vector3.forward * DisplacementPreview.GetDistanceAt(data, NormalizedTime);
+
             SceneView.RepaintAll();
         }
     }

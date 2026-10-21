@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b632d6a0a9f188343951427d1d0436e1, type: 3}
+  m_Name: DefaultDash
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Dashes.DashData
+  guidText: d63716d3-be54-4fa1-bf44-e07f435e3ba1
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: 65865a45df233ec48a1d1e090b0ac3eb, type: 2}
+  hitboxes: []
+  windows:
+  - <Flag>k__BackingField:
+      rid: 8017306121691201632
+    <Window>k__BackingField:
+      <Start>k__BackingField: 0
+      <End>k__BackingField: 1
+  - <Flag>k__BackingField:
+      rid: 8017306121691201639
+    <Window>k__BackingField:
+      <Start>k__BackingField: 0.275
+      <End>k__BackingField: 1
+  <Duration>k__BackingField: 0
+  <Cooldown>k__BackingField: 0.4
+  references:
+    version: 2
+    RefIds:
+    - rid: 8017306121691201632
+      type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Distance>k__BackingField: 5
+        <ProgressOverWindow>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 2.3965857
+            outSlope: 2.3965857
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.04339964
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0.4009969
+            outSlope: 0.4009969
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.08137435
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 8017306121691201639
+      type: {class: Combo, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <NextAttack>k__BackingField: {fileID: 11400000, guid: 270ed6c3be65c314fb2b14c5ee4f5f99, type: 2}
