@@ -19,6 +19,11 @@ namespace PFE.Gameplay.Scripts.NPCs
             return instance;
         }
 
+        public void SetupRuntime(TData data, INpcInstance instance)
+        {
+            
+        }
+
         public Vector3 RedirectTargetPosition(TData data, INpcInstance instance, Vector3 goal)
             => RedirectTargetPosition(data, (TInstance)instance, goal);
 

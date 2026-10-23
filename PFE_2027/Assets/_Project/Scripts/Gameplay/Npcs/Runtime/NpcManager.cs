@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using PFE.Core.Scripts.DataMapping;
+using PFE.Core.Scripts.NPCs;
+using PFE.Core.Scripts.Pilgrims;
+using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
@@ -7,75 +12,106 @@ namespace PFE.Gameplay.Scripts.NPCs
     // Registry of the battle's living NPCs, subscribes to their death to stay up to date
     public class NpcManager
     {
+        public readonly struct DataInstance
+        {
+            public readonly INpcData data;
+            public readonly INpcInstance instance;
+            
+            public DataInstance(INpcData data, INpcInstance instance)
+            {
+                this.data = data;
+                this.instance = instance;
+            }
+        }
+        
         public event Action<INpcInstance> OnNpcAdded;
         public event Action<INpcInstance> OnNpcDied;
 
         //créer une liste vide (à la création du Manager) des NpcInstance qui ne peut etre effacer mais peut etre modifier 
-        private readonly List<INpcInstance> npcs = new();
+        private readonly List<DataInstance> npcList = new();
+        private readonly List<DataInstance> deadNpcList = new();
         
-        //associe la liste au dessus mais en "vu seulement" pour que les autres scripts voient mais n'y touche pas 
-        public IReadOnlyList<INpcInstance> Npcs => npcs;
-        public int Count => npcs.Count;
-        
-        
-        public void Add(INpcInstance instance)
-        {
-            //si instance donné est null OU si la liste contient deja d'instance
-            if (instance == null || npcs.Contains(instance))
-                return;
-
-            npcs.Add(instance);
-            instance.OnDeath += HandleDeath;
-            OnNpcAdded?.Invoke(instance);
-        }
-
-        public bool Remove(INpcInstance instance)
-        {
-            if (instance == null || !npcs.Remove(instance))
-                return false;
-
-            instance.OnDeath -= HandleDeath;
-            return true;
-        }
+        public int Count => npcList.Count;
 
         public bool TryGetFirst<T>(out T result) where T : class, INpcInstance
         {
-            for (int i = 0; i < npcs.Count; i++)
+            foreach (var instance in npcList)
             {
-                if (npcs[i] is not T typed) 
+                if (instance is not T typedInstance)
                     continue;
-                
-                result = typed;
+                result = typedInstance;
                 return true;
             }
-
             result = null;
             return false;
         }
-
-        public int CountOf<T>() where T : class, INpcInstance
+        
+        
+        public bool TryGetData(out PilgrimData pilgrimData)
         {
-            int count = 0;
-            for (int i = 0; i < npcs.Count; i++)
+            foreach (DataInstance data in npcList)
             {
-                if (npcs[i] is T)
-                    count++;
+                if (data.data is PilgrimData compatible)
+                {
+                    pilgrimData = compatible;
+                    return true;
+                }
             }
-            return count;
+            pilgrimData = null;
+            return false;
+        }
+        
+        //méthode permettant de récupérer une instance par rapport à une data
+        public bool TryGetInstance(INpcData data, out INpcInstance instance)
+        {
+            foreach (var dataInstance in npcList)
+            {
+                if (dataInstance.data == data)
+                {
+                    instance = dataInstance.instance;
+                    return true;
+                }
+            }
+            Debug.LogError($"[Npc Manager] No instance has been found for  {data.Name}");
+            instance = null;
+            return false;
+        }
+        
+        
+        //il creé, associe et ajoute dans le dictionnaire
+        public void Add(NpcData data, NpcInstanceContext context)
+        {
+            //si la data n'a pas de behavior
+            if (!data.TryGet(out INpcContainer container))
+                return;
+            
+            //création de l'instance
+            INpcInstance newInstance = container.CreateInstance(data, context);
+            
+            //ajout dans la struct de stockage => ajout dans la liste
+            var dataInstance = new DataInstance(data, newInstance);
+            npcList.Add(dataInstance);
+            
+            OnNpcAdded?.Invoke(newInstance);
         }
 
+        public void Remove(INpcData data)
+        {
+            for (int i = 0; i < npcList.Count; i++)
+            {
+                if (npcList[i].data == data)
+                {
+                    npcList.RemoveAt(i);
+                    Debug.LogWarning($"[Npc Manager] data || instance wasn't removed from {npcList}");
+                }
+                Debug.LogWarning($"[Npc Manager] data || instance was removed from {npcList}");
+                return;
+            }
+        }
+        
         public void Clear()
         {
-            for (int i = 0; i < npcs.Count; i++)
-                npcs[i].OnDeath -= HandleDeath;
-
-            npcs.Clear();
-        }
-
-        private void HandleDeath(INpcInstance instance)
-        {
-            Remove(instance);
-            OnNpcDied?.Invoke(instance);
+            npcList.Clear();
         }
     }
 }

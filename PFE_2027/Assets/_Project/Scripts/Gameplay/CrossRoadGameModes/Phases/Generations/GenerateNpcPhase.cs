@@ -4,6 +4,7 @@ using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.NPCs;
+using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.RoadSystem;
@@ -23,6 +24,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             this.area = area;
             this.npcManager = npcManager;
         }
+        
 
         protected override Awaitable Initialize(CancellationToken token)
         {
@@ -37,7 +39,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
                 
                 var context = new NpcInstanceContext(area.Path, npcManager);
                 INpcInstance currentNpcInstance = container.CreateInstance(currentNpcData, context);
-                npcManager.Add(currentNpcInstance);
+                npcManager.Add(currentNpcData, context);
             }
             return base.Initialize(token);
         }

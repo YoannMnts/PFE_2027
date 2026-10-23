@@ -7,6 +7,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
+using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Players;
@@ -52,15 +53,22 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             var arenaResult = await generateAreaPhase.Run();
         
             var generateNpcPhase = new GenerateNpcPhase(currentArea, arenaResult.value, gameModeContext.NpcManager);
-            await generateNpcPhase.Run();
+            var bla = await generateNpcPhase.Run();
 
-            if (!gameModeContext.NpcManager.TryGetFirst<PilgrimInstance>(out var pilgrimInstance)) 
+            if (!gameModeContext.NpcManager.TryGetData(out PilgrimData pilgrimData))
+            {
                 return false;
-            
-            var protectPilgrimPhase = new ProtectPilgrimPhase(pilgrimInstance);
-            var result = await protectPilgrimPhase.Run();
+            }
 
-            return result.value;
+            bool result = false;
+            if (gameModeContext.NpcManager.TryGetInstance(pilgrimData, out INpcInstance npcInstance)
+                && npcInstance is PilgrimInstance pilgrimInstance)
+            {
+                var protectPilgrimPhase = new ProtectPilgrimPhase(pilgrimInstance);
+                result = await protectPilgrimPhase.Run();
+            }
+            
+            return result;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

@@ -14,6 +14,10 @@ namespace PFE.Gameplay.Scripts.NPCs
         // returns null if the runtime doesn't match the instance type
         INpcInstance CreateInstance(TData data, NpcInstanceContext context);
         
+        
+        [AddToContainer]
+        void SetupRuntime(TData data, INpcInstance instance);
+        
         [AddToContainer]
         // final destination of the NPC from the goal given by the game (pilgrim position, spline point...):
         // lets each NPC type go somewhere else than straight to it (flank, keep its distance, stay home...)
