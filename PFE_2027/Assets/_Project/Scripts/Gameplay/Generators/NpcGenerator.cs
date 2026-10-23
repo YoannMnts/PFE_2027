@@ -161,8 +161,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return null;
             }
 
-            IRuntimeNpc runtime = runtimeNpc.GetComponent<IRuntimeNpc>();
-            npcContainer.TryToSetupRuntime(npcData, npcInstance, runtime);
+            npcContainer.TrySetupRuntime(npcData, npcInstance, runtimeNpc);
             
             return runtimeNpc;
         }

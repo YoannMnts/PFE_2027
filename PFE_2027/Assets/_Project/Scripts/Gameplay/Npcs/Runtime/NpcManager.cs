@@ -33,11 +33,12 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public int Count => npcList.Count;
 
-        public bool TryGetFirst<T>(out T result) where T : class, INpcInstance
+        public bool TryGetFirstInstance<TInstance>(out TInstance result) 
+            where TInstance : class, INpcInstance
         {
             foreach (DataInstance instance in npcList)
             {
-                if (instance.instance is not T typedInstance)
+                if (instance.instance is not TInstance typedInstance)
                     continue;
                 result = typedInstance;
                 return true;
@@ -46,12 +47,13 @@ namespace PFE.Gameplay.Scripts.NPCs
             return false;
         }
         
-        
-        public bool TryGetData(out PilgrimData pilgrimData)
+        //passé en generique mais honnetement il y en a pas tellement besoin
+        public bool TryGetFirstData<TData>(out TData pilgrimData)
+            where TData : NpcData
         {
             foreach (DataInstance data in npcList)
             {
-                if (data.data is PilgrimData compatible)
+                if (data.data is TData compatible)
                 {
                     pilgrimData = compatible;
                     return true;
@@ -87,6 +89,9 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             //création de l'instance
             INpcInstance newInstance = container.CreateInstance(data, context);
+
+            //si l'instance meurt on l'a remove auto des npcs
+            newInstance.OnDeath += Remove;
             
             //ajout dans la struct de stockage => ajout dans la liste
             var dataInstance = new DataInstance(data, newInstance);
@@ -97,21 +102,38 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         public void Remove(INpcData data)
         {
+            //premier parcours pour savoir qui est mort
+            var removeIndex = new List<int>();
             for (int i = 0; i < npcList.Count; i++)
             {
-                if (npcList[i].data == data)
+                var dataInstance = npcList[i];
+                if (dataInstance.data == data)
                 {
-                    npcList.RemoveAt(i);
+                    dataInstance.instance.OnDeath -= Remove;
+                    OnNpcDied?.Invoke(dataInstance.instance);
+                    
+                    deadNpcList.Add(dataInstance);
+                    removeIndex.Add(i);
                     
                     Debug.LogWarning($"[Npc Manager] data || instance was removed from {npcList}");
                 }
                 Debug.LogWarning($"[Npc Manager] data || instance wasn't removed from {npcList}");
                 return;
             }
+
+            //deuxieme parcour pour retirer les morts de la list
+            foreach (var i in removeIndex)
+                npcList.RemoveAt(i);
         }
         
         public void Clear()
         {
+            foreach (var dataInstance in npcList)
+            {
+                dataInstance.instance.OnDeath -= Remove;
+                OnNpcDied?.Invoke(dataInstance.instance);
+            }
+            
             npcList.Clear();
         }
     }

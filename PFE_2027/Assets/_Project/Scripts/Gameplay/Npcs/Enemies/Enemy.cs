@@ -11,7 +11,7 @@ namespace PFE.Gameplay.Scripts.Enemy
         // The pilgrim is spawned first by the NpcGenerator: already in the manager here
         protected override EnemyInstance Create(TData data, NpcInstanceContext context)
         {
-            context.npcManager.TryGetFirst(out PilgrimInstance instance);
+            context.npcManager.TryGetFirstInstance(out PilgrimInstance instance);
             return new EnemyInstance(data, instance);
         }
 

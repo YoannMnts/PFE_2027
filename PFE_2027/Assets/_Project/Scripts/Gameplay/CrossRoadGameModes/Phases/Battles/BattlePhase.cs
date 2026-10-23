@@ -53,9 +53,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             var arenaResult = await generateAreaPhase.Run();
         
             var generateNpcPhase = new GenerateNpcPhase(currentArea, arenaResult.value, gameModeContext.NpcManager);
-            var bla = await generateNpcPhase.Run();
+            await generateNpcPhase.Run();
 
-            if (!gameModeContext.NpcManager.TryGetData(out PilgrimData pilgrimData))
+            if (!gameModeContext.NpcManager.TryGetFirstData(out PilgrimData pilgrimData))
             {
                 return false;
             }

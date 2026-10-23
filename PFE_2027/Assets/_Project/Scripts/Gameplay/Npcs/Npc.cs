@@ -19,23 +19,17 @@ namespace PFE.Gameplay.Scripts.NPCs
             return instance;
         }
 
-        public bool TryToSetupRuntime(TData currentData, INpcInstance currentInstance, IRuntimeNpc currentRuntimeNpc)
+        public bool TrySetupRuntime(TData data, INpcInstance currentInstance, Transform prefab)
         {
-            //la méthode s'écriera différemment si tout marche
+            //on fait les douanes et si tous passe on peut return true
+            if(!prefab.TryGetComponent<IRuntimeNpc<TInstance>>(out var runtimeNpc))
+                return false;
             
-            if (currentRuntimeNpc is IRuntimeNpc<TInstance> runtimeNpcInstance )
-            {
-                if (currentInstance is TInstance instance)
-                {
-                    //pas sur des 2 lignes
-                    currentRuntimeNpc = runtimeNpcInstance;
-                    currentInstance = instance;
-                    
-                    runtimeNpcInstance.Setup(instance);
-                    return true;
-                }
-            }
-            return false;
+            if(currentInstance is not TInstance instance)
+                return false;
+            
+            runtimeNpc.Setup(instance);
+            return true;
         }
 
 

@@ -9,7 +9,7 @@ namespace PFE.Gameplay.Scripts.NPCs
     public abstract class NpcInstance<TData> : INpcInstance where TData : NpcData
     {
         public event Action<float> OnModifyHealth;
-        public event Action<INpcInstance> OnDeath;
+        public event Action<INpcData> OnDeath;
 
         public readonly TData data;
         INpcData INpcInstance.Data => data;
@@ -46,7 +46,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (IsDead)
             {
                 container.Dying(data);
-                OnDeath?.Invoke(this);
+                OnDeath?.Invoke(data);
             }
         }
 
