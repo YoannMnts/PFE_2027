@@ -124,9 +124,9 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         
         private Transform Spawn(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, NpcInstanceContext context)
         {
+            //DOUANES MULTIPLES
             var npcData = spawnPoint.Npc;
             
-            //DOUANES MULTIPLES
             //si pas de data
             if (npcData == null)
             {
@@ -154,20 +154,16 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             runtimeNpc.SetParent(container);
 
             //douane
-            if (!context.npcManager.TryGetInstance(npcData, out var npcInstance))
+            if (!context.npcManager.TryGetInstance(npcData, out INpcInstance npcInstance))
             {
                 Debug.LogError($"[NpcGenerator] npcInstance was not found in dictionary");
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }
-            
-            //npcContainer.SetupRuntime();
-            
-            
-            
-            //TODO appeller le setup dans la classe RuntimeNpcGeneric avec l'instance et un runtime 
-            //yoann a dit qu'on mettra une douille 
 
+            IRuntimeNpc runtime = runtimeNpc.GetComponent<IRuntimeNpc>();
+            npcContainer.TryToSetupRuntime(npcData, npcInstance, runtime);
+            
             return runtimeNpc;
         }
 

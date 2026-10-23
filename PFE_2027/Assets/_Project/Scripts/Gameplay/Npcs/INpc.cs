@@ -16,7 +16,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         
         [AddToContainer]
-        void SetupRuntime(TData data, INpcInstance instance);
+        bool TryToSetupRuntime(TData currentData, INpcInstance currentInstance, IRuntimeNpc currentRuntimeNpc);
         
         [AddToContainer]
         // final destination of the NPC from the goal given by the game (pilgrim position, spline point...):

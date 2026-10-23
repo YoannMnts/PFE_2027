@@ -35,9 +35,9 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         public bool TryGetFirst<T>(out T result) where T : class, INpcInstance
         {
-            foreach (var instance in npcList)
+            foreach (DataInstance instance in npcList)
             {
-                if (instance is not T typedInstance)
+                if (instance.instance is not T typedInstance)
                     continue;
                 result = typedInstance;
                 return true;
@@ -102,9 +102,10 @@ namespace PFE.Gameplay.Scripts.NPCs
                 if (npcList[i].data == data)
                 {
                     npcList.RemoveAt(i);
-                    Debug.LogWarning($"[Npc Manager] data || instance wasn't removed from {npcList}");
+                    
+                    Debug.LogWarning($"[Npc Manager] data || instance was removed from {npcList}");
                 }
-                Debug.LogWarning($"[Npc Manager] data || instance was removed from {npcList}");
+                Debug.LogWarning($"[Npc Manager] data || instance wasn't removed from {npcList}");
                 return;
             }
         }
