@@ -1,4 +1,5 @@
 using PFE.Core.Scripts.Enemy;
+using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using UnityEngine;
@@ -10,8 +11,8 @@ namespace PFE.Gameplay.Scripts.Enemy
         // The pilgrim is spawned first by the NpcGenerator: already in the manager here
         protected override EnemyInstance Create(TData data, NpcInstanceContext context)
         {
-            context.npcManager.TryGetFirst(out PilgrimInstance pilgrim);
-            return new EnemyInstance(data, pilgrim);
+            context.npcManager.TryGetFirstInstance(out PilgrimInstance instance);
+            return new EnemyInstance(data, instance);
         }
 
         public override void Dying(TData data)

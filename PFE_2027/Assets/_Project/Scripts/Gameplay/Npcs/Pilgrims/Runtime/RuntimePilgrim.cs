@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable<RuntimePilgrim>
+    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable
     {
         [SerializeField, BoxGroup("Debugs")]
         private bool isCameraOnPilgrim = true;
@@ -46,6 +46,11 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
+        }
+
+        public bool TryLaunchInteractable()
+        {
+            return false;
         }
     }
 }

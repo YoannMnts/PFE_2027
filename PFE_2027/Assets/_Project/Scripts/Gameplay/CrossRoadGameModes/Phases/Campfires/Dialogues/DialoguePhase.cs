@@ -17,9 +17,9 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
 
-        public DialoguePhase()
+        public DialoguePhase(CrossRoadGameModeContext gameModeContext)
         {
-            
+            this.gameModeContext = gameModeContext;
         }
         
         protected override Awaitable Initialize(CancellationToken token)

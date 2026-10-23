@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Helteix.Tools;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
@@ -31,6 +32,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             }
         }
 
+        
         [SerializeField]
         private Transform container;
 
@@ -54,9 +56,11 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
         {
+            //on nettoie au cas où au START de la phase GenerateNpc
             container.ClearChildren();
             pendingNpcs.Clear();
 
+            //Pour récupérer l'area
             IRuntimeArea runtimeArea = phase.area;
             if (runtimeArea == null)
             {
@@ -65,16 +69,23 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return;
             }
 
+            //création du context des instance
             var context = new NpcInstanceContext(runtimeArea.Path, phase.npcManager);
+            //récupération des spawnpoints et donc des données de chaque npc
             var spawnPoints = phase.currentArea.SpawnPoints;
+            
+            
 
             // Pass 1: pilgrims, present from the start and needed by the enemies' instances
+            //pour tout les spawnpoint récupérés (un par un)
             for (int i = 0; i < spawnPoints.Count; i++)
             {
+                //si un pilgrimdata est referencé au spawnpoint => on lance la méthode de spawn
                 if (spawnPoints[i].Npc is PilgrimData)
                     Spawn(spawnPoints[i], runtimeArea, context);
             }
 
+            
             // Pass 2: every other NPC, placed on its anchor then hidden until the pilgrim gets close enough
             using (ListPool<PendingNpc>.Get(out List<PendingNpc> hidden))
             {
@@ -84,7 +95,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                     if (spawnPoint.Npc is PilgrimData)
                         continue;
 
-                    Transform runtimeNpc = SpawnAdnHide(spawnPoint, runtimeArea, context);
+                    Transform runtimeNpc = SpawnAndHide(spawnPoint, runtimeArea, context);
                     
                     if(runtimeNpc == null)
                         continue;
@@ -104,7 +115,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         {
         }
 
-        private Transform SpawnAdnHide(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, NpcInstanceContext context)
+        private Transform SpawnAndHide(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, NpcInstanceContext context)
         {
             var runtime = Spawn(spawnPoint, runtimeArea, context);
             runtime?.gameObject.SetActive(false);
@@ -113,49 +124,58 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         
         private Transform Spawn(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, NpcInstanceContext context)
         {
+            //DOUANES MULTIPLES
             var npcData = spawnPoint.Npc;
+            
+            //si pas de data
             if (npcData == null)
             {
                 Debug.LogWarning($"[NpcGenerator] Spawn point '{spawnPoint.AnchorId}' has no NPC assigned.", this);
                 return null;
             }
 
+            //si pas de behavior
             if (!npcData.TryGet(out INpcContainer npcContainer))
             {
                 Debug.LogError($"[NpcGenerator] No INpc behaviour registered for '{npcData.GetType().Name}'.", this);
                 return null;
             }
 
+            //si pas d'ancre
             if (!runtimeArea.TryGetAnchor(spawnPoint.AnchorId, out Transform anchor))
             {
                 Debug.LogWarning($"[NpcGenerator] Spawn anchor '{spawnPoint.AnchorId}' not found in the current area.", this);
                 return null;
             }
 
+            //création du transform runtime
             Transform runtimeNpc = npcData.Prefab.InstantiatePrefab();
             runtimeNpc.SetPositionAndRotation(anchor.position, anchor.rotation);
             runtimeNpc.SetParent(container);
 
-            // the behaviour creates the instance and plugs it into the runtime (error already logged on failure)
-            INpcInstance instance = npcContainer.CreateInstance(npcData, context, runtimeNpc);
-            if (instance == null)
+            //douane
+            if (!context.npcManager.TryGetInstance(npcData, out INpcInstance npcInstance))
             {
+                Debug.LogError($"[NpcGenerator] npcInstance was not found in dictionary");
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }
 
-            context.npcManager.Add(instance);
+            npcContainer.TrySetupRuntime(npcData, npcInstance, runtimeNpc);
+            
             return runtimeNpc;
         }
 
         // ---------------------------------------------------------------- progression
 
+        
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
             pilgrimInstance = phase.pilgrimInstance;
             pilgrimInstance.OnPositionChanged += OnPilgrimPositionChanged;
         }
 
+        
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
             phase.pilgrimInstance.OnPositionChanged -= OnPilgrimPositionChanged;

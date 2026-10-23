@@ -27,5 +27,14 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             
             runtimePlayer.Dash();
         }
+
+        public void PerformInteract(InputAction.CallbackContext context)
+        {
+            Debug.Log("Performing interact");
+            if (!context.performed)
+                return;
+            
+            runtimePlayer.Interact();
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace PFE.Gameplay.Scripts.NPCs
     public interface INpcInstance
     {
         public event Action<float> OnModifyHealth;
-        public event Action<INpcInstance> OnDeath;
+        public event Action<INpcData> OnDeath;
 
         public INpcData Data { get; }
         public float CurrentHealth { get; }

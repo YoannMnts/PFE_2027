@@ -68,12 +68,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
         }
         
-        protected virtual void OnDeath(INpcInstance deadInstance)
+        protected virtual void OnDeath(INpcData data)
         {
             Tween.StopAll(onTarget: transform);
             Destroy(gameObject);
         }
-
+        
         public abstract void ApplyKnockback(in KnockbackRequest request);
         public abstract void TakeDamage(int amount);
     }

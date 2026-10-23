@@ -9,6 +9,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public bool IsKnockedBack { get; }
         public HitboxRunner HitboxRunner { get; }
         public void ApplyKnockback(in KnockbackRequest request);
+        
     }
     
     public interface IRuntimeNpc<TInstance> : IRuntimeNpc

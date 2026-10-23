@@ -8,10 +8,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         public void StartFocusMode()
         {
-            if(!TryGetNearestInteractable<RuntimeEnemy>(out var enemy))
-                return;
-
-            currentFocusTarget = enemy.Interactable;
         }
 
         private void UpdateFocus()

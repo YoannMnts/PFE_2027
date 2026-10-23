@@ -10,20 +10,28 @@ namespace PFE.Gameplay.Scripts.NPCs
         where TData : NpcData
         where TInstance : class, INpcInstance
     {
+        //ABSTRACT car tous les Npc doivent dire COMMENT créer l'instance référencée
         protected abstract TInstance Create(TData data, NpcInstanceContext context);
 
-        public INpcInstance CreateInstance(TData data, NpcInstanceContext context, Transform runtime)
+        public INpcInstance CreateInstance(TData data, NpcInstanceContext context)
         {
-            if (!runtime.TryGetComponent(out IRuntimeNpc<TInstance> runtimeNpc))
-            {
-                Debug.LogError($"[Npc] '{runtime.name}' has no IRuntimeNpc<{typeof(TInstance).Name}> on its root (data '{data.name}').", runtime);
-                return null;
-            }
-
             TInstance instance = Create(data, context);
-            runtimeNpc.Setup(instance);
             return instance;
         }
+
+        public bool TrySetupRuntime(TData data, INpcInstance currentInstance, Transform prefab)
+        {
+            //on fait les douanes et si tous passe on peut return true
+            if(!prefab.TryGetComponent<IRuntimeNpc<TInstance>>(out var runtimeNpc))
+                return false;
+            
+            if(currentInstance is not TInstance instance)
+                return false;
+            
+            runtimeNpc.Setup(instance);
+            return true;
+        }
+
 
         public Vector3 RedirectTargetPosition(TData data, INpcInstance instance, Vector3 goal)
             => RedirectTargetPosition(data, (TInstance)instance, goal);
