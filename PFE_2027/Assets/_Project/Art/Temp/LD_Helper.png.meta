@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3dd571cce1cca844abbb47e83c5b60af
+guid: 35f8db4d85088544294719569059cff7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1618396366665119802
-    second: LevelDesignHelper_0
+      213: 9222404340076977253
+    second: LD_Helper_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,7 +102,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LevelDesignHelper_0
+      name: LD_Helper_0
       rect:
         serializedVersion: 2
         x: 0
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c78423441d4a89e0800000000000000
-      internalID: -1618396366665119802
+      spriteID: 56c1f4982ef8cff70800000000000000
+      internalID: 9222404340076977253
       vertices: []
       indices: 
       edges: []
