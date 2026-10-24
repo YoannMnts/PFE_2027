@@ -43,5 +43,18 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             
             return path.EvaluatePosition(spline, localTargetPosition);;
         }
+        
+        public override bool TryLaunchInteractable(bool isInteractable)
+        {
+            base.TryLaunchInteractable(isInteractable);
+            Interact();
+            return true;
+        }
+
+        protected override void Interact()
+        {
+            base.Interact();
+            //TODO comment les comportements d'interaction de place 
+        }
     }
 }

@@ -44,6 +44,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
                 player.ShowUI.AddPriority(key, PriorityTags.Default, false);
             }
             
+            
+            
             return base.Initialize(token);
         }
 

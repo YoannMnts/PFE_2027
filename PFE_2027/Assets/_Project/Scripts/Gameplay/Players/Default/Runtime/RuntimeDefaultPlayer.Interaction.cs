@@ -16,6 +16,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private IInteractable currentInteractable;
         
         
+        //TODO Une remarque au passage : la méthode s’appelle Nearest,
+        //mais elle prend le premier collider trouvé, pas le plus proche. Avec un
+        //pèlerin et un ennemi à portée, la cible dépendra de l’ordre renvoyé par la physique.
         public bool TryGetNearestInteractable(out IInteractable interactable)
         {
             int count = 
@@ -44,7 +47,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (TryGetNearestInteractable(out currentInteractable))
             {
-               currentInteractable.TryLaunchInteractable(true);
+                //TODO ici le true doit etre modifiable en fonction du state
+               currentInteractable.IsInteractable(true);
                Debug.Log($"{currentInteractable}");
             }
         }

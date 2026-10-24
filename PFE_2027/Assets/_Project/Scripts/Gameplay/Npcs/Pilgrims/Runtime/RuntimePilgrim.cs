@@ -50,17 +50,5 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
         }
-
-        public new bool TryLaunchInteractable(bool isInteractable)
-        {
-            base.TryLaunchInteractable(isInteractable);
-            return true;
-        }
-
-        public new void Interact()
-        {
-            base.Interact();
-            //TODO comment les comportements d'interaction de place 
-        }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using Helteix.ChanneledProperties;
-using Helteix.ChanneledProperties.Conditions;
-using Helteix.ChanneledProperties.Formulas;
+﻿using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Interactions;
@@ -10,12 +7,11 @@ using Sirenix.OdinInspector;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
-using Condition = Helteix.ChanneledProperties.Conditions.Condition;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
     [RequireComponent(typeof(BehaviorGraphAgent))]
-    public abstract partial class RuntimeNpc : MonoBehaviour, IRuntimeNpc, IInteractable
+    public abstract partial class RuntimeNpc : MonoBehaviour, IRuntimeNpc
     {
         protected const string BEHAVIOR_SELF_NPC = "SelfNpc";
         protected const string BEHAVIOR_TARGET_POSITION = "TargetPosition";
@@ -26,9 +22,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         [field : SerializeField, BoxGroup("References")]
         public Transform Mesh { get; private set; }
-        
-        private Condition interactableCondition;
-        private ChannelKey interactStateKey;
         
         public abstract HitboxRunner HitboxRunner { get; protected set;}
 
@@ -42,10 +35,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
             InitializeAnimation();
-            
-            interactableCondition = new Condition(false);
-            interactStateKey = ChannelKey.GetUniqueChannelKey();
-            interactableCondition.AddCondition(interactStateKey, false);
             
             if (NavMeshAgent != null)
                 NavMeshAgent.updateRotation = Mesh == null;
@@ -73,33 +62,13 @@ namespace PFE.Gameplay.Scripts.NPCs
             }
         }
         
-        protected virtual void OnModifyHealth(float currentHealth)
+        protected void OnModifyHealth(float currentHealth)
         {
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
         }
         
-        public bool TryLaunchInteractable(bool isInteractable)
-        {
-            interactableCondition.Write(interactStateKey, isInteractable);
-
-            if (!interactableCondition.Value)
-            {
-                return false;
-            }
-            
-            Interact();
-            Debug.Log($"{name} try interact");
-            return true;        
-        }
-
-        public void Interact()
-        {
-            //TODO comportement global
-            Debug.Log($"{name} is interacted");
-        }
         
-        
-        protected virtual void OnDeath(INpcData data)
+        protected void OnDeath(INpcData data)
         {
             Tween.StopAll(onTarget: transform);
             Destroy(gameObject);
@@ -107,5 +76,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public abstract void ApplyKnockback(in KnockbackRequest request);
         public abstract void TakeDamage(int amount);
+        
     }
 }

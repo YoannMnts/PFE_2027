@@ -44,17 +44,5 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
         // The runtime only forwards what happens in the world; the instance and its behaviour pick the target
         protected virtual void OnPilgrimMoved(Vector3 pilgrimPosition) => Instance?.SetGoal(pilgrimPosition);
         
-        public new bool TryLaunchInteractable(bool isInteractable)
-        {
-            base.TryLaunchInteractable(isInteractable);
-            return true;
-        }
-
-        public new void Interact()
-        {
-            base.Interact();
-            //TODO comment les comportements d'interaction de place 
-        }
-        
     }
 }

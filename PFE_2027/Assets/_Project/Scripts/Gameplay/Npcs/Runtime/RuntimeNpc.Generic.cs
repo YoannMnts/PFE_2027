@@ -10,7 +10,7 @@ using UnityEngine;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>, IInteractable
         where TInstance : NpcInstance<TData>
         where TData : NpcData 
     {
@@ -83,6 +83,16 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             HitboxRunner?.LateTick();
         }
+        
+        public bool IsInteractable(bool interactionPossibility)
+        {
+            if (interactionPossibility)
+            {
+                instance.TryLaunchInteractable(interactionPossibility);
+                return true;
+            }
+            return false;
+        }
 
         protected virtual void OnDestroy() => Unsubscribe();
 
@@ -143,7 +153,5 @@ namespace PFE.Gameplay.Scripts.NPCs
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;
         }
-        
-        
     }
 }

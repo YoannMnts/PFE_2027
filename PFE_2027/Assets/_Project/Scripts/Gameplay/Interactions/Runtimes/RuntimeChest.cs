@@ -6,36 +6,17 @@ namespace PFE.Gameplay.Scripts.Interactions.Chests
 {
     public class RuntimeChest : MonoBehaviour, IInteractable
     {
-        private Condition interactableCondition;
-        private ChannelKey interactStateKey;
-
-        public void Start()
+        public bool IsInteractable(bool interactionPossibility)
         {
-            interactableCondition = new Condition(false);
-            interactStateKey = ChannelKey.GetUniqueChannelKey();
-            interactableCondition.AddCondition(interactStateKey, false);
-        }
-        
-        public bool TryLaunchInteractable(bool isInteractable)
-        {
-            interactableCondition.Write(interactStateKey, isInteractable);
-
-            if (!interactableCondition.Value)
+            //TODO ici trouver un moyen de bien séparer le runtime de la logic
+            /*
+            if (interactionPossibility)
             {
-                return false;
+                instance.TryLaunchInteractable(interactionPossibility);
+                return true;
             }
-            
-            Interact();
-             
-            Debug.Log($"{name} try interact");
-            return true;
+            */
+            return false;
         }
-
-        public void Interact()
-        {
-            //TODO comportement de l'interact 
-            //pk pas activer la phase d'inventaire ? 
-        }
-        
     }
 }
