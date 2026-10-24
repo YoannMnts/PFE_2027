@@ -1,13 +1,16 @@
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Conditions;
 using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Interactions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> 
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>, IInteractable
         where TInstance : NpcInstance<TData>
         where TData : NpcData 
     {
@@ -18,9 +21,15 @@ namespace PFE.Gameplay.Scripts.NPCs
         private LayerMask hitMask;
         
         private TInstance instance;
+        
+        private Condition interactableCondition;
+        private ChannelKey interactStateKey;
+        
         public TInstance Instance => instance;
+        
 
         public override HitboxRunner HitboxRunner { get; protected set; }
+        
         
         public void Setup(TInstance npcInstance)
         {
@@ -29,6 +38,10 @@ namespace PFE.Gameplay.Scripts.NPCs
                 Debug.LogError($"[RuntimeNpc] '{name}' received a null {typeof(TInstance).Name}.", this);
                 return;
             }
+            
+            interactableCondition = new Condition(false);
+            interactStateKey = ChannelKey.GetUniqueChannelKey();
+            interactableCondition.AddCondition(interactStateKey, false);
 
             Unsubscribe();
             instance = npcInstance;
@@ -47,8 +60,11 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             OnSetup();
         }
-        
-        protected virtual void OnSetup() { }
+
+        protected virtual void OnSetup()
+        {
+            instance.OnModifyHealth += OnModifyHealth;
+        }
         
         private void Unsubscribe()
         {
@@ -133,6 +149,25 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;
+        }
+
+        public bool TryLaunchInteractable(bool isInteractable)
+        {
+            interactableCondition.Write(interactStateKey, isInteractable);
+
+            if (!interactableCondition.Value)
+            {
+                return false;
+            }
+            
+            Interact();
+            Debug.Log($"{name} try interact");
+            return true;        
+        }
+
+        public void Interact()
+        {
+            //TODO comportement global
         }
     }
 }

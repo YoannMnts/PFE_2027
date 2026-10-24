@@ -22,7 +22,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 Physics.OverlapSphereNonAlloc(mesh.transform.position, SPHERE_SIZE, overlapResults, interactMask, QueryTriggerInteraction.Collide);
             Debug.Log($"{count}");
             
-            
             for (int i = 0; i < count; i++)
             {
                 var collider = overlapResults[i];
@@ -43,7 +42,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (TryGetNearestInteractable(out currentInteractable))
             {
-               currentInteractable.TryLaunchInteractable();
+               currentInteractable.TryLaunchInteractable(true);
                Debug.Log($"{currentInteractable}");
             }
         }
