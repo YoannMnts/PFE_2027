@@ -7,7 +7,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     public partial class RuntimeDefaultPlayer
     {
         private const int MAX_COLLIDERS = 16;
-        private const int SPHERE_SIZE = 100;
+        private const int SPHERE_SIZE = 2;
 
         [SerializeField, BoxGroup("Interaction")]
         private LayerMask interactMask;
@@ -20,6 +20,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             int count = 
                 Physics.OverlapSphereNonAlloc(mesh.transform.position, SPHERE_SIZE, overlapResults, interactMask, QueryTriggerInteraction.Collide);
+            
             Debug.Log($"{count}");
             
             for (int i = 0; i < count; i++)
@@ -31,6 +32,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                     continue;
                 
                 interactable = target;
+                Debug.Log($"{interactable}");
                 return true;
             }
             

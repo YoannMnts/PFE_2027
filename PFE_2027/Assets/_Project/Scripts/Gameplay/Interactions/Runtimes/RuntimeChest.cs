@@ -36,5 +36,6 @@ namespace PFE.Gameplay.Scripts.Interactions.Chests
             //TODO comportement de l'interact 
             //pk pas activer la phase d'inventaire ? 
         }
+        
     }
 }

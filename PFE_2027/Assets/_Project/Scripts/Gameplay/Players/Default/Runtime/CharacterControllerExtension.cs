@@ -30,7 +30,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void PerformInteract(InputAction.CallbackContext context)
         {
-            Debug.Log("Performing interact");
+            //Debug.Log("Performing interact");
             if (!context.performed)
                 return;
             

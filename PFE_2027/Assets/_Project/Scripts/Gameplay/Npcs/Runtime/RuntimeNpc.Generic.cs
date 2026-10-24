@@ -10,7 +10,7 @@ using UnityEngine;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>, IInteractable
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>
         where TInstance : NpcInstance<TData>
         where TData : NpcData 
     {
@@ -21,9 +21,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         private LayerMask hitMask;
         
         private TInstance instance;
-        
-        private Condition interactableCondition;
-        private ChannelKey interactStateKey;
         
         public TInstance Instance => instance;
         
@@ -38,10 +35,6 @@ namespace PFE.Gameplay.Scripts.NPCs
                 Debug.LogError($"[RuntimeNpc] '{name}' received a null {typeof(TInstance).Name}.", this);
                 return;
             }
-            
-            interactableCondition = new Condition(false);
-            interactStateKey = ChannelKey.GetUniqueChannelKey();
-            interactableCondition.AddCondition(interactStateKey, false);
 
             Unsubscribe();
             instance = npcInstance;
@@ -150,24 +143,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;
         }
-
-        public bool TryLaunchInteractable(bool isInteractable)
-        {
-            interactableCondition.Write(interactStateKey, isInteractable);
-
-            if (!interactableCondition.Value)
-            {
-                return false;
-            }
-            
-            Interact();
-            Debug.Log($"{name} try interact");
-            return true;        
-        }
-
-        public void Interact()
-        {
-            //TODO comportement global
-        }
+        
+        
     }
 }

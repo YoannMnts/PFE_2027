@@ -17,3 +17,7 @@ MonoBehaviour:
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
+    <Progression>k__BackingField: 0
+  - <AnchorId>k__BackingField: Anchor_1
+    <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Progression>k__BackingField: 0
