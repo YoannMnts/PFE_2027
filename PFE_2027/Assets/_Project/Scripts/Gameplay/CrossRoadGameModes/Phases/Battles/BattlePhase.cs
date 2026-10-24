@@ -39,13 +39,11 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         protected override Awaitable Initialize(CancellationToken token)
         {
             key = ChannelKey.GetUniqueChannelKey();
+            
             foreach (var player in Players)
             {
                 player.ShowUI.AddPriority(key, PriorityTags.Default, false);
             }
-            
-            
-            
             return base.Initialize(token);
         }
 
@@ -61,12 +59,12 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             {
                 return false;
             }
-
             bool result = false;
+            
             if (gameModeContext.NpcManager.TryGetInstance(pilgrimData, out INpcInstance npcInstance)
                 && npcInstance is PilgrimInstance pilgrimInstance)
             {
-                var protectPilgrimPhase = new ProtectPilgrimPhase(pilgrimInstance);
+                var protectPilgrimPhase = new ProtectPilgrimPhase(gameModeContext, pilgrimInstance);
                 result = await protectPilgrimPhase.Run();
             }
             

@@ -29,8 +29,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         public Vector3 TargetPosition { get; private set; }
         public bool IsDead => CurrentHealth <= 0f;
         
-        private Condition interactableCondition;
         private ChannelKey interactStateKey;
+        private ChannelKey dialoguePhaseKey;
 
         // resolved once here rather than a lookup on every call
         private readonly INpcContainer container;
@@ -40,9 +40,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             this.data = data;
             CurrentHealth = data.MaxHealth;
             
-            interactableCondition = new Condition(false);
             interactStateKey = ChannelKey.GetUniqueChannelKey();
-            interactableCondition.AddCondition(interactStateKey, false);
+            dialoguePhaseKey = ChannelKey.GetUniqueChannelKey();
 
             if (!data.TryGet(out container))
                 Debug.LogError($"[NpcInstance] No INpc behaviour registered for '{data.GetType().Name}'.");
@@ -76,14 +75,14 @@ namespace PFE.Gameplay.Scripts.NPCs
         public virtual bool TryLaunchInteractable(bool isInteractable)
         {
             OnModifyInteractable?.Invoke(isInteractable);
-            interactableCondition.Write(interactStateKey, isInteractable);
 
-            if (!interactableCondition.Value)
+            if (!isInteractable)
             {
                 return false;
             }
             
             Interact();
+            
             Debug.Log($"{this} try interact");
             return true;        
         }

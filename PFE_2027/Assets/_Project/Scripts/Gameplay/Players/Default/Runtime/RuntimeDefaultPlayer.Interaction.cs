@@ -1,3 +1,6 @@
+using System;
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Conditions;
 using PFE.Gameplay.Scripts.Interactions;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,10 +16,22 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private LayerMask interactMask;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
+        
         private IInteractable currentInteractable;
-        
-        
-        //TODO Une remarque au passage : la méthode s’appelle Nearest,
+        private ChannelKey keyState;
+        public Condition isInteractionPossible;
+        public Condition isInProtectPhase;
+        public Condition isInCampfirePhase;
+
+        private void Start()
+        {
+            isInteractionPossible = new Condition(false);
+            isInProtectPhase = new Condition(false);
+            isInCampfirePhase = new Condition(false);
+        }
+
+
+        //la méthode s’appelle Nearest,
         //mais elle prend le premier collider trouvé, pas le plus proche. Avec un
         //pèlerin et un ennemi à portée, la cible dépendra de l’ordre renvoyé par la physique.
         public bool TryGetNearestInteractable(out IInteractable interactable)
@@ -35,11 +50,13 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                     continue;
                 
                 interactable = target;
+                isInteractionPossible.Write(keyState, true);
                 Debug.Log($"{interactable}");
                 return true;
             }
             
             interactable = null;
+            isInteractionPossible.Write(keyState, false);
             return false;
         }
         
@@ -47,9 +64,14 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (TryGetNearestInteractable(out currentInteractable))
             {
-                //TODO ici le true doit etre modifiable en fonction du state
-               currentInteractable.IsInteractable(true);
-               Debug.Log($"{currentInteractable}");
+                if (!isInteractionPossible)
+                    return;
+
+                if (!isInProtectPhase || !isInCampfirePhase)
+                    return;
+                
+                currentInteractable.IsInteractable(true);
+                Debug.Log($"{currentInteractable}");
             }
         }
     }

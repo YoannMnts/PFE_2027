@@ -5,6 +5,7 @@ using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
+using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.NPCs;
@@ -54,14 +55,16 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             
             //création de la phase de combat
             var battlePhase = new BattlePhase(context);
-            var result = await battlePhase.Run();
+            await battlePhase.Run();
 
-            //cration de la phase de feu de camp
-            //TODO déplacer ceci dans un script qui active la phase quand on arrive au feu de camp 
+            //creation de la phase de feu de camp
             var campfirePhase = new CampfirePhase(context);
             await campfirePhase.Run();
             
-            return result.value;
+            var dialoguePhase = new DialoguePhase(context);
+            var dialogueResult = await dialoguePhase.Run();
+            
+            return dialogueResult.value;
         }
 
         protected override Awaitable Dispose(CancellationToken token)
