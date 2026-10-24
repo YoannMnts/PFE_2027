@@ -7,6 +7,7 @@ using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
 
@@ -15,11 +16,13 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
     public class CampfirePhase : Phase<bool>
     { 
         private readonly CrossRoadGameModeContext gameModeContext;
-        private ChannelKey key;
+        private ChannelKey playerKey;
+        private ChannelKey interactStateKey;
         
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
         private readonly IAreaData currentArea;
+        public readonly PilgrimInstance pilgrimInstance;
         
         
         public CampfirePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
@@ -34,11 +37,12 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 
         protected override Awaitable Initialize(CancellationToken token)
         {
-            key = ChannelKey.GetUniqueChannelKey();
+            playerKey = ChannelKey.GetUniqueChannelKey();
             foreach (var player in Players)
             {
-                player.ShowUI.AddPriority(key, PriorityTags.Default, false);
+                player.ShowUI.AddPriority(playerKey, PriorityTags.Default, false);
             }
+
             
             return base.Initialize(token);
         }
@@ -72,8 +76,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         {
             foreach (var player in Players)
             {
-                player.ShowUI.RemovePriority(key);
+                player.ShowUI.RemovePriority(playerKey);
             }
+            
+            //modifier la variable de joueur campfire false
             return base.Dispose(token);
         }
     }

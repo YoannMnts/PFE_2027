@@ -1,5 +1,4 @@
-﻿using System;
-using Helteix.ChanneledProperties.Formulas;
+﻿using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Interactions;
@@ -63,12 +62,13 @@ namespace PFE.Gameplay.Scripts.NPCs
             }
         }
         
-        protected virtual void OnModifyHealth(float currentHealth)
+        protected void OnModifyHealth(float currentHealth)
         {
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
         }
         
-        protected virtual void OnDeath(INpcData data)
+        
+        protected void OnDeath(INpcData data)
         {
             Tween.StopAll(onTarget: transform);
             Destroy(gameObject);
@@ -76,5 +76,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public abstract void ApplyKnockback(in KnockbackRequest request);
         public abstract void TakeDamage(int amount);
+        
     }
 }

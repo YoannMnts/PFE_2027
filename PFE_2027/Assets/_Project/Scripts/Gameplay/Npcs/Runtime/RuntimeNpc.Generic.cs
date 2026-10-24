@@ -1,13 +1,16 @@
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Conditions;
 using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Interactions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> 
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>, IInteractable
         where TInstance : NpcInstance<TData>
         where TData : NpcData 
     {
@@ -18,9 +21,12 @@ namespace PFE.Gameplay.Scripts.NPCs
         private LayerMask hitMask;
         
         private TInstance instance;
+        
         public TInstance Instance => instance;
+        
 
         public override HitboxRunner HitboxRunner { get; protected set; }
+        
         
         public void Setup(TInstance npcInstance)
         {
@@ -47,8 +53,11 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             OnSetup();
         }
-        
-        protected virtual void OnSetup() { }
+
+        protected virtual void OnSetup()
+        {
+            instance.OnModifyHealth += OnModifyHealth;
+        }
         
         private void Unsubscribe()
         {
@@ -73,6 +82,16 @@ namespace PFE.Gameplay.Scripts.NPCs
                 behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, instance.TargetPosition);
 
             HitboxRunner?.LateTick();
+        }
+        
+        public bool IsInteractable(bool interactionPossibility)
+        {
+            if (interactionPossibility)
+            {
+                instance.TryLaunchInteractable(interactionPossibility);
+                return true;
+            }
+            return false;
         }
 
         protected virtual void OnDestroy() => Unsubscribe();

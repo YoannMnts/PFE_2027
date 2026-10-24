@@ -1,4 +1,7 @@
 ﻿using System;
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Conditions;
+using Helteix.ChanneledProperties.Priorities;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Interactions;
 using PFE.Gameplay.Scripts.NPCs;
@@ -11,7 +14,7 @@ using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable
+    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>
     {
         [SerializeField, BoxGroup("Debugs")]
         private bool isCameraOnPilgrim = true;
@@ -27,7 +30,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         protected override void OnSetup()
         {
             base.OnSetup();
-
+            
             if (!isCameraOnPilgrim)
                 targetCamera.Priority.Value = -1;
         }
@@ -46,11 +49,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
-        }
-
-        public bool TryLaunchInteractable()
-        {
-            return false;
         }
     }
 }
