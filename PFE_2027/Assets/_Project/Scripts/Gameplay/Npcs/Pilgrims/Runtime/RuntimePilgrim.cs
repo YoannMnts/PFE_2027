@@ -25,7 +25,16 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
         
-        public RuntimePilgrim Interactable => this;
+        //je t'ai preparer le terrain mais du coup c'est lui qui drive si il peut interagir ou non
+        //il est surement a connecter aux phases Battle et Campfire
+        public Condition IsInteractable { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            IsInteractable = new Condition();
+        }
 
         protected override void OnSetup()
         {
