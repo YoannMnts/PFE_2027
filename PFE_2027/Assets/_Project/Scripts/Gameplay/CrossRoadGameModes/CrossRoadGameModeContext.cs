@@ -10,6 +10,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         //Npc manager rempli du lancement du gamemode 
         public NpcManager NpcManager => gameMode.NpcManager;
         public readonly CrossRoadGameMode gameMode;
+
         
         public CrossRoadGameModeContext(CrossRoadGameMode gameMode)
         {

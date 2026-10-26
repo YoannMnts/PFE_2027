@@ -14,18 +14,5 @@ namespace PFE.Gameplay.Scripts.Enemy
         {
             Pilgrim = pilgrim;
         }
-        
-        public override bool TryLaunchInteractable(bool isInteractable)
-        {
-            base.TryLaunchInteractable(isInteractable);
-            Interact();
-            return true;
-        }
-
-        protected override void Interact()
-        {
-            base.Interact();
-            //TODO comment les comportements d'interaction de place 
-        }
     }
 }

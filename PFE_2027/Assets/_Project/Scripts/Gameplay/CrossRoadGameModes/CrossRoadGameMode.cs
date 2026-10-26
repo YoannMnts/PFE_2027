@@ -21,9 +21,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         private SceneReference sceneToLoad;
         public IEnumerable<IPlayer> Players => players.Values;
         public int PlayerCount => players.Count;
-
         private Dictionary<int, IPlayer> players;
         
+        private bool isGameFinished;
         public NpcManager NpcManager { get; private set; }
         
         public CrossRoadGameMode(SceneReference sceneToLoad)
@@ -37,11 +37,11 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
 
             players = DictionaryPool<int, IPlayer>.Get();
-            
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
             //creation du manager npc unique au jeu 
             NpcManager = new NpcManager();
+            isGameFinished =  false;
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -52,19 +52,20 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             
             //fading screen
             await GameController.GameSceneController.HideLoadingScreen();
-            
-            //création de la phase de combat
-            var battlePhase = new BattlePhase(context);
-            await battlePhase.Run();
 
-            //creation de la phase de feu de camp
-            var campfirePhase = new CampfirePhase(context);
-            await campfirePhase.Run();
-            
-            var dialoguePhase = new DialoguePhase(context);
-            var dialogueResult = await dialoguePhase.Run();
-            
-            return dialogueResult.value;
+            while (!isGameFinished)
+            {
+                var battlePhase = new BattlePhase(context);
+                await battlePhase.Run();
+
+                var campfirePhase = new CampfirePhase(context);
+                var endgameResult = await campfirePhase.Run();
+
+                if (endgameResult)
+                    return isGameFinished == endgameResult.value;
+            }
+
+            return isGameFinished;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

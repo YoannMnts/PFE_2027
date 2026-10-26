@@ -1,6 +1,10 @@
-﻿using Helteix.ChanneledProperties.Formulas;
+﻿using System;
+using Helteix.ChanneledProperties.Formulas;
+using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.Interactions;
 using PrimeTween;
 using Sirenix.OdinInspector;
@@ -62,13 +66,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             }
         }
         
-        protected void OnModifyHealth(float currentHealth)
+        protected virtual void OnModifyHealth(float currentHealth)
         {
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
         }
         
-        
-        protected void OnDeath(INpcData data)
+        protected virtual void OnDeath(INpcData data)
         {
             Tween.StopAll(onTarget: transform);
             Destroy(gameObject);
@@ -76,6 +79,5 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public abstract void ApplyKnockback(in KnockbackRequest request);
         public abstract void TakeDamage(int amount);
-        
     }
 }

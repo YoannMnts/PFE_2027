@@ -1,6 +1,4 @@
-using System;
-using Helteix.ChanneledProperties;
-using Helteix.ChanneledProperties.Conditions;
+using Helteix.ChanneledProperties.Priorities;
 using PFE.Gameplay.Scripts.Interactions;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,68 +9,75 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     {
         private const int MAX_COLLIDERS = 16;
         private const int SPHERE_SIZE = 2;
+        private const int CONVERSION_CENTIMETERS = 100;
 
         [SerializeField, BoxGroup("Interaction")]
         private LayerMask interactMask;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
+        public Priority<IInteractable> CurrentInteractable { get; private set; }
         
-        private IInteractable currentInteractable;
-        private ChannelKey keyState;
-        public Condition isInteractionPossible;
-        public Condition isInProtectPhase;
-        public Condition isInCampfirePhase;
-
-        private void Start()
+        
+        private void Awake()
         {
-            isInteractionPossible = new Condition(false);
-            isInProtectPhase = new Condition(false);
-            isInCampfirePhase = new Condition(false);
+            CurrentInteractable = new Priority<IInteractable>();
         }
-
-
-        //la méthode s’appelle Nearest,
-        //mais elle prend le premier collider trouvé, pas le plus proche. Avec un
-        //pèlerin et un ennemi à portée, la cible dépendra de l’ordre renvoyé par la physique.
-        public bool TryGetNearestInteractable(out IInteractable interactable)
+        
+        public bool TryGetNearestInteractable()
         {
+            CurrentInteractable.Clear();
+            
+            Vector3 playerPosition = mesh.position;
             int count = 
-                Physics.OverlapSphereNonAlloc(mesh.transform.position, SPHERE_SIZE, overlapResults, interactMask, QueryTriggerInteraction.Collide);
+                Physics.OverlapSphereNonAlloc(mesh.position, SPHERE_SIZE,
+                    overlapResults, interactMask, 
+                    QueryTriggerInteraction.Collide);
             
             Debug.Log($"{count}");
             
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var collider = overlapResults[i];
                 var target = collider.GetComponentInParent<IInteractable>();
+
                 
-                if(target == null)
+                //-----------DOUANE------------
+                if (target == null)
                     continue;
                 
-                interactable = target;
-                isInteractionPossible.Write(keyState, true);
-                Debug.Log($"{interactable}");
-                return true;
+
+                //calculer distance entre joueur et l'interactible
+                Vector3 closestPoint = collider.ClosestPointOnBounds(playerPosition);
+                float distance = Vector3.Distance(playerPosition, closestPoint);
+                
+                
+                //inverser pour que la plus petite distance soit la plus grande propriété + centimètres
+                var preciseDistance = Mathf.Clamp((SPHERE_SIZE - distance) * CONVERSION_CENTIMETERS,
+                    0, 
+                    SPHERE_SIZE * CONVERSION_CENTIMETERS);
+                
+                //arrondir
+                var finalPriority = Mathf.RoundToInt(preciseDistance);
+                
+                Debug.Log($"{target.GetType().Name} : {finalPriority}");
+                CurrentInteractable.AddPriority(collider, finalPriority, target);                
             }
-            
-            interactable = null;
-            isInteractionPossible.Write(keyState, false);
-            return false;
+
+            if (CurrentInteractable.ChannelCount == 0)
+            {
+                return false;
+            }
+
+            return true;
         }
         
         public void Interact()
         {
-            if (TryGetNearestInteractable(out currentInteractable))
+            if (!TryGetNearestInteractable())
             {
-                if (!isInteractionPossible)
-                    return;
-
-                if (!isInProtectPhase || !isInCampfirePhase)
-                    return;
-                
-                currentInteractable.IsInteractable(true);
-                Debug.Log($"{currentInteractable}");
+                return;
             }
+            CurrentInteractable.Value.LaunchInteract();
         }
     }
 }
