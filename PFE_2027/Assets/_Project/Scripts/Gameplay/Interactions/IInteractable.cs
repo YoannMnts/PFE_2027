@@ -6,6 +6,6 @@ namespace PFE.Gameplay.Scripts.Interactions
 {
     public interface IInteractable
     {
-        public bool IsInteractable(bool interactionPossibility);
+        public void LaunchInteract();
     }
 }

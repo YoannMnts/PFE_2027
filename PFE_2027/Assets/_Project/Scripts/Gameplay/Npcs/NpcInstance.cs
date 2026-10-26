@@ -1,9 +1,7 @@
 ﻿using System;
 using Helteix.ChanneledProperties;
-using Helteix.ChanneledProperties.Conditions;
 using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.NPCs;
-using PFE.Gameplay.Scripts.Interactions;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs

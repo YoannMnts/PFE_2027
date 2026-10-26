@@ -1,7 +1,10 @@
 ﻿using System;
 using Helteix.ChanneledProperties.Formulas;
+using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.Interactions;
 using PrimeTween;
 using Sirenix.OdinInspector;

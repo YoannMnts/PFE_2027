@@ -11,7 +11,7 @@ namespace PFE.Gameplay.Scripts.Interactions.Chests
         //N.B. :
         //je pense renomme la methode en Interact ou LaunchInteraction
         //et ça arrive souvent qu'on passe le gars qui a lancer l'interaction dans les paramètres de la methodes
-        public bool IsInteractable(bool interactionPossibility)
+        public void LaunchInteract()
         {
             //pour les interactions c'est dur de vraiment separer logique et runtime,
             //donc c'est ok si c'est le runtime qui appel des methodes de la logique
@@ -25,7 +25,6 @@ namespace PFE.Gameplay.Scripts.Interactions.Chests
                 return true;
             }
             */
-            return false;
         }
     }
 }

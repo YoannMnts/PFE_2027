@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
-    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>
+    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IInteractable
     {
         public RuntimeEnemy Interactable => this;
 
@@ -43,6 +43,10 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 
         // The runtime only forwards what happens in the world; the instance and its behaviour pick the target
         protected virtual void OnPilgrimMoved(Vector3 pilgrimPosition) => Instance?.SetGoal(pilgrimPosition);
-        
+
+        public void LaunchInteract()
+        {
+            //comportement du focus
+        }
     }
 }

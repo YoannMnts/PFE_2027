@@ -11,7 +11,6 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 {
     public class DialoguePhase : Phase<bool>
     {
-        private readonly DialogueData dialogueData;
         private readonly CrossRoadGameModeContext gameModeContext;
         private ChannelKey key;
         

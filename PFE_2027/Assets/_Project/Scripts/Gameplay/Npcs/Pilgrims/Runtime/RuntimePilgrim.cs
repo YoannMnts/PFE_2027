@@ -2,7 +2,11 @@
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Conditions;
 using Helteix.ChanneledProperties.Priorities;
+using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.Interactions;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players.Default.Runtime;
@@ -14,7 +18,9 @@ using UnityEngine.Serialization;
 
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
-    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>
+    public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable,
+        IPhaseListener<ProtectPilgrimPhase>, 
+        IPhaseListener<CampPhase>
     {
         [SerializeField, BoxGroup("Debugs")]
         private bool isCameraOnPilgrim = true;
@@ -24,16 +30,15 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
-        
-        //je t'ai preparer le terrain mais du coup c'est lui qui drive si il peut interagir ou non
-        //il est surement a connecter aux phases Battle et Campfire
-        public Condition IsInteractable { get; private set; }
 
+        //sans doute passer en properties, + propre qu'un bool
+        private bool isInCampfirePhase;
+
+        //--------------------------------------------------
+        
         protected override void Awake()
         {
             base.Awake();
-            
-            IsInteractable = new Condition();
         }
 
         protected override void OnSetup()
@@ -44,20 +49,85 @@ namespace PFE.Gameplay.Scripts.Pilgrims
                 targetCamera.Priority.Value = -1;
         }
 
+        private void OnEnable()
+        {
+            this.Register<ProtectPilgrimPhase>();
+            this.Register<CampPhase>();
+        }
+
+        private void OnDisable()
+        {
+            this.Unregister<ProtectPilgrimPhase>();
+            this.Unregister<CampPhase>();
+        }
+        
+        //--------------------------------------------------
+
         public void AddMemberToCmGroup(Transform member, float weight = 0, float radius = 0)
         {
             targetGroup.AddMember(member, weight, radius);
         }
-
         public void RemoveMemberFromCmGroup(Transform member)
         {
             targetGroup.RemoveMember(member);
         }
+        
+        //--------------------------------------------------
+
         
         private void FixedUpdate()
         {
             if (Instance != null)
                 Instance.UpdatePosition(transform.position);
         }
+        
+        
+        public void LaunchInteract()
+        {
+            if (!isInCampfirePhase)
+            {
+                InteractOnBattle();
+                return;
+            }
+            
+            InteractOnCampfire();
+        }
+
+        private void InteractOnBattle()
+        {
+            //comportement pilgrim battle
+            //peut appeller des méthodes logic
+        }
+
+        private void InteractOnCampfire()
+        {
+            //comportement pilgrim campfire
+            //peut appeller des méthodes logic
+        }
+        
+        //--------------------------------------------------
+
+
+        public void OnPhaseBegin(ProtectPilgrimPhase phase)
+        {
+            isInCampfirePhase = false;
+            
+        }
+
+        public void OnPhaseEnd(ProtectPilgrimPhase phase)
+        {
+            isInCampfirePhase = false;
+        }
+
+        public void OnPhaseBegin(CampPhase phase)
+        {
+            isInCampfirePhase = true;
+        }
+
+        public void OnPhaseEnd(CampPhase phase)
+        {
+            isInCampfirePhase = false;
+        }
+
     }
 }
