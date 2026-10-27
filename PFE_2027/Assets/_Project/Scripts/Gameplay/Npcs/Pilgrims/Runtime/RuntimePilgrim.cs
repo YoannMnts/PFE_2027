@@ -5,6 +5,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.Interactions;
@@ -32,14 +33,15 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         private CinemachineTargetGroup targetGroup;
 
         private Action interaction;
+        private CrossRoadGameModeContext gameModeContext;
         private CampPhase campPhase;
-        
+
+
 
         //--------------------------------------------------
-        
-        protected override void Awake()
+        public RuntimePilgrim(CrossRoadGameModeContext gameModeContext)
         {
-            base.Awake();
+            this.gameModeContext = gameModeContext;
         }
 
         protected override void OnSetup()
@@ -87,23 +89,25 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             interaction?.Invoke();
         }
+        private void BattleInteraction()
+        {
+            Debug.Log($"{this} is interacting on battle");
+        }
         
         private void CampInteraction()
         {
-            campPhase.SetResult(true);
-            
+            Debug.Log($"{this} is interacting on camp");
+            var dialoguePhase = new DialoguePhase(gameModeContext);
+            dialoguePhase.Run();
         }
         
-        private void BattleInteraction()
-        {
-            //si comportement camp
-        }
         
         //--------------------------------------------------
 
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
+            Debug.Log($"{this} is in {phase}");
             interaction = BattleInteraction;
         }
         
@@ -113,13 +117,13 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         public void OnPhaseBegin(CampPhase phase)
         {
-            campPhase = phase;
+            Debug.Log($"{this} is in {phase}");
             interaction = CampInteraction;
+            campPhase = phase;
         }
 
         public void OnPhaseEnd(CampPhase phase)
         {
-            campPhase = null;
         }
     }
 }

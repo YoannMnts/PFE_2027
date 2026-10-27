@@ -3,8 +3,10 @@ using System.Threading;
 using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
+using PFE.Core.Scripts;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Players;
+using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
@@ -13,6 +15,7 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
     {
         private readonly CrossRoadGameModeContext gameModeContext;
         private ChannelKey key;
+        private IRuntimeArea runtimeArea;
 
         public DialoguePhase(CrossRoadGameModeContext gameModeContext)
         {
@@ -32,11 +35,14 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
+            await GameController.GameSceneController.HideLoadingScreen();
+            
             while (true)
             {
                 var talkPhase =  new TalkPhase(gameModeContext);
                 var talkResult = await talkPhase.Run();
 
+                //---Douane de check si encore content---
                 if (talkResult == false)
                     break;
                 

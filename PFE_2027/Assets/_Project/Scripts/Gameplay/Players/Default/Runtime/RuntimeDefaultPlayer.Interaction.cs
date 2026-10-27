@@ -48,7 +48,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                     Physics.OverlapSphereNonAlloc(mesh.position, SPHERE_SIZE,
                         overlapResults, interactMask, 
                         QueryTriggerInteraction.Collide);
-                Debug.Log($"{count}");
                 
                 //------calcul avec i-------
                 for (var i = 0; i < count; i++)
@@ -56,11 +55,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                     var collider = overlapResults[i];
                     var currentTarget = collider.GetComponentInParent<IInteractable>();
                     
-                
                     //-----------DOUANE------------
                     if (currentTarget == null)
                         continue;
-                    
                     
                     Vector3 closestPoint = collider.ClosestPointOnBounds(playerPosition);
                     
@@ -68,7 +65,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                     var currentDistance = Mathf.RoundToInt(distance);
 
                     interactables.Add(new NearestInteractable(currentTarget, currentDistance));
-                    Debug.Log($"{currentTarget.GetType().Name} : {currentDistance}");
                 }
 
                 if (interactables.Count <= 0)
