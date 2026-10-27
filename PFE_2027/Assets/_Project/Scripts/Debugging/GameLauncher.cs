@@ -25,12 +25,12 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         private class DebugGameMode : CrossRoadGameMode
         {
             private readonly IAreaData data;
-            private readonly bool isBattlePhaseLaunch;
+            private readonly bool isBattlePhase;
 
-            public DebugGameMode(IAreaData data, bool isBattlePhaseLaunch) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            public DebugGameMode(IAreaData data, bool isBattlePhase) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
                 this.data = data;
-                this.isBattlePhaseLaunch = isBattlePhaseLaunch;
+                this.isBattlePhase = isBattlePhase;
             }
 
             protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -38,7 +38,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                 var context = new CrossRoadGameModeContext(this);
                 await GameController.GameSceneController.HideLoadingScreen();
 
-                if (isBattlePhaseLaunch)
+                if (isBattlePhase)
                 {
                     var battlePhase = new BattlePhase(context, data);
                     await battlePhase.Run();
@@ -72,7 +72,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            CrossRoadGameMode gameMode = new DebugGameMode(areaData, isBattlePhase);
+            DebugGameMode gameMode = new DebugGameMode(areaData, isBattlePhase);
             
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();

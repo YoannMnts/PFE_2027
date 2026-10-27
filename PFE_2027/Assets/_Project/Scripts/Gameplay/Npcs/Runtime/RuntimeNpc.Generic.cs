@@ -1,6 +1,7 @@
 using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         public override HitboxRunner HitboxRunner { get; protected set; }
         
-        public void Setup(TInstance npcInstance)
+        public void Setup(CrossRoadGameModeContext context, TInstance npcInstance)
         {
             if (npcInstance == null)
             {
@@ -45,10 +46,10 @@ namespace PFE.Gameplay.Scripts.NPCs
             PushbackData pushback = instance.data.PushbackData;
             KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
             
-            OnSetup();
+            OnSetup(context);
         }
         
-        protected virtual void OnSetup() { }
+        protected virtual void OnSetup(CrossRoadGameModeContext context) { }
         
         private void Unsubscribe()
         {

@@ -35,8 +35,6 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            await GameController.GameSceneController.HideLoadingScreen();
-            
             while (true)
             {
                 var talkPhase =  new TalkPhase(gameModeContext);

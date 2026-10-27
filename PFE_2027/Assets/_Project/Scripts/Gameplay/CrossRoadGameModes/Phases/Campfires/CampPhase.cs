@@ -37,8 +37,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            await Awaitable.MainThreadAsync();
-            return true;
+            while (true)
+            {
+                await Awaitable.NextFrameAsync(token);
+            }
         }
 
         protected override Awaitable Dispose(CancellationToken token)

@@ -1,4 +1,5 @@
 ﻿using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -19,7 +20,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             return instance;
         }
 
-        public bool TrySetupRuntime(TData data, INpcInstance currentInstance, Transform prefab)
+        public bool TrySetupRuntime(TData data, CrossRoadGameModeContext context, INpcInstance currentInstance, Transform prefab)
         {
             //on fait les douanes et si tous passe on peut return true
             if(!prefab.TryGetComponent<IRuntimeNpc<TInstance>>(out var runtimeNpc))
@@ -28,7 +29,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             if(currentInstance is not TInstance instance)
                 return false;
             
-            runtimeNpc.Setup(instance);
+            runtimeNpc.Setup(context, instance);
             return true;
         }
 

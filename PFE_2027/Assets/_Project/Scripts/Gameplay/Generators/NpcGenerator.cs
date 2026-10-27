@@ -6,6 +6,7 @@ using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.NPCs;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
@@ -161,7 +162,8 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return null;
             }
 
-            npcContainer.TrySetupRuntime(npcData, npcInstance, runtimeNpc);
+            var gameModeContext = new CrossRoadGameModeContext(context.crossRoadGameMode);
+            npcContainer.TrySetupRuntime(npcData,gameModeContext ,npcInstance, runtimeNpc);
             
             return runtimeNpc;
         }

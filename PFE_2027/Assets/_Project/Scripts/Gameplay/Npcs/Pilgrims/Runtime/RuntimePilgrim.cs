@@ -39,14 +39,12 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
 
         //--------------------------------------------------
-        public RuntimePilgrim(CrossRoadGameModeContext gameModeContext)
-        {
-            this.gameModeContext = gameModeContext;
-        }
+        
 
-        protected override void OnSetup()
+        protected override void OnSetup(CrossRoadGameModeContext context)
         {
-            base.OnSetup();
+            base.OnSetup(context);
+            this.gameModeContext = context;
             
             if (!isCameraOnPilgrim)
                 targetCamera.Priority.Value = -1;
@@ -107,7 +105,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            Debug.Log($"{this} is in {phase}");
             interaction = BattleInteraction;
         }
         
@@ -117,7 +114,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         public void OnPhaseBegin(CampPhase phase)
         {
-            Debug.Log($"{this} is in {phase}");
             interaction = CampInteraction;
             campPhase = phase;
         }

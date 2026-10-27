@@ -34,8 +34,11 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
-        { 
-            await Awaitable.MainThreadAsync();
+        {
+            while (true)
+            {
+                await Awaitable.NextFrameAsync(token);
+            }
             
             if (TalkData.Choice == null)
             {
