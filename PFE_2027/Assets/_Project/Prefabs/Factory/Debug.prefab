@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Debugging.GameLauncher
   launchOnStart: 1
+  isBattlePhase: 0
+  areaData: {fileID: 11400000, guid: 66b060046e2cf0a4384eec2b96765f89, type: 2}

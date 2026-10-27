@@ -1,3 +1,4 @@
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Enemy.Runtime;
 using UnityEngine;
 
@@ -7,9 +8,9 @@ namespace PFE.Gameplay.Scripts.Enemy
     public class RuntimeDummyEnemy : RuntimeEnemy
     {
         // Setup runs while the NPC stands on its anchor (before it is hidden): that's its home
-        protected override void OnSetup()
+        protected override void OnSetup(CrossRoadGameModeContext context)
         {
-            base.OnSetup();
+            base.OnSetup(context);
             Instance.SetGoal(transform.position);
         }
 

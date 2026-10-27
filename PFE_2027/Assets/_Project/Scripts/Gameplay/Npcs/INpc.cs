@@ -1,6 +1,7 @@
 ﻿using PFE.Core.Scripts.DataMapping.Attributes;
 using PFE.Core.Scripts.DataMapping.Interfaces;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -16,7 +17,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         
         [AddToContainer]
-        bool TrySetupRuntime(TData data, INpcInstance instance, Transform prefab);
+        bool TrySetupRuntime(TData data, CrossRoadGameModeContext context ,INpcInstance instance, Transform prefab);
         
         [AddToContainer]
         // final destination of the NPC from the goal given by the game (pilgrim position, spline point...):

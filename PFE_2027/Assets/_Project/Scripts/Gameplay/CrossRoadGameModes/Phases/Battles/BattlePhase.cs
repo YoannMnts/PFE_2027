@@ -23,7 +23,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
-        private readonly SceneReference sceneToLoad;
         private readonly IAreaData currentArea;
 
         public BattlePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
@@ -49,10 +48,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var generateAreaPhase = new GenerateAreaPhase(currentArea);
+            var generateAreaPhase = new GenerateAreaPhase(gameModeContext, currentArea);
             var arenaResult = await generateAreaPhase.Run();
         
-            var generateNpcPhase = new GenerateNpcPhase(currentArea, arenaResult.value, gameModeContext.NpcManager);
+            var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, arenaResult.value);
             await generateNpcPhase.Run();
 
             if (!gameModeContext.NpcManager.TryGetFirstData(out PilgrimData pilgrimData))

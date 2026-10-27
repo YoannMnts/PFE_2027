@@ -59,12 +59,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
                 await battlePhase.Run();
 
                 var campfirePhase = new CampfirePhase(context);
-                var endgameResult = await campfirePhase.Run();
-
-                if (endgameResult)
-                    return isGameFinished == endgameResult.value;
+                await campfirePhase.Run();
             }
-
+            
             return isGameFinished;
         }
 

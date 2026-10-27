@@ -5,6 +5,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.Interactions;
@@ -31,19 +32,19 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
 
-        //sans doute passer en properties, + propre qu'un bool
-        private bool isInCampfirePhase;
+        private Action interaction;
+        private CrossRoadGameModeContext gameModeContext;
+        private CampPhase campPhase;
+
+
 
         //--------------------------------------------------
         
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
-        protected override void OnSetup()
+        protected override void OnSetup(CrossRoadGameModeContext context)
         {
-            base.OnSetup();
+            base.OnSetup(context);
+            this.gameModeContext = context;
             
             if (!isCameraOnPilgrim)
                 targetCamera.Priority.Value = -1;
@@ -84,50 +85,41 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         public void LaunchInteract()
         {
-            if (!isInCampfirePhase)
-            {
-                InteractOnBattle();
-                return;
-            }
-            
-            InteractOnCampfire();
+            interaction?.Invoke();
         }
-
-        private void InteractOnBattle()
+        private void BattleInteraction()
         {
-            //comportement pilgrim battle
-            //peut appeller des méthodes logic
+            Debug.Log($"{this} is interacting on battle");
         }
-
-        private void InteractOnCampfire()
+        
+        private void CampInteraction()
         {
-            //comportement pilgrim campfire
-            //peut appeller des méthodes logic
+            Debug.Log($"{this} is interacting on camp");
+            var dialoguePhase = new DialoguePhase(gameModeContext);
+            dialoguePhase.Run();
         }
+        
         
         //--------------------------------------------------
 
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            isInCampfirePhase = false;
-            
+            interaction = BattleInteraction;
         }
-
+        
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            isInCampfirePhase = false;
         }
 
         public void OnPhaseBegin(CampPhase phase)
         {
-            isInCampfirePhase = true;
+            interaction = CampInteraction;
+            campPhase = phase;
         }
 
         public void OnPhaseEnd(CampPhase phase)
         {
-            isInCampfirePhase = false;
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine.Splines;
+﻿using PFE.Gameplay.Scripts.CrossRoadGameModes;
+using UnityEngine.Splines;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
@@ -7,11 +8,13 @@ namespace PFE.Gameplay.Scripts.NPCs
     {
         public readonly SplineContainer splineContainer;
         public readonly NpcManager npcManager;
+        public readonly CrossRoadGameMode crossRoadGameMode;
 
-        public NpcInstanceContext(SplineContainer splineContainer, NpcManager npcManager)
+        public NpcInstanceContext(SplineContainer splineContainer, NpcManager npcManager, CrossRoadGameMode crossRoadGameMode)
         {
             this.splineContainer = splineContainer;
             this.npcManager = npcManager;
+            this.crossRoadGameMode = crossRoadGameMode;
         }
     }
 }

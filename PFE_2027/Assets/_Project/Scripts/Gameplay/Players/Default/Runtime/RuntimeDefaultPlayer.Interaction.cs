@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Helteix.ChanneledProperties.Priorities;
 using PFE.Gameplay.Scripts.Interactions;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
@@ -9,75 +12,81 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     {
         private const int MAX_COLLIDERS = 16;
         private const int SPHERE_SIZE = 2;
-        private const int CONVERSION_CENTIMETERS = 100;
 
         [SerializeField, BoxGroup("Interaction")]
         private LayerMask interactMask;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
-        public Priority<IInteractable> CurrentInteractable { get; private set; }
-        
-        
-        private void Awake()
-        {
-            CurrentInteractable = new Priority<IInteractable>();
+        private IInteractable currentInteractable;
+
+        private struct NearestInteractable : IComparable<NearestInteractable>
+        { 
+            public IInteractable Target { get; private set; }
+            public int Distance { get; private set; }
+
+            public NearestInteractable(IInteractable target, int distance)
+            {
+                Target = target;
+                Distance = distance;
+            }
+
+            public int CompareTo(NearestInteractable other)
+            {
+                return Distance.CompareTo(other.Distance);
+            }
         }
         
-        public bool TryGetNearestInteractable()
+        
+        public bool TryGetNearestInteractable(out IInteractable interactable)
         {
-            CurrentInteractable.Clear();
-            
-            Vector3 playerPosition = mesh.position;
-            int count = 
-                Physics.OverlapSphereNonAlloc(mesh.position, SPHERE_SIZE,
-                    overlapResults, interactMask, 
-                    QueryTriggerInteraction.Collide);
-            
-            Debug.Log($"{count}");
-            
-            for (var i = 0; i < count; i++)
+            using (ListPool<NearestInteractable>.Get(out List<NearestInteractable> interactables))
             {
-                var collider = overlapResults[i];
-                var target = collider.GetComponentInParent<IInteractable>();
+                Vector3 playerPosition = mesh.position;
+                
+                //------travail et calcul avec objet runtime-------
+                int count = 
+                    Physics.OverlapSphereNonAlloc(mesh.position, SPHERE_SIZE,
+                        overlapResults, interactMask, 
+                        QueryTriggerInteraction.Collide);
+                
+                //------calcul avec i-------
+                for (var i = 0; i < count; i++)
+                {
+                    var collider = overlapResults[i];
+                    var currentTarget = collider.GetComponentInParent<IInteractable>();
+                    
+                    //-----------DOUANE------------
+                    if (currentTarget == null)
+                        continue;
+                    
+                    Vector3 closestPoint = collider.ClosestPointOnBounds(playerPosition);
+                    
+                    float distance = playerPosition.sqrMagnitude - closestPoint.sqrMagnitude;
+                    var currentDistance = Mathf.RoundToInt(distance);
 
-                
-                //-----------DOUANE------------
-                if (target == null)
-                    continue;
-                
+                    interactables.Add(new NearestInteractable(currentTarget, currentDistance));
+                }
 
-                //calculer distance entre joueur et l'interactible
-                Vector3 closestPoint = collider.ClosestPointOnBounds(playerPosition);
-                float distance = Vector3.Distance(playerPosition, closestPoint);
+                if (interactables.Count <= 0)
+                {
+                    interactable = null;
+                    return false;
+                }
                 
-                
-                //inverser pour que la plus petite distance soit la plus grande propriété + centimètres
-                var preciseDistance = Mathf.Clamp((SPHERE_SIZE - distance) * CONVERSION_CENTIMETERS,
-                    0, 
-                    SPHERE_SIZE * CONVERSION_CENTIMETERS);
-                
-                //arrondir
-                var finalPriority = Mathf.RoundToInt(preciseDistance);
-                
-                Debug.Log($"{target.GetType().Name} : {finalPriority}");
-                CurrentInteractable.AddPriority(collider, finalPriority, target);                
+                //le rangement SORT est décider par le Compare
+                interactables.Sort();
+                interactable = interactables[0].Target;
+                return true;
             }
-
-            if (CurrentInteractable.ChannelCount == 0)
-            {
-                return false;
-            }
-
-            return true;
         }
         
         public void Interact()
         {
-            if (!TryGetNearestInteractable())
+            if (!TryGetNearestInteractable(out currentInteractable))
             {
                 return;
             }
-            CurrentInteractable.Value.LaunchInteract();
+            currentInteractable.LaunchInteract();
         }
     }
 }

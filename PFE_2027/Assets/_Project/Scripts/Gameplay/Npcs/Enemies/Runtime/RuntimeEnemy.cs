@@ -1,4 +1,5 @@
 ﻿using PFE.Core.Scripts.Enemy;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Interactions;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
@@ -18,9 +19,9 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
         private void OnDisable() => Follow(null);
 
         // The first OnEnable runs during the instantiation, before the instance is plugged
-        protected override void OnSetup()
+        protected override void OnSetup(CrossRoadGameModeContext context)
         {
-            base.OnSetup();
+            base.OnSetup(context);
 
             if (isActiveAndEnabled)
                 Follow(Instance.Pilgrim);

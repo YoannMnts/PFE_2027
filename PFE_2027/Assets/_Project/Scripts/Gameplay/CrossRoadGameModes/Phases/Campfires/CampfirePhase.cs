@@ -5,6 +5,7 @@ using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
+using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
@@ -49,18 +50,28 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
             //generate campfire zone
-            var generateCampfireAreaPhase = new GenerateAreaPhase(currentArea);
+            var generateCampfireAreaPhase = new GenerateAreaPhase(gameModeContext,  currentArea);
             var campfireResult = await generateCampfireAreaPhase.Run();
             
             //generate pilgrim
-            var generatePilgrimPhase = new GenerateNpcPhase(currentArea, campfireResult.value, gameModeContext.NpcManager);
-            await generatePilgrimPhase.Run();
-
-            //phase to wait, discover and launch dialogue
-            var campPhase = new CampPhase(gameModeContext, campfireResult.value);
-            var result = await campPhase.Run();
+            var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, campfireResult.value);
+            await generateNpcPhase.Run();
             
-            return result.value;
+            if (!gameModeContext.NpcManager.TryGetFirstData(out PilgrimData pilgrimData))
+            {
+                return false;
+            }
+            
+            bool result = false;
+
+            if (gameModeContext.NpcManager.TryGetInstance(pilgrimData, out INpcInstance npcInstance)
+                && npcInstance is PilgrimInstance pilgrimInstance)
+            {
+                var campPhase = new CampPhase(gameModeContext, campfireResult.value);
+                result = await campPhase.Run();
+                
+            }
+            return result;
         }
         
         protected override Awaitable Dispose(CancellationToken token)

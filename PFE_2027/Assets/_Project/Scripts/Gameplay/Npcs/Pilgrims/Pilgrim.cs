@@ -8,6 +8,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
     // Stateless pilgrim behaviour, its state (position...) lives in PilgrimInstance
     public partial class Pilgrim : Npc<PilgrimData, PilgrimInstance>
     {
-        protected override PilgrimInstance Create(PilgrimData data, NpcInstanceContext context) => new PilgrimInstance(data, context.splineContainer);
+        protected override PilgrimInstance Create(PilgrimData data, NpcInstanceContext context) 
+            => new PilgrimInstance(data, context.splineContainer, context.crossRoadGameMode.Players);
     }
 }

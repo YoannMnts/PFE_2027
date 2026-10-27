@@ -1,4 +1,5 @@
 ﻿using PFE.Core.Scripts.Enemy.Attacks;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine.AI;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -16,6 +17,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         where TInstance : class, INpcInstance
     {
         public TInstance Instance { get; }
-        public void Setup(TInstance instance);
+        public void Setup(CrossRoadGameModeContext context ,TInstance instance);
     }
 }

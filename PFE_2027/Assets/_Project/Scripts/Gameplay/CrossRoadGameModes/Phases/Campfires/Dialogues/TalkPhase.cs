@@ -16,14 +16,17 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         public TalkData TalkData { get; private set; }
 
         private readonly CrossRoadGameModeContext gameModeContext;
-        private ChannelKey key; 
-        public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
-        
-        
+        private ChannelKey key;
+
+        public TalkPhase(CrossRoadGameModeContext gameModeContext)
+        {
+            this.gameModeContext = gameModeContext;
+        }
+
         protected override Awaitable Initialize(CancellationToken token)
         {
             key = ChannelKey.GetUniqueChannelKey();
-            foreach (var player in Players)
+            foreach (var player in gameModeContext.gameMode.Players)
             {
                 player.ShowUI.AddPriority(key, PriorityTags.Default, true);
             }
@@ -31,8 +34,11 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
-        { 
-            await Awaitable.MainThreadAsync();
+        {
+            while (true)
+            {
+                await Awaitable.NextFrameAsync(token);
+            }
             
             if (TalkData.Choice == null)
             {
@@ -43,7 +49,7 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 
         protected override Awaitable Dispose(CancellationToken token)
         {
-            foreach (var player in Players)
+            foreach (var player in gameModeContext.gameMode.Players)
             {
                 player.ShowUI.RemovePriority(key);
             }
