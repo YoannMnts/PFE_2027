@@ -70,7 +70,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             }
 
             //création du context des instance
-            var context = new NpcInstanceContext(runtimeArea.Path, phase.npcManager);
+            var context = new NpcInstanceContext(runtimeArea.Path, phase.gameModeContext.NpcManager, phase.gameModeContext.gameMode);
             //récupération des spawnpoints et donc des données de chaque npc
             var spawnPoints = phase.currentArea.SpawnPoints;
             

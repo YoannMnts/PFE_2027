@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 {
-    public class CampPhase : Phase<bool>
+    public class CampPhase : PhaseCompletionSource<bool>
     {
         private readonly CrossRoadGameModeContext gameModeContext;
         private ChannelKey playerKey;

@@ -49,10 +49,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            var generateAreaPhase = new GenerateAreaPhase(currentArea);
+            var generateAreaPhase = new GenerateAreaPhase(gameModeContext, currentArea);
             var arenaResult = await generateAreaPhase.Run();
         
-            var generateNpcPhase = new GenerateNpcPhase(currentArea, arenaResult.value, gameModeContext.NpcManager);
+            var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, arenaResult.value);
             await generateNpcPhase.Run();
 
             if (!gameModeContext.NpcManager.TryGetFirstData(out PilgrimData pilgrimData))

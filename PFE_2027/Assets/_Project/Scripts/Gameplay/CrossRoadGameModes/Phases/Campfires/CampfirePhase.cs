@@ -49,11 +49,11 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
             //generate campfire zone
-            var generateCampfireAreaPhase = new GenerateAreaPhase(currentArea);
+            var generateCampfireAreaPhase = new GenerateAreaPhase(gameModeContext,  currentArea);
             var campfireResult = await generateCampfireAreaPhase.Run();
             
             //generate pilgrim
-            var generatePilgrimPhase = new GenerateNpcPhase(currentArea, campfireResult.value, gameModeContext.NpcManager);
+            var generatePilgrimPhase = new GenerateNpcPhase(gameModeContext, currentArea, campfireResult.value);
             await generatePilgrimPhase.Run();
 
             //phase to wait, discover and launch dialogue

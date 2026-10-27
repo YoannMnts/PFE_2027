@@ -16,13 +16,13 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
     {
         public readonly IAreaData currentArea;
         public readonly IRuntimeArea area;
-        public readonly NpcManager npcManager;
+        public readonly CrossRoadGameModeContext gameModeContext;
 
-        public GenerateNpcPhase(IAreaData currentArea, IRuntimeArea area, NpcManager npcManager)
+        public GenerateNpcPhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea, IRuntimeArea area)
         {
             this.currentArea = currentArea;
             this.area = area;
-            this.npcManager = npcManager;
+            this.gameModeContext = gameModeContext;
         }
         
 
@@ -37,9 +37,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
                     continue;
                 }
                 
-                var context = new NpcInstanceContext(area.Path, npcManager);
+                var context = new NpcInstanceContext(area.Path, gameModeContext.NpcManager, gameModeContext.gameMode);
+                
                 INpcInstance currentNpcInstance = container.CreateInstance(currentNpcData, context);
-                npcManager.Add(currentNpcData, context);
+                gameModeContext.NpcManager.Add(currentNpcData, context);
             }
             return base.Initialize(token);
         }

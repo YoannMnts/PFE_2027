@@ -31,8 +31,9 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         [SerializeField, BoxGroup("References")]
         private CinemachineTargetGroup targetGroup;
 
-        //sans doute passer en properties, + propre qu'un bool
-        private bool isInCampfirePhase;
+        private Action interaction;
+        private CampPhase campPhase;
+        
 
         //--------------------------------------------------
         
@@ -84,25 +85,18 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         public void LaunchInteract()
         {
-            if (!isInCampfirePhase)
-            {
-                InteractOnBattle();
-                return;
-            }
+            interaction?.Invoke();
+        }
+        
+        private void CampInteraction()
+        {
+            campPhase.SetResult(true);
             
-            InteractOnCampfire();
         }
-
-        private void InteractOnBattle()
+        
+        private void BattleInteraction()
         {
-            //comportement pilgrim battle
-            //peut appeller des méthodes logic
-        }
-
-        private void InteractOnCampfire()
-        {
-            //comportement pilgrim campfire
-            //peut appeller des méthodes logic
+            //si comportement camp
         }
         
         //--------------------------------------------------
@@ -110,24 +104,22 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            isInCampfirePhase = false;
-            
+            interaction = BattleInteraction;
         }
-
+        
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            isInCampfirePhase = false;
         }
 
         public void OnPhaseBegin(CampPhase phase)
         {
-            isInCampfirePhase = true;
+            campPhase = phase;
+            interaction = CampInteraction;
         }
 
         public void OnPhaseEnd(CampPhase phase)
         {
-            isInCampfirePhase = false;
+            campPhase = null;
         }
-
     }
 }
