@@ -27,10 +27,10 @@ namespace PFE.Core.Scripts.Area
         private static IEnumerable<string> GetAnchorIds(InspectorProperty property)
         {
             var targets = property.Tree.WeakTargets;
-            if (targets.Count == 0 || targets[0] is not AreaData area || area.Prefab == null)
+            if (targets.Count == 0 || targets[0] is not AreaData area || area.AreaPrefab == null)
                 yield break;
 
-            foreach (SpawnAnchor anchor in area.Prefab.GetComponentsInChildren<SpawnAnchor>(true))
+            foreach (SpawnAnchor anchor in area.AreaPrefab.GetComponentsInChildren<SpawnAnchor>(true))
                 yield return anchor.Id;
         }
 #endif

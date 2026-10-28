@@ -48,6 +48,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
+            var cleanupPhase = new CleanupPhase(gameModeContext);
+            await cleanupPhase.Run();
+            
             var generateAreaPhase = new GenerateAreaPhase(gameModeContext, currentArea);
             var arenaResult = await generateAreaPhase.Run();
         

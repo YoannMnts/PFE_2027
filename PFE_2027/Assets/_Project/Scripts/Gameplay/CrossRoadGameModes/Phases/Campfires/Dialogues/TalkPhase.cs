@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 {
-    public class TalkPhase : Phase<bool>
+    public class TalkPhase : PhaseCompletionSource<bool>
     { 
         public TalkData TalkData { get; private set; }
 

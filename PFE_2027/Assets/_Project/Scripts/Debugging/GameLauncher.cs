@@ -24,41 +24,51 @@ namespace PFE.Debugging._Project.Scripts.Debugging
     {
         private class DebugGameMode : CrossRoadGameMode
         {
-            private readonly IAreaData data;
-            private readonly bool isBattlePhase;
+            private readonly IAreaData battleData;
+            private readonly CampfireAreaData campfireData;
 
-            public DebugGameMode(IAreaData data, bool isBattlePhase) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            private bool isBattlePhase;
+
+            public DebugGameMode(IAreaData battleData, CampfireAreaData campfireData, bool isBattlePhase) : 
+                base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
-                this.data = data;
+                this.battleData = battleData;
+                this.campfireData = campfireData;
                 this.isBattlePhase = isBattlePhase;
             }
-
+            
             protected override async Awaitable<bool> Execute(CancellationToken token)
             {
                 var context = new CrossRoadGameModeContext(this);
                 await GameController.GameSceneController.HideLoadingScreen();
 
-                if (isBattlePhase)
-                {
-                    var battlePhase = new BattlePhase(context, data);
-                    await battlePhase.Run();
-                }
-                var campfirePhase = new CampfirePhase(context, data);
-                await campfirePhase.Run();
 
-                return true;
+                while (true)
+                {
+                    if (!isBattlePhase)
+                    {
+                        var campfirePhase = new CampfirePhase(context, campfireData);
+                        await campfirePhase.Run();
+                        isBattlePhase = true;
+                    }
+                    var battlePhase = new BattlePhase(context, battleData);
+                    await battlePhase.Run();
+                    isBattlePhase = false;
+                }
             }
         }
         
         
         
-        [SerializeField]
+        [SerializeField, BoxGroup("Parameters")]
         private bool launchOnStart = true;
-
-        [SerializeField] private bool isBattlePhase;
+        [SerializeField, BoxGroup("Parameters")] 
+        private bool isBattlePhase;
         
-        [SerializeField]
-        private AreaData areaData;
+        [SerializeField, BoxGroup("Area")]
+        private AreaData battleAreaData;
+        [SerializeField, BoxGroup("Area")]
+        private CampfireAreaData campfireAreaData;
         
         private void Start()
         {
@@ -72,7 +82,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            DebugGameMode gameMode = new DebugGameMode(areaData, isBattlePhase);
+            DebugGameMode gameMode = new DebugGameMode(battleAreaData, campfireAreaData, isBattlePhase);
             
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();

@@ -100,14 +100,14 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
         private void OpenPrefab(AreaData area)
         {
-            if (area.Prefab == null)
+            if (area.AreaPrefab == null)
             {
                 Debug.LogWarning($"[AreaBrowserTool] '{area.name}' has no Prefab assigned.", area);
                 return;
             }
 
             requestedArea = area;
-            string path = AssetDatabase.GetAssetPath(area.Prefab);
+            string path = AssetDatabase.GetAssetPath(area.AreaPrefab);
 
             PrefabStage current = PrefabStageUtility.GetCurrentPrefabStage();
             if (current != null && current.assetPath == path)
@@ -151,7 +151,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
             foreach (string guid in guids)
             {
                 AreaData area = AssetDatabase.LoadAssetAtPath<AreaData>(AssetDatabase.GUIDToAssetPath(guid));
-                if (area != null && area.Prefab != null && AssetDatabase.GetAssetPath(area.Prefab) == prefabPath)
+                if (area != null && area.AreaPrefab != null && AssetDatabase.GetAssetPath(area.AreaPrefab) == prefabPath)
                     results.Add(area);
             }
 
@@ -177,7 +177,7 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools
 
             Label title = new($"Editing: {editedArea.name}");
             title.AddToClassList("area-edit__title");
-            Label subtitle = new($"Prefab: {editedArea.Prefab.name}");
+            Label subtitle = new($"Prefab: {editedArea.AreaPrefab.name}");
             subtitle.AddToClassList("area-edit__subtitle");
 
             titles.Add(title);

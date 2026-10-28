@@ -5,7 +5,7 @@ namespace PFE.Core.Scripts.Area
 {
     public interface IAreaData
     {
-        public Transform Prefab { get;  }
+        public Transform AreaPrefab { get;  }
         public List<SpawnPoint> SpawnPoints { get;  }
 
     }

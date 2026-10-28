@@ -5,30 +5,42 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.RoadSystem
 {
-    public class AreaGenerator : MonoBehaviour, IPhaseListener<GenerateAreaPhase>
+    public class AreaGenerator : MonoBehaviour, IPhaseListener<GenerateAreaPhase>, IPhaseListener<CleanupPhase>
     {
         [SerializeField]
         private Transform container;
 
         private void OnEnable()
         {
+            this.Register<CleanupPhase>();
             this.Register<GenerateAreaPhase>();
         }
 
         private void OnDisable()
         {
+            this.Unregister<CleanupPhase>();
             this.Unregister<GenerateAreaPhase>();
         }
 
-        void IPhaseListener<GenerateAreaPhase>.OnPhaseBegin(GenerateAreaPhase phase)
+        //---------------------------------------------
+        
+        void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
         {
             container.ClearChildren();
-            
-            Transform runtime = phase.areaData.Prefab.InstantiatePrefab();
+        }
+
+        void IPhaseListener<CleanupPhase>.OnPhaseEnd(CleanupPhase phase)
+        {
+        }
+        
+        
+        void IPhaseListener<GenerateAreaPhase>.OnPhaseBegin(GenerateAreaPhase phase)
+        {
+            Transform runtime = phase.areaData.AreaPrefab.InstantiatePrefab();
             runtime.transform.SetParent(container);
 
             if (!runtime.TryGetComponent(out IRuntimeArea arena))
-                Debug.LogError($"[AreaGenerator] Area prefab '{phase.areaData.Prefab.name}' has no RuntimeArena on its root.", runtime);
+                Debug.LogError($"[AreaGenerator] Area prefab '{phase.areaData.AreaPrefab.name}' has no RuntimeArena on its root.", runtime);
 
             phase.SetResult(arena);
         }
@@ -36,5 +48,6 @@ namespace PFE.Gameplay.Scripts.RoadSystem
         void IPhaseListener<GenerateAreaPhase>.OnPhaseEnd(GenerateAreaPhase phase)
         {
         }
+
     }
 }

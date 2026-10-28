@@ -18,7 +18,10 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 {
     // Spawns every NPC of the area up front (no Instantiate during the fight), then reveals them one by one
     // as the pilgrim progresses along its path.
-    public class NpcGenerator : MonoBehaviour, IPhaseListener<GenerateNpcPhase>, IPhaseListener<ProtectPilgrimPhase>
+    public class NpcGenerator : MonoBehaviour, 
+        IPhaseListener<CleanupPhase>,
+        IPhaseListener<GenerateNpcPhase>, 
+        IPhaseListener<ProtectPilgrimPhase>
     {
         // NPC already placed on its anchor, kept inactive until the pilgrim reaches its progression
         private readonly struct PendingNpc
@@ -43,24 +46,33 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         private void OnEnable()
         {
+            this.Register<CleanupPhase>();
             this.Register<GenerateNpcPhase>();
             this.Register<ProtectPilgrimPhase>();
         }
 
         private void OnDisable()
         {
+            this.Unregister<CleanupPhase>();
             this.Unregister<GenerateNpcPhase>();
             this.Unregister<ProtectPilgrimPhase>();
         }
 
-        // ---------------------------------------------------------------- generation
+        // ---------------------CLEANUP & GENERATION------------------------------
 
-        void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
+        public void OnPhaseBegin(CleanupPhase phase)
         {
-            //on nettoie au cas où au START de la phase GenerateNpc
             container.ClearChildren();
             pendingNpcs.Clear();
+        }
 
+        public void OnPhaseEnd(CleanupPhase phase)
+        {
+            Debug.Log($"CLEAN UP FINISH");
+        }
+        
+        void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
+        { 
             //Pour récupérer l'area
             IRuntimeArea runtimeArea = phase.area;
             if (runtimeArea == null)

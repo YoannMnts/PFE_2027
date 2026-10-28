@@ -179,6 +179,38 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!1 &6440439018602083668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 775269573955109073}
+  m_Layer: 0
+  m_Name: PlayerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &775269573955109073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440439018602083668}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.49, y: 0.5, z: -6.72}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3698895861285095815}
+  m_Father: {fileID: 6333760646644915440}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8876358958513796488
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +376,68 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &40079079088291440
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 775269573955109073}
+    m_Modifications:
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029753092794283764, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+      propertyPath: m_Name
+      value: PlayerSpawn
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+--- !u!4 &3698895861285095815 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
+  m_PrefabInstance: {fileID: 40079079088291440}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1365202279995206834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -563,6 +657,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3240017679664409567, guid: 989663c2cde5b3449a771bb2c129c49d, type: 3}
       insertIndex: 0
+      addedObject: {fileID: 775269573955109073}
+    - targetCorrespondingSourceObject: {fileID: 3240017679664409567, guid: 989663c2cde5b3449a771bb2c129c49d, type: 3}
+      insertIndex: 1
       addedObject: {fileID: 3475916719138526454}
     - targetCorrespondingSourceObject: {fileID: 3240017679664409567, guid: 989663c2cde5b3449a771bb2c129c49d, type: 3}
       insertIndex: -1
