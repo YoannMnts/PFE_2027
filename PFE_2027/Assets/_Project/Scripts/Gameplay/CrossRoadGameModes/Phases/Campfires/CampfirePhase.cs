@@ -21,10 +21,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         private ChannelKey playerKey;
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
-        private readonly IAreaData currentArea;
+        private readonly CampfireAreaData currentArea;
         
         
-        public CampfirePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
+        public CampfirePhase(CrossRoadGameModeContext gameModeContext, CampfireAreaData currentArea) : this(gameModeContext)
         {
             this.currentArea = currentArea;
         }
@@ -42,13 +42,15 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             {
                 player.ShowUI.AddPriority(playerKey, PriorityTags.Default, false);
             }
-            
             return base.Initialize(token);
         }
         
         
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
+            var cleanupPhase = new CleanupPhase(gameModeContext);
+            await cleanupPhase.Run();
+            
             //generate campfire zone
             var generateCampfireAreaPhase = new GenerateAreaPhase(gameModeContext,  currentArea);
             var campfireResult = await generateCampfireAreaPhase.Run();
@@ -67,9 +69,18 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             if (gameModeContext.NpcManager.TryGetInstance(pilgrimData, out INpcInstance npcInstance)
                 && npcInstance is PilgrimInstance pilgrimInstance)
             {
-                var campPhase = new CampPhase(gameModeContext, campfireResult.value);
-                result = await campPhase.Run();
-                
+                var campPhase = new CampPhase(gameModeContext, campfireResult.value, currentArea.DialogueAreaPrefab);
+                PhaseResult<DialoguePhase> dialogueResult = await campPhase.Run();
+
+                if (dialogueResult.value == null)
+                {
+                    result = true;
+                    return false;
+                }
+
+                var isDialogueFinish = await dialogueResult.value.Run();
+                result = isDialogueFinish.value;
+
             }
             return result;
         }

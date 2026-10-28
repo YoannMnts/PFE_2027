@@ -46,4 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Scripts.Debugging.GameLauncher
   launchOnStart: 1
   isBattlePhase: 0
-  areaData: {fileID: 11400000, guid: 66b060046e2cf0a4384eec2b96765f89, type: 2}
+  battleAreaData: {fileID: 11400000, guid: b4517b8240a61c442aae70d25dc9a21f, type: 2}
+  campfireAreaData: {fileID: 11400000, guid: 66b060046e2cf0a4384eec2b96765f89, type: 2}

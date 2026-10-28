@@ -21,7 +21,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 {
     public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable,
         IPhaseListener<ProtectPilgrimPhase>, 
-        IPhaseListener<CampPhase>
+        IPhaseListener<CampPhase>,
+        IPhaseListener<FinishDialoguePhase>
     {
         [SerializeField, BoxGroup("Debugs")]
         private bool isCameraOnPilgrim = true;
@@ -34,7 +35,9 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         private Action interaction;
         private CrossRoadGameModeContext gameModeContext;
+        
         private CampPhase campPhase;
+        private FinishDialoguePhase finishDialogue;
 
 
 
@@ -54,12 +57,14 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             this.Register<ProtectPilgrimPhase>();
             this.Register<CampPhase>();
+            this.Register<FinishDialoguePhase>();
         }
 
         private void OnDisable()
         {
             this.Unregister<ProtectPilgrimPhase>();
             this.Unregister<CampPhase>();
+            this.Unregister<FinishDialoguePhase>();
         }
         
         //--------------------------------------------------
@@ -87,6 +92,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             interaction?.Invoke();
         }
+        
+        
         private void BattleInteraction()
         {
             Debug.Log($"{this} is interacting on battle");
@@ -94,11 +101,20 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         private void CampInteraction()
         {
-            Debug.Log($"{this} is interacting on camp");
-            var dialoguePhase = new DialoguePhase(gameModeContext);
-            dialoguePhase.Run();
+            if (campPhase.dialogueArea == null)
+            {
+                return;
+            }
+            
+            DialoguePhase dialoguePhase = new DialoguePhase(gameModeContext, campPhase.dialogueArea);
+            campPhase.SetResult(dialoguePhase);
         }
         
+        private void DialogueInteraction()
+        {
+            Debug.Log($"{this} is interacting on dialogue");
+            finishDialogue.SetResult(true);
+        }
         
         //--------------------------------------------------
 
@@ -119,6 +135,16 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         }
 
         public void OnPhaseEnd(CampPhase phase)
+        {
+        }
+
+        public void OnPhaseBegin(FinishDialoguePhase phase)
+        {
+            finishDialogue = phase;
+            interaction = DialogueInteraction;
+        }
+
+        public void OnPhaseEnd(FinishDialoguePhase phase)
         {
         }
     }

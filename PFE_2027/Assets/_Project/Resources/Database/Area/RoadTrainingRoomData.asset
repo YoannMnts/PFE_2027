@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RoadTrainingRoomData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.RoadAreaData
   guidText: a485392f-1635-479b-8190-b8416c0025a7
-  <Prefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
+  <AreaPrefab>k__BackingField: {fileID: 8187781064993512320, guid: 5c1a1be9df8f4da4095402a56b55e251, type: 3}
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 5cc99684b0251c549a04fff526da9ed4, type: 2}

@@ -23,7 +23,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         public int PlayerCount => players.Count;
         private Dictionary<int, IPlayer> players;
         
-        private bool isGameFinished;
+        public bool isGameFinished {get; private set;}
+        
         public NpcManager NpcManager { get; private set; }
         
         public CrossRoadGameMode(SceneReference sceneToLoad)

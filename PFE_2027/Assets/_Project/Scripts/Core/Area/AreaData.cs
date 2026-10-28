@@ -9,7 +9,7 @@ namespace PFE.Core.Scripts.Area
     public class AreaData : GameDatabaseObject, IAreaData
     {
         [field: SerializeField, BoxGroup("References", true, false, 1f)]
-        public Transform Prefab { get; private set; }
+        public Transform AreaPrefab { get; private set; }
 
         [field: SerializeField, BoxGroup("Base")]
         public List<SpawnPoint> SpawnPoints { get; private set; }

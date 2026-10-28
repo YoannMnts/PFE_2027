@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CampfireTrainingRoomData
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.CampfireAreaData
   guidText: e19f538e-8aaf-4a2d-99c3-3c6e04d3dd93
-  <Prefab>k__BackingField: {fileID: 6333760646644915440, guid: 507e46e63c10e3e4aab702b6927f4314, type: 3}
+  <AreaPrefab>k__BackingField: {fileID: 6333760646644915440, guid: 507e46e63c10e3e4aab702b6927f4314, type: 3}
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
@@ -21,3 +21,4 @@ MonoBehaviour:
   - <AnchorId>k__BackingField: Anchor_1
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
     <Progression>k__BackingField: 0
+  <DialogueAreaPrefab>k__BackingField: {fileID: 11400000, guid: 46cd4ccb9d7e03543b861d9ae0b20ea0, type: 2}

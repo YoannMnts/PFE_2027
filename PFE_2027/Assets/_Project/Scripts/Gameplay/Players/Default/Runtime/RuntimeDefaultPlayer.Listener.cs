@@ -9,25 +9,28 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<GenerateAreaPhase>,
-        IPhaseListener<ProtectPilgrimPhase>, IPhaseListener<CampfirePhase>, IPhaseListener<DialoguePhase>
+    public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<ProtectPilgrimPhase>,
+        IPhaseListener<CampfirePhase>, IPhaseListener<DialoguePhase>, IPhaseListener<GenerateNpcPhase>, 
+        IPhaseListener<CleanupPhase>
     {
         private void OnEnable()
         {
             this.Register<BattlePhase>();
             this.Register<CampfirePhase>();
-            this.Register<GenerateAreaPhase>();
             this.Register<ProtectPilgrimPhase>();
             this.Register<DialoguePhase>();
+            this.Register<GenerateNpcPhase>();
+            this.Register<CleanupPhase>();
         }
 
         private void OnDisable()
         {
             this.Unregister<BattlePhase>();
             this.Unregister<CampfirePhase>();
-            this.Unregister<GenerateAreaPhase>();
             this.Unregister<ProtectPilgrimPhase>();
             this.Unregister<DialoguePhase>();
+            this.Unregister<GenerateNpcPhase>();
+            this.Unregister<CleanupPhase>();
         }
 
         void IPhaseListener<BattlePhase>.OnPhaseBegin(BattlePhase phase)
@@ -36,7 +39,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         void IPhaseListener<BattlePhase>.OnPhaseEnd(BattlePhase phase)
         {
-            rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
 
@@ -47,18 +49,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         void IPhaseListener<CampfirePhase>.OnPhaseEnd(CampfirePhase phase)
         {
         }
-
-
-        void IPhaseListener<GenerateAreaPhase>.OnPhaseBegin(GenerateAreaPhase phase)
-        {
-        }
-
-        void IPhaseListener<GenerateAreaPhase>.OnPhaseEnd(GenerateAreaPhase phase)
-        {
-            transform.position = Vector3.zero;
-            rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
-
         
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
@@ -82,6 +72,33 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         void IPhaseListener<DialoguePhase>.OnPhaseEnd(DialoguePhase phase)
         {
             
+        }
+
+        void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
+        {
+            var playerSpawn = phase.area.SpawnPosition;
+            if (!playerSpawn)
+            {
+                Debug.LogError($"[RuntimeArea] No PlayerSpawn found");
+                return;
+            }
+            rigidBody.position = playerSpawn.transform.position;
+            rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+            
+            
+        }
+
+        void IPhaseListener<GenerateNpcPhase>.OnPhaseEnd(GenerateNpcPhase phase)
+        {
+        }
+
+        void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
+        {
+            rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        }
+
+        void IPhaseListener<CleanupPhase>.OnPhaseEnd(CleanupPhase phase)
+        {
         }
     }
 }

@@ -4,23 +4,26 @@ using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
+using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 {
-    public class CampPhase : PhaseCompletionSource<bool>
+    public class CampPhase : PhaseCompletionSource<DialoguePhase>
     {
         private readonly CrossRoadGameModeContext gameModeContext;
         private ChannelKey playerKey;
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         private readonly IRuntimeArea currentArea;
+        public readonly IAreaData dialogueArea;
 
-        public CampPhase(CrossRoadGameModeContext gameModeContext, IRuntimeArea currentArea)
+        public CampPhase(CrossRoadGameModeContext gameModeContext, IRuntimeArea currentArea,  IAreaData dialogueArea)
         {
             this.gameModeContext = gameModeContext;
             this.currentArea = currentArea;
+            this.dialogueArea = dialogueArea;
         }
 
         protected override Awaitable Initialize(CancellationToken token)
@@ -34,15 +37,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             return base.Initialize(token);
         }
         
-        
-        protected override async Awaitable<bool> Execute(CancellationToken token)
-        {
-            while (true)
-            {
-                await Awaitable.NextFrameAsync(token);
-            }
-        }
-
         protected override Awaitable Dispose(CancellationToken token)
         {
             foreach (var player in Players)
