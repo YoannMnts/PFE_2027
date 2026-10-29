@@ -27,8 +27,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         public Vector3 TargetPosition { get; private set; }
         public bool IsDead => CurrentHealth <= 0f;
         
-        private ChannelKey interactStateKey;
-        private ChannelKey dialoguePhaseKey;
 
         // resolved once here rather than a lookup on every call
         private readonly INpcContainer container;
@@ -37,14 +35,11 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             this.data = data;
             CurrentHealth = data.MaxHealth;
-            
-            interactStateKey = ChannelKey.GetUniqueChannelKey();
-            dialoguePhaseKey = ChannelKey.GetUniqueChannelKey();
 
             if (!data.TryGet(out container))
                 Debug.LogError($"[NpcInstance] No INpc behaviour registered for '{data.GetType().Name}'.");
         }
-
+        
         
         public void AddOrRemoveHealth(int amount)
         {
@@ -56,39 +51,23 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             if (IsDead)
             {
-                container.Dying(data);
-                OnDeath?.Invoke(data);
+                Dying();
             }
         }
-        
 
+        public void Dying()
+        {
+            container.Dying(data);
+            OnDeath?.Invoke(data);
+        }
+
+        
         public void SetGoal(Vector3 goal)
         {
             Goal = goal;
             TargetPosition = container != null && !IsDead
                 ? container.RedirectTargetPosition(data, this, goal)
                 : goal;
-        }
-        
-        public virtual bool TryLaunchInteractable(bool isInteractable)
-        {
-            OnModifyInteractable?.Invoke(isInteractable);
-
-            if (!isInteractable)
-            {
-                return false;
-            }
-            
-            Interact();
-            
-            Debug.Log($"{this} try interact");
-            return true;        
-        }
-
-        protected virtual void Interact()
-        {
-            //TODO comportement global
-            Debug.Log($"{this} is interacted");
         }
     }
 }

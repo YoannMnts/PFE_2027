@@ -24,28 +24,31 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         IPhaseListener<ProtectPilgrimPhase>
     {
         // NPC already placed on its anchor, kept inactive until the pilgrim reaches its progression
-        private readonly struct PendingNpc
+        private struct PendingNpc
         {
             public readonly GameObject runtime;
             public readonly float progression;
+            public bool isActive;
 
-            public PendingNpc(GameObject runtime, float progression)
+            public PendingNpc(GameObject runtime, float progression, bool isActive =  false)
             {
                 this.runtime = runtime;
                 this.progression = progression;
+                this.isActive = isActive;
+            }
+            public bool SetRuntimeActive()
+            {
+                isActive =  true;
+                runtime.SetActive(isActive);
+                return true;
             }
         }
-
         
         [SerializeField]
         private Transform container;
 
         // Ordered by progression: only the first one has to be checked when the pilgrim moves
-        private readonly Queue<PendingNpc> pendingNpcs = new();
-        
-        //TODO créer une List de deadNpc (runtime)
-        //Fin de phase = détruire le runtime 
-        //puis vider la list
+        private readonly List<PendingNpc> pendingNpcs = new();
         
         private PilgrimInstance pilgrimInstance;
 
@@ -65,13 +68,14 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         // ---------------------CLEANUP & GENERATION------------------------------
 
-        public void OnPhaseBegin(CleanupPhase phase)
+        void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
         {
-            container.ClearChildren();
-            pendingNpcs.Clear();
+            phase.context.NpcManager.Clear();
+            
+            phase.SetResult(true);
         }
 
-        public void OnPhaseEnd(CleanupPhase phase)
+        void IPhaseListener<CleanupPhase>.OnPhaseEnd(CleanupPhase phase)
         {
         }
         
@@ -81,7 +85,6 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             IRuntimeArea runtimeArea = phase.area;
             if (runtimeArea == null)
             {
-                Debug.LogError("[NpcGenerator] No runtime area available, NPCs cannot be placed.", this);
                 phase.SetResult(false);
                 return;
             }
@@ -98,30 +101,34 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             {
                 //si un pilgrimdata est referencé au spawnpoint => on lance la méthode de spawn
                 if (spawnPoints[i].Npc is PilgrimData)
-                    Spawn(spawnPoints[i], runtimeArea, context);
+                {
+                    var runtimePilgrim = Spawn(spawnPoints[i], runtimeArea, context);
+                    var pendingPilgrim = new  PendingNpc(runtimePilgrim.gameObject, spawnPoints[i].Progression, true);
+                    pendingNpcs.Add(pendingPilgrim);
+                }
             }
 
             
             // Pass 2: every other NPC, placed on its anchor then hidden until the pilgrim gets close enough
-            using (ListPool<PendingNpc>.Get(out List<PendingNpc> hidden))
+            using (ListPool<PendingNpc>.Get(out List<PendingNpc> hiddenEnemy))
             {
+                //création et ajout runtime Enemy dans PendingNpc
                 for (int i = 0; i < spawnPoints.Count; i++)
                 {
                     var spawnPoint = spawnPoints[i];
                     if (spawnPoint.Npc is PilgrimData)
                         continue;
 
-                    Transform runtimeNpc = SpawnAndHide(spawnPoint, runtimeArea, context);
+                    Transform runtimeEnemy = SpawnAndHide(spawnPoint, runtimeArea, context);
                     
-                    if(runtimeNpc == null)
+                    if(runtimeEnemy == null)
                         continue;
                     
-                    hidden.Add(new PendingNpc(runtimeNpc.gameObject, spawnPoint.Progression));
+                    hiddenEnemy.Add(new PendingNpc(runtimeEnemy.gameObject, spawnPoint.Progression));
                 }
 
-                hidden.Sort((a, b) => a.progression.CompareTo(b.progression));
-                for (int i = 0; i < hidden.Count; i++)
-                    pendingNpcs.Enqueue(hidden[i]);
+                hiddenEnemy.Sort((a, b) => a.progression.CompareTo(b.progression));
+                pendingNpcs.AddRange(hiddenEnemy);
             }
 
             phase.SetResult(true);
@@ -183,15 +190,13 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             return runtimeNpc;
         }
 
-        // ---------------------------------------------------------------- progression
-
+        // ------------------------------- PROGRESSION ---------------------------------
         
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
             pilgrimInstance = phase.pilgrimInstance;
             pilgrimInstance.OnPositionChanged += OnPilgrimPositionChanged;
         }
-
         
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
@@ -203,12 +208,14 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         // on consecutive steps, which also spreads their activation cost
         private void OnPilgrimPositionChanged(Vector3 position)
         {
-            if (!pendingNpcs.TryPeek(out PendingNpc next) || pilgrimInstance.Progression < next.progression)
-                return;
-
-            pendingNpcs.Dequeue();
-            if (next.runtime != null)
-                next.runtime.SetActive(true);
+            for (int i = 0; i < pendingNpcs.Count; i++)
+            {
+                var pendingNpc = pendingNpcs[i];
+                if (pendingNpc.progression <= pilgrimInstance.Progression && pendingNpc.isActive == false)
+                {
+                    pendingNpc.SetRuntimeActive();
+                }
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public void SetGoal(Vector3 goal);
         public void AddOrRemoveHealth(int amount);
         public bool IsDead { get; }
+        public void Dying();
 
     }
 }

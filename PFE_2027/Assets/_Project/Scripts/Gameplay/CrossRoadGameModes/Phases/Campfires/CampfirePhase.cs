@@ -37,6 +37,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
 
         protected override Awaitable Initialize(CancellationToken token)
         {
+            Debug.Log($"[Campfire Phase]{gameModeContext.NpcManager.Count}");
             playerKey = ChannelKey.GetUniqueChannelKey();
             foreach (var player in Players)
             {

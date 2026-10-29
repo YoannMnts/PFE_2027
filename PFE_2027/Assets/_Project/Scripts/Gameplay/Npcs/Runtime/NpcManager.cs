@@ -12,12 +12,12 @@ namespace PFE.Gameplay.Scripts.NPCs
     // Registry of the battle's living NPCs, subscribes to their death to stay up to date
     public class NpcManager
     {
-        public readonly struct DataInstance
+        public readonly struct DataInstanceNpc
         {
             public readonly INpcData data;
             public readonly INpcInstance instance;
             
-            public DataInstance(INpcData data, INpcInstance instance)
+            public DataInstanceNpc(INpcData data, INpcInstance instance)
             {
                 this.data = data;
                 this.instance = instance;
@@ -28,15 +28,39 @@ namespace PFE.Gameplay.Scripts.NPCs
         public event Action<INpcInstance> OnNpcDied;
 
         //créer une liste vide (à la création du Manager) des NpcInstance qui ne peut etre effacer mais peut etre modifier 
-        private readonly List<DataInstance> npcList = new();
-        private readonly List<DataInstance> deadNpcList = new();
+        private readonly List<DataInstanceNpc> npcList = new();
+        private readonly List<DataInstanceNpc> deadNpcList = new();
         
         public int Count => npcList.Count;
 
+        //------------------- Add to List ---------------------
+        
+        public void Add(NpcData data, NpcInstanceContext context)
+        {
+            //si la data n'a pas de behavior
+            if (!data.TryGet(out INpcContainer container))
+                return;
+            
+            //création de l'instance
+            INpcInstance newInstance = container.CreateInstance(data, context);
+
+            //si l'instance meurt on l'a remove auto des npcs
+            newInstance.OnDeath += Remove;
+            
+            //ajout dans la struct de stockage => ajout dans la liste
+            var dataInstance = new DataInstanceNpc(data, newInstance);
+            npcList.Add(dataInstance);
+            
+            OnNpcAdded?.Invoke(newInstance);
+        }
+        
+        
+        //----------------------------Try Get ------------------------
+        
         public bool TryGetFirstInstance<TInstance>(out TInstance result) 
             where TInstance : class, INpcInstance
         {
-            foreach (DataInstance instance in npcList)
+            foreach (DataInstanceNpc instance in npcList)
             {
                 if (instance.instance is not TInstance typedInstance)
                     continue;
@@ -47,11 +71,10 @@ namespace PFE.Gameplay.Scripts.NPCs
             return false;
         }
         
-        //passé en generique mais honnetement il y en a pas tellement besoin
         public bool TryGetFirstData<TData>(out TData pilgrimData)
             where TData : NpcData
         {
-            foreach (DataInstance data in npcList)
+            foreach (DataInstanceNpc data in npcList)
             {
                 if (data.data is TData compatible)
                 {
@@ -74,32 +97,13 @@ namespace PFE.Gameplay.Scripts.NPCs
                     return true;
                 }
             }
-            Debug.LogError($"[Npc Manager] No instance has been found for  {data.Name}");
+            Debug.LogError($"[Npc Manager] No instance has been found for {data.Name}");
             instance = null;
             return false;
         }
         
+        //--------------------- Remove ----------------------
         
-        //il creé, associe et ajoute dans le dictionnaire
-        public void Add(NpcData data, NpcInstanceContext context)
-        {
-            //si la data n'a pas de behavior
-            if (!data.TryGet(out INpcContainer container))
-                return;
-            
-            //création de l'instance
-            INpcInstance newInstance = container.CreateInstance(data, context);
-
-            //si l'instance meurt on l'a remove auto des npcs
-            newInstance.OnDeath += Remove;
-            
-            //ajout dans la struct de stockage => ajout dans la liste
-            var dataInstance = new DataInstance(data, newInstance);
-            npcList.Add(dataInstance);
-            
-            OnNpcAdded?.Invoke(newInstance);
-        }
-
         public void Remove(INpcData data)
         {
             //premier parcours pour savoir qui est mort
@@ -132,6 +136,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             {
                 dataInstance.instance.OnDeath -= Remove;
                 OnNpcDied?.Invoke(dataInstance.instance);
+                dataInstance.instance.Dying();
             }
             
             npcList.Clear();
