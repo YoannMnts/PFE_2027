@@ -4,6 +4,7 @@ using Helteix.Tools.Phases;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires.Inventories;
 using PFE.Gameplay.Scripts.Pilgrims;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
     public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<ProtectPilgrimPhase>,
         IPhaseListener<CampfirePhase>, IPhaseListener<DialoguePhase>, IPhaseListener<GenerateNpcPhase>, 
-        IPhaseListener<CleanupPhase>
+        IPhaseListener<CleanupPhase>, IPhaseListener<InventoryPhase>
     {
         private void OnEnable()
         {
@@ -21,6 +22,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             this.Register<DialoguePhase>();
             this.Register<GenerateNpcPhase>();
             this.Register<CleanupPhase>();
+            this.Register<InventoryPhase>();
         }
 
         private void OnDisable()
@@ -31,6 +33,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             this.Unregister<DialoguePhase>();
             this.Unregister<GenerateNpcPhase>();
             this.Unregister<CleanupPhase>();
+            this.Unregister<InventoryPhase>();
         }
 
         void IPhaseListener<BattlePhase>.OnPhaseBegin(BattlePhase phase)
@@ -84,8 +87,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             }
             rigidBody.position = playerSpawn.transform.position;
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-            
-            
         }
 
         void IPhaseListener<GenerateNpcPhase>.OnPhaseEnd(GenerateNpcPhase phase)
@@ -98,6 +99,15 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         }
 
         void IPhaseListener<CleanupPhase>.OnPhaseEnd(CleanupPhase phase)
+        {
+        }
+
+        void IPhaseListener<InventoryPhase>.OnPhaseBegin(InventoryPhase phase)
+        {
+            
+        }
+
+        void IPhaseListener<InventoryPhase>.OnPhaseEnd(InventoryPhase phase)
         {
         }
     }

@@ -1,9 +1,12 @@
 ﻿using System.Threading;
 using Helteix.Tools.Phases;
+using PFE.Gameplay.Scripts.NPCs;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 {
+    //a faire sauter => pas de clear des instance mais clear des runtimes 
+    // a faire dans le NpcGenerator
     public class CleanupPhase : Phase<bool>
     {
         private readonly CrossRoadGameModeContext context;
@@ -16,10 +19,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            foreach (var player in context.gameMode.Players)
-            {
-            }
-            var npcManager = context.NpcManager;
+            NpcManager npcManager = context.NpcManager;
             npcManager.Clear();
 
             if (npcManager.Count != 0)
@@ -29,7 +29,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             
             await Awaitable.NextFrameAsync(token);
             return true;
-            
         }
     }
 }

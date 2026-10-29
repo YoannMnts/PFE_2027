@@ -54,8 +54,8 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
             var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, arenaResult.value);
             await generateNpcPhase.Run();
 
-            var finishDialogue = new FinishDialoguePhase();
-            await finishDialogue.Run();
+            var debugDialoguePhase = new DebugWaitingDialoguePhase();
+            await debugDialoguePhase.Run();
             
             return true;
             

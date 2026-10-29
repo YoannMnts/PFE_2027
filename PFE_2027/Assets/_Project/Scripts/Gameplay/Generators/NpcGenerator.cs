@@ -42,6 +42,11 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         // Ordered by progression: only the first one has to be checked when the pilgrim moves
         private readonly Queue<PendingNpc> pendingNpcs = new();
+        
+        //TODO créer une List de deadNpc (runtime)
+        //Fin de phase = détruire le runtime 
+        //puis vider la list
+        
         private PilgrimInstance pilgrimInstance;
 
         private void OnEnable()
@@ -68,7 +73,6 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         public void OnPhaseEnd(CleanupPhase phase)
         {
-            Debug.Log($"CLEAN UP FINISH");
         }
         
         void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
@@ -88,7 +92,6 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             var spawnPoints = phase.currentArea.SpawnPoints;
             
             
-
             // Pass 1: pilgrims, present from the start and needed by the enemies' instances
             //pour tout les spawnpoint récupérés (un par un)
             for (int i = 0; i < spawnPoints.Count; i++)
