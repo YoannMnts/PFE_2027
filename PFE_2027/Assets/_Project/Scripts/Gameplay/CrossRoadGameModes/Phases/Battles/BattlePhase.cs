@@ -37,6 +37,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 
         protected override Awaitable Initialize(CancellationToken token)
         {
+            Debug.Log($"[Battle Phase]{gameModeContext.NpcManager.Count}");
+            
             key = ChannelKey.GetUniqueChannelKey();
             
             foreach (var player in Players)

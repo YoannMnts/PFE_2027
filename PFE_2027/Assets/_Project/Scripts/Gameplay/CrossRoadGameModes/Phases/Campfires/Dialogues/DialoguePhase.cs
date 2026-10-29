@@ -32,6 +32,7 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         protected override Awaitable Initialize(CancellationToken token)
         {
+            Debug.Log($"[Dialogue Phase] {gameModeContext.NpcManager.Count}");
             key = ChannelKey.GetUniqueChannelKey();
             foreach (var player in gameModeContext.gameMode.Players)
             {

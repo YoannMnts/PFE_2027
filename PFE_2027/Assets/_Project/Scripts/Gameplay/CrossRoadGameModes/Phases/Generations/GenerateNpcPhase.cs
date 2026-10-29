@@ -34,7 +34,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
                 
                 var context = new NpcInstanceContext(area.Path, gameModeContext.NpcManager, gameModeContext.gameMode);
                 
-                gameModeContext.NpcManager.Add(currentNpcData, context);
+                if (!gameModeContext.NpcManager.TryGetInstance(currentNpcData, out _))
+                {
+                    gameModeContext.NpcManager.Add(currentNpcData, context);
+                }
             }
             return base.Initialize(token);
         }
