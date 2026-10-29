@@ -3,7 +3,7 @@
 namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 {
     //A SUPPRIMER APRES FP
-    public class FinishDialoguePhase : PhaseCompletionSource<bool>
+    public class DebugWaitingDialoguePhase : PhaseCompletionSource<bool>
     {
         
     }

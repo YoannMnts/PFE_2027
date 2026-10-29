@@ -69,8 +69,11 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             if (gameModeContext.NpcManager.TryGetInstance(pilgrimData, out INpcInstance npcInstance)
                 && npcInstance is PilgrimInstance pilgrimInstance)
             {
+                
+                //TOUT CHANGER => la camp ne doit pas attendre la phase de dialogue
+                //campPhase se termine quand la dialogue est lancée (car dialogue = area + npc propre)
                 var campPhase = new CampPhase(gameModeContext, campfireResult.value, currentArea.DialogueAreaPrefab);
-                PhaseResult<DialoguePhase> dialogueResult = await campPhase.Run();
+                var dialogueResult = await campPhase.Run();
 
                 if (dialogueResult.value == null)
                 {

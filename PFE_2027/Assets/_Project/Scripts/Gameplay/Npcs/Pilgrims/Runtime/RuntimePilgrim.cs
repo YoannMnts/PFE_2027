@@ -22,7 +22,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
     public class RuntimePilgrim : RuntimeNpc<PilgrimInstance, PilgrimData>, IInteractable,
         IPhaseListener<ProtectPilgrimPhase>, 
         IPhaseListener<CampPhase>,
-        IPhaseListener<FinishDialoguePhase>
+        IPhaseListener<DebugWaitingDialoguePhase>
     {
         [SerializeField, BoxGroup("Debugs")]
         private bool isCameraOnPilgrim = true;
@@ -37,13 +37,12 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         private CrossRoadGameModeContext gameModeContext;
         
         private CampPhase campPhase;
-        private FinishDialoguePhase finishDialogue;
+        private DebugWaitingDialoguePhase debugWaitingDialogue;
 
 
 
         //--------------------------------------------------
         
-
         protected override void OnSetup(CrossRoadGameModeContext context)
         {
             base.OnSetup(context);
@@ -57,14 +56,14 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
             this.Register<ProtectPilgrimPhase>();
             this.Register<CampPhase>();
-            this.Register<FinishDialoguePhase>();
+            this.Register<DebugWaitingDialoguePhase>();
         }
 
         private void OnDisable()
         {
             this.Unregister<ProtectPilgrimPhase>();
             this.Unregister<CampPhase>();
-            this.Unregister<FinishDialoguePhase>();
+            this.Unregister<DebugWaitingDialoguePhase>();
         }
         
         //--------------------------------------------------
@@ -96,6 +95,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         private void BattleInteraction()
         {
+            //TODO grappin
             Debug.Log($"{this} is interacting on battle");
         }
         
@@ -106,14 +106,16 @@ namespace PFE.Gameplay.Scripts.Pilgrims
                 return;
             }
             
-            DialoguePhase dialoguePhase = new DialoguePhase(gameModeContext, campPhase.dialogueArea);
+            var dialoguePhase = new DialoguePhase(gameModeContext, campPhase.dialogueArea);
+            //lancer et attendre la dialogue phase
             campPhase.SetResult(dialoguePhase);
         }
         
+        //debug a retirer
         private void DialogueInteraction()
         {
             Debug.Log($"{this} is interacting on dialogue");
-            finishDialogue.SetResult(true);
+            debugWaitingDialogue.SetResult(true);
         }
         
         //--------------------------------------------------
@@ -138,13 +140,13 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         {
         }
 
-        public void OnPhaseBegin(FinishDialoguePhase phase)
+        public void OnPhaseBegin(DebugWaitingDialoguePhase phase)
         {
-            finishDialogue = phase;
+            debugWaitingDialogue = phase;
             interaction = DialogueInteraction;
         }
 
-        public void OnPhaseEnd(FinishDialoguePhase phase)
+        public void OnPhaseEnd(DebugWaitingDialoguePhase phase)
         {
         }
     }

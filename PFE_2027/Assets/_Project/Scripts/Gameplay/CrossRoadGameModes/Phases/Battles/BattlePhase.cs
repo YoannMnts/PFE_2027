@@ -79,6 +79,10 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             {
                 player.ShowUI.RemovePriority(key);
             }
+            
+            
+            
+            
             return base.Dispose(token);
         }
     }
