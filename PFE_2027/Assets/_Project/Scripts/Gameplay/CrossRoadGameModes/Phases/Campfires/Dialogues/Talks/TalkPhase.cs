@@ -5,7 +5,6 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Dialogues;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
-using PFE.Gameplay.Scripts.Dialogues.Talks;
 using PFE.Gameplay.Scripts.Players;
 using UnityEngine;
 
@@ -13,14 +12,14 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 {
     public class TalkPhase : PhaseCompletionSource<bool>
     { 
-        public TalkData TalkData { get; private set; }
-
         private readonly CrossRoadGameModeContext gameModeContext;
+        public readonly string[] texts;
         private ChannelKey key;
 
-        public TalkPhase(CrossRoadGameModeContext gameModeContext)
+        public TalkPhase(CrossRoadGameModeContext gameModeContext, string[] texts)
         {
             this.gameModeContext = gameModeContext;
+            this.texts = texts;
         }
 
         protected override Awaitable Initialize(CancellationToken token)
@@ -31,20 +30,6 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
                 player.ShowUI.AddPriority(key, PriorityTags.Default, true);
             }
             return base.Initialize(token);
-        }
-
-        protected override async Awaitable<bool> Execute(CancellationToken token)
-        {
-            while (true)
-            {
-                await Awaitable.NextFrameAsync(token);
-            }
-            
-            if (TalkData.Choice == null)
-            {
-                return false;
-            }
-            return true;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

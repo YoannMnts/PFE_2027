@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a0e77ce1f44f6b3ebe331cb6117f3, type: 3}
+  m_Name: ChoiceData
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.ChoiceData
+  guidText: 652a2b57-06f8-4396-8d90-537448fb4956
+  <Text>k__BackingField: AAAAAAAAAAAAAAAA
+  <NextTalk>k__BackingField: {fileID: 11400000, guid: 0f25b9ebef4101046b65c0c43b451722, type: 2}

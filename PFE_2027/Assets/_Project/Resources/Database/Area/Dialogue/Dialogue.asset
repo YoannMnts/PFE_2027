@@ -18,3 +18,4 @@ MonoBehaviour:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
     <Progression>k__BackingField: 0
+  <TalkData>k__BackingField: {fileID: 11400000, guid: 2b88ab9be13d3df4b9d4a8932fa2772d, type: 2}

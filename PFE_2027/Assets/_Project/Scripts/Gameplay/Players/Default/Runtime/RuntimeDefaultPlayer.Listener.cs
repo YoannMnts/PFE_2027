@@ -10,9 +10,14 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<ProtectPilgrimPhase>,
-        IPhaseListener<CampfirePhase>, IPhaseListener<DialoguePhase>, IPhaseListener<GenerateNpcPhase>, 
-        IPhaseListener<CleanupPhase>, IPhaseListener<InventoryPhase>
+    public partial class RuntimeDefaultPlayer : 
+        IPhaseListener<BattlePhase>, 
+        IPhaseListener<ProtectPilgrimPhase>,
+        IPhaseListener<CampfirePhase>, 
+        IPhaseListener<DialoguePhase>, 
+        IPhaseListener<GenerateNpcPhase>, 
+        IPhaseListener<CleanupPhase>, 
+        IPhaseListener<InventoryPhase>
     {
         private void OnEnable()
         {
@@ -69,7 +74,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         void IPhaseListener<DialoguePhase>.OnPhaseBegin(DialoguePhase phase)
         {
-            
         }
 
         void IPhaseListener<DialoguePhase>.OnPhaseEnd(DialoguePhase phase)

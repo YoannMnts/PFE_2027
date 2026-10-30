@@ -17,9 +17,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         private ChannelKey playerKey;
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         private readonly IRuntimeArea currentArea;
-        public readonly IAreaData dialogueArea;
+        public readonly DialogueAreaData dialogueArea;
 
-        public CampPhase(CrossRoadGameModeContext gameModeContext, IRuntimeArea currentArea,  IAreaData dialogueArea)
+        public CampPhase(CrossRoadGameModeContext gameModeContext, IRuntimeArea currentArea,  DialogueAreaData dialogueArea)
         {
             this.gameModeContext = gameModeContext;
             this.currentArea = currentArea;
