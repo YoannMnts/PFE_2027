@@ -7,7 +7,7 @@ namespace PFE.Utilities.Scripts
 {
     public static class UIExtension
     {
-        public static Tween Show(this CanvasGroup canvasGroup, float duration)
+        public static Tween Show(this CanvasGroup canvasGroup, float duration = .3f)
         {
             Tween.StopAll(canvasGroup);
             canvasGroup.interactable = true;
@@ -16,7 +16,7 @@ namespace PFE.Utilities.Scripts
             return Tween.Alpha(canvasGroup, 1, duration);
         }
 
-        public static Tween Hide(this CanvasGroup canvasGroup, float duration)
+        public static Tween Hide(this CanvasGroup canvasGroup, float duration = .3f)
         {
             Tween.StopAll(canvasGroup);
             canvasGroup.interactable = false;

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0effdb61d554870aba3ea8eafa17f1a, type: 3}
+  m_Name: TalkData
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.TalkData
+  guidText: 58902f51-776f-450c-bfd7-41cd20a6d86c
+  <Texts>k__BackingField:
+  - Eve la nul bouh
+  <Choices>k__BackingField:
+  - {fileID: 11400000, guid: 10bb78b705ecb3a438b6eaef9881cab7, type: 2}

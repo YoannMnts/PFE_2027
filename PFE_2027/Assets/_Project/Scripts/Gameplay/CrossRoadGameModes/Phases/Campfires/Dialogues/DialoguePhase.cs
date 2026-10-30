@@ -5,6 +5,7 @@ using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
+using PFE.Core.Scripts.Dialogues;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.Players;
@@ -16,18 +17,17 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
     public class DialoguePhase : Phase<bool>
     {
         private readonly CrossRoadGameModeContext gameModeContext;
+        private readonly IAreaData  currentArea;
+        private readonly TalkData talkData;
+        
         private ChannelKey key;
         private IRuntimeArea runtimeArea;
-        private readonly IAreaData  currentArea;
 
-        private const float TIME_IN_DIALOGUE = 5f;
-
-        private bool isDialogueRunning;
-
-        public DialoguePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea)
+        public DialoguePhase(CrossRoadGameModeContext gameModeContext, DialogueAreaData currentArea)
         {
             this.gameModeContext = gameModeContext;
             this.currentArea = currentArea;
+            talkData = currentArea.TalkData;
         }
         
         protected override Awaitable Initialize(CancellationToken token)
@@ -36,10 +36,8 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
             key = ChannelKey.GetUniqueChannelKey();
             foreach (var player in gameModeContext.gameMode.Players)
             {
-                player.ShowUI.AddPriority(key, PriorityTags.Default, false);
+                player.ShowUI.AddPriority(key, PriorityTags.High, true);
             }
-            
-            isDialogueRunning = true;
             
             return base.Initialize(token);
         }
@@ -54,31 +52,25 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
             var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, arenaResult.value);
             await generateNpcPhase.Run();
-
-            var debugDialoguePhase = new DebugWaitingDialoguePhase();
-            await debugDialoguePhase.Run();
             
-            return true;
-            
-            
-            /*
-            TODO UI
-            while (isDialogueRunning)
+            while (true)
             {
-                var talkPhase =  new TalkPhase(gameModeContext);
+                var talkPhase =  new TalkPhase(gameModeContext, talkData.Texts);
                 var talkResult = await talkPhase.Run();
 
-                //---Douane de check si encore CHOICE---
-                if (talkResult == false)
-                {
-                    isDialogueRunning = false;
-                    break;
-                }
+                //---Douane de check si pas atteint la fin---//
+                if (!talkResult.value)
+                    return false;
 
-                var choicePhase = new ChoicePhase(gameModeContext);
+                //---Douane de check si plus de choice---//
+                if (talkData.Choices.Length == 0)
+                    break;
+
+                var choicePhase = new ChoicePhase(gameModeContext, talkData.Choices);
                 await choicePhase.Run();
             }
-            */
+
+            return true;
         }
         
         protected override Awaitable Dispose(CancellationToken token)
@@ -87,8 +79,6 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
             {
                 player.ShowUI.RemovePriority(key);
             }
-            isDialogueRunning = false;
-            
             
             return base.Dispose(token);
         }

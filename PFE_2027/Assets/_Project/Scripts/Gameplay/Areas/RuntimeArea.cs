@@ -11,7 +11,7 @@ namespace PFE.Gameplay.Scripts.RoadSystem
         [SerializeField, ReadOnly, BoxGroup("Spawn Anchors")]
         private SpawnAnchor[] anchors;
 
-        [SerializeField, ReadOnly, BoxGroup("Spawn Anchors")]
+        [SerializeField, BoxGroup("Spawn Anchors")]
         private PlayerSpawn playerSpawn;
         
         public Transform SpawnPosition => playerSpawn != null ? playerSpawn.transform : null;

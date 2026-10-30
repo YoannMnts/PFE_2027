@@ -71,7 +71,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
         {
             phase.context.NpcManager.Clear();
-            
+            pendingNpcs.Clear();
             phase.SetResult(true);
         }
 

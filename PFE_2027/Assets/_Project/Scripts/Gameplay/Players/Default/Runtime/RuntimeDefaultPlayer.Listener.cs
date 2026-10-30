@@ -10,9 +10,14 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public partial class RuntimeDefaultPlayer : IPhaseListener<BattlePhase>, IPhaseListener<ProtectPilgrimPhase>,
-        IPhaseListener<CampfirePhase>, IPhaseListener<DialoguePhase>, IPhaseListener<GenerateNpcPhase>, 
-        IPhaseListener<CleanupPhase>, IPhaseListener<InventoryPhase>
+    public partial class RuntimeDefaultPlayer : 
+        IPhaseListener<BattlePhase>, 
+        IPhaseListener<ProtectPilgrimPhase>,
+        IPhaseListener<CampfirePhase>, 
+        IPhaseListener<DialoguePhase>, 
+        IPhaseListener<GenerateNpcPhase>, 
+        IPhaseListener<CleanupPhase>, 
+        IPhaseListener<InventoryPhase>
     {
         private void OnEnable()
         {
@@ -69,7 +74,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         void IPhaseListener<DialoguePhase>.OnPhaseBegin(DialoguePhase phase)
         {
-            
         }
 
         void IPhaseListener<DialoguePhase>.OnPhaseEnd(DialoguePhase phase)
@@ -80,12 +84,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
         {
             var playerSpawn = phase.area.SpawnPosition;
-            if (!playerSpawn)
-            {
-                Debug.LogError($"[RuntimeArea] No PlayerSpawn found");
-                return;
-            }
-            rigidBody.position = playerSpawn.transform.position;
+            
+            rigidBody.position = playerSpawn == null ? Vector3.zero : playerSpawn.position;
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
 

@@ -106,6 +106,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
                 return;
             }
             
+            //TODO mettre une methode dans l'instance pour lancer le dialogue 
             var dialoguePhase = new DialoguePhase(gameModeContext, campPhase.dialogueArea);
             //dialoguePhase.Run();
             //lancer et attendre la dialogue phase

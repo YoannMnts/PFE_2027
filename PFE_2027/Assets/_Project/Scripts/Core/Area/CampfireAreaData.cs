@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace PFE.Core.Scripts.Area
 {
@@ -7,6 +8,6 @@ namespace PFE.Core.Scripts.Area
     public class CampfireAreaData : AreaData
     {
         [field: SerializeField, BoxGroup("References", true, false, 2f)]
-        public DialogueAreaData DialogueAreaPrefab { get; private set; }
+        public DialogueAreaData DialogueAreaData { get; private set; }
     }
 }
