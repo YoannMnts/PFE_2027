@@ -56,6 +56,7 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         private void ShowText()
         {
+            textField.text = string.Empty;
             foreach (var text in currentPhase.texts)
             {
                 textField.text += text;

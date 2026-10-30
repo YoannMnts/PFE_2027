@@ -84,12 +84,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
         {
             var playerSpawn = phase.area.SpawnPosition;
-            if (!playerSpawn)
-            {
-                Debug.LogError($"[RuntimeArea] No PlayerSpawn found");
-                return;
-            }
-            rigidBody.position = playerSpawn.transform.position;
+            
+            rigidBody.position = playerSpawn == null ? Vector3.zero : playerSpawn.position;
             rigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
 

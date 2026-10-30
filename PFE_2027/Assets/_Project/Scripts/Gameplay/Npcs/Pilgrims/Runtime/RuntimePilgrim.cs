@@ -101,7 +101,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         private void CampInteraction()
         {
-            Debug.Log("AAAAAAAAAA");
             if (campPhase.dialogueArea == null)
             {
                 return;
