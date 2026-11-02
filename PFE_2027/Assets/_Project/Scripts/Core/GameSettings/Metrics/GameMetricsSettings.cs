@@ -27,7 +27,7 @@ namespace PFE.Core.Scripts.GameSettings
         public float LeashPullBackSpeed { get; private set; } = 4f;
         
         [field: SerializeField, BoxGroup("Areas In Order")]
-        public IAreaData[] AreaDatas { get; private set; }
+        public AreaData[] AreaDatas { get; private set; } = Array.Empty<AreaData>();
         
     }
 }

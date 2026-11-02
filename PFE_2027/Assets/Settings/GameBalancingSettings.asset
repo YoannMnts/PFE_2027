@@ -16,3 +16,7 @@ MonoBehaviour:
   <PilgrimData>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
   <LeashRadius>k__BackingField: 100
   <LeashPullBackSpeed>k__BackingField: 4
+  <AreaDatas>k__BackingField:
+  - {fileID: 11400000, guid: f639a9c2ea4a63d488f3ae4196388372, type: 2}
+  - {fileID: 11400000, guid: c3a9db70c8049e344ae6ef4e2f8ba62e, type: 2}
+  - {fileID: 11400000, guid: c393bff6e16b39e4c88fe4c2f30934b2, type: 2}

@@ -45,8 +45,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
                 for (var i = 0; i < GameMetricsSettings.Current.AreaDatas.Length; i++)
                 {
-                    Debug.Log($"{i}");
-                    var startIndex = -1;
+                   var startIndex = -1;
                     var areaData = GameMetricsSettings.Current.AreaDatas[i];
                     if (areaData == currentAreaData || startIndex >= i)
                     {
@@ -59,7 +58,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                             
                         }
 
-                        var battlePhase = new BattlePhase(context, areaData as AreaData);
+                        var battlePhase = new BattlePhase(context, areaData);
                         await battlePhase.Run();
                     }
                 }
