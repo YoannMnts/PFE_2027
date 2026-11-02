@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
+using Helteix.Tools.Settings;
+using NUnit.Framework;
 using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
@@ -24,17 +27,13 @@ namespace PFE.Debugging._Project.Scripts.Debugging
     {
         private class DebugGameMode : CrossRoadGameMode
         {
-            private readonly IAreaData battleData;
-            private readonly CampfireAreaData campfireData;
+            private readonly IAreaData currentAreaData;
+            private readonly Phase currentPhase;
 
-            private bool isBattlePhase;
-
-            public DebugGameMode(IAreaData battleData, CampfireAreaData campfireData, bool isBattlePhase) : 
+            public DebugGameMode(IAreaData currentAreaData) : 
                 base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
-                this.battleData = battleData;
-                this.campfireData = campfireData;
-                this.isBattlePhase = isBattlePhase;
+                this.currentAreaData = currentAreaData;
             }
             
             protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -42,33 +41,40 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                 var context = new CrossRoadGameModeContext(this);
                 await GameController.GameSceneController.HideLoadingScreen();
 
+                var areaArray = new List<IAreaData>();
 
-                while (true)
+                for (var i = 0; i < GameMetricsSettings.Current.AreaDatas.Length; i++)
                 {
-                    if (!isBattlePhase)
+                    Debug.Log($"{i}");
+                    var startIndex = -1;
+                    var areaData = GameMetricsSettings.Current.AreaDatas[i];
+                    if (areaData == currentAreaData || startIndex >= i)
                     {
-                        var campfirePhase = new CampfirePhase(context, campfireData);
-                        await campfirePhase.Run();
-                        isBattlePhase = true;
+                        startIndex = i;
+
+                        if (currentAreaData is CampfireAreaData)
+                        {
+                            var campfirePhase = new CampfirePhase(context, areaData as CampfireAreaData);
+                            await campfirePhase.Run();
+                            
+                        }
+
+                        var battlePhase = new BattlePhase(context, areaData as AreaData);
+                        await battlePhase.Run();
                     }
-                    var battlePhase = new BattlePhase(context, battleData);
-                    await battlePhase.Run();
-                    isBattlePhase = false;
                 }
+                //todo  A CHANGER 
+                return true;
             }
         }
         
-        
+        //-----------------------------------------------------------
         
         [SerializeField, BoxGroup("Parameters")]
         private bool launchOnStart = true;
-        [SerializeField, BoxGroup("Parameters")] 
-        private bool isBattlePhase;
         
-        [SerializeField, BoxGroup("Area")]
-        private AreaData battleAreaData;
-        [SerializeField, BoxGroup("Area")]
-        private CampfireAreaData campfireAreaData;
+        [field : SerializeField, BoxGroup("Area")]
+        private AreaData currentArea;
         
         private void Start()
         {
@@ -82,7 +88,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             if (gameModeController.Current != null) 
                 return;
             
-            DebugGameMode gameMode = new DebugGameMode(battleAreaData, campfireAreaData, isBattlePhase);
+            DebugGameMode gameMode = new DebugGameMode(currentArea);
             
             gameModeController.StartGameMode(gameMode);
             gameMode.RunAndForget();

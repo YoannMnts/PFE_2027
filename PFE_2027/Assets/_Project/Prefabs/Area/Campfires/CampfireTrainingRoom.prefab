@@ -104,6 +104,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96655a65721494eaccd52893afa95c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PFE.Gameplay::PFE.Gameplay.Scripts.Interactions.Chests.RuntimeInventory
+  <OnPhaseBeginUnityEvent>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnPhaseEndUnityEvent>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3901988626383484914
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +392,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.46
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
       propertyPath: m_LocalPosition.y
@@ -394,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.72
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3736718330161330167, guid: 3f72b837cccd3364daceb6b61e290406, type: 3}
       propertyPath: m_LocalRotation.w
