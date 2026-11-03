@@ -27,11 +27,11 @@ namespace PFE.Debugging._Project.Scripts.Debugging
     {
         private class DebugGameMode : CrossRoadGameMode
         {
-            private readonly IAreaData currentAreaData;
-            private readonly Phase currentPhase;
+            private readonly AreaData currentAreaData;
+            
+            private int startLaunchIndex = int.MaxValue;
 
-            public DebugGameMode(IAreaData currentAreaData) : 
-                base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            public DebugGameMode(AreaData currentAreaData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
             {
                 this.currentAreaData = currentAreaData;
             }
@@ -41,28 +41,32 @@ namespace PFE.Debugging._Project.Scripts.Debugging
                 var context = new CrossRoadGameModeContext(this);
                 await GameController.GameSceneController.HideLoadingScreen();
 
-                var areaArray = new List<IAreaData>();
-
                 for (var i = 0; i < GameMetricsSettings.Current.AreaDatas.Length; i++)
-                {
-                   var startIndex = -1;
-                    var areaData = GameMetricsSettings.Current.AreaDatas[i];
-                    if (areaData == currentAreaData || startIndex >= i)
+                { 
+                    AreaData areaData = GameMetricsSettings.Current.AreaDatas[i];
+                    
+                    if (areaData == currentAreaData)
                     {
-                        startIndex = i;
+                        startLaunchIndex = i;
+                    }
 
-                        if (currentAreaData is CampfireAreaData)
+                    if (i >= startLaunchIndex)
+                    {
+                        switch (areaData)
                         {
-                            var campfirePhase = new CampfirePhase(context, areaData as CampfireAreaData);
-                            await campfirePhase.Run();
+                            case CampfireAreaData campfireAreaData:
+                                var campfirePhase = new CampfirePhase(context, campfireAreaData);
+                                await campfirePhase.Run();
+                                break;
                             
+                            case RoadAreaData roadAreaData:
+                                var battlePhase = new BattlePhase(context, roadAreaData);
+                                await battlePhase.Run();                                
+                                break;
                         }
-
-                        var battlePhase = new BattlePhase(context, areaData);
-                        await battlePhase.Run();
                     }
                 }
-                //todo  A CHANGER 
+
                 return true;
             }
         }
