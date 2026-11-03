@@ -21,6 +21,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         private IEnumerable<IPlayer> players;
         public event Action<Vector3> OnPositionChanged;
+        public event Action OnPilgrimFinalPosition;
         
 
         public PilgrimInstance(PilgrimData data, SplineContainer path, IEnumerable<IPlayer> players) : base(data)
@@ -37,6 +38,11 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             SetGoal(TargetDestination);
             
             OnPositionChanged?.Invoke(CurrentPosition);
+
+            if (Progression >= 1)
+            {
+                OnPilgrimFinalPosition?.Invoke();
+            }
         }
 
         private float3 GetPositionFromSpline(Vector3 newPosition, float distance)
@@ -49,7 +55,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             
             spline.GetPointAtLinearDistance(nearestPoint, distance, out float localTargetPosition);
             
-            return path.EvaluatePosition(spline, localTargetPosition);;
+            return path.EvaluatePosition(spline, localTargetPosition);
         }
         
     }

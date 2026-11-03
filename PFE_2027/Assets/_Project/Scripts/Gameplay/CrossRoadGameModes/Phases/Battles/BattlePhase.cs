@@ -23,9 +23,9 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         
         public IEnumerable<IPlayer> Players => gameModeContext.gameMode.Players;
         
-        private readonly IAreaData currentArea;
+        private readonly RoadAreaData currentArea;
 
-        public BattlePhase(CrossRoadGameModeContext gameModeContext, IAreaData currentArea) : this(gameModeContext)
+        public BattlePhase(CrossRoadGameModeContext gameModeContext, RoadAreaData currentArea) : this(gameModeContext)
         {
             this.currentArea = currentArea;
         }

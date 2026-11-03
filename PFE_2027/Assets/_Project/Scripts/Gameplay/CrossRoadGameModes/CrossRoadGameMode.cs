@@ -3,6 +3,7 @@ using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
+using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
@@ -22,7 +23,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         public IEnumerable<IPlayer> Players => players.Values;
         public int PlayerCount => players.Count;
         private Dictionary<int, IPlayer> players;
-        
+
+        private AreaData[] currentAreaDatas;
         public bool isGameFinished {get; private set;}
         
         public NpcManager NpcManager { get; private set; }
@@ -34,33 +36,31 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         
         protected override async Awaitable Initialize(CancellationToken token)
         {
-            sceneToLoad ??= GameSceneSettings.Current.Game;
+            if (sceneToLoad is null)
+            {
+                sceneToLoad = GameSceneSettings.Current.Game;
+            }
+
+            var areaDatas = GameMetricsSettings.Current.AreaDatas;
+            currentAreaDatas = areaDatas;
+            
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
 
             players = DictionaryPool<int, IPlayer>.Get();
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
-            //creation du manager npc unique au jeu 
             NpcManager = new NpcManager();
             isGameFinished =  false;
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
-            // créer un context propre au gamemode
-            // ici le NpcManager rempli est mit dans le context 
             CrossRoadGameModeContext context = new CrossRoadGameModeContext(this);
-            
-            //fading screen
             await GameController.GameSceneController.HideLoadingScreen();
 
             while (!isGameFinished)
             {
-                var battlePhase = new BattlePhase(context);
-                await battlePhase.Run();
-
-                var campfirePhase = new CampfirePhase(context);
-                await campfirePhase.Run();
+                
             }
             
             return isGameFinished;

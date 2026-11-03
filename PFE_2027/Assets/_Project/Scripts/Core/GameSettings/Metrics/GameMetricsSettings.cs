@@ -1,5 +1,6 @@
 using System;
 using Helteix.Tools.Settings;
+using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Core.Scripts.Players;
 using Sirenix.OdinInspector;
@@ -24,5 +25,9 @@ namespace PFE.Core.Scripts.GameSettings
         // Speed at which the player is pulled back when the pilgrim got too far away
         [field: SerializeField, Min(0f), BoxGroup("Pilgrim")]
         public float LeashPullBackSpeed { get; private set; } = 4f;
+        
+        [field: SerializeField, BoxGroup("Areas In Order")]
+        public AreaData[] AreaDatas { get; private set; } = Array.Empty<AreaData>();
+        
     }
 }

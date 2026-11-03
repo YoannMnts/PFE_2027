@@ -37,6 +37,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         private CrossRoadGameModeContext gameModeContext;
         
         private CampPhase campPhase;
+        private ProtectPilgrimPhase protectPhase;
         private DebugWaitingDialoguePhase debugWaitingDialogue;
 
 
@@ -46,7 +47,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         protected override void OnSetup(CrossRoadGameModeContext context)
         {
             base.OnSetup(context);
-            this.gameModeContext = context;
+            gameModeContext = context;
             
             if (!isCameraOnPilgrim)
                 targetCamera.Priority.Value = -1;
@@ -78,25 +79,38 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         }
         
         //--------------------------------------------------
-
         
         private void FixedUpdate()
         {
             if (Instance != null)
+            {
                 Instance.UpdatePosition(transform.position);
+                Debug.Log($"[Runtime Pilgrim] {this} is moving");
+            }
+            
+
         }
         
+        //--------------------------------------------------
         
         public void LaunchInteract()
         {
             interaction?.Invoke();
         }
         
+        //----------------------- BATTLE ---------------------------
         
         private void BattleInteraction()
         {
             //TODO grappin
             Debug.Log($"{this} is interacting on battle");
+        }
+        
+        //----------------------- CAMPFIRE ---------------------------
+        
+        private void LaunchCampfirePhase()
+        {
+            protectPhase.SetResult(true);
         }
         
         private void CampInteraction()
@@ -113,6 +127,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             campPhase.SetResult(dialoguePhase);
         }
         
+        //----------------------- DIALOGUE ---------------------------
+        
         //debug a retirer
         private void DialogueInteraction()
         {
@@ -120,16 +136,22 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             debugWaitingDialogue.SetResult(true);
         }
         
+        
         //--------------------------------------------------
 
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
             interaction = BattleInteraction;
+            protectPhase =  phase;
+            
+            phase.pilgrimInstance.OnPilgrimFinalPosition += LaunchCampfirePhase;
         }
-        
+
+
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
         {
+            phase.pilgrimInstance.OnPilgrimFinalPosition -= LaunchCampfirePhase;
         }
 
         public void OnPhaseBegin(CampPhase phase)
