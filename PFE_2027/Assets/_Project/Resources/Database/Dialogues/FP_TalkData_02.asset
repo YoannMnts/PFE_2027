@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0effdb61d554870aba3ea8eafa17f1a, type: 3}
-  m_Name: TalkData
+  m_Name: FP_TalkData_02
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.TalkData
-  guidText: 58902f51-776f-450c-bfd7-41cd20a6d86c
+  guidText: 0e43f1d3-7800-4447-8c31-eaed4f9c8481
   <Texts>k__BackingField:
-  - Eve la nul bouh
-  <Choices>k__BackingField:
-  - {fileID: 11400000, guid: 10bb78b705ecb3a438b6eaef9881cab7, type: 2}
+  - "Fe-Ynn : Enfin bon, l\u2019Arbre savoir est \xE0 environ 2 semaines d\u2019ici, ce ne sera pas un p\xE9riple facile, je te pr\xE9viens."
+  - "Heppa : Eh oh, je le prendrais presque mal ! Je suis pr\xEAte, croyez moi. Je suis une Protectrice apr\xE8s tout, \xE7a ne me fait pas peur."
+  <Choices>k__BackingField: []

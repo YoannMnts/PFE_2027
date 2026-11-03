@@ -23,7 +23,7 @@ MonoBehaviour:
     <Offset>k__BackingField: {x: 0.012635488, y: -0.28892335, z: 0.012038129}
     <Size>k__BackingField: {x: 0.21790457, y: 1.507931, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
-    <Damage>k__BackingField: 0
+    <Damage>k__BackingField: 10
     <Strength>k__BackingField: 1.75
   - <Window>k__BackingField:
       <Start>k__BackingField: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
     <Offset>k__BackingField: {x: 0.012635488, y: -0.10394949, z: 0.012038123}
     <Size>k__BackingField: {x: 0.21790457, y: 1.8778783, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
-    <Damage>k__BackingField: 0
+    <Damage>k__BackingField: 10
     <Strength>k__BackingField: 1.75
   windows:
   - <Flag>k__BackingField:

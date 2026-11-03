@@ -33,7 +33,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             
             private int startLaunchIndex = int.MaxValue;
 
-            public DebugGameMode(AreaData currentAreaData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path))
+            public DebugGameMode(AreaData currentAreaData) : base(SceneReference.FromScenePath(SceneManager.GetActiveScene().path), currentAreaData)
             {
                 this.currentAreaData = currentAreaData;
             }
