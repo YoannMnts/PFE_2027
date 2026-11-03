@@ -20,8 +20,8 @@ namespace PFE.Core.Scripts.ECS
         {
             var next = index++;
             
-            if(idMapping.Length <= next)
-                Array.Resize(ref idMapping, Mathf.ClosestPowerOfTwo(next));
+            if (next >= MAX_COMPONENTS)
+                throw new InvalidOperationException($"Too many component types (max {MAX_COMPONENTS}): {typeof(T).Name}");
             
             idMapping[next] = typeof(T);
             return next;
