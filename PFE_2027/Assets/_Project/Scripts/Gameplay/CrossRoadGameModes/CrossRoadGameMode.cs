@@ -23,10 +23,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         public IEnumerable<IPlayer> Players => players.Values;
         public int PlayerCount => players.Count;
         private Dictionary<int, IPlayer> players;
-
-        private AreaData[] currentAreaDatas;
-        public bool isGameFinished {get; private set;}
-        
         public NpcManager NpcManager { get; private set; }
         
         public CrossRoadGameMode(SceneReference sceneToLoad)
@@ -40,9 +36,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             {
                 sceneToLoad = GameSceneSettings.Current.Game;
             }
-
-            var areaDatas = GameMetricsSettings.Current.AreaDatas;
-            currentAreaDatas = areaDatas;
             
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
 
@@ -50,7 +43,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
             NpcManager = new NpcManager();
-            isGameFinished =  false;
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
@@ -58,12 +50,11 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             CrossRoadGameModeContext context = new CrossRoadGameModeContext(this);
             await GameController.GameSceneController.HideLoadingScreen();
 
-            while (!isGameFinished)
-            {
-                
-            }
             
-            return isGameFinished;
+            
+            
+            
+            return true;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

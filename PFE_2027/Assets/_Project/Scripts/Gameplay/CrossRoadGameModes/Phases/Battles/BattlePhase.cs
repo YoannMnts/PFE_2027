@@ -11,6 +11,7 @@ using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Players;
+using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 using EnemyData = PFE.Core.Scripts.Enemy.EnemyData;
 
@@ -25,20 +26,21 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
         
         private readonly RoadAreaData currentArea;
 
+        
         public BattlePhase(CrossRoadGameModeContext gameModeContext, RoadAreaData currentArea) : this(gameModeContext)
         {
             this.currentArea = currentArea;
         }
-        
-        public BattlePhase(CrossRoadGameModeContext gameModeContext)
+
+        private BattlePhase(CrossRoadGameModeContext gameModeContext)
         {
             this.gameModeContext = gameModeContext;
         }
-
+        
+        //-----------------------------------------------------
+        
         protected override Awaitable Initialize(CancellationToken token)
         {
-            Debug.Log($"[Battle Phase]{gameModeContext.NpcManager.Count}");
-            
             key = ChannelKey.GetUniqueChannelKey();
             
             foreach (var player in Players)
@@ -83,9 +85,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
             }
             
             
-            
-            
             return base.Dispose(token);
         }
+
     }
 }

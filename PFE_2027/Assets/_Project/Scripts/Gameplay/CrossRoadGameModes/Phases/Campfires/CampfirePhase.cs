@@ -29,15 +29,15 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             this.currentArea = currentArea;
         }
 
-        public CampfirePhase(CrossRoadGameModeContext gameModeContext)
+        private CampfirePhase(CrossRoadGameModeContext gameModeContext)
         {
             this.gameModeContext = gameModeContext;
         }
-
+        
+        //-----------------------------------------
 
         protected override Awaitable Initialize(CancellationToken token)
         {
-            Debug.Log($"[Campfire Phase]{gameModeContext.NpcManager.Count}");
             playerKey = ChannelKey.GetUniqueChannelKey();
             foreach (var player in Players)
             {
@@ -53,7 +53,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             await cleanupPhase.Run();
             
             //generate campfire zone
-            var generateCampfireAreaPhase = new GenerateAreaPhase(gameModeContext,  currentArea);
+            var generateCampfireAreaPhase = new GenerateAreaPhase(gameModeContext, currentArea);
             var campfireResult = await generateCampfireAreaPhase.Run();
             
             //generate pilgrim
@@ -97,5 +97,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             }
             return base.Dispose(token);
         }
+
     }
 }

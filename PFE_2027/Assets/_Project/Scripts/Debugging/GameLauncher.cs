@@ -7,6 +7,7 @@ using NUnit.Framework;
 using PFE.Core;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
+using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
@@ -15,6 +16,7 @@ using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
+using PFE.Gameplay.Scripts.RoadSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -27,7 +29,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
     {
         private class DebugGameMode : CrossRoadGameMode
         {
-            private readonly AreaData currentAreaData;
+            private AreaData currentAreaData;
             
             private int startLaunchIndex = int.MaxValue;
 
@@ -40,7 +42,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             {
                 var context = new CrossRoadGameModeContext(this);
                 await GameController.GameSceneController.HideLoadingScreen();
-
+    
                 for (var i = 0; i < GameMetricsSettings.Current.AreaDatas.Length; i++)
                 { 
                     AreaData areaData = GameMetricsSettings.Current.AreaDatas[i];
@@ -52,17 +54,11 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
                     if (i >= startLaunchIndex)
                     {
-                        switch (areaData)
+                        currentAreaData = areaData;
+                        
+                        if (currentAreaData.TryGet(out IAreaContainer container))
                         {
-                            case CampfireAreaData campfireAreaData:
-                                var campfirePhase = new CampfirePhase(context, campfireAreaData);
-                                await campfirePhase.Run();
-                                break;
-                            
-                            case RoadAreaData roadAreaData:
-                                var battlePhase = new BattlePhase(context, roadAreaData);
-                                await battlePhase.Run();                                
-                                break;
+                            await container.LaunchPhase(currentAreaData, context);
                         }
                     }
                 }
