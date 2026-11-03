@@ -17,11 +17,11 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
     public class DialoguePhase : Phase<bool>
     {
         private readonly CrossRoadGameModeContext gameModeContext;
-        private readonly IAreaData  currentArea;
+        private IRuntimeArea runtimeArea;
+        private readonly AreaData currentArea;
         private readonly TalkData talkData;
         
         private ChannelKey key;
-        private IRuntimeArea runtimeArea;
 
         public DialoguePhase(CrossRoadGameModeContext gameModeContext, DialogueAreaData currentArea)
         {

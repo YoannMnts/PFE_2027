@@ -85,7 +85,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             if (Instance != null)
             {
                 Instance.UpdatePosition(transform.position);
-                Debug.Log($"[Runtime Pilgrim] {this} is moving");
             }
             
 

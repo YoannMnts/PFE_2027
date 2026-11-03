@@ -4,6 +4,7 @@ using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
+using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
@@ -12,6 +13,7 @@ using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 using PFE.Gameplay.Scripts.Players.Default;
+using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -20,18 +22,18 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
     public class CrossRoadGameMode :  GameMode<bool>
     {
         private SceneReference sceneToLoad;
+        private AreaData currentAreaData;
+        private int startLaunchIndex = int.MaxValue;
         public IEnumerable<IPlayer> Players => players.Values;
         public int PlayerCount => players.Count;
         private Dictionary<int, IPlayer> players;
-
-        private AreaData[] currentAreaDatas;
-        public bool isGameFinished {get; private set;}
-        
         public NpcManager NpcManager { get; private set; }
         
-        public CrossRoadGameMode(SceneReference sceneToLoad)
+        
+        public CrossRoadGameMode(SceneReference sceneToLoad, AreaData currentAreaData)
         {
             this.sceneToLoad = sceneToLoad;
+            this.currentAreaData = currentAreaData;
         }
         
         protected override async Awaitable Initialize(CancellationToken token)
@@ -40,30 +42,42 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             {
                 sceneToLoad = GameSceneSettings.Current.Game;
             }
-
-            var areaDatas = GameMetricsSettings.Current.AreaDatas;
-            currentAreaDatas = areaDatas;
-            
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
 
             players = DictionaryPool<int, IPlayer>.Get();
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
             NpcManager = new NpcManager();
-            isGameFinished =  false;
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
+            /*
             CrossRoadGameModeContext context = new CrossRoadGameModeContext(this);
             await GameController.GameSceneController.HideLoadingScreen();
+    
+            for (var i = 0; i < GameMetricsSettings.Current.AreaDatas.Length; i++)
+            { 
+                AreaData areaData = GameMetricsSettings.Current.AreaDatas[i];
+                    
+                if (areaData == currentAreaData)
+                {
+                    startLaunchIndex = i;
+                }
 
-            while (!isGameFinished)
-            {
-                
+                if (i >= startLaunchIndex)
+                {
+                    currentAreaData = areaData;
+                        
+                    if (currentAreaData.TryGet(out IAreaContainer container))
+                    {
+                        await container.LaunchPhase(currentAreaData, context);
+                    }
+                }
             }
-            
-            return isGameFinished;
+            //TODO fin du jeu => renvoie écran de fin => renvoie écran de start
+            */
+            return true;
         }
 
         protected override Awaitable Dispose(CancellationToken token)

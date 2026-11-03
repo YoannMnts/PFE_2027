@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using Eflatun.SceneReference;
+using PFE.Core.Scripts.Area;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Players;
 
@@ -10,7 +13,6 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         //Npc manager rempli du lancement du gamemode 
         public NpcManager NpcManager => gameMode.NpcManager;
         public readonly CrossRoadGameMode gameMode;
-
         
         public CrossRoadGameModeContext(CrossRoadGameMode gameMode)
         {
