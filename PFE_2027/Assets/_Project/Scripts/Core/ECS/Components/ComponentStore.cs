@@ -6,13 +6,16 @@ namespace PFE.Core.Scripts.ECS
         where TComponent : struct, IEntityComponent
     {
         public const int NONE = -1;
+
+        public ReadOnlySpan<TComponent> AllComponents => dense.AsSpan(0, Count);
+        public ReadOnlySpan<int> AllEntities => denseToEntity.AsSpan(0, Count);
         
         public int Count { get; private set; }
         
-        private readonly int[] denseToEntity; // dense[i] appartient à quelle entité ?
-        private readonly int[] sparse; // entityId → index dans dense (-1 = absent)
+        private readonly int[] denseToEntity; // Rangement => Entity
+        private readonly int[] sparse; // Entity => Rangement
 
-        private TComponent[] dense; // les composants, contigus en mémoire
+        private TComponent[] dense; // Rangement des composants, contigu en memoire
         
         public ComponentStore(int maxEntities)
         {
@@ -32,20 +35,22 @@ namespace PFE.Core.Scripts.ECS
 
         public bool TryRemove(int entityId)
         {
-            int index = sparse[entityId];
-            if(index == NONE)
+            if(!Has(entityId))
                 return false;
             
-            int lastIndex = Count - 1;
-            int lastEntityId = denseToEntity[lastIndex];
+            int index = sparse[entityId];
+            
+            int furthestIndex = Count - 1;
+            int furthestEntityId = denseToEntity[furthestIndex];
             
             //Écrase le trou avec le dernier élément
-            dense[index] = dense[lastIndex];
-            denseToEntity[index] = lastEntityId;
-            sparse[lastEntityId] = index;
+            dense[index] = dense[furthestIndex];
+            denseToEntity[index] = furthestEntityId;
+            sparse[furthestEntityId] = index;
 
             //Nettoie la dernière case
             sparse[entityId] = NONE;
+            dense[furthestIndex] = default;
             Count--;
             
             return true;
@@ -69,17 +74,21 @@ namespace PFE.Core.Scripts.ECS
             return ref dense[sparse[entityId]];
         }
         
-        public void Set(int entityId, TComponent component)
+        public bool Set(int entityId, in TComponent component)
         {
+            var isEmpty = true;
             var index = sparse[entityId];
+            
             if (index == NONE)
             {
                 index = Count++;
                 sparse[entityId] = index;
                 denseToEntity[index] = entityId;
+                isEmpty = false;
             }
             
             dense[index] = component;
+            return isEmpty;
         }
     }
 
