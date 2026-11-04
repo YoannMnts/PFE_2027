@@ -18,30 +18,33 @@ MonoBehaviour:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
     <Progression>k__BackingField: 0
-  - <AnchorId>k__BackingField: Anchor_2
+  - <AnchorId>k__BackingField: Anchor_1
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.211
+    <Progression>k__BackingField: 0.08529905
   - <AnchorId>k__BackingField: Anchor_7
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.21099192
+    <Progression>k__BackingField: 0.1897372
   - <AnchorId>k__BackingField: Anchor_3
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.31823683
+    <Progression>k__BackingField: 0.2822992
   - <AnchorId>k__BackingField: Anchor_4
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.31393653
+    <Progression>k__BackingField: 0.27490988
   - <AnchorId>k__BackingField: Anchor_5
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.41630605
+    <Progression>k__BackingField: 0.39039296
   - <AnchorId>k__BackingField: Anchor_8
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.42165855
+    <Progression>k__BackingField: 0.3964624
   - <AnchorId>k__BackingField: Anchor_10
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.55275106
+    <Progression>k__BackingField: 0.53446525
   - <AnchorId>k__BackingField: Anchor_6
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.55243415
+    <Progression>k__BackingField: 0.5311062
   - <AnchorId>k__BackingField: Anchor_9
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
-    <Progression>k__BackingField: 0.55243504
+    <Progression>k__BackingField: 0.5374599
+  - <AnchorId>k__BackingField: Anchor_11
+    <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
+    <Progression>k__BackingField: 0.84011704
