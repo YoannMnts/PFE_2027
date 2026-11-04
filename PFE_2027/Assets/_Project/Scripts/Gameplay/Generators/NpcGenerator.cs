@@ -187,7 +187,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             if (!npcContainer.TrySetupRuntime(npcData, gameModeContext, npcInstance, runtimeNpc))
             {
                 Debug.LogError($"[NpcGenerator] '{runtimeNpc.name}' has no runtime matching the instance of '{npcData.GetType().Name}'.", this);
-                context.npcManager.Remove(npcInstance);
+                context.npcManager.TryRemove(npcInstance);
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }
