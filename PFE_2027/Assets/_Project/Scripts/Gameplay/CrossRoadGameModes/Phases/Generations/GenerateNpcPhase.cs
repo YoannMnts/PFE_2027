@@ -28,17 +28,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases
 
         protected override Awaitable Initialize(CancellationToken token)
         {
-            foreach (SpawnPoint spawnPoints in currentArea.SpawnPoints)
-            {
-                var currentNpcData = spawnPoints.Npc;
-                
-                var context = new NpcInstanceContext(area.Path, gameModeContext.NpcManager, gameModeContext.gameMode);
-                
-                if (!gameModeContext.NpcManager.TryGetInstance(currentNpcData, out _))
-                {
-                    gameModeContext.NpcManager.Add(currentNpcData, context);
-                }
-            }
+            
             return base.Initialize(token);
         }
     }

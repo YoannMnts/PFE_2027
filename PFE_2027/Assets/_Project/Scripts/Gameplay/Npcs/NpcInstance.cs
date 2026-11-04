@@ -11,7 +11,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         where TData : NpcData
     {
         public event Action<float> OnModifyHealth;
-        public event Action<INpcData> OnDeath;
+        public event Action<INpcInstance> OnDeath;
         
         public event Action<bool> OnModifyInteractable;
 
@@ -58,7 +58,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public void Dying()
         {
             container.Dying(data);
-            OnDeath?.Invoke(data);
+            OnDeath?.Invoke(this);
         }
 
         

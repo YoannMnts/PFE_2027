@@ -24,7 +24,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         IPhaseListener<ProtectPilgrimPhase>
     {
         // NPC already placed on its anchor, kept inactive until the pilgrim reaches its progression
-        private struct PendingNpc
+        private class PendingNpc
         {
             public readonly GameObject runtime;
             public readonly float progression;
@@ -100,10 +100,12 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             for (int i = 0; i < spawnPoints.Count; i++)
             {
                 //si un pilgrimdata est referencé au spawnpoint => on lance la méthode de spawn
-                if (spawnPoints[i].Npc is PilgrimData)
+                var spawnPoint = spawnPoints[i];
+                
+                if (spawnPoint.Npc is PilgrimData)
                 {
-                    var runtimePilgrim = Spawn(spawnPoints[i], runtimeArea, context);
-                    var pendingPilgrim = new  PendingNpc(runtimePilgrim.gameObject, spawnPoints[i].Progression, true);
+                    var runtimePilgrim = Spawn(spawnPoint, runtimeArea, context);
+                    var pendingPilgrim = new  PendingNpc(runtimePilgrim.gameObject, spawnPoint.Progression, true);
                     pendingNpcs.Add(pendingPilgrim);
                 }
             }
@@ -171,21 +173,24 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return null;
             }
 
+            // Every check passed: nothing is created before this point, so a failed check can't leave an orphan instance
+            if (!context.npcManager.TryAdd(npcData, context, out INpcInstance npcInstance))
+                return null;
+
             //création du transform runtime
             Transform runtimeNpc = npcData.Prefab.InstantiatePrefab();
             runtimeNpc.SetPositionAndRotation(anchor.position, anchor.rotation);
             runtimeNpc.SetParent(container);
 
-            //douane
-            if (!context.npcManager.TryGetInstance(npcData, out INpcInstance npcInstance))
+            // The instance just created goes straight to its own runtime: no lookup, so no possible mix-up
+            var gameModeContext = new CrossRoadGameModeContext(context.crossRoadGameMode);
+            if (!npcContainer.TrySetupRuntime(npcData, gameModeContext, npcInstance, runtimeNpc))
             {
-                Debug.LogError($"[NpcGenerator] npcInstance was not found in dictionary");
+                Debug.LogError($"[NpcGenerator] '{runtimeNpc.name}' has no runtime matching the instance of '{npcData.GetType().Name}'.", this);
+                context.npcManager.Remove(npcInstance);
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }
-
-            var gameModeContext = new CrossRoadGameModeContext(context.crossRoadGameMode);
-            npcContainer.TrySetupRuntime(npcData,gameModeContext ,npcInstance, runtimeNpc);
             
             return runtimeNpc;
         }
