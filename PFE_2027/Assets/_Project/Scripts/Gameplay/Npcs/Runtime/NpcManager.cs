@@ -12,7 +12,7 @@ namespace PFE.Gameplay.Scripts.NPCs
     // Registry of the battle's living NPCs, subscribes to their death to stay up to date
     public class NpcManager
     {
-        public readonly struct DataInstanceNpc
+        public readonly struct DataInstanceNpc : IEquatable<DataInstanceNpc>
         {
             public readonly INpcData data;
             public readonly INpcInstance instance;
@@ -21,6 +21,11 @@ namespace PFE.Gameplay.Scripts.NPCs
             {
                 this.data = data;
                 this.instance = instance;
+            }
+
+            public bool Equals(DataInstanceNpc other)
+            {
+                return instance == other.instance;
             }
         }
         
@@ -35,23 +40,33 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         //------------------- Add to List ---------------------
         
-        public void Add(NpcData data, NpcInstanceContext context)
+        // One instance per call, i.e. per spawned NPC: two NPCs sharing the same data get two distinct instances.
+        // The created instance is handed back so the caller plugs it into its own runtime, without any lookup
+        public bool TryAdd(NpcData data, NpcInstanceContext context, out INpcInstance instance)
         {
             //si la data n'a pas de behavior
             if (!data.TryGet(out INpcContainer container))
-                return;
+            {
+                instance = null;
+                return false;
+            }
             
             //création de l'instance
-            INpcInstance newInstance = container.CreateInstance(data, context);
+            instance = container.CreateInstance(data, context);
+            if (instance == null)
+            {
+                Debug.LogError($"[Npc Manager] '{data.GetType().Name}' behaviour created a null instance.");
+                return false;
+            }
 
             //si l'instance meurt on l'a remove auto des npcs
-            newInstance.OnDeath += Remove;
+            instance.OnDeath += OnInstanceDeath;
             
             //ajout dans la struct de stockage => ajout dans la liste
-            var dataInstance = new DataInstanceNpc(data, newInstance);
-            npcList.Add(dataInstance);
+            npcList.Add(new DataInstanceNpc(data, instance));
             
-            OnNpcAdded?.Invoke(newInstance);
+            OnNpcAdded?.Invoke(instance);
+            return true;
         }
         
         
@@ -104,37 +119,61 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         //--------------------- Remove ----------------------
         
-        public void Remove(INpcData data)
+        // Takes the NPC out of the registry without counting it as dead (e.g. its runtime couldn't be set up)
+        public bool TryRemove(INpcInstance instance)
         {
-            //premier parcours pour savoir qui est mort
-            var removeIndex = new List<int>();
-            for (int i = 0; i < npcList.Count; i++)
+            if (!TryGetDataInstance(instance, out var dataInstance))
             {
-                var dataInstance = npcList[i];
-                if (dataInstance.data == data)
-                {
-                    dataInstance.instance.OnDeath -= Remove;
-                    OnNpcDied?.Invoke(dataInstance.instance);
-                    
-                    deadNpcList.Add(dataInstance);
-                    removeIndex.Add(i);
-                    
-                    Debug.LogWarning($"[Npc Manager] data || instance was removed from {npcList}");
-                }
-                Debug.LogWarning($"[Npc Manager] data || instance wasn't removed from {npcList}");
-                return;
+                return false;
             }
 
-            //deuxieme parcour pour retirer les morts de la list
-            foreach (var i in removeIndex)
-                npcList.RemoveAt(i);
+            instance.OnDeath -= OnInstanceDeath;
+            npcList.Remove(dataInstance);
+            return true;
+        }
+
+        // Subscribed to every registered instance: only the instance that died leaves the list
+        private void OnInstanceDeath(INpcInstance instance)
+        {
+            if (!TryGetDataInstance(instance, out var dataInstance) 
+                || !TryRemove(instance))
+            {
+                return;
+            }
+            
+            deadNpcList.Add(dataInstance);
+            OnNpcDied?.Invoke(instance);
+        }
+
+        // Compared by reference: the exact instance, never another one sharing its data
+        private bool TryGetDataInstance(INpcInstance instance, out DataInstanceNpc dataInstanceNpc)
+        {
+            if (instance == null)
+            {
+                dataInstanceNpc = new DataInstanceNpc();
+                return false;   
+            }
+
+            for (int i = 0; i < npcList.Count; i++)
+            {
+                DataInstanceNpc currentDataInstanceNpc = npcList[i];
+
+                if (currentDataInstanceNpc.instance == instance)
+                {
+                    dataInstanceNpc = currentDataInstanceNpc;
+                    return true;
+                }
+            }
+            
+            dataInstanceNpc = new DataInstanceNpc();
+            return false;
         }
         
         public void Clear()
         {
             foreach (var dataInstance in npcList)
             {
-                dataInstance.instance.OnDeath -= Remove;
+                dataInstance.instance.OnDeath -= OnInstanceDeath;
                 OnNpcDied?.Invoke(dataInstance.instance);
                 dataInstance.instance.Dying();
             }

@@ -71,7 +71,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
         }
         
-        protected virtual void OnDeath(INpcData data)
+        protected virtual void OnDeath(INpcInstance instance)
         {
             Tween.StopAll(onTarget: transform);
             Destroy(gameObject);

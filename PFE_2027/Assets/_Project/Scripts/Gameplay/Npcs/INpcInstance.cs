@@ -8,7 +8,8 @@ namespace PFE.Gameplay.Scripts.NPCs
     public interface INpcInstance
     {
         public event Action<float> OnModifyHealth;
-        public event Action<INpcData> OnDeath;
+        // Sends the instance itself: several NPCs can share the same data, only the instance identifies the one that died
+        public event Action<INpcInstance> OnDeath;
 
         public INpcData Data { get; }
         public float CurrentHealth { get; }
