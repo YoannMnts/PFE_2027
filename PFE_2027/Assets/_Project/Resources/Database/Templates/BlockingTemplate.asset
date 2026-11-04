@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: BlockingTemplate
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.RoadAreaData
   guidText: 7672b5ef-3e22-458d-87fa-43b56cf8d5cd
-  <Prefab>k__BackingField: {fileID: 401126396206121567, guid: d916ef38290c5d04287a71e11b6beb59, type: 3}
-  <SpawnPoints>k__BackingField: []
+  <Prefab>k__BackingField: {fileID: 8375614944129119740, guid: 30cc956f13abd4a4c96da88d8359f987, type: 3}
+  <SpawnPoints>k__BackingField:
+  - <AnchorId>k__BackingField: Anchor_0
+    <Npc>k__BackingField: {fileID: 11400000, guid: 5cc99684b0251c549a04fff526da9ed4, type: 2}
+    <Progression>k__BackingField: 0
