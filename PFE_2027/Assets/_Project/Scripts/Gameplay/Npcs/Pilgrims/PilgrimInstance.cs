@@ -13,6 +13,10 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 {
     public class PilgrimInstance : NpcInstance<PilgrimData>
     {
+        private const float THRESHOLD = 0.01f;
+        private const float MAX_PROGRESSION = 1f;
+        
+        
         private readonly SplineContainer path;
         public Vector3 CurrentPosition { get; private set; }
         public Vector3 TargetDestination { get;  private set; }
@@ -38,8 +42,8 @@ namespace PFE.Gameplay.Scripts.Pilgrims
             SetGoal(TargetDestination);
             
             OnPositionChanged?.Invoke(CurrentPosition);
-
-            if (Progression >= 1)
+            
+            if (Progression >= (MAX_PROGRESSION - THRESHOLD))
             {
                 OnPilgrimFinalPosition?.Invoke();
             }

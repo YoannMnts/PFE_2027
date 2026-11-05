@@ -52,6 +52,7 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
             group.Hide();
             skipButton.onClick.RemoveListener(SkipPhase);
             textField.text = string.Empty;
+            currentPhase = null;
         }
         
         private void ShowText()

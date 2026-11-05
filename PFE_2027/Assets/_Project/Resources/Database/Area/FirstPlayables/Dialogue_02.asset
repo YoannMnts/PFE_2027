@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eaca2135a3245f39df4ebf29d798421, type: 3}
-  m_Name: Dialogue
+  m_Name: Dialogue_02
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.DialogueAreaData
-  guidText: 6fff7d6f-1eef-45e8-ac23-d24076919180
-  <AreaPrefab>k__BackingField: {fileID: 8639543318633412035, guid: e6f6bbfeb3f29ac4984c177c4310ce75, type: 3}
+  guidText: 4df02174-8ee3-4279-b1dc-31760a40fb53
+  <AreaPrefab>k__BackingField: {fileID: 3039410223625563842, guid: 0cb8a4d62f1743f4baaa6e7a542bd100, type: 3}
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0
     <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
     <Progression>k__BackingField: 0
-  <TalkData>k__BackingField: {fileID: 11400000, guid: 2b88ab9be13d3df4b9d4a8932fa2772d, type: 2}
+  <TalkData>k__BackingField: {fileID: 11400000, guid: 081c9d7af8c37b14fb774201acbabfed, type: 2}

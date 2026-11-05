@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 717a0e77ce1f44f6b3ebe331cb6117f3, type: 3}
-  m_Name: FP_Choice_01
+  m_Name: FP_ChoiceData_Camp02_01
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.ChoiceData
-  guidText: 652a2b57-06f8-4396-8d90-537448fb4956
-  <Text>k__BackingField: "Je suis pr\xEAt \xE0 quitter ce village !"
-  <NextTalk>k__BackingField: {fileID: 11400000, guid: 0f25b9ebef4101046b65c0c43b451722, type: 2}
+  guidText: 60066cde-40e2-49b9-89b2-eb9d20b2d563
+  <Text>k__BackingField: "Je suis plutot un l\xE8ve tard..."
+  <NextTalk>k__BackingField: {fileID: 11400000, guid: 4452ece53354f114c89831b815b277a1, type: 2}

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 717a0e77ce1f44f6b3ebe331cb6117f3, type: 3}
-  m_Name: FP_Choice_02
+  m_Name: FP_ChoiceData_Camp01_03
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.ChoiceData
-  guidText: cd168dbd-eff2-43d0-80c3-525ce608ccd6
-  <Text>k__BackingField: "Bien content de partir d'ici ! A moi la libert\xE9 ! "
+  guidText: d99de6ac-9c01-4b34-8d48-4425158e7634
+  <Text>k__BackingField: Ce village va me manquer un peu... Mamie aussi d'ailleurs...
   <NextTalk>k__BackingField: {fileID: 11400000, guid: 0f25b9ebef4101046b65c0c43b451722, type: 2}

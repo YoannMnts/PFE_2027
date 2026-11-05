@@ -32,7 +32,6 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
         protected override Awaitable Initialize(CancellationToken token)
         {
-            Debug.Log($"[Dialogue Phase] {gameModeContext.NpcManager.Count}");
             key = ChannelKey.GetUniqueChannelKey();
             foreach (var player in gameModeContext.gameMode.Players)
             {
@@ -52,22 +51,25 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         
             var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, arenaResult.value);
             await generateNpcPhase.Run();
+
+            var currentTalkData = talkData;
             
             while (true)
             {
-                var talkPhase =  new TalkPhase(gameModeContext, talkData.Texts);
-                var talkResult = await talkPhase.Run();
+                var talkPhase =  new TalkPhase(gameModeContext, currentTalkData.Texts);
+                PhaseResult<bool> talkResult = await talkPhase.Run();
 
                 //---Douane de check si pas atteint la fin---//
                 if (!talkResult.value)
                     return false;
-
+                
                 //---Douane de check si plus de choice---//
-                if (talkData.Choices.Length == 0)
+                if (currentTalkData.Choices.Length == 0)
                     break;
 
-                var choicePhase = new ChoicePhase(gameModeContext, talkData.Choices);
-                await choicePhase.Run();
+                var choicePhase = new ChoicePhase(gameModeContext, currentTalkData.Choices);
+                PhaseResult<ChoiceData> choiceResult = await choicePhase.Run();
+                currentTalkData = choiceResult.value.NextTalk;
             }
 
             return true;

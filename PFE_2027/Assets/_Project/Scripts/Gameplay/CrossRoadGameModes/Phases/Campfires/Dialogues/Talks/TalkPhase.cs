@@ -24,6 +24,8 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 
         protected override Awaitable Initialize(CancellationToken token)
         {
+            Debug.Log($"Talk phase is initialized");
+            
             key = ChannelKey.GetUniqueChannelKey();
             foreach (var player in gameModeContext.gameMode.Players)
             {
