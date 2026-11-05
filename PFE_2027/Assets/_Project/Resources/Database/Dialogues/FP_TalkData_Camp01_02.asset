@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0effdb61d554870aba3ea8eafa17f1a, type: 3}
-  m_Name: FP_TalkData_02
+  m_Name: FP_TalkData_Camp01_02
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.TalkData
   guidText: 0e43f1d3-7800-4447-8c31-eaed4f9c8481
   <Texts>k__BackingField:

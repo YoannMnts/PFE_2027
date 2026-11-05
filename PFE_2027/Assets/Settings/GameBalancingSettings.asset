@@ -17,5 +17,6 @@ MonoBehaviour:
   <LeashRadius>k__BackingField: 100
   <LeashPullBackSpeed>k__BackingField: 4
   <AreaDatas>k__BackingField:
-  - {fileID: 11400000, guid: f639a9c2ea4a63d488f3ae4196388372, type: 2}
   - {fileID: 11400000, guid: c3a9db70c8049e344ae6ef4e2f8ba62e, type: 2}
+  - {fileID: 11400000, guid: f639a9c2ea4a63d488f3ae4196388372, type: 2}
+  - {fileID: 11400000, guid: 2bbf2ee941277da4a8cfa30286d88b6a, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eaca2135a3245f39df4ebf29d798421, type: 3}
   m_Name: Dialogue_01
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.DialogueAreaData
-  guidText: 4df02174-8ee3-4279-b1dc-31760a40fb53
+  guidText: 9c75fe17-ee12-408e-8397-2d834f19390a
   <AreaPrefab>k__BackingField: {fileID: 3039410223625563842, guid: b06a69ef3a57ff448b90963859ad56e5, type: 3}
   <SpawnPoints>k__BackingField:
   - <AnchorId>k__BackingField: Anchor_0

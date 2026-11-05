@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 959341926c9c485ab9e90f045ca63535, type: 3}
+  m_Name: Campfire_02
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Area.CampfireAreaData
+  guidText: 22d7db79-13ee-49e2-ac6f-b779fbfa5abd
+  <AreaPrefab>k__BackingField: {fileID: 445048088128476998, guid: 90f09cd555c1ba346ae223929378b01e, type: 3}
+  <SpawnPoints>k__BackingField:
+  - <AnchorId>k__BackingField: Anchor_0
+    <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
+    <Progression>k__BackingField: 0
+  <DialogueAreaData>k__BackingField: {fileID: 11400000, guid: c393bff6e16b39e4c88fe4c2f30934b2, type: 2}

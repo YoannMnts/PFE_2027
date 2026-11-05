@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0effdb61d554870aba3ea8eafa17f1a, type: 3}
+  m_Name: FP_TalkData_Camp02_01
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Dialogues.TalkData
+  guidText: e5e69ee7-d9d4-4b14-9a39-4facbb7d8d42
+  <Texts>k__BackingField:
+  - "Heppa : Il est vraiment t\xF4t pour partir. On aurait pas pu prendre des forces avant le voyage ?"
+  - "Fe-Ynn : Ce serait une erreur monumentale, le monde appartient \xE0 ceux qui se l\xE8vent t\xF4t jeune fille. Et puis nous sommes press\xE9s. Ce n\u2019est pas comme si les gens allaient venir nous acclamer de toute fa\xE7on."
+  <Choices>k__BackingField:
+  - {fileID: 11400000, guid: 6bef65e93460d0946b5cc6ff944dc565, type: 2}
+  - {fileID: 11400000, guid: a5942eed4715c0741b75997c2851d47a, type: 2}
