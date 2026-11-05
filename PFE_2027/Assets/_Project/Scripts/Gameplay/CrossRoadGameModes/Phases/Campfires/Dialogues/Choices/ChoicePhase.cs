@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 {
-    public class ChoicePhase : PhaseCompletionSource<bool>
+    public class ChoicePhase : PhaseCompletionSource<ChoiceData>
     {
         private readonly CrossRoadGameModeContext gameModeContext;
         public ChoiceData[] ChoiceDatas {get ; private set;}
@@ -15,6 +15,12 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
         {
             this.gameModeContext = gameModeContext;
             ChoiceDatas = choiceDatas;
+        }
+        
+        protected override Awaitable Initialize(CancellationToken token)
+        {
+            Debug.Log($"Choice phase is initialized");
+            return base.Initialize(token);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Helteix.Tools.Phases;
 using Helteix.Tools.Phases.Listeners;
+using PFE.Core.Scripts.Dialogues;
 using PFE.Utilities.Scripts;
 using UnityEngine;
 
@@ -42,9 +43,9 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
             currentPhase = null;
         }
 
-        public void ChooseTalk()
+        public void ChooseTalk(ChoiceData currentChoice)
         {
-            currentPhase.SetResult(true);
+            currentPhase.SetResult(currentChoice);
         }
     }
 }
