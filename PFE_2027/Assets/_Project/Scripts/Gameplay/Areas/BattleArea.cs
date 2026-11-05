@@ -11,7 +11,6 @@ namespace PFE.Gameplay.Scripts.RoadSystem
         public async Awaitable LaunchPhase(RoadAreaData data, CrossRoadGameModeContext context)
         {
             var battlePhase = new BattlePhase(context, data);
-            Debug.Log($"[Battle Area] launch {data}");
             await battlePhase.Run();
         }
     }
