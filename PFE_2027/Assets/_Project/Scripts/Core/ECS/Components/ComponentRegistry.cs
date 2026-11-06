@@ -8,22 +8,22 @@ namespace PFE.Core.Scripts.ECS
         public const int MAX_COMPONENTS = 64;
         
         private static int index;
-        private static Type[] idMapping;
+        private static readonly Type[] IDMapping;
 
         static ComponentRegistry()
         {
             index = 0;
-            idMapping = new Type[MAX_COMPONENTS];
+            IDMapping = new Type[MAX_COMPONENTS];
         }
         
         internal static int Next<T>() where T : IEntityComponent
         {
             var next = index++;
             
-            if (next >= MAX_COMPONENTS)
+            if (next >= IDMapping.Length)
                 throw new InvalidOperationException($"Too many component types (max {MAX_COMPONENTS}): {typeof(T).Name}");
             
-            idMapping[next] = typeof(T);
+            IDMapping[next] = typeof(T);
             return next;
         }
         

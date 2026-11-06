@@ -29,5 +29,8 @@ namespace PFE.Core.Scripts.ECS
         //Debug
         public override string ToString() 
             => $"Entity({id}, {generation})";
+        
+        public static bool operator ==(Entity a, Entity b) => a.Equals(b);
+        public static bool operator !=(Entity a, Entity b) => !a.Equals(b);
     }
 }
