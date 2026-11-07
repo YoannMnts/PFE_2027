@@ -8,19 +8,19 @@ namespace PFE.Core.Scripts.ECS
 
         public bool IsEmpty => bits == 0;
 
-        public void Set(int id)
+        public void Set(int componentID)
         {
-            bits |= 1UL << id;
+            bits |= 1UL << componentID;
         }
 
-        public void Clear(int id)
+        public void Clear(int componentID)
         {
-            bits &= ~ (1UL << id);
+            bits &= ~ (1UL << componentID);
         }
 
-        public readonly bool Has(int id)
+        public readonly bool Has(int componentID)
         {
-            return (bits & (1UL << id)) != 0;
+            return (bits & (1UL << componentID)) != 0;
         }
 
         public readonly bool MatchesAll(in ComponentMask other)

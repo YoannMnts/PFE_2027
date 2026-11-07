@@ -2,7 +2,7 @@ using System;
 
 namespace PFE.Core.Scripts.ECS
 {
-    public class SparseSet<T>
+    public abstract class SparseSet<T>
     {
         public const int NONE = -1;
 

@@ -6,13 +6,13 @@ namespace PFE.Core.Scripts.ECS
 {
     public partial class World
     {
-        public ReadOnlySpan<EntityMeta> Metas => entities.AllElements;
-        public ReadOnlySpan<int> Entities => entities.AllIDs;
+        public ReadOnlySpan<EntityMeta> Metas => entityStores.AllElements;
+        public ReadOnlySpan<int> Entities => entityStores.AllIDs;
         
         private readonly int maxEntities;
         
-        private readonly IComponentStore[] stores;
-        private readonly SparseSet<EntityMeta> entities;
+        private readonly IComponentStore[] componentStores;
+        private readonly EntityStore entityStores;
         private readonly int[] generations;
         
         private readonly Stack<int> freeIds = new ();
@@ -21,28 +21,28 @@ namespace PFE.Core.Scripts.ECS
         public World(int maxEntities)
         {
             this.maxEntities = maxEntities;
-            stores = new IComponentStore[maxEntities];
-            entities = new SparseSet<EntityMeta>(maxEntities);
+            componentStores = new IComponentStore[ComponentRegistry.MAX_COMPONENTS];
+            entityStores = new EntityStore(maxEntities);
             generations = new int[maxEntities];
         }
         
-        public int GetGeneration(int id) => id >= 0 && id < generations.Length ? generations[id] : 0;
+        public int GetGeneration(int entityID) => entityID >= 0 && entityID < generations.Length ? generations[entityID] : 0;
 
         public ComponentStore<T> GetOrCreateStore<T>() where T : struct, IEntityComponent
         {
-            var id = ComponentID<T>.Value;
+            var componentID = ComponentID<T>.Value;
             
-            if(stores[id] is ComponentStore<T> store)
+            if(componentStores[componentID] is ComponentStore<T> store)
                 return store;
             
             var newStore = new ComponentStore<T>(maxEntities);
-            stores[id] = newStore;
+            componentStores[componentID] = newStore;
             return newStore;
         }
 
         public bool TryGetStore<T>(out ComponentStore<T> store) where T : struct, IEntityComponent
         {
-            var componentStore = stores[ComponentID<T>.Value];
+            var componentStore = componentStores[ComponentID<T>.Value];
             
             if (componentStore == null)
             {
@@ -62,17 +62,17 @@ namespace PFE.Core.Scripts.ECS
         
         public Entity CreateEntity()
         {
-            if(nextId >= maxEntities)
+            if(freeIds.Count == 0 && nextId >= maxEntities)
                 throw new InvalidOperationException($"[World] Capacity of {maxEntities} entities exceeded.");
             
             var id = freeIds.Count > 0 ? freeIds.Pop() : nextId++;
-            entities.Set(id, new EntityMeta(true));
+            entityStores.Set(id, new EntityMeta(true));
             return new Entity(id, GetGeneration(id));
         }
 
         public bool IsAlive(in Entity entity)
         {
-            return entities.Has(entity.id) && GetGeneration(entity.id) == entity.generation;
+            return entityStores.Has(entity.id) && GetGeneration(entity.id) == entity.generation;
         }
 
         public void Activate(in Entity entity)
@@ -80,7 +80,7 @@ namespace PFE.Core.Scripts.ECS
             if(!IsAlive(entity))
                 return;
             
-            entities.GetRef(entity.id).Activate();
+            entityStores.GetRef(entity.id).Activate();
         }
 
         public void Deactivate(in Entity entity)
@@ -88,7 +88,7 @@ namespace PFE.Core.Scripts.ECS
             if(!IsAlive(entity))
                 return;
             
-            entities.GetRef(entity.id).Deactivate();
+            entityStores.GetRef(entity.id).Deactivate();
         }
 
         public void DestroyEntity(in Entity entity)
@@ -108,13 +108,13 @@ namespace PFE.Core.Scripts.ECS
 
         private void RemoveEntity(int entityId)
         {
-            var mask = entities.GetRef(entityId).Mask;
+            var mask = entityStores.GetRef(entityId).Mask;
 
             foreach (var componentID in mask)
-                stores[componentID].TryRemove(entityId);
+                componentStores[componentID].TryRemove(entityId);
             
             
-            entities.TryRemove(entityId);
+            entityStores.TryRemove(entityId);
 
             generations[entityId]++;
             freeIds.Push(entityId);
