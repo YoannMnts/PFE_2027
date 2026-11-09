@@ -17,7 +17,7 @@ namespace PFE.Gameplay.Scripts.Enemy
             return new EnemyInstance(data, instance);
         }
 
-        protected override void SetupComponent(TData data, EntityAddress address)
+        public override void SetupEntity(TData data, EntityAddress address)
         {
             address.AddComponent<HealthComponent>();
             address.AddComponent<EnemyTagComponent>();

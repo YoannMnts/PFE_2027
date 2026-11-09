@@ -13,7 +13,7 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         protected override PilgrimInstance Create(PilgrimData data, NpcInstanceContext context) 
             => new PilgrimInstance(data, context.splineContainer, context.crossRoadGameMode.Players);
 
-        protected override void SetupComponent(PilgrimData data, EntityAddress address)
+        public override void SetupEntity(PilgrimData data, EntityAddress address)
         {
             address.AddComponent<PilgrimTagComponent>();
             address.AddComponent<HealthComponent>();

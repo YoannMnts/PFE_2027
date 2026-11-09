@@ -17,7 +17,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         INpcInstance CreateInstance(TData data, NpcInstanceContext context);
 
         [AddToContainer]
-        void CreateEntity(TData data, World world);
+        void SetupEntity(TData data, EntityAddress address);
         
         [AddToContainer]
         bool TrySetupRuntime(TData data, CrossRoadGameModeContext context ,INpcInstance instance, Transform prefab);

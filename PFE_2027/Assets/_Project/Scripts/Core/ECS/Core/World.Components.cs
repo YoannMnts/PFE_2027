@@ -5,7 +5,7 @@ namespace PFE.Core.Scripts.ECS
 {
     public partial class World
     {
-        public bool AddComponent<T>(Entity entity, in T component = default) where T : struct, IEntityComponent
+        public bool AddComponent<T>(Entity entity, in T component = default) where T : IEntityComponent
         {
             if (!IsAlive(entity))
             {
@@ -25,7 +25,7 @@ namespace PFE.Core.Scripts.ECS
             return isNew;
         }
         
-        public bool HasComponent<T>(Entity entity) where T : struct, IEntityComponent
+        public bool HasComponent<T>(Entity entity) where T : IEntityComponent
         {
             if (!IsAlive(entity))
                 return false;
@@ -34,7 +34,7 @@ namespace PFE.Core.Scripts.ECS
             return meta.Mask.Has(ComponentID<T>.Value);
         }
 
-        public bool TryGetComponent<T>(Entity entity, out T component) where T : struct, IEntityComponent
+        public bool TryGetComponent<T>(Entity entity, out T component) where T : IEntityComponent
         {
             if (!TryGetComponentRef<T>(entity, out var componentRef))
             {
@@ -46,7 +46,7 @@ namespace PFE.Core.Scripts.ECS
             return true;
         }
         
-        public bool TryGetComponentRef<T>(Entity entity, out ComponentRef<T> componentRef) where T : struct, IEntityComponent
+        public bool TryGetComponentRef<T>(Entity entity, out ComponentRef<T> componentRef) where T : IEntityComponent
         {
             if (!IsAlive(entity))
             {
@@ -71,7 +71,7 @@ namespace PFE.Core.Scripts.ECS
             return true;
         }
         
-        public bool RemoveComponent<T>(Entity entity) where T : struct, IEntityComponent
+        public bool RemoveComponent<T>(Entity entity) where T : IEntityComponent
         {
             if (!IsAlive(entity))
             {

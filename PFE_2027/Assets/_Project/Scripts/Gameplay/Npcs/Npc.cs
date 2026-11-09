@@ -21,13 +21,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             return instance;
         }
 
-        public virtual void CreateEntity(TData data, World world)
-        {
-            var entity = world.CreateEntity();
-            SetupComponent(data, new EntityAddress(world, entity));
-        }
+        public abstract void SetupEntity(TData data, EntityAddress address);
 
-        protected abstract void SetupComponent(TData data, EntityAddress address);
         public bool TrySetupRuntime(TData data, CrossRoadGameModeContext context, INpcInstance currentInstance, Transform prefab)
         {
             //on fait les douanes et si tous passe on peut return true

@@ -5,6 +5,8 @@ using PFE.Core.Scripts.DataMapping;
 using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.NPCs;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.Components;
+using PFE.Gameplay.Scripts.Entities;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -47,6 +49,27 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public int Count => npcList.Count;
 
+        public bool TryAdd(NpcData data, IRuntimeEntity runtimeEntity)
+        {
+            //si la data n'a pas de behavior
+            if (!data.TryGet(out INpcContainer container))
+                return false;
+            
+            var entity = world.CreateEntity();
+            var entityAddress = new EntityAddress(world, entity);
+            container.SetupEntity(data, entityAddress);
+            
+            runtimeEntityRegistry.Set(entity.id, runtimeEntity);
+
+            if (!entityAddress.TryGetComponentRef<HealthComponent>(out var healthComponent)) 
+                return true;
+            
+            var health = healthComponent.GetValue();
+            health.OnDeath += OnEntityDeath;
+
+            return true;
+        }
+        
         //------------------- Add to List ---------------------
         
         // One instance per call, i.e. per spawned NPC: two NPCs sharing the same data get two distinct instances.
@@ -62,6 +85,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             //création de l'instance
             instance = container.CreateInstance(data, context);
+            
             if (instance == null)
             {
                 Debug.LogError($"[Npc Manager] '{data.GetType().Name}' behaviour created a null instance.");
@@ -141,6 +165,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             return true;
         }
 
+        private void OnEntityDeath(){}
+        
         // Subscribed to every registered instance: only the instance that died leaves the list
         private void OnInstanceDeath(INpcInstance instance)
         {

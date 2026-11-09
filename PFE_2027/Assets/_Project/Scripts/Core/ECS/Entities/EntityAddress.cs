@@ -11,16 +11,16 @@ namespace PFE.Core.Scripts.ECS
             this.entity = entity;
         }
 
-        public void AddComponent<T>() where T : struct, IEntityComponent 
+        public bool AddComponent<T>() where T : IEntityComponent 
             => world.AddComponent<T>(entity);
 
-        public void RemoveComponent<T>() where T : struct, IEntityComponent 
+        public bool RemoveComponent<T>() where T : IEntityComponent 
             => world.RemoveComponent<T>(entity);
 
-        public void TryGetComponent<T>(out T component) where T : struct, IEntityComponent 
+        public bool TryGetComponent<T>(out T component) where T : IEntityComponent 
             => world.TryGetComponent(entity, out component);
 
-        public void TryGetComponentRef<T>(out ComponentRef<T> component) where T : struct, IEntityComponent 
+        public bool TryGetComponentRef<T>(out ComponentRef<T> component) where T : IEntityComponent 
             => world.TryGetComponentRef(entity, out component);
         
         public void Activate() => world.Activate(entity);
