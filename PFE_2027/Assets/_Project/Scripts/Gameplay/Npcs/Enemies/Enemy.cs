@@ -1,5 +1,7 @@
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using UnityEngine;
@@ -14,6 +16,16 @@ namespace PFE.Gameplay.Scripts.Enemy
             context.npcManager.TryGetFirstInstance(out PilgrimInstance instance);
             return new EnemyInstance(data, instance);
         }
+
+        protected override void SetupComponent(TData data, EntityAddress address)
+        {
+            address.AddComponent<HealthComponent>();
+            address.AddComponent<EnemyTagComponent>();
+            
+            AddSpecificComponent(data, address);
+        }
+
+        protected virtual void AddSpecificComponent(TData data, EntityAddress address){}
 
         public override void Dying(TData data)
         {

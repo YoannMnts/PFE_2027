@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.NPCs;
+﻿using PFE.Core.Scripts.ECS;
+using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine;
 
@@ -20,6 +21,13 @@ namespace PFE.Gameplay.Scripts.NPCs
             return instance;
         }
 
+        public virtual void CreateEntity(TData data, World world)
+        {
+            var entity = world.CreateEntity();
+            SetupComponent(data, new EntityAddress(world, entity));
+        }
+
+        protected abstract void SetupComponent(TData data, EntityAddress address);
         public bool TrySetupRuntime(TData data, CrossRoadGameModeContext context, INpcInstance currentInstance, Transform prefab)
         {
             //on fait les douanes et si tous passe on peut return true

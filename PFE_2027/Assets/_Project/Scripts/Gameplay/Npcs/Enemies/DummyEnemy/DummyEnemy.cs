@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.Enemy;
+﻿using PFE.Core.Scripts.ECS;
+using PFE.Core.Scripts.Enemy;
 
 namespace PFE.Gameplay.Scripts.Enemy
 {

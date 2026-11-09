@@ -1,10 +1,12 @@
 ﻿using System;
 using Helteix.ChanneledProperties.Formulas;
 using Helteix.Tools.Phases;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
+using PFE.Gameplay.Scripts.Entities;
 using PFE.Gameplay.Scripts.Interactions;
 using PrimeTween;
 using Sirenix.OdinInspector;
@@ -15,7 +17,7 @@ using UnityEngine.AI;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     [RequireComponent(typeof(BehaviorGraphAgent))]
-    public abstract partial class RuntimeNpc : MonoBehaviour, IRuntimeNpc
+    public abstract partial class RuntimeNpc : MonoBehaviour, IRuntimeNpc, IRuntimeEntity
     {
         protected const string BEHAVIOR_SELF_NPC = "SelfNpc";
         protected const string BEHAVIOR_TARGET_POSITION = "TargetPosition";
@@ -28,6 +30,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         public Transform Mesh { get; private set; }
         
         public abstract HitboxRunner HitboxRunner { get; protected set;}
+        public abstract EntityAddress Address { get; protected set; }
+
 
         // Meters travelled for a knockback of strength 1. Starts at PushbackData.Distance (built in Setup), lasting
         // modifiers (armor, stun, buffs) are channels: Multiply(key, value, orderInGroup: unique >= 1).

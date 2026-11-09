@@ -1,4 +1,5 @@
 using Helteix.ChanneledProperties.Formulas;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
@@ -22,6 +23,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         public TInstance Instance => instance;
 
         public override HitboxRunner HitboxRunner { get; protected set; }
+        public override EntityAddress Address { get; protected set; }
         
         public void Setup(CrossRoadGameModeContext context, TInstance npcInstance)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using PFE.Core.Scripts.DataMapping;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.NPCs;
 using PFE.Core.Scripts.Pilgrims;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace PFE.Gameplay.Scripts.NPCs
     // Registry of the battle's living NPCs, subscribes to their death to stay up to date
     public class NpcManager
     {
+        private readonly World world;
+
         public readonly struct DataInstanceNpc : IEquatable<DataInstanceNpc>
         {
             public readonly INpcData data;
@@ -32,9 +35,15 @@ namespace PFE.Gameplay.Scripts.NPCs
         public event Action<INpcInstance> OnNpcAdded;
         public event Action<INpcInstance> OnNpcDied;
 
+        public NpcManager(World world)
+        {
+            this.world = world;
+        }
+
         //créer une liste vide (à la création du Manager) des NpcInstance qui ne peut etre effacer mais peut etre modifier 
         private readonly List<DataInstanceNpc> npcList = new();
         private readonly List<DataInstanceNpc> deadNpcList = new();
+        private readonly RuntimeEntityRegistry runtimeEntityRegistry;
         
         public int Count => npcList.Count;
 
