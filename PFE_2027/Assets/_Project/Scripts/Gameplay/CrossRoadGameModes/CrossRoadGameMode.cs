@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using Eflatun.SceneReference;
 using Helteix.Tools.Phases;
@@ -44,6 +44,8 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             }
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
 
+            world = new World(64);
+            
             players = DictionaryPool<int, IPlayer>.Get();
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
