@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.NPCs;
+﻿using PFE.Core.Scripts.ECS;
+using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             TInstance instance = Create(data, context);
             return instance;
         }
+
+        public abstract void SetupEntity(TData data, EntityAddress address);
 
         public bool TrySetupRuntime(TData data, CrossRoadGameModeContext context, INpcInstance currentInstance, Transform prefab)
         {

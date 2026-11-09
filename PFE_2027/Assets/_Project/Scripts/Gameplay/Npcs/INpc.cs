@@ -1,5 +1,6 @@
 ﻿using PFE.Core.Scripts.DataMapping.Attributes;
 using PFE.Core.Scripts.DataMapping.Interfaces;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.NPCs;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine;
@@ -14,7 +15,9 @@ namespace PFE.Gameplay.Scripts.NPCs
         // creates the instance (runtime state) specific to this NPC type and plugs it into its spawned runtime
         // returns null if the runtime doesn't match the instance type
         INpcInstance CreateInstance(TData data, NpcInstanceContext context);
-        
+
+        [AddToContainer]
+        void SetupEntity(TData data, EntityAddress address);
         
         [AddToContainer]
         bool TrySetupRuntime(TData data, CrossRoadGameModeContext context ,INpcInstance instance, Transform prefab);

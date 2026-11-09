@@ -1,4 +1,6 @@
-﻿using PFE.Core.Scripts.Pilgrims;
+﻿using PFE.Core.Scripts.ECS;
+using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.NPCs;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -10,5 +12,12 @@ namespace PFE.Gameplay.Scripts.Pilgrims
     {
         protected override PilgrimInstance Create(PilgrimData data, NpcInstanceContext context) 
             => new PilgrimInstance(data, context.splineContainer, context.crossRoadGameMode.Players);
+
+        public override void SetupEntity(PilgrimData data, EntityAddress address)
+        {
+            address.AddComponent<PilgrimTagComponent>();
+            address.AddComponent<HealthComponent>();
+            address.AddComponent<PlayerAllyComponent>();
+        }
     }
 }
