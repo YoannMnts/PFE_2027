@@ -5,6 +5,7 @@ using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.DataMapping;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.GameModes;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
@@ -21,14 +22,17 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
 {
     public class CrossRoadGameMode :  GameMode<bool>
     {
+        public IEnumerable<IPlayer> Players => players.Values;
+        public int PlayerCount => players.Count;
+        
+        public World World { get; private set; }
+        public NpcManager NpcManager { get; private set; }
+        
+        
         private SceneReference sceneToLoad;
         private AreaData currentAreaData;
         private int startLaunchIndex = int.MaxValue;
-        public IEnumerable<IPlayer> Players => players.Values;
-        public int PlayerCount => players.Count;
         private Dictionary<int, IPlayer> players;
-        public NpcManager NpcManager { get; private set; }
-        
         
         public CrossRoadGameMode(SceneReference sceneToLoad, AreaData currentAreaData)
         {
@@ -44,7 +48,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             }
             await GameController.GameSceneController.LoadSceneWithLoadingScreen(sceneToLoad);
 
-            world = new World(64);
+            World = new World(64);
             
             players = DictionaryPool<int, IPlayer>.Get();
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));

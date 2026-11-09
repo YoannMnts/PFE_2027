@@ -19,7 +19,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         {
             base.OnPhaseBegin(phase);
 
-            world = phase.world;
+            world = phase.World;
         }
 
         protected override void OnPhaseEnd(CrossRoadGameMode phase)
