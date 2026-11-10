@@ -13,10 +13,10 @@ namespace PFE.Core.Scripts.ECS
             mask = new ComponentMask();
         }
 
-        public void AddComponent<TComponent>() where TComponent : IEntityComponent 
+        public void AddComponent<TComponent>() where TComponent : struct, IEntityComponent 
             => mask.Set(ComponentID<TComponent>.Value);
 
-        public void RemoveComponent<TComponent>() where TComponent : IEntityComponent 
+        public void RemoveComponent<TComponent>() where TComponent : struct, IEntityComponent 
             => mask.Clear(ComponentID<TComponent>.Value);
 
         public void Activate() => IsActive = true;

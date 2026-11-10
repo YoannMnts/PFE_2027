@@ -4,6 +4,5 @@ namespace PFE.Gameplay.Scripts.Components
 {
     public struct PlayerTagComponent : IEntityComponent
     {
-        
     }
 }

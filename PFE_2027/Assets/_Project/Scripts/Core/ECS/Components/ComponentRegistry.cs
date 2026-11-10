@@ -16,7 +16,7 @@ namespace PFE.Core.Scripts.ECS
             IDMapping = new Type[MAX_COMPONENTS];
         }
         
-        internal static int Next<T>() where T : IEntityComponent
+        internal static int Next<T>() where T : struct, IEntityComponent
         {
             var next = index++;
             

@@ -45,7 +45,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         //créer une liste vide (à la création du Manager) des NpcInstance qui ne peut etre effacer mais peut etre modifier 
         private readonly List<DataInstanceNpc> npcList = new();
         private readonly List<DataInstanceNpc> deadNpcList = new();
-        private readonly RuntimeEntityRegistry runtimeEntityRegistry;
+        private readonly RuntimeEntityRegistry runtimeEntityRegistry = new(64);
         
         public int Count => npcList.Count;
 
@@ -64,12 +64,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (!entityAddress.TryGetComponentRef<HealthComponent>(out var healthComponent)) 
                 return true;
             
-            var health = healthComponent.GetValue();
-            health.OnDeath += OnEntityDeath;
+            var component = healthComponent.GetValue();
+            component.Health.OnValueChanged += OnHealthChanged;
 
             return true;
         }
-        
+
         //------------------- Add to List ---------------------
         
         // One instance per call, i.e. per spawned NPC: two NPCs sharing the same data get two distinct instances.
@@ -165,7 +165,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             return true;
         }
 
-        private void OnEntityDeath(){}
+        private void OnHealthChanged(float value)
+        {
+            if(value > 0)
+                return;
+            
+        }
         
         // Subscribed to every registered instance: only the instance that died leaves the list
         private void OnInstanceDeath(INpcInstance instance)

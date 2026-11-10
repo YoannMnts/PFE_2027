@@ -28,7 +28,7 @@ namespace PFE.Core.Scripts.ECS
         
         public int GetGeneration(int entityID) => entityID >= 0 && entityID < generations.Length ? generations[entityID] : 0;
 
-        public ComponentStore<T> GetOrCreateStore<T>() where T : IEntityComponent
+        public ComponentStore<T> GetOrCreateStore<T>() where T : struct, IEntityComponent
         {
             var componentID = ComponentID<T>.Value;
             
@@ -40,7 +40,7 @@ namespace PFE.Core.Scripts.ECS
             return newStore;
         }
 
-        public bool TryGetStore<T>(out ComponentStore<T> store) where T : IEntityComponent
+        public bool TryGetStore<T>(out ComponentStore<T> store) where T : struct, IEntityComponent
         {
             var componentStore = componentStores[ComponentID<T>.Value];
             

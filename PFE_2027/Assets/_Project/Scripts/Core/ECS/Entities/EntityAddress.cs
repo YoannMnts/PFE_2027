@@ -2,8 +2,8 @@ namespace PFE.Core.Scripts.ECS
 {
     public readonly struct EntityAddress
     {
-        private readonly World world;
-        private readonly Entity entity;
+        public readonly World world;
+        public readonly Entity entity;
 
         public EntityAddress(World world, Entity entity)
         {
@@ -11,16 +11,16 @@ namespace PFE.Core.Scripts.ECS
             this.entity = entity;
         }
 
-        public bool AddComponent<T>() where T : IEntityComponent 
-            => world.AddComponent<T>(entity);
+        public bool AddComponent<T>(in T component) where T : struct, IEntityComponent 
+            => world.AddComponent<T>(entity, component);
 
-        public bool RemoveComponent<T>() where T : IEntityComponent 
+        public bool RemoveComponent<T>() where T : struct, IEntityComponent 
             => world.RemoveComponent<T>(entity);
 
-        public bool TryGetComponent<T>(out T component) where T : IEntityComponent 
+        public bool TryGetComponent<T>(out T component) where T : struct, IEntityComponent 
             => world.TryGetComponent(entity, out component);
 
-        public bool TryGetComponentRef<T>(out ComponentRef<T> component) where T : IEntityComponent 
+        public bool TryGetComponentRef<T>(out ComponentRef<T> component) where T : struct, IEntityComponent 
             => world.TryGetComponentRef(entity, out component);
         
         public void Activate() => world.Activate(entity);
