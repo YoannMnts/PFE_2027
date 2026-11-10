@@ -1280,16 +1280,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: NpcBehavior Blackboard
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
-  VersionTimestamp: 639272366025766405
+  VersionTimestamp: 639270512010847634
   AssetID:
-    m_Value0: 9581856778832446290
-    m_Value1: 4875888607983546858
+    m_Value0: 0
+    m_Value1: 0
   m_Blackboard:
     m_Variables:
     - rid: 2040359518556389599
-    - rid: 2040359521245200840
-    - rid: 2040359521245200759
-    - rid: 2040359521245200472
   m_SharedBlackboardVariableGuids: []
   references:
     version: 2
@@ -1301,30 +1298,6 @@ MonoBehaviour:
           m_Value0: 1
           m_Value1: 0
         Name: Self
-        m_Value: {fileID: 0}
-    - rid: 2040359521245200472
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 13247837797571768168
-          m_Value1: 16744289917824149717
-        Name: TargetPosition
-        m_Value: {x: 0, y: 0, z: 0}
-    - rid: 2040359521245200759
-      type: {class: 'BlackboardVariable`1[[PFE.Core.Scripts.Enemy.Attacks.AttackData, PFE.Core]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 2510092791180639659
-          m_Value1: 12131382788102978674
-        Name: AttackData
-        m_Value: {fileID: 0}
-    - rid: 2040359521245200840
-      type: {class: 'BlackboardVariable`1[[PFE.Gameplay.Scripts.NPCs.RuntimeNpc, PFE.Gameplay]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 18306783855675722463
-          m_Value1: 339305170338859
-        Name: SelfNpc
         m_Value: {fileID: 0}
 --- !u!114 &5998746931166083142
 MonoBehaviour:
