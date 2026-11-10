@@ -4,6 +4,7 @@ using Helteix.Tools.Phases;
 using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires;
 using PFE.Gameplay.Scripts.Entities;
@@ -31,6 +32,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public abstract HitboxRunner HitboxRunner { get; protected set;}
         public abstract EntityAddress Address { get; protected set; }
+        public abstract void Connect(CrossRoadGameModeContext context, EntityAddress address);
+        public abstract void Disconnect();
 
 
         // Meters travelled for a knockback of strength 1. Starts at PushbackData.Distance (built in Setup), lasting

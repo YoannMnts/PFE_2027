@@ -1,30 +1,25 @@
 using System;
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.ECS;
 
 namespace PFE.Gameplay.Scripts.Components
 {
-    public class HealthComponent : IEntityComponent
+    public struct HealthComponent : IEntityComponent
     {
-        private readonly int maxHealth;
-        private int health;
+        public Formula<float> Health { get; private set; }
         
-        public event Action OnDeath;
-        public event Action OnHealthChanged;
+        private readonly ChannelKey key;
 
-        public HealthComponent(int maxHealth)
+        public HealthComponent(float maxHealth)
         {
-            this.maxHealth = maxHealth;
-            this.health = maxHealth;
+            Health = new Formula<float>(maxHealth);
+            key = ChannelKey.GetUniqueChannelKey();
         }
 
         public void AddOrRemove(int amount)
         {
-            health += amount;
-            OnHealthChanged?.Invoke();
-            
-            if(health <= 0)
-                OnDeath?.Invoke();
-            
+            Health.Subtract(key, amount);
         }
     }
 }

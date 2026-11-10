@@ -15,9 +15,9 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         public override void SetupEntity(PilgrimData data, EntityAddress address)
         {
-            address.AddComponent<PilgrimTagComponent>();
-            address.AddComponent<HealthComponent>();
-            address.AddComponent<PlayerAllyComponent>();
+            address.AddComponent<PilgrimTagComponent>(new());
+            address.AddComponent<HealthComponent>(new(data.MaxHealth));
+            address.AddComponent<PlayerAllyComponent>(new());
         }
     }
 }

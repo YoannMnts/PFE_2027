@@ -2,6 +2,7 @@ using Helteix.ChanneledProperties.Formulas;
 using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -24,7 +25,35 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         public override HitboxRunner HitboxRunner { get; protected set; }
         public override EntityAddress Address { get; protected set; }
+
+        public override void Connect(CrossRoadGameModeContext context, EntityAddress address)
+        {
+            Disconnect();
+            
+            Address = address;
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
+            
+            var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
+            HitboxRunner = new HitboxRunner(attackContext);
+
+            // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
+            PushbackData pushback = instance.data.PushbackData;
+            KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
+
+            if (address.TryGetComponent<HealthComponent>(out var healthComponent))
+                healthComponent.Health.OnValueChanged += OnModifyHealth; 
+            
+            OnSetup(context);
+        }
+
+        public override void Disconnect()
+        {
+            Address = default;
+        }
         
+        protected virtual void OnSetup(CrossRoadGameModeContext context) { }
+
         public void Setup(CrossRoadGameModeContext context, TInstance npcInstance)
         {
             if (npcInstance == null)
@@ -50,8 +79,6 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             OnSetup(context);
         }
-        
-        protected virtual void OnSetup(CrossRoadGameModeContext context) { }
         
         private void Unsubscribe()
         {

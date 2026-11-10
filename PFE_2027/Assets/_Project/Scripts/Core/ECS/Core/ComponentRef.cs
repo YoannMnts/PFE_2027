@@ -1,6 +1,6 @@
 namespace PFE.Core.Scripts.ECS
 {
-    public readonly struct ComponentRef<T> where T : IEntityComponent
+    public readonly struct ComponentRef<T> where T : struct, IEntityComponent
     {
         public readonly Entity entity;
         public readonly ComponentStore<T> store;

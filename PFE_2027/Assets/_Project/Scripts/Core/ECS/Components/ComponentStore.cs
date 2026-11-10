@@ -3,7 +3,7 @@ using System;
 namespace PFE.Core.Scripts.ECS
 {
     public sealed class ComponentStore<TComponent> : SparseSet<TComponent>, IComponentStore 
-        where TComponent : IEntityComponent
+        where TComponent : struct, IEntityComponent
     {
         public ComponentStore(int capacity) : base(capacity)
         {
