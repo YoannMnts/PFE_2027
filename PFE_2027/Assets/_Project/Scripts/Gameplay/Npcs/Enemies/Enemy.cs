@@ -8,21 +8,19 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy
 {
-    public abstract class Enemy<TData> : Npc<TData, EnemyInstance> where TData : EnemyData
+    public abstract class Enemy<TData> : Npc<TData> where TData : EnemyData
     {
-        // The pilgrim is spawned first by the NpcGenerator: already in the manager here
-        protected override EnemyInstance Create(TData data, NpcInstanceContext context)
-        {
-            context.npcManager.TryGetFirstInstance(out PilgrimInstance instance);
-            return new EnemyInstance(data, instance);
-        }
-
         public override void SetupEntity(TData data, EntityAddress address)
         {
             address.AddComponent<HealthComponent>(new(data.MaxHealth));
             address.AddComponent<EnemyTagComponent>(new());
             
             AddSpecificComponent(data, address);
+        }
+
+        public override Vector3 RedirectTargetPosition(TData data, EntityAddress address, Vector3 goal)
+        {
+            return goal;
         }
 
         protected virtual void AddSpecificComponent(TData data, EntityAddress address){}

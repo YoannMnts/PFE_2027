@@ -10,8 +10,7 @@ using UnityEngine;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> 
-        where TInstance : NpcInstance<TData>
+    public abstract class RuntimeNpc<TData> : RuntimeNpc
         where TData : NpcData 
     {
         [SerializeField, BoxGroup("Attacks")]
@@ -20,9 +19,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         [SerializeField, BoxGroup("Attacks")]
         private LayerMask hitMask;
         
-        private TInstance instance;
-        public TInstance Instance => instance;
-
         public override HitboxRunner HitboxRunner { get; protected set; }
         public override EntityAddress Address { get; protected set; }
 

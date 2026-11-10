@@ -12,20 +12,12 @@ namespace PFE.Gameplay.Scripts.NPCs
     public interface INpc<in TData> : IBehaviour<TData> where TData : INpcData
     {
         [AddToContainer]
-        // creates the instance (runtime state) specific to this NPC type and plugs it into its spawned runtime
-        // returns null if the runtime doesn't match the instance type
-        INpcInstance CreateInstance(TData data, NpcInstanceContext context);
-
-        [AddToContainer]
         void SetupEntity(TData data, EntityAddress address);
-        
-        [AddToContainer]
-        bool TrySetupRuntime(TData data, CrossRoadGameModeContext context ,INpcInstance instance, Transform prefab);
         
         [AddToContainer]
         // final destination of the NPC from the goal given by the game (pilgrim position, spline point...):
         // lets each NPC type go somewhere else than straight to it (flank, keep its distance, stay home...)
-        Vector3 RedirectTargetPosition(TData data, INpcInstance instance, Vector3 goal);
+        Vector3 RedirectTargetPosition(TData data, EntityAddress address, Vector3 goal);
 
         [AddToContainer]
         // computes the new health (negative amount = damage)

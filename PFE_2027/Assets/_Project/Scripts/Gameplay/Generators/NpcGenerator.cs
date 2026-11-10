@@ -8,6 +8,7 @@ using PFE.Core.Scripts.NPCs;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
+using PFE.Gameplay.Scripts.Entities;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.RoadSystem;
@@ -70,7 +71,6 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
         {
-            phase.context.NpcManager.Clear();
             pendingNpcs.Clear();
             phase.SetResult(true);
         }
@@ -173,21 +173,16 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return null;
             }
 
-            // Every check passed: nothing is created before this point, so a failed check can't leave an orphan instance
-            if (!context.npcManager.TryAdd(npcData, context, out INpcInstance npcInstance))
-                return null;
-
             //création du transform runtime
             Transform runtimeNpc = npcData.Prefab.InstantiatePrefab();
             runtimeNpc.SetPositionAndRotation(anchor.position, anchor.rotation);
             runtimeNpc.SetParent(container);
 
-            // The instance just created goes straight to its own runtime: no lookup, so no possible mix-up
-            var gameModeContext = new CrossRoadGameModeContext(context.crossRoadGameMode);
-            if (!npcContainer.TrySetupRuntime(npcData, gameModeContext, npcInstance, runtimeNpc))
+            // Every check passed: nothing is created before this point, so a failed check can't leave an orphan instance
+            if (runtimeNpc.TryGetComponent<IRuntimeEntity>(out var runtimeEntity) 
+                && !context.npcManager.TryAdd(npcData, runtimeEntity))
             {
                 Debug.LogError($"[NpcGenerator] '{runtimeNpc.name}' has no runtime matching the instance of '{npcData.GetType().Name}'.", this);
-                context.npcManager.TryRemove(npcInstance);
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }

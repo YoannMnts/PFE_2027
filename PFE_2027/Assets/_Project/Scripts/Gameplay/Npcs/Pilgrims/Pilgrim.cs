@@ -8,16 +8,18 @@ using UnityEngine.Splines;
 namespace PFE.Gameplay.Scripts.Pilgrims
 {
     // Stateless pilgrim behaviour, its state (position...) lives in PilgrimInstance
-    public partial class Pilgrim : Npc<PilgrimData, PilgrimInstance>
+    public partial class Pilgrim : Npc<PilgrimData>
     {
-        protected override PilgrimInstance Create(PilgrimData data, NpcInstanceContext context) 
-            => new PilgrimInstance(data, context.splineContainer, context.crossRoadGameMode.Players);
-
         public override void SetupEntity(PilgrimData data, EntityAddress address)
         {
             address.AddComponent<PilgrimTagComponent>(new());
             address.AddComponent<HealthComponent>(new(data.MaxHealth));
             address.AddComponent<PlayerAllyComponent>(new());
+        }
+
+        public override Vector3 RedirectTargetPosition(PilgrimData data, EntityAddress address, Vector3 goal)
+        {
+            return goal;
         }
     }
 }

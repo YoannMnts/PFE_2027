@@ -11,9 +11,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Pilgrim Leash"), Min(0f)]
         private float targetGroupWeight = .5f;
         
-        // Pilgrim the player is leashed to, only set during the ProtectPilgrimPhase
-        private PilgrimInstance pilgrim;
-
         // Leash rules come from the game settings: they belong to the "protect the pilgrim" mode, not to the character
         private static float LeashRadius => GameMetricsSettings.Current.LeashRadius;
         private static float LeashPullBackSpeed => GameMetricsSettings.Current.LeashPullBackSpeed;
