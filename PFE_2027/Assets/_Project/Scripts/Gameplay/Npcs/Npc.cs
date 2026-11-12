@@ -1,5 +1,7 @@
 ﻿using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.NPCs;
+using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using UnityEngine;
 
@@ -11,7 +13,10 @@ namespace PFE.Gameplay.Scripts.NPCs
     public abstract class Npc<TData> : INpc<TData>
         where TData : NpcData
     {
-        public abstract void SetupEntity(TData data, EntityAddress address);
+        public virtual void SetupEntity(TData data, EntityAddress address)
+        {
+            address.AddComponent(new NpcTagComponent(data));
+        }
 
         public abstract Vector3 RedirectTargetPosition(TData data, EntityAddress address, Vector3 goal);
 

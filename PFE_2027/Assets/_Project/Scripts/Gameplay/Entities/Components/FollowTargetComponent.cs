@@ -2,7 +2,7 @@ using PFE.Core.Scripts.ECS;
 
 namespace PFE.Gameplay.Scripts.Components
 {
-    public struct FollowTargetComponent
+    public struct FollowTargetComponent : IEntityComponent
     {
         public Entity Target { get; private set; }
 

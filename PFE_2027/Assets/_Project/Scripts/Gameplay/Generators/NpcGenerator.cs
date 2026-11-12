@@ -4,8 +4,10 @@ using Helteix.Tools;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.DataMapping;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.NPCs;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.Entities;
@@ -24,35 +26,11 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         IPhaseListener<GenerateNpcPhase>, 
         IPhaseListener<ProtectPilgrimPhase>
     {
-        // NPC already placed on its anchor, kept inactive until the pilgrim reaches its progression
-        private class PendingNpc
-        {
-            public readonly GameObject runtime;
-            public readonly float progression;
-            public bool isActive;
-
-            public PendingNpc(GameObject runtime, float progression, bool isActive =  false)
-            {
-                this.runtime = runtime;
-                this.progression = progression;
-                this.isActive = isActive;
-            }
-            public bool SetRuntimeActive()
-            {
-                isActive =  true;
-                runtime.SetActive(isActive);
-                return true;
-            }
-        }
-        
         [SerializeField]
         private Transform container;
 
-        // Ordered by progression: only the first one has to be checked when the pilgrim moves
-        private readonly List<PendingNpc> pendingNpcs = new();
+        private NpcManager npcManager;
         
-        private PilgrimInstance pilgrimInstance;
-
         private void OnEnable()
         {
             this.Register<CleanupPhase>();
@@ -71,7 +49,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
 
         void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
         {
-            pendingNpcs.Clear();
+            npcManager = phase.context.NpcManager;
             phase.SetResult(true);
         }
 
@@ -89,8 +67,8 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return;
             }
 
+            var context = phase.gameModeContext;
             //création du context des instance
-            var context = new NpcInstanceContext(runtimeArea.Path, phase.gameModeContext.NpcManager, phase.gameModeContext.gameMode);
             //récupération des spawnpoints et donc des données de chaque npc
             var spawnPoints = phase.currentArea.SpawnPoints;
             
@@ -104,35 +82,21 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 
                 if (spawnPoint.Npc is PilgrimData)
                 {
-                    var runtimePilgrim = Spawn(spawnPoint, runtimeArea, context);
-                    var pendingPilgrim = new  PendingNpc(runtimePilgrim.gameObject, spawnPoint.Progression, true);
-                    pendingNpcs.Add(pendingPilgrim);
+                    Spawn(spawnPoint, runtimeArea, context);
                 }
             }
 
             
             // Pass 2: every other NPC, placed on its anchor then hidden until the pilgrim gets close enough
-            using (ListPool<PendingNpc>.Get(out List<PendingNpc> hiddenEnemy))
+            for (int i = 0; i < spawnPoints.Count; i++)
             {
-                //création et ajout runtime Enemy dans PendingNpc
-                for (int i = 0; i < spawnPoints.Count; i++)
-                {
-                    var spawnPoint = spawnPoints[i];
-                    if (spawnPoint.Npc is PilgrimData)
-                        continue;
+                var spawnPoint = spawnPoints[i];
+                if (spawnPoint.Npc is PilgrimData)
+                    continue;
 
-                    Transform runtimeEnemy = SpawnAndHide(spawnPoint, runtimeArea, context);
-                    
-                    if(runtimeEnemy == null)
-                        continue;
-                    
-                    hiddenEnemy.Add(new PendingNpc(runtimeEnemy.gameObject, spawnPoint.Progression));
-                }
-
-                hiddenEnemy.Sort((a, b) => a.progression.CompareTo(b.progression));
-                pendingNpcs.AddRange(hiddenEnemy);
+                SpawnAndHide(spawnPoint, runtimeArea, context);
             }
-
+                
             phase.SetResult(true);
         }
 
@@ -140,14 +104,14 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         {
         }
 
-        private Transform SpawnAndHide(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, NpcInstanceContext context)
+        private Transform SpawnAndHide(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, CrossRoadGameModeContext context)
         {
             var runtime = Spawn(spawnPoint, runtimeArea, context);
             runtime?.gameObject.SetActive(false);
             return runtime;
         }
         
-        private Transform Spawn(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, NpcInstanceContext context)
+        private Transform Spawn(SpawnPoint spawnPoint, IRuntimeArea runtimeArea, CrossRoadGameModeContext context)
         {
             //DOUANES MULTIPLES
             var npcData = spawnPoint.Npc;
@@ -179,13 +143,15 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
             runtimeNpc.SetParent(container);
 
             // Every check passed: nothing is created before this point, so a failed check can't leave an orphan instance
-            if (runtimeNpc.TryGetComponent<IRuntimeEntity>(out var runtimeEntity) 
-                && !context.npcManager.TryAdd(npcData, runtimeEntity))
+            if (!runtimeNpc.TryGetComponent<IRuntimeEntity>(out var runtimeEntity))
             {
                 Debug.LogError($"[NpcGenerator] '{runtimeNpc.name}' has no runtime matching the instance of '{npcData.GetType().Name}'.", this);
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }
+            
+            if(!context.NpcManager.TryAdd(npcData, runtimeEntity))
+                return null;
             
             return runtimeNpc;
         }
@@ -194,27 +160,36 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            pilgrimInstance = phase.pilgrimInstance;
-            pilgrimInstance.OnPositionChanged += OnPilgrimPositionChanged;
         }
         
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            phase.pilgrimInstance.OnPositionChanged -= OnPilgrimPositionChanged;
-            pilgrimInstance = null;
         }
 
         // Reveals at most one NPC per pilgrim move (one per physics step): NPCs sharing a progression appear
         // on consecutive steps, which also spreads their activation cost
-        private void OnPilgrimPositionChanged(Vector3 position)
+        private void OnPilgrimPositionChanged(float pilgrimProgression)
         {
-            for (int i = 0; i < pendingNpcs.Count; i++)
+            var query = EntityQuery.Base.WithAll<PendingNpcComponent>();
+            using (ListPool<EntityAddress>.Get(out var removedEntities))
             {
-                var pendingNpc = pendingNpcs[i];
-                if (pendingNpc.progression <= pilgrimInstance.Progression && pendingNpc.isActive == false)
+                foreach (var address in npcManager.World.Query(query))
                 {
-                    pendingNpc.SetRuntimeActive();
+                    if (!address.TryGetComponentRef<PendingNpcComponent>(out var componentRef))
+                        continue;
+                    
+                    ref var component = ref componentRef.GetValue();
+
+                    if (!(component.progressionGoal <= pilgrimProgression)) 
+                        continue;
+                    
+                    var runtimeEntity = npcManager.runtimeEntityRegistry.GetRef(address.entity.id);
+                    runtimeEntity.SetActive();
+                    removedEntities.Add(address);
                 }
+
+                foreach (var address in removedEntities)
+                    address.RemoveComponent<PendingNpcComponent>();
             }
         }
     }

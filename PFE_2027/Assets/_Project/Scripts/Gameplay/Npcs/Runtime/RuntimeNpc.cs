@@ -32,6 +32,15 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public abstract HitboxRunner HitboxRunner { get; protected set;}
         public abstract EntityAddress Address { get; protected set; }
+        public abstract NpcManager NpcManager { get; protected set; }
+        public void SetActive()
+        {
+            if(gameObject.activeSelf)
+                return;
+            
+            gameObject.SetActive(true);
+        }
+
         public abstract void Connect(CrossRoadGameModeContext context, EntityAddress address);
         public abstract void Disconnect();
 
@@ -76,12 +85,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         protected virtual void OnModifyHealth(float currentHealth)
         {
             Tween.PunchScale(transform, Vector3.one * .2f, .3f);
-        }
-        
-        protected virtual void OnDeath(INpcInstance instance)
-        {
-            Tween.StopAll(onTarget: transform);
-            Destroy(gameObject);
         }
         
         public abstract void ApplyKnockback(in KnockbackRequest request);

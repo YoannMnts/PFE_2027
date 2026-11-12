@@ -5,6 +5,7 @@ namespace PFE.Core.Scripts.ECS
         public readonly World world;
         public readonly Entity entity;
 
+        public bool IsValid => world != null;
         public EntityAddress(World world, Entity entity)
         {
             this.world = world;

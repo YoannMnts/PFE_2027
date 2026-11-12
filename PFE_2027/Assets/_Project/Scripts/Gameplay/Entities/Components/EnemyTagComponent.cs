@@ -7,12 +7,9 @@ namespace PFE.Gameplay.Scripts.Components
     public struct EnemyTagComponent : IEntityComponent
     {
         public readonly EnemyData data;
-        public EnemyTagComponent(NpcData data)
+        public EnemyTagComponent(EnemyData data)
         {
-            if (data is EnemyData enemyData)
-                this.data = enemyData;
-
-            this.data = null;
+            this.data = data;
         }
     }
 }

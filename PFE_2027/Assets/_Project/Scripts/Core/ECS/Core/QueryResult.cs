@@ -58,7 +58,8 @@ namespace PFE.Core.Scripts.ECS
                 return false;
             }
             
-            public Entity Current => new Entity(entities[index], world.GetGeneration(entities[index]));
+            public EntityAddress Current 
+                => new EntityAddress(world, new Entity(entities[index], world.GetGeneration(entities[index])));
         }
     }
 

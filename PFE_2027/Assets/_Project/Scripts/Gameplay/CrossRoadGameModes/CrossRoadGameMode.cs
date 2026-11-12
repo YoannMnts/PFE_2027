@@ -53,7 +53,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
             players = DictionaryPool<int, IPlayer>.Get();
             players.Add(0, new DefaultPlayer(GameMetricsSettings.Current.PlayerData));
             
-            NpcManager = new NpcManager(World);
+            NpcManager = new NpcManager(new CrossRoadGameModeContext(this));
         }
 
         protected override async Awaitable<bool> Execute(CancellationToken token)

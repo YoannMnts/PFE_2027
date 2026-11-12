@@ -60,16 +60,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            pilgrim = phase.pilgrimInstance;
-            var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
-            runtimePilgrim.AddMemberToCmGroup(rigidBody.transform, targetGroupWeight, 1);
         }
 
         void IPhaseListener<ProtectPilgrimPhase>.OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            pilgrim = null;
-            var runtimePilgrim = GetComponentInChildren<RuntimePilgrim>();
-            runtimePilgrim.RemoveMemberFromCmGroup(rigidBody.transform);
         }
 
         void IPhaseListener<DialoguePhase>.OnPhaseBegin(DialoguePhase phase)
@@ -96,6 +90,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         void IPhaseListener<CleanupPhase>.OnPhaseBegin(CleanupPhase phase)
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            world = phase.context.gameMode.World;
         }
 
         void IPhaseListener<CleanupPhase>.OnPhaseEnd(CleanupPhase phase)

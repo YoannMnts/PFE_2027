@@ -8,6 +8,11 @@ namespace PFE.Gameplay.Scripts.Enemy
 {
     public partial class EnemyTemplate : Enemy<EnemyTemplateData>
     {
-        
+        protected override void AddSpecificComponent(EnemyTemplateData data, EntityAddress address)
+        {
+            base.AddSpecificComponent(data, address);
+            
+            address.AddComponent(new AIMovementComponent());
+        }
     }
 }

@@ -266,7 +266,7 @@ namespace PFE.Debugging._Project.Scripts.Debugging
         private static int CountMatches(World targetWorld, in EntityQuery query, bool onlyActive = false)
         {
             int count = 0;
-            foreach (Entity _ in targetWorld.Query(query, onlyActive))
+            foreach (EntityAddress _ in targetWorld.Query(query, onlyActive))
                 count++;
 
             return count;
@@ -314,12 +314,12 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
             int count = 0;
             bool foundHealthAndMove = false, foundHealthOnly = false, foundHealthAndTag = false;
-            foreach (Entity entity in testWorld.Query(query))
+            foreach (EntityAddress entity in testWorld.Query(query))
             {
                 count++;
-                foundHealthAndMove |= entity == healthAndMove;
-                foundHealthOnly |= entity == healthOnly;
-                foundHealthAndTag |= entity == healthAndTag;
+                foundHealthAndMove |= entity.entity == healthAndMove;
+                foundHealthOnly |= entity.entity == healthOnly;
+                foundHealthAndTag |= entity.entity == healthAndTag;
             }
 
             Check(count == 2, "Query returns exactly 2 entities");
@@ -336,19 +336,19 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             testWorld.AddComponent(destroyed, new TestHealth());
             testWorld.DestroyEntity(destroyed);
 
-            Entity reused = testWorld.CreateEntity();
-            testWorld.AddComponent(reused, new TestHealth());
+            EntityAddress reused = new EntityAddress(world, testWorld.CreateEntity());
+            reused.AddComponent(new TestHealth());
 
             int count = 0;
             bool returnedIsAlive = false, returnedIsReused = false;
-            foreach (Entity entity in testWorld.Query(default(EntityQuery).WithAll<TestHealth>()))
+            foreach (EntityAddress entity in testWorld.Query(default(EntityQuery).WithAll<TestHealth>()))
             {
                 count++;
-                returnedIsAlive = testWorld.IsAlive(entity);
-                returnedIsReused = entity == reused;
+                returnedIsAlive = testWorld.IsAlive(entity.entity);
+                returnedIsReused = entity.entity == reused.entity;
             }
 
-            Check(reused.id == destroyed.id, "The id was reused");
+            Check(reused.entity.id == destroyed.id, "The id was reused");
             Check(count == 1, "Only the new entity is returned");
             Check(returnedIsAlive, "The returned entity is alive (generation included)");
             Check(returnedIsReused, "The returned entity equals the new handle, not the old one");
@@ -363,15 +363,15 @@ namespace PFE.Debugging._Project.Scripts.Debugging
 
             EntityQuery query = default(EntityQuery).WithAll<TestHealth>();
 
-            using (ListPool<Entity>.Get(out List<Entity> toDestroy))
+            using (ListPool<EntityAddress>.Get(out List<EntityAddress> toDestroy))
             {
-                foreach (Entity entity in testWorld.Query(query))
+                foreach (EntityAddress entity in testWorld.Query(query))
                     toDestroy.Add(entity);
 
                 Check(toDestroy.Count == 5, "The 5 entities are collected");
 
-                foreach (Entity entity in toDestroy)
-                    testWorld.DestroyEntity(entity);
+                foreach (EntityAddress entity in toDestroy)
+                    testWorld.DestroyEntity(entity.entity);
             }
 
             Check(CountMatches(testWorld, query) == 0, "No entity left after the batch destroy");
@@ -394,8 +394,8 @@ namespace PFE.Debugging._Project.Scripts.Debugging
             Check(CountMatches(testWorld, query, onlyActive: true) == 1, "With onlyActive, the inactive one is skipped");
 
             Entity first = Entity.None;
-            foreach (Entity entity in testWorld.Query(query, onlyActive: true))
-                first = entity;
+            foreach (EntityAddress entity in testWorld.Query(query, onlyActive: true))
+                first = entity.entity;
 
             Check(first == active, "With onlyActive, the returned entity is the active one");
         }

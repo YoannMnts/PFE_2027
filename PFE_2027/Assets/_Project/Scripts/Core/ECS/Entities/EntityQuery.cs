@@ -2,6 +2,8 @@ namespace PFE.Core.Scripts.ECS
 {
     public struct EntityQuery
     {
+        public static readonly EntityQuery Base = new EntityQuery();
+        
         private ComponentMask all;
         private ComponentMask any;
         private ComponentMask none;

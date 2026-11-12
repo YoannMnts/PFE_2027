@@ -6,6 +6,7 @@ using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.NPCs;
 using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Components;
+using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Entities;
 using UnityEngine;
 
@@ -13,14 +14,15 @@ namespace PFE.Gameplay.Scripts.NPCs
 {
     public class NpcManager
     {
-        private readonly World world;
+        private readonly CrossRoadGameModeContext context;
+        public World World => context.gameMode.World;
         
-        public NpcManager(World world)
+        public NpcManager(CrossRoadGameModeContext context)
         {
-            this.world = world;
+            this.context = context;
         }
 
-        private readonly RuntimeEntityRegistry runtimeEntityRegistry = new(64);
+        public readonly RuntimeEntityRegistry runtimeEntityRegistry = new(64);
         
         public bool TryAdd(NpcData data, IRuntimeEntity runtimeEntity)
         {
@@ -28,11 +30,12 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (!data.TryGet(out INpcContainer container))
                 return false;
             
-            var entity = world.CreateEntity();
-            var entityAddress = new EntityAddress(world, entity);
+            var entity = World.CreateEntity();
+            var entityAddress = new EntityAddress(World, entity);
             container.SetupEntity(data, entityAddress);
             
             runtimeEntityRegistry.Set(entity.id, runtimeEntity);
+            runtimeEntity.Connect(context, entityAddress);
 
             if (!entityAddress.TryGetComponentRef<HealthComponent>(out var healthComponent)) 
                 return true;
@@ -42,7 +45,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             return true;
         }
-
+        
         private void OnHealthChanged(float value)
         {
             if(value > 0)

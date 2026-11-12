@@ -12,8 +12,10 @@ namespace PFE.Gameplay.Scripts.Enemy
     {
         public override void SetupEntity(TData data, EntityAddress address)
         {
-            address.AddComponent<HealthComponent>(new(data.MaxHealth));
-            address.AddComponent<EnemyTagComponent>(new());
+            base.SetupEntity(data, address);
+            
+            address.AddComponent(new HealthComponent(data.MaxHealth));
+            address.AddComponent(new EnemyTagComponent(data));
             
             AddSpecificComponent(data, address);
         }

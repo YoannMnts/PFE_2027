@@ -21,20 +21,26 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         public override HitboxRunner HitboxRunner { get; protected set; }
         public override EntityAddress Address { get; protected set; }
+        public override NpcManager NpcManager { get; protected set; }
 
         public override void Connect(CrossRoadGameModeContext context, EntityAddress address)
         {
             Disconnect();
             
             Address = address;
+            NpcManager = context.NpcManager;
+            
+            if(!Address.TryGetComponent<NpcTagComponent>(out var npcTagComponent))
+                return;
+            
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
-            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
+            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, npcTagComponent.npcData.AttackData);
             
             var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
             HitboxRunner = new HitboxRunner(attackContext);
 
             // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
-            PushbackData pushback = instance.data.PushbackData;
+            PushbackData pushback = npcTagComponent.npcData.PushbackData;
             KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
 
             if (address.TryGetComponent<HealthComponent>(out var healthComponent))
@@ -50,41 +56,6 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         protected virtual void OnSetup(CrossRoadGameModeContext context) { }
 
-        public void Setup(CrossRoadGameModeContext context, TInstance npcInstance)
-        {
-            if (npcInstance == null)
-            {
-                Debug.LogError($"[RuntimeNpc] '{name}' received a null {typeof(TInstance).Name}.", this);
-                return;
-            }
-
-            Unsubscribe();
-            instance = npcInstance;
-            instance.OnModifyHealth += OnModifyHealth;
-            instance.OnDeath += OnDeath;
-
-            behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
-            behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
-
-            var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
-            HitboxRunner = new HitboxRunner(attackContext);
-
-            // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
-            PushbackData pushback = instance.data.PushbackData;
-            KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
-            
-            OnSetup(context);
-        }
-        
-        private void Unsubscribe()
-        {
-            if (instance == null)
-                return;
-
-            instance.OnModifyHealth -= OnModifyHealth;
-            instance.OnDeath -= OnDeath;
-        }
-
         protected override void Update()
         {
             LockMovementDuringAttack();
@@ -95,18 +66,25 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             base.LateUpdate();
 
-            if (instance != null)
-                behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, instance.TargetPosition);
+            if(Address.TryGetComponent<AIMovementComponent>(out var component))
+                behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, component.TargetPosition);
 
             HitboxRunner?.LateTick();
         }
 
-        protected virtual void OnDestroy() => Unsubscribe();
+        protected virtual void OnDestroy() => Disconnect();
 
         [Button, DisableInEditorMode]
         public void DebugDamage(int damage) => TakeDamage(damage);
 
-        public override void TakeDamage(int amount) => instance?.AddOrRemoveHealth(-amount);
+        public override void TakeDamage(int amount)
+        {
+            if(!Address.TryGetComponentRef<HealthComponent>(out var healthComponentRef))
+                return;
+            
+            ref var healthComponent = ref healthComponentRef.GetValue();
+            healthComponent.AddOrRemove(amount);
+        }
 
         private void OnAttackHit(in HitboxHit hit)
         {
@@ -138,11 +116,13 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (NavMeshAgent == null || !NavMeshAgent.isOnNavMesh)
                 return;
 
-            // No PushbackData: this NPC can't be pushed (e.g. the pilgrim)
-            PushbackData pushback = instance.data.PushbackData;
-            if (pushback == null)
+            if(!Address.TryGetComponent<NpcTagComponent>(out var component))
+                return;
+            
+            if(component.npcData.PushbackData == null)
                 return;
 
+            var pushback = component.npcData.PushbackData;
             KnockbackRequest final = pushback.Redirect != null
                 ? request.WithDirection(RedirectKnockback(request.direction, pushback.Redirect, hitMask))
                 : request;

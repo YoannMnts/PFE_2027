@@ -12,9 +12,12 @@ namespace PFE.Gameplay.Scripts.Pilgrims
     {
         public override void SetupEntity(PilgrimData data, EntityAddress address)
         {
-            address.AddComponent<PilgrimTagComponent>(new());
+            base.SetupEntity(data, address);
+            
+            address.AddComponent<PilgrimTagComponent>(new(data));
             address.AddComponent<HealthComponent>(new(data.MaxHealth));
             address.AddComponent<PlayerAllyComponent>(new());
+            address.AddComponent(new AIMovementComponent());
         }
 
         public override Vector3 RedirectTargetPosition(PilgrimData data, EntityAddress address, Vector3 goal)

@@ -60,33 +60,21 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
             var generateNpcPhase = new GenerateNpcPhase(gameModeContext, currentArea, campfireResult.value);
             await generateNpcPhase.Run();
             
-            if (!gameModeContext.NpcManager.TryGetFirstData(out PilgrimData pilgrimData))
+                
+            //TOUT CHANGER => la camp ne doit pas attendre la phase de dialogue
+            //campPhase se termine quand la dialogue est lancée (car dialogue = area + npc propre)
+            var campPhase = new CampPhase(gameModeContext, campfireResult.value, currentArea.DialogueAreaData);
+            var campResult = await campPhase.Run();
+
+            if (campResult.value == null)
             {
                 return false;
             }
-            
-            bool result = false;
 
-            if (gameModeContext.NpcManager.TryGetInstance(pilgrimData, out INpcInstance npcInstance)
-                && npcInstance is PilgrimInstance pilgrimInstance)
-            {
+            var dialoguePhase = await campResult.value.Run();
+            var dialogueResult = dialoguePhase.value;
                 
-                //TOUT CHANGER => la camp ne doit pas attendre la phase de dialogue
-                //campPhase se termine quand la dialogue est lancée (car dialogue = area + npc propre)
-                var campPhase = new CampPhase(gameModeContext, campfireResult.value, currentArea.DialogueAreaData);
-                var dialogueResult = await campPhase.Run();
-
-                if (dialogueResult.value == null)
-                {
-                    result = true;
-                    return false;
-                }
-
-                var isDialogueFinish = await dialogueResult.value.Run();
-                result = isDialogueFinish.value;
-
-            }
-            return result;
+            return dialogueResult;
         }
         
         protected override Awaitable Dispose(CancellationToken token)

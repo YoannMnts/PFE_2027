@@ -1,4 +1,6 @@
-﻿using PFE.Core.Scripts.Enemy;
+﻿using PFE.Core.Scripts.ECS;
+using PFE.Core.Scripts.Enemy;
+using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Interactions;
 using PFE.Gameplay.Scripts.NPCs;
@@ -7,53 +9,25 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
-    public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IInteractable
+    public abstract class RuntimeEnemy : RuntimeNpc<EnemyData>, IInteractable
     {
-        public RuntimeEnemy Interactable => this;
-
-        // Pilgrim followed while this enemy is active (given by its instance)
-        private PilgrimInstance followedPilgrim;
-
         // Also runs when the NpcGenerator reveals the enemy (SetActive(true)), the instance exists by then
-        private void OnEnable() => Follow(Instance?.Pilgrim);
-        private void OnDisable() => Follow(null);
+        private void OnEnable() => Follow();
+        private void OnDisable() => UnFollow();
 
         // The first OnEnable runs during the instantiation, before the instance is plugged
-        protected override void OnSetup(CrossRoadGameModeContext context)
+
+        private void Follow()
         {
-            base.OnSetup(context);
-
-            if (isActiveAndEnabled)
-                Follow(Instance.Pilgrim);
+            //TODO refaire le follow du pilgrim
         }
-
-        private void Follow(PilgrimInstance pilgrim)
+        
+        private void UnFollow()
         {
-            if (followedPilgrim != null)
-                followedPilgrim.OnPositionChanged -= OnPilgrimMoved;
-
-            followedPilgrim = pilgrim;
-            if (followedPilgrim == null)
-                return;
-
-            followedPilgrim.OnPositionChanged += OnPilgrimMoved;
-
-            // Goal given right away instead of waiting for the next pilgrim move
-            OnPilgrimMoved(followedPilgrim.CurrentPosition);
         }
-
-        // The runtime only forwards what happens in the world; the instance and its behaviour pick the target
-        protected virtual void OnPilgrimMoved(Vector3 pilgrimPosition) => Instance?.SetGoal(pilgrimPosition);
-
-
-        protected override void OnDestroy()
-        {
-            
-        }
-
+        
         public void LaunchInteract()
         {
-            //comportement du focus
         }
     }
 }

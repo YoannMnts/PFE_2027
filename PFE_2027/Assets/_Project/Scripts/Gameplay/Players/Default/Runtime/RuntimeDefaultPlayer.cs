@@ -1,6 +1,7 @@
 ﻿using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools;
 using PFE.Core.Scripts;
+using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.Enemy.Attacks.BasicAttacks;
 using PFE.Core.Scripts.GameSettings;
@@ -32,6 +33,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         [SerializeField, BoxGroup("References")]
         private CharacterMotor characterMotor;
+        
+        private World world;
         
         protected override void OnConnected()
         {
