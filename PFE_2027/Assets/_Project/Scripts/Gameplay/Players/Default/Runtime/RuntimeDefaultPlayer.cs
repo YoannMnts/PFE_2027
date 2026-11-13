@@ -16,7 +16,7 @@ using UnityEngine.InputSystem;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public abstract partial class RuntimeDefaultPlayer : RuntimePlayer<DefaultPlayer>
+    public partial class RuntimeDefaultPlayer : RuntimePlayer<DefaultPlayer>
     {
         [SerializeField, BoxGroup("References", true, false, 1f)]
         private Rigidbody rigidBody;
@@ -45,15 +45,12 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
             InitializeAnimation();
             
-            var attackContext = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnAttackHit, OnWindowEnter);
+            var context = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnDefaultHit, OnWindowEnter);
             // The player is not IDamageable yet: no owner to exclude
-            hitboxRunner = new HitboxRunner(attackContext);
+            hitboxRunner = new HitboxRunner(context);
             
-
             InitializeFacing();
         }
-
-        
 
         protected override void OnDisconnected()
         {

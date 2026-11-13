@@ -25,5 +25,4 @@ namespace PFE.Core.Scripts.Enemy.Attacks
     // Called once per target and per attack (a target is never hit twice by the same attack)
     //template des hit durant une anim
     public delegate void HitboxHitHandler(in HitboxHit hit);
-    
 }

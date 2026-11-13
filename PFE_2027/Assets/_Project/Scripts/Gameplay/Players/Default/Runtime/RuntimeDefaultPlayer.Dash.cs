@@ -1,6 +1,7 @@
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.Fight.Dashes;
 using PFE.Core.Scripts.Players;
+using PFE.Gameplay.Scripts.NPCs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -32,15 +33,22 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             //sinon dash esquive
             
             // Replaces the current attack; the cooldown counts from the end of the dash
-            hitboxRunner.Begin(dash);
+            hitboxRunner.Begin(dash, OnDashHit);
             dashReadyTime = Time.time + dash.PlaySeconds + dash.Cooldown;
         }
+
         
         private void OnDashHit(in HitboxHit hit)
         {
-            Debug.Log($"[Runtime player Dash] {hit.collider.gameObject.name}");
-
             //TODO faire la logic de collision de dash chargé
+            
+            if (hit.target is not RuntimeNpc npc)
+                return;
+
+            Debug.Log($"[Runtime player Dash] {npc.gameObject.name}");
+            
+            KnockbackRequest request = PushBackExtension.FromHit(mesh.transform.position, hit, mesh.forward);
+            npc.PushBackWithDamage(hit.hitbox.Damage, request);
         }
     }
 }
