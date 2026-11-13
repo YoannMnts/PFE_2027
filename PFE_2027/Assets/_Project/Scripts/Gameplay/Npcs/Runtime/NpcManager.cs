@@ -8,6 +8,8 @@ using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Entities;
+using PFE.Gameplay.Scripts.Generators;
+using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.NPCs
@@ -24,7 +26,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         public readonly RuntimeEntityRegistry runtimeEntityRegistry = new(64);
         
-        public bool TryAdd(NpcData data, IRuntimeEntity runtimeEntity)
+        public bool TryAdd(NpcData data, IRuntimeEntity runtimeEntity, IRuntimeArea area, float progressionGoal = 0)
         {
             //si la data n'a pas de behavior
             if (!data.TryGet(out INpcContainer container))
@@ -32,17 +34,24 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             var entity = World.CreateEntity();
             var entityAddress = new EntityAddress(World, entity);
-            container.SetupEntity(data, entityAddress);
+            var setupContext = new EntitySetupContext(generatorContext, entityAddress);
+            container.SetupEntity(data, setupContext);
             
             runtimeEntityRegistry.Set(entity.id, runtimeEntity);
             runtimeEntity.Connect(context, entityAddress);
 
             if (!entityAddress.TryGetComponentRef<HealthComponent>(out var healthComponent)) 
-                return true;
+                return false;
             
             var component = healthComponent.GetValue();
             component.Health.OnValueChanged += OnHealthChanged;
 
+            if (progressionGoal > 0)
+            {
+                entityAddress.AddComponent(new PendingNpcComponent(progressionGoal));
+                entityAddress.Deactivate();
+            }
+            
             return true;
         }
         

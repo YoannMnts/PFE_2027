@@ -1,22 +1,22 @@
 ﻿using PFE.Core.Scripts.ECS;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
+using PFE.Gameplay.Scripts.Generators;
 using UnityEngine.Splines;
 
 namespace PFE.Gameplay.Scripts.NPCs
 {
-    // What a behaviour may need to create the instance of its NPC
-    public readonly struct NpcSetupContext
+    public readonly struct EntitySetupContext
     {
         public readonly SplineContainer splineContainer;
         public readonly NpcManager npcManager;
         public readonly CrossRoadGameMode crossRoadGameMode;
         public readonly EntityAddress address;
 
-        public NpcSetupContext(SplineContainer splineContainer, CrossRoadGameModeContext gameModeContext, EntityAddress address)
+        public EntitySetupContext(CrossRoadGameModeContext context, EntityAddress address)
         {
-            this.splineContainer = splineContainer;
-            this.npcManager = gameModeContext.NpcManager;
-            this.crossRoadGameMode = gameModeContext.gameMode;
+            splineContainer = context.spline;
+            npcManager = context.NpcManager;
+            crossRoadGameMode = context.gameMode;
             this.address = address;
         }
     }

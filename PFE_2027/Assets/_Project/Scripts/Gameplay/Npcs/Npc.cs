@@ -13,9 +13,9 @@ namespace PFE.Gameplay.Scripts.NPCs
     public abstract class Npc<TData> : INpc<TData>
         where TData : NpcData
     {
-        public virtual void SetupEntity(TData data, EntityAddress address)
+        public virtual void SetupEntity(TData data, EntitySetupContext context)
         {
-            address.AddComponent(new NpcTagComponent(data));
+            context.address.AddComponent(new NpcTagComponent(data));
         }
 
         public abstract Vector3 RedirectTargetPosition(TData data, EntityAddress address, Vector3 goal);

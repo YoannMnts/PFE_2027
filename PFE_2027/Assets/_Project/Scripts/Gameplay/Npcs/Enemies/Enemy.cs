@@ -10,10 +10,11 @@ namespace PFE.Gameplay.Scripts.Enemy
 {
     public abstract class Enemy<TData> : Npc<TData> where TData : EnemyData
     {
-        public override void SetupEntity(TData data, EntityAddress address)
+        public override void SetupEntity(TData data, EntitySetupContext context)
         {
-            base.SetupEntity(data, address);
+            base.SetupEntity(data, context);
             
+            var address = context.address;
             address.AddComponent(new HealthComponent(data.MaxHealth));
             address.AddComponent(new EnemyTagComponent(data));
             

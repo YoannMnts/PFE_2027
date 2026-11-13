@@ -12,7 +12,7 @@ namespace PFE.Gameplay.Scripts.NPCs
     public interface INpc<in TData> : IBehaviour<TData> where TData : INpcData
     {
         [AddToContainer]
-        void SetupEntity(TData data, EntityAddress address);
+        void SetupEntity(TData data, EntitySetupContext context);
         
         [AddToContainer]
         // final destination of the NPC from the goal given by the game (pilgrim position, spline point...):

@@ -10,13 +10,14 @@ namespace PFE.Gameplay.Scripts.Pilgrims
     // Stateless pilgrim behaviour, its state (position...) lives in PilgrimInstance
     public partial class Pilgrim : Npc<PilgrimData>
     {
-        public override void SetupEntity(PilgrimData data, EntityAddress address)
+        public override void SetupEntity(PilgrimData data, EntitySetupContext context)
         {
-            base.SetupEntity(data, address);
-            
+            base.SetupEntity(data, context);
+
+            var address = context.address;
             address.AddComponent<PilgrimTagComponent>(new(data));
             address.AddComponent<HealthComponent>(new(data.MaxHealth));
-            address.AddComponent<PlayerAllyComponent>(new());
+            address.AddComponent<PlayerAllyComponent>(new(data));
             address.AddComponent(new AIMovementComponent());
         }
 

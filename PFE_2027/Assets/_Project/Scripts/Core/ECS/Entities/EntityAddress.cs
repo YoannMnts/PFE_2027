@@ -13,18 +13,47 @@ namespace PFE.Core.Scripts.ECS
         }
 
         public bool AddComponent<T>(in T component) where T : struct, IEntityComponent 
-            => world.AddComponent<T>(entity, component);
+            => IsValid && world.AddComponent<T>(entity, component);
 
         public bool RemoveComponent<T>() where T : struct, IEntityComponent 
-            => world.RemoveComponent<T>(entity);
+            => IsValid && world.RemoveComponent<T>(entity);
 
-        public bool TryGetComponent<T>(out T component) where T : struct, IEntityComponent 
-            => world.TryGetComponent(entity, out component);
+        public bool TryGetComponent<T>(out T component) where T : struct, IEntityComponent
+        {
+            if (!IsValid)
+            {
+                component = default;
+                return false;
+            }
 
-        public bool TryGetComponentRef<T>(out ComponentRef<T> component) where T : struct, IEntityComponent 
-            => world.TryGetComponentRef(entity, out component);
-        
-        public void Activate() => world.Activate(entity);
-        public void Deactivate() => world.Deactivate(entity);
+            return world.TryGetComponent(entity, out component);
+        }
+
+        public bool TryGetComponentRef<T>(out ComponentRef<T> component) where T : struct, IEntityComponent
+        {
+            if (!IsValid)
+            {
+                component = default;
+                return false;
+            }
+            
+            return world.TryGetComponentRef(entity, out component);
+        }
+
+        public void Activate()
+        {
+            if (!IsValid)
+                return;
+            
+            world.Activate(entity);
+        }
+
+        public void Deactivate()
+        {
+            if (!IsValid)
+                return;
+            
+            world.Deactivate(entity);
+        }
     }
 }

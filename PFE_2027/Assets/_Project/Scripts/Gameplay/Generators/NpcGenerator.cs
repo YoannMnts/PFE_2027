@@ -11,6 +11,7 @@ using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.Entities;
+using PFE.Gameplay.Scripts.Generators;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.RoadSystem;
@@ -58,7 +59,9 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
         }
         
         void IPhaseListener<GenerateNpcPhase>.OnPhaseBegin(GenerateNpcPhase phase)
-        { 
+        {
+            container.ClearChildren();
+            
             //Pour récupérer l'area
             IRuntimeArea runtimeArea = phase.area;
             if (runtimeArea == null)
@@ -149,9 +152,13 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 Destroy(runtimeNpc.gameObject);
                 return null;
             }
-            
-            if(!context.NpcManager.TryAdd(npcData, runtimeEntity))
+
+            var generateContext = new GeneratorContext(runtimeArea.Path, context);
+            if (!context.NpcManager.TryAdd(npcData, runtimeEntity, generateContext, spawnPoint.Progression))
+            {
+                Destroy(runtimeNpc.gameObject);
                 return null;
+            }
             
             return runtimeNpc;
         }
@@ -189,7 +196,10 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 }
 
                 foreach (var address in removedEntities)
+                {
                     address.RemoveComponent<PendingNpcComponent>();
+                    address.Activate();
+                }
             }
         }
     }
