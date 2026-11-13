@@ -8,7 +8,6 @@ using PFE.Core.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.Entities;
-using PFE.Gameplay.Scripts.Generators;
 using PFE.Gameplay.Scripts.RoadSystem;
 using UnityEngine;
 
@@ -34,7 +33,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             var entity = World.CreateEntity();
             var entityAddress = new EntityAddress(World, entity);
-            var setupContext = new EntitySetupContext(generatorContext, entityAddress);
+            var setupContext = new EntitySetupContext(context, entityAddress);
             container.SetupEntity(data, setupContext);
             
             runtimeEntityRegistry.Set(entity.id, runtimeEntity);

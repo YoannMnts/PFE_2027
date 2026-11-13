@@ -11,7 +11,6 @@ using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using PFE.Gameplay.Scripts.Entities;
-using PFE.Gameplay.Scripts.Generators;
 using PFE.Gameplay.Scripts.NPCs;
 using PFE.Gameplay.Scripts.Pilgrims;
 using PFE.Gameplay.Scripts.RoadSystem;
@@ -153,8 +152,7 @@ namespace PFE.Gameplay.Scripts.EnemyGenerators
                 return null;
             }
 
-            var generateContext = new GeneratorContext(runtimeArea.Path, context);
-            if (!context.NpcManager.TryAdd(npcData, runtimeEntity, generateContext, spawnPoint.Progression))
+            if (!context.NpcManager.TryAdd(npcData, runtimeEntity, runtimeArea, spawnPoint.Progression))
             {
                 Destroy(runtimeNpc.gameObject);
                 return null;
