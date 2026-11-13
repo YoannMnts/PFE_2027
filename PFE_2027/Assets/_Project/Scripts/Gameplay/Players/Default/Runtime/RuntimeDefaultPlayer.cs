@@ -16,7 +16,7 @@ using UnityEngine.InputSystem;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    public partial class RuntimeDefaultPlayer : RuntimePlayer<DefaultPlayer>
+    public abstract partial class RuntimeDefaultPlayer : RuntimePlayer<DefaultPlayer>
     {
         [SerializeField, BoxGroup("References", true, false, 1f)]
         private Rigidbody rigidBody;
@@ -44,13 +44,16 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 Debug.LogError("[RuntimeDefaultPlayer] No CharacterMotor assigned, movement won't be locked during attacks.", this);
 
             InitializeAnimation();
-
+            
             var attackContext = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnAttackHit, OnWindowEnter);
             // The player is not IDamageable yet: no owner to exclude
             hitboxRunner = new HitboxRunner(attackContext);
+            
 
             InitializeFacing();
         }
+
+        
 
         protected override void OnDisconnected()
         {

@@ -14,24 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Dashes.DashData
   guidText: d63716d3-be54-4fa1-bf44-e07f435e3ba1
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: 65865a45df233ec48a1d1e090b0ac3eb, type: 2}
-  hitboxes: []
+  hitboxes:
+  - <Window>k__BackingField:
+      <Start>k__BackingField: 0
+      <End>k__BackingField: 1
+    <Anchor>k__BackingField: {fileID: 11400000, guid: daff74a5bcbe2c44b8dd0c107d5f335e, type: 2}
+    <Shape>k__BackingField: 0
+    <Offset>k__BackingField: {x: -0.12643844, y: 0.60860085, z: -6.646417e-11}
+    <Size>k__BackingField: {x: 1.7872865, y: 0.8716759, z: 1}
+    <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
+    <Damage>k__BackingField: 0
+    <Strength>k__BackingField: 1
   windows:
   - <Flag>k__BackingField:
-      rid: 8017306121691201632
+      rid: 497124695599218779
     <Window>k__BackingField:
       <Start>k__BackingField: 0
       <End>k__BackingField: 1
-  - <Flag>k__BackingField:
-      rid: 8017306121691201639
-    <Window>k__BackingField:
-      <Start>k__BackingField: 0.275
-      <End>k__BackingField: 1
   <Duration>k__BackingField: 0
   <Cooldown>k__BackingField: 0.4
+  <MaxCooldown>k__BackingField: 0
+  <ChargeUpTime>k__BackingField: 0
   references:
     version: 2
     RefIds:
-    - rid: 8017306121691201632
+    - rid: 497124695599218779
       type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data:
         <Distance>k__BackingField: 5
@@ -59,7 +66,3 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 8017306121691201639
-      type: {class: Combo, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
-      data:
-        <NextAttack>k__BackingField: {fileID: 11400000, guid: 270ed6c3be65c314fb2b14c5ee4f5f99, type: 2}

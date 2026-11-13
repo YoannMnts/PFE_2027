@@ -14,7 +14,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private readonly HitboxAnchors anchors;
         private readonly IDamageable owner;         // The attacker itself, never hit by its own attack (can be null)
         private readonly LayerMask hitMask;
-        private readonly AttackHitHandler onHit;
+        private readonly HitboxHitHandler onHit;
         private readonly WindowEnterHandler onWindowEnter;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
@@ -63,7 +63,10 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         
         public void Begin(HitboxData data)
         {
+            //joue l'anim
             playId = actionAnimator.Play(data.AnimationClip, duration: data.PlayDuration);
+            
+            
             if (playId < 0)
             {
                 Debug.LogError($"[AttackRunner] Attack '{data.name}' has no animation clip.", data);

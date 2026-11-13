@@ -15,6 +15,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private LayerMask hitMask;
 
         private HitboxRunner hitboxRunner;
+        
         private float attackRequestTime = float.NegativeInfinity;
         
         public void PlayAttack()
