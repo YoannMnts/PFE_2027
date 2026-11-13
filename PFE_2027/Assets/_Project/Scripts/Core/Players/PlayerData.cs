@@ -25,5 +25,8 @@ namespace PFE.Core.Scripts.Players
         // Dash of this character: animation, windows (Displacement for the movement), duration and cooldown
         [field: SerializeField, BoxGroup("Dash")]
         public DashData Dash { get; private set; }
+        
+        [field: SerializeField, BoxGroup("Dash")]
+        public int MaxDashSequency { get; private set; }
     }
 }

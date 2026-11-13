@@ -16,6 +16,13 @@ namespace PFE.Core.Scripts.Fight.Dashes
         // Time (in seconds) after the end of the dash before the next one is allowed
         [field: SerializeField, BoxGroup("Dash"), Min(0f)]
         public float Cooldown { get; private set; } = 0.4f;
+        
+        [field: SerializeField, BoxGroup("Dash"), Min(0f)]
+        public float MaxCooldown  { get;  private set; }
+        
+        [field: SerializeField, BoxGroup("Dash"), Min(0f)]
+        public float ChargeUpTime { get;  private set; }
+        
 
         public override float PlayDuration => Duration > 0f ? Duration : -1f;
     }

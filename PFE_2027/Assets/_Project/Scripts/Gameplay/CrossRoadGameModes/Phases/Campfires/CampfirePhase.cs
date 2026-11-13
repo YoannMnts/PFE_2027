@@ -49,6 +49,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
         
         protected override async Awaitable<bool> Execute(CancellationToken token)
         {
+            //TODO mettre le clean up => generate dans initialize 
             var cleanupPhase = new CleanupPhase(gameModeContext);
             await cleanupPhase.Run();
             
@@ -71,7 +72,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes.Phases.Campfires
                 && npcInstance is PilgrimInstance pilgrimInstance)
             {
                 
-                //TOUT CHANGER => la camp ne doit pas attendre la phase de dialogue
+                //TODO TOUT CHANGER => la camp ne doit pas attendre la phase de dialogue
                 //campPhase se termine quand la dialogue est lancée (car dialogue = area + npc propre)
                 var campPhase = new CampPhase(gameModeContext, campfireResult.value, currentArea.DialogueAreaData);
                 var dialogueResult = await campPhase.Run();

@@ -15,6 +15,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private LayerMask hitMask;
 
         private HitboxRunner hitboxRunner;
+        
         private float attackRequestTime = float.NegativeInfinity;
         
         public void PlayAttack()
@@ -49,7 +50,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         }
 
         // What the player's attacks do to what they touch: pushed away from the player, base strength
-        private void OnAttackHit(in HitboxHit hit)
+        private void OnDefaultHit(in HitboxHit hit)
         {
             if (hit.target is not IRuntimeNpc npc)
                 return;

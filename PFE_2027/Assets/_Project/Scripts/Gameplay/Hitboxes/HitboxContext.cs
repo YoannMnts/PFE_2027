@@ -11,12 +11,12 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         public readonly HitboxAnchors anchors;
         public readonly IDamageable owner;
         public readonly UnityEngine.LayerMask hitMask;
-        public readonly AttackHitHandler onHit;
+        public readonly HitboxHitHandler onHit;
         public readonly WindowEnterHandler onWindowEnter;   // Optional
 
         public HitboxContext(
             ActionAnimator actionAnimator, HitboxAnchors anchors, IDamageable owner, UnityEngine.LayerMask hitMask,
-            AttackHitHandler onHit, WindowEnterHandler onWindowEnter = null)
+            HitboxHitHandler onHit, WindowEnterHandler onWindowEnter = null)
         {
             this.actionAnimator = actionAnimator;
             this.anchors = anchors;

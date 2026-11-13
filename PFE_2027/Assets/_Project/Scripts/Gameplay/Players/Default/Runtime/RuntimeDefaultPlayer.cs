@@ -44,11 +44,11 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 Debug.LogError("[RuntimeDefaultPlayer] No CharacterMotor assigned, movement won't be locked during attacks.", this);
 
             InitializeAnimation();
-
-            var attackContext = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnAttackHit, OnWindowEnter);
+            
+            var context = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnDefaultHit, OnWindowEnter);
             // The player is not IDamageable yet: no owner to exclude
-            hitboxRunner = new HitboxRunner(attackContext);
-
+            hitboxRunner = new HitboxRunner(context);
+            
             InitializeFacing();
         }
 

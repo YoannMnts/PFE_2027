@@ -14,7 +14,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private readonly HitboxAnchors anchors;
         private readonly IDamageable owner;         // The attacker itself, never hit by its own attack (can be null)
         private readonly LayerMask hitMask;
-        private readonly AttackHitHandler onHit;
+        private readonly HitboxHitHandler defaultHit;
         private readonly WindowEnterHandler onWindowEnter;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
@@ -25,6 +25,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private int playId = -1;
         private float previousTime;
         private float currentSeconds;       // Real duration of the current action, converts windows into seconds
+        private HitboxHitHandler currentHit;
 
         public bool IsRunning => current != null;
 
@@ -57,13 +58,28 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             anchors = context.anchors;
             owner = context.owner;
             hitMask = context.hitMask;
-            onHit = context.onHit;
+            defaultHit = context.onHit;
             onWindowEnter = context.onWindowEnter;
         }
         
-        public void Begin(HitboxData data)
+        public void Begin(HitboxData data, HitboxHitHandler specificAction = null)
         {
+            //DOUANE
+            if (specificAction == null)
+            {
+                currentHit = defaultHit;
+            }
+            else
+            {
+                currentHit = specificAction;
+            }
+            
+            
+            
+            //joue l'anim
             playId = actionAnimator.Play(data.AnimationClip, duration: data.PlayDuration);
+            
+            
             if (playId < 0)
             {
                 Debug.LogError($"[AttackRunner] Attack '{data.name}' has no animation clip.", data);
@@ -136,6 +152,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         // Also cancels the animation when the attack is interrupted before its end
         public void End()
         {
+            //peut peut etre passer en null
+            currentHit = defaultHit;
+            
             actionAnimator.Stop(playId);
             playId = -1;
             current = null;
@@ -166,7 +185,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                     continue;
 
                 alreadyHit.Add(target);
-                onHit?.Invoke(new HitboxHit(target, collider, in hitbox, center));
+                currentHit?.Invoke(new HitboxHit(target, collider, in hitbox, center));
             }
         }
 
