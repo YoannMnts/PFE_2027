@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Eflatun.SceneReference;
+using Helteix.ChanneledProperties.Formulas;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts;
 using PFE.Core.Scripts.Area;
@@ -28,11 +29,11 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         public World World { get; private set; }
         public NpcManager NpcManager { get; private set; }
         
-        
         private SceneReference sceneToLoad;
         private AreaData currentAreaData;
         private int startLaunchIndex = int.MaxValue;
         private Dictionary<int, IPlayer> players;
+        
         
         public CrossRoadGameMode(SceneReference sceneToLoad, AreaData currentAreaData)
         {

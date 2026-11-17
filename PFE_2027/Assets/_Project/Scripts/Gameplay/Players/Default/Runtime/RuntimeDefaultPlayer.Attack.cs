@@ -1,5 +1,6 @@
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.Players;
+using PFE.Gameplay.Scripts.BulletTimes;
 using PFE.Gameplay.Scripts.NPCs;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -34,6 +35,11 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (Time.time - attackRequestTime > data.AttackInputBuffer)
                 return;
 
+            if (currentBulletTimePhase != null)
+            {
+                currentBulletTimePhase.SetResult(false);
+            }
+            
             AttackData attack;
             if (!hitboxRunner.IsRunning)
                 attack = data.BasicAttack;
@@ -44,7 +50,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             
             else
                 return; // Keep the request buffered until the combo window opens or it expires
-
+            
             hitboxRunner.Begin(attack);
             attackRequestTime = float.NegativeInfinity;
         }
@@ -54,9 +60,12 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (hit.target is not IRuntimeNpc npc)
                 return;
-
+            
+            
+            
             KnockbackRequest request = PushBackExtension.FromHit(mesh.transform.position, hit, mesh.forward);
             npc.PushBackWithDamage(hit.hitbox.Damage, request);
         }
+        
     }
 }

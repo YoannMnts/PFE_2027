@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.Enemy.Attacks;
+﻿using PFE.Core.Scripts.BulletTimes;
+using PFE.Core.Scripts.Enemy.Attacks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,7 +23,6 @@ namespace PFE.Core.Scripts.Fight.Dashes
         
         [field: SerializeField, BoxGroup("Dash"), Min(0f)]
         public float ChargeUpTime { get;  private set; }
-        
 
         public override float PlayDuration => Duration > 0f ? Duration : -1f;
     }

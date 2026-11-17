@@ -1,16 +1,13 @@
-﻿using Helteix.ChanneledProperties.Priorities;
-using Helteix.Tools;
-using PFE.Core.Scripts;
+﻿using System;
+using Helteix.ChanneledProperties;
+using Helteix.ChanneledProperties.Priorities;
+using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Enemy.Attacks;
-using PFE.Core.Scripts.Enemy.Attacks.BasicAttacks;
 using PFE.Core.Scripts.GameSettings;
-using PFE.Gameplay.Scripts.Enemy.Runtime;
-using PFE.Gameplay.Scripts.NPCs;
-using PFE.Gameplay.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.BulletTimes;
 using PFE.Gameplay.Scripts.Players.Runtime;
 using Sirenix.OdinInspector;
 using TraversalPro;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,10 +30,14 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("References")]
         private CharacterMotor characterMotor;
         
+        private BulletTimePhase currentBulletTimePhase;
+        
+        
         protected override void OnConnected()
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             Player.ShowUI.OnValueChanged += SetUIMode;
+
 
             if (characterMotor != null)
                 characterMotor.Moving += OnCharacterMoving;
@@ -61,7 +62,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             
             DisposeFacing();
         }
-        
+
         private void LateUpdate()
         {
             UpdateLocomotionAnimation();
