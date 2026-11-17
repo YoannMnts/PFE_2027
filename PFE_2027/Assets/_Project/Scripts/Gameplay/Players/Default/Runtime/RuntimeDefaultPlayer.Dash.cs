@@ -1,6 +1,11 @@
+using System;
+using Helteix.ChanneledProperties.Priorities;
+using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.Fight.Dashes;
 using PFE.Core.Scripts.Players;
+using PFE.Gameplay.Scripts.BulletTimes;
+using PFE.Gameplay.Scripts.Enemy.Runtime;
 using PFE.Gameplay.Scripts.NPCs;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,6 +28,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             DashData dash = data != null ? data.Dash : null;
             if (dash == null || hitboxRunner == null || IsDashing || Time.time < dashReadyTime)
                 return;
+            if (currentBulletTimePhase != null)
+            {
+                currentBulletTimePhase.SetResult(true);
+            }
 
             // The CharacterMotor only drives the velocity on the ground
             if (characterMotor == null || !characterMotor.IsGrounded)
@@ -40,15 +49,16 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         private void OnDashHit(in HitboxHit hit)
         {
-            //TODO faire la logic de collision de dash chargé
-            
-            if (hit.target is not RuntimeNpc npc)
+            if (hit.target is not RuntimeEnemy npc)
                 return;
-
             Debug.Log($"[Runtime player Dash] {npc.gameObject.name}");
+
+            currentBulletTimePhase = new BulletTimePhase();
+            currentBulletTimePhase.RunAndForget();
             
             KnockbackRequest request = PushBackExtension.FromHit(mesh.transform.position, hit, mesh.forward);
             npc.PushBackWithDamage(hit.hitbox.Damage, request);
         }
+        
     }
 }

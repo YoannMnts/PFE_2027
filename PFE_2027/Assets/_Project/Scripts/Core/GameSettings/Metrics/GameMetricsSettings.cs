@@ -28,6 +28,12 @@ namespace PFE.Core.Scripts.GameSettings
         
         [field: SerializeField, BoxGroup("Areas In Order")]
         public AreaData[] AreaDatas { get; private set; } = Array.Empty<AreaData>();
+
+        [field: SerializeField, BoxGroup("World Time Scale")]
+        public float DefaultTimeScale { get; private set; } = 1;
+        
+        [field: SerializeField, BoxGroup("World Time Scale")]
+        public float BulletTimeScale { get; private set; }
         
     }
 }

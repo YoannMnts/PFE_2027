@@ -4,6 +4,7 @@ using Helteix.ChanneledProperties.Conditions;
 using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Phases;
 using PFE.Core.Scripts.Pilgrims;
+using PFE.Gameplay.Scripts.BulletTimes;
 using PFE.Gameplay.Scripts.CampfireGameModes.Phases;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
@@ -87,7 +88,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
                 Instance.UpdatePosition(transform.position);
             }
             
-
         }
         
         //--------------------------------------------------
@@ -139,7 +139,6 @@ namespace PFE.Gameplay.Scripts.Pilgrims
         
         
         //--------------------------------------------------
-
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
