@@ -171,6 +171,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ce93edbf-0240-48ac-970e-a5d8e73416c1
     m_ActionName: 'UI/MiddleClick[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6129747126310287363}
+        m_TargetAssemblyTypeName: PFE.Gameplay.Scripts.Players.Default.Runtime.CharacterControllerExtension, PFE.Gameplay
+        m_MethodName: PerformFocus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bd9cfc77-25e9-41a5-a7d3-736d0ec6552d
+    m_ActionName: 'Player/Focus[/DualShock4GamepadHID/rightStickPress]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -643,7 +659,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6153992402919270734}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9c1c57004c34c63864842adb9190501, type: 3}
   m_Name: 

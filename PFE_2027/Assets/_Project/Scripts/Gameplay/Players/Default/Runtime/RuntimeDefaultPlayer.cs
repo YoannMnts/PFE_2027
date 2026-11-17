@@ -65,6 +65,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private void LateUpdate()
         {
             UpdateLocomotionAnimation();
+            UpdateFocus();
             
             if (hitboxRunner == null)
                 return;

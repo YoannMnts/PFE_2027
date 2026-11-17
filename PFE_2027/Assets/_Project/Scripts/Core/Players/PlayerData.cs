@@ -13,6 +13,9 @@ namespace PFE.Core.Scripts.Players
     {
         [field: SerializeField, Min(1f), BoxGroup("Metrics")]
         public float MaxHealth { get; private set; } = 100f;
+        
+        [field: SerializeField, Min(1f), BoxGroup("Metrics")]
+        public float FocusRadius { get; private set; } = 10;
 
         // First attack of the combo chain (the next ones follow AttackData.Next)
         [field: SerializeField, BoxGroup("Attack")]
