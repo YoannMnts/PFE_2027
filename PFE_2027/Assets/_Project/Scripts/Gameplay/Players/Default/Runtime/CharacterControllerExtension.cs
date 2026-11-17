@@ -36,5 +36,13 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             
             runtimePlayer.Interact();
         }
+
+        public void PerformFocus(InputAction.CallbackContext context)
+        {
+            if(!context.performed)
+                return;
+            
+            runtimePlayer.Focus();
+        }
     }
 }

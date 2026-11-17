@@ -30,7 +30,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             targetFacingDirection = new Priority<Vector3>();
             inputChannel = ChannelKey.GetUniqueChannelKey();
-            targetFacingDirection.AddPriority(inputChannel, PriorityTags.Smallest, Vector3.zero);
+            targetFacingDirection.AddPriority(inputChannel, PriorityTags.Default, Vector3.zero);
 
             // Current orientation as the first goal: a direction already faced doesn't start a turn
             facingGoal = mesh.rotation;
