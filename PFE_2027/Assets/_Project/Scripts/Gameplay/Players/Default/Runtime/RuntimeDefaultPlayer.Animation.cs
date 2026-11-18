@@ -1,4 +1,6 @@
+
 using PFE.Gameplay.Scripts.Animations;
+using PFE.Gameplay.Scripts.BulletTimes;
 using Sirenix.OdinInspector;
 using TraversalPro;
 using UnityEngine;
@@ -52,7 +54,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (actionAnimator == null || characterMotor == null)
                 return;
-
+            
             bool isGrounded = characterMotor.IsGrounded;
             actionAnimator.SetBool(GROUNDED_ID, isGrounded);
 
@@ -65,8 +67,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             Vector3 horizontal = runVelocity;
             horizontal.y = 0f;
             float runValue = runSpeedToValue.Evaluate(horizontal.magnitude);
+            
             actionAnimator.SetFloat(VELOCITY_Y_ID, runValue);
-            actionAnimator.SetFloat(ANIMATION_SPEED_ID, Mathf.Max(runValue, 1f));
+            actionAnimator.SetFloat(ANIMATION_SPEED_ID, BulletTimePhase.TimeMultiplier);
 
             bool hasRecentlyJumped = jump != null && Time.timeAsDouble < jump.LastJumpTime + recentJumpDuration;
             actionAnimator.SetBool(JUMP_ID, hasRecentlyJumped);

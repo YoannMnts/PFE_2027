@@ -54,15 +54,17 @@ namespace PFE.Gameplay.Scripts.Pilgrims
                 targetCamera.Priority.Value = -1;
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             this.Register<ProtectPilgrimPhase>();
             this.Register<CampPhase>();
             this.Register<DebugWaitingDialoguePhase>();
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
             this.Unregister<ProtectPilgrimPhase>();
             this.Unregister<CampPhase>();
             this.Unregister<DebugWaitingDialoguePhase>();

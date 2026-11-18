@@ -37,8 +37,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             Player.ShowUI.OnValueChanged += SetUIMode;
-
-
+            
             if (characterMotor != null)
                 characterMotor.Moving += OnCharacterMoving;
             else
@@ -85,17 +84,25 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             // After the lock: a displacement window (dash, lunge) moves the player even when its input is locked
             ApplyDisplacement(motor);
             ApplyPilgrimLeash(motor);
+            
+            ComputeTimeScale(motor);
         }
 
         private void LockMovementDuringAttack(ICharacterMotor motor)
         {
             if (hitboxRunner == null || !hitboxRunner.Has<MovementLock>(out _))
                 return;
-
+            
             motor.MoveInput = Vector3.zero;
             motor.LocalVelocityGoal = Vector3.zero;
         }
-        
+
+        private void ComputeTimeScale(ICharacterMotor motor)
+        {
+            motor.MoveInput *= BulletTimePhase.TimeMultiplier;
+            motor.LocalVelocityGoal *= BulletTimePhase.TimeMultiplier;
+        }
+
         private void SetUIMode(bool showUI)
         {
             playerInput.SwitchCurrentActionMap(showUI ? "UI" : "Player");

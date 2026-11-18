@@ -1,4 +1,5 @@
 using PFE.Gameplay.Scripts.Animations;
+using PFE.Gameplay.Scripts.BulletTimes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             float runValue = runSpeedToValue.Evaluate(animatedSpeed);
             ActionAnimator.SetFloat(VELOCITY_Y_ID, runValue);
-            ActionAnimator.SetFloat(ANIMATION_SPEED_ID, Mathf.Max(runValue, 1f));
+            ActionAnimator.SetFloat(ANIMATION_SPEED_ID, BulletTimePhase.TimeMultiplier);
         }
     }
 }
