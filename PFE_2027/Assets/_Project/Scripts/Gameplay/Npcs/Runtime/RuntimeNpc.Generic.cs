@@ -1,7 +1,10 @@
+using System;
 using Helteix.ChanneledProperties.Formulas;
+using Helteix.Tools.Phases;
 using PFE.Core.Scripts.ECS;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.NPCs;
+using PFE.Gameplay.Scripts.BulletTimes;
 using PFE.Gameplay.Scripts.Components;
 using PFE.Gameplay.Scripts.CrossRoadGameModes;
 using Sirenix.OdinInspector;
@@ -10,9 +13,9 @@ using UnityEngine;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> 
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> , IPhaseListener<BulletTimePhase>
         where TInstance : NpcInstance<TData>
-        where TData : NpcData 
+        where TData : NpcData
     {
         [SerializeField, BoxGroup("Attacks")]
         private HitboxAnchors hitboxAnchors;
@@ -26,6 +29,17 @@ namespace PFE.Gameplay.Scripts.NPCs
         public override HitboxRunner HitboxRunner { get; protected set; }
         public override EntityAddress Address { get; protected set; }
 
+        protected virtual void OnEnable()
+        {
+            this.Register<BulletTimePhase>();
+        }
+
+        protected virtual void OnDisable()
+        {
+            this.Unregister<BulletTimePhase>();        
+        }
+
+
         public override void Connect(CrossRoadGameModeContext context, EntityAddress address)
         {
             Disconnect();
@@ -33,6 +47,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             Address = address;
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
+            
+            NavMeshAgent.speed = instance.data.Speed;
             
             var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
             HitboxRunner = new HitboxRunner(attackContext);
@@ -93,6 +109,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             LockMovementDuringAttack();
             base.Update();
+            
         }
 
         protected override void LateUpdate()
@@ -163,6 +180,17 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;
+        }
+
+        public void OnPhaseBegin(BulletTimePhase phase)
+        {
+            NavMeshAgent.speed = instance.data.Speed * BulletTimePhase.TimeMultiplier;
+            Debug.Log("aaaaa");
+        }
+
+        public void OnPhaseEnd(BulletTimePhase phase)
+        {
+            NavMeshAgent.speed = instance.data.Speed;
         }
     }
 }

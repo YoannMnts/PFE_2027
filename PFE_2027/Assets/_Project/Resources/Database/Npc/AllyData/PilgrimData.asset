@@ -16,6 +16,7 @@ MonoBehaviour:
   <Name>k__BackingField: "InGameMode_P\xE8lerin"
   <MaxHealth>k__BackingField: 100
   <IsPlayerAlly>k__BackingField: 1
+  <Speed>k__BackingField: 1.5
   <AttackData>k__BackingField: {fileID: 0}
   <PushbackData>k__BackingField: {fileID: 0}
   <Prefab>k__BackingField: {fileID: 1606105754538817475, guid: f4c1b18d0c05645429923c02179173ff, type: 3}

@@ -15,8 +15,17 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
         private PilgrimInstance followedPilgrim;
 
         // Also runs when the NpcGenerator reveals the enemy (SetActive(true)), the instance exists by then
-        private void OnEnable() => Follow(Instance?.Pilgrim);
-        private void OnDisable() => Follow(null);
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            Follow(Instance?.Pilgrim);
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Follow(null);
+        }
 
         // The first OnEnable runs during the instantiation, before the instance is plugged
         protected override void OnSetup(CrossRoadGameModeContext context)
