@@ -69,7 +69,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             float runValue = runSpeedToValue.Evaluate(horizontal.magnitude);
             
             actionAnimator.SetFloat(VELOCITY_Y_ID, runValue);
-            actionAnimator.SetFloat(ANIMATION_SPEED_ID, BulletTimePhase.TimeMultiplier);
+            actionAnimator.SetFloat(ANIMATION_SPEED_ID,TimeScaleManager.TimeMultiplier);
 
             bool hasRecentlyJumped = jump != null && Time.timeAsDouble < jump.LastJumpTime + recentJumpDuration;
             actionAnimator.SetBool(JUMP_ID, hasRecentlyJumped);

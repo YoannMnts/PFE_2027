@@ -23,10 +23,10 @@ MonoBehaviour:
     <Offset>k__BackingField: {x: -0.20468277, y: -0.25956365, z: 0.032606557}
     <Size>k__BackingField: {x: 1.4093635, y: 0.74453175, z: 0.6252793}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
-    <Damage>k__BackingField: 0
-    <Strength>k__BackingField: 1
+    <Damage>k__BackingField: 1
+    <Strength>k__BackingField: 2
   windows: []
-  <Distance>k__BackingField: 3
+  <DistancePerStrength>k__BackingField: 2
   <ProgressOverTime>k__BackingField:
     serializedVersion: 2
     m_Curve:

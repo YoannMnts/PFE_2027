@@ -20,9 +20,6 @@ namespace PFE.Core.Scripts.Fight.Dashes
         
         [field: SerializeField, BoxGroup("Dash"), Min(0f)]
         public float MaxCooldown  { get;  private set; }
-        
-        [field: SerializeField, BoxGroup("Dash"), Min(0f)]
-        public float ChargeUpTime { get;  private set; }
 
         public override float PlayDuration => Duration > 0f ? Duration : -1f;
     }

@@ -6,7 +6,9 @@ namespace PFE.Utilities.Scripts.Timers
 {
     public class Timer
     {
-        private readonly int duration;
+        public bool IsFinish => elapsed >= duration;
+        
+        private readonly float duration;
         private readonly float interval;
 
         private readonly AwaitableCompletionSource resumeSignal = new();
@@ -15,23 +17,23 @@ namespace PFE.Utilities.Scripts.Timers
         private float elapsed;
         private bool isPaused;
 
-        public Timer(int duration, float interval = .1f)
+        public Timer(float duration, float interval = .1f)
         {
             this.duration = duration;
             this.interval = interval;
         }
 
-        public async Awaitable Start()
+        public async void Run()
         {
-            // A fresh run always gets a fresh token - a cancelled CancellationTokenSource can't be reused.
-            cts?.Cancel();
-            cts?.Dispose();
-            cts = new CancellationTokenSource();
-            elapsed = 0f;
-            isPaused = false;
-
             try
             {
+                // A fresh run always gets a fresh token - a cancelled CancellationTokenSource can't be reused.
+                cts?.Cancel();
+                cts?.Dispose();
+                cts = new CancellationTokenSource();
+                elapsed = 0f;
+                isPaused = false;
+                
                 while (elapsed < duration)
                 {
                     if (isPaused)
@@ -51,10 +53,15 @@ namespace PFE.Utilities.Scripts.Timers
             {
                 // Expected when Stop() cancels a run in progress - not an error.
             }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
 
         public void Stop()
         {
+            
             cts?.Cancel();
             resumeSignal.TrySetCanceled();
         }

@@ -62,7 +62,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             float runValue = runSpeedToValue.Evaluate(animatedSpeed);
             ActionAnimator.SetFloat(VELOCITY_Y_ID, runValue);
-            ActionAnimator.SetFloat(ANIMATION_SPEED_ID, BulletTimePhase.TimeMultiplier);
+            ActionAnimator.SetFloat(ANIMATION_SPEED_ID, TimeScaleManager.TimeMultiplier);
         }
     }
 }
