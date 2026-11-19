@@ -8,22 +8,17 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.BulletTimes
 {
-    public partial class BulletTimePhase : PhaseCompletionSource<bool>
+    public class BulletTimePhase : PhaseCompletionSource<bool>
     {
-        [AutoStaticsCleanup]
-        public static float TimeMultiplier { get ; private set;} = GameMetricsSettings.Current.DefaultTimeScale;
-        
         protected override Awaitable Initialize(CancellationToken token)
         {
-            TimeMultiplier = GameMetricsSettings.Current.BulletTimeScale;
-            
+            TimeScaleManager.SetTimeScale(GameMetricsSettings.Current.BulletTimeScale);
             return base.Initialize(token);
         }
 
         protected override Awaitable Dispose(CancellationToken token)
         {
-            TimeMultiplier = GameMetricsSettings.Current.DefaultTimeScale;
-            
+            TimeScaleManager.SetTimeScale(GameMetricsSettings.Current.DefaultTimeScale);
             return base.Dispose(token);
         }
     }

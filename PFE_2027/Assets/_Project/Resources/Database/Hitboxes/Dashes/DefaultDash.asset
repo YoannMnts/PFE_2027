@@ -23,11 +23,11 @@ MonoBehaviour:
     <Offset>k__BackingField: {x: -0.12643844, y: 0.60860085, z: -6.646417e-11}
     <Size>k__BackingField: {x: 1.7872865, y: 0.8716759, z: 1}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
-    <Damage>k__BackingField: 0
-    <Strength>k__BackingField: 1
+    <Damage>k__BackingField: 2
+    <Strength>k__BackingField: 2
   windows:
   - <Flag>k__BackingField:
-      rid: 497124695599218779
+      rid: 497124834518499420
     <Window>k__BackingField:
       <Start>k__BackingField: 0
       <End>k__BackingField: 1
@@ -38,7 +38,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 497124695599218779
+    - rid: 497124834518499420
       type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data:
         <Distance>k__BackingField: 5

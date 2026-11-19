@@ -9,7 +9,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
     {
         // Meters travelled for a knockback of strength 1. Starting value of RuntimeNpc.KnockbackDistance
         [field: SerializeField, BoxGroup("Knockback"), Min(0f)]
-        public float Distance { get; private set; }
+        public float DistancePerStrength { get; private set; }
 
         // Shape of the slide. X: seconds since the hit (the last key gives the duration of the knockback and of its
         // animation). Y: part of the distance already travelled; only the shape matters, the last key counts as 100%.

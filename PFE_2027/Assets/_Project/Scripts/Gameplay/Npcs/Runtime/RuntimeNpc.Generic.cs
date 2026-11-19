@@ -13,7 +13,7 @@ using UnityEngine;
 namespace PFE.Gameplay.Scripts.NPCs
 {
     // Base of NPC runtimes: receives its typed instance through Npc<TData, TInstance>.CreateInstance
-    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance> , IPhaseListener<BulletTimePhase>
+    public abstract class RuntimeNpc<TInstance, TData> : RuntimeNpc, IRuntimeNpc<TInstance>
         where TInstance : NpcInstance<TData>
         where TData : NpcData
     {
@@ -31,12 +31,10 @@ namespace PFE.Gameplay.Scripts.NPCs
 
         protected virtual void OnEnable()
         {
-            this.Register<BulletTimePhase>();
         }
 
         protected virtual void OnDisable()
         {
-            this.Unregister<BulletTimePhase>();        
         }
 
 
@@ -55,7 +53,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
             PushbackData pushback = instance.data.PushbackData;
-            KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
+            KnockbackDistance = new Formula<float>(pushback != null ? pushback.DistancePerStrength : 0f);
 
             if (address.TryGetComponent<HealthComponent>(out var healthComponent))
                 healthComponent.Health.OnValueChanged += OnModifyHealth; 
@@ -91,7 +89,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
             PushbackData pushback = instance.data.PushbackData;
-            KnockbackDistance = new Formula<float>(pushback != null ? pushback.Distance : 0f);
+            KnockbackDistance = new Formula<float>(pushback != null ? pushback.DistancePerStrength : 0f);
             
             OnSetup(context);
         }
@@ -108,6 +106,8 @@ namespace PFE.Gameplay.Scripts.NPCs
         protected override void Update()
         {
             LockMovementDuringAttack();
+            NavMeshAgent.speed = instance.data.Speed.WithTimeScale();
+            
             base.Update();
             
         }
@@ -180,17 +180,6 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;
-        }
-
-        public void OnPhaseBegin(BulletTimePhase phase)
-        {
-            NavMeshAgent.speed = instance.data.Speed * BulletTimePhase.TimeMultiplier;
-            Debug.Log("aaaaa");
-        }
-
-        public void OnPhaseEnd(BulletTimePhase phase)
-        {
-            NavMeshAgent.speed = instance.data.Speed;
         }
     }
 }

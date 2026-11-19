@@ -99,8 +99,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void ComputeTimeScale(ICharacterMotor motor)
         {
-            motor.MoveInput *= BulletTimePhase.TimeMultiplier;
-            motor.LocalVelocityGoal *= BulletTimePhase.TimeMultiplier;
+            motor.MoveInput *= TimeScaleManager.TimeMultiplier;
+            motor.LocalVelocityGoal *= TimeScaleManager.TimeMultiplier;
         }
 
         private void SetUIMode(bool showUI)
