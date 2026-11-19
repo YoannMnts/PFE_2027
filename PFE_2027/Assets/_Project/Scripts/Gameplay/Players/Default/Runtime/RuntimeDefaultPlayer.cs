@@ -6,6 +6,7 @@ using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.BulletTimes;
 using PFE.Gameplay.Scripts.Players.Runtime;
+using PFE.Utilities.Scripts.Timers;
 using Sirenix.OdinInspector;
 using TraversalPro;
 using UnityEngine;
@@ -31,8 +32,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private CharacterMotor characterMotor;
         
         private BulletTimePhase currentBulletTimePhase;
-        
-        
+
         protected override void OnConnected()
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
@@ -48,6 +48,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             var context = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnDefaultHit, OnWindowEnter);
             // The player is not IDamageable yet: no owner to exclude
             hitboxRunner = new HitboxRunner(context);
+            
+            dashChargeTimer = new Timer(Player.Data.ChargeUpTime);
             
             InitializeFacing();
         }

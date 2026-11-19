@@ -7,6 +7,7 @@ using PFE.Core.Scripts.Players;
 using PFE.Gameplay.Scripts.BulletTimes;
 using PFE.Gameplay.Scripts.Enemy.Runtime;
 using PFE.Gameplay.Scripts.NPCs;
+using PFE.Utilities.Scripts.Timers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,16 +18,26 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     public partial class RuntimeDefaultPlayer
     {
         private float dashReadyTime;
-
+        private Timer dashChargeTimer;
         public bool IsDashing => hitboxRunner != null && hitboxRunner.Current is DashData;
 
+        public void StartCharging()
+        {
+            dashChargeTimer.Stop();
+            dashChargeTimer.Run();
+        }
+        
         // Called by the input (CharacterControllerExtension)
         public void Dash()
         {
             //Douane et association des DATAs
-            PlayerData data = Player?.Data;
-            DashData dash = data != null ? data.Dash : null;
-            if (dash == null || hitboxRunner == null || IsDashing || Time.time < dashReadyTime)
+            PlayerData data = Player.Data;
+            DashData currentDashData = dashChargeTimer.IsFinish ? data.ChargeDash : data.DefaultDash;
+            Debug.Log($"[Runtime player Dash] {currentDashData.name}");
+            
+
+            
+            if (currentDashData == null || hitboxRunner == null || IsDashing || Time.time < dashReadyTime)
                 return;
             if (currentBulletTimePhase != null)
             {
@@ -36,23 +47,19 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             // The CharacterMotor only drives the velocity on the ground
             if (characterMotor == null || !characterMotor.IsGrounded)
                 return;
-            
             Debug.Log($"[Runtime player Dash] Player is dashing");
-            //TODO Si chargeUpTime >= 1 ==> Dash Chargé
-            //sinon dash esquive
             
             // Replaces the current attack; the cooldown counts from the end of the dash
-            hitboxRunner.Begin(dash, OnDashHit);
-            dashReadyTime = Time.time + dash.PlaySeconds + dash.Cooldown;
+            hitboxRunner.Begin(currentDashData, OnDashHit);
+            dashReadyTime = Time.time + currentDashData.PlaySeconds + currentDashData.Cooldown;
         }
-
         
         private void OnDashHit(in HitboxHit hit)
         {
             if (hit.target is not RuntimeEnemy npc)
                 return;
             Debug.Log($"[Runtime player Dash] {npc.gameObject.name}");
-
+            
             currentBulletTimePhase = new BulletTimePhase();
             currentBulletTimePhase.RunAndForget();
             

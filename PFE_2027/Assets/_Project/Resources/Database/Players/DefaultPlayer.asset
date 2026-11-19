@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Players.PlayerData
   guidText: 12f3dca8-85c2-4226-a058-241f4e8511ea
   <MaxHealth>k__BackingField: 100
+  <FocusRadius>k__BackingField: 10
   <BasicAttack>k__BackingField: {fileID: 11400000, guid: 3d366dab21af43043877e7bda598769b, type: 2}
   <AttackInputBuffer>k__BackingField: 0.25
-  <Dash>k__BackingField: {fileID: 11400000, guid: d1c9795ea2ab4d641a328b1172a9bd81, type: 2}
+  <DefaultDash>k__BackingField: {fileID: 11400000, guid: d1c9795ea2ab4d641a328b1172a9bd81, type: 2}
+  <ChargeDash>k__BackingField: {fileID: 11400000, guid: fa6ffd79173709f44ba3993e3a80e5ce, type: 2}
+  <ChargeUpTime>k__BackingField: 2
+  <MaxDashSequency>k__BackingField: 0
