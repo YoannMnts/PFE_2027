@@ -85,6 +85,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "FocusSwitch",
+                    "type": "Value",
+                    "id": "363f58b6-cd39-4034-8dfa-356770c2f2e2",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -393,6 +403,17 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Focus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8728e20b-7921-4deb-9627-8a174e13451e",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FocusSwitch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
