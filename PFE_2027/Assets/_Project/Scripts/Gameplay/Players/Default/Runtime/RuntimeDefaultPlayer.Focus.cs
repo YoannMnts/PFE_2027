@@ -4,6 +4,7 @@ using Helteix.ChanneledProperties;
 using Helteix.ChanneledProperties.Priorities;
 using PFE.Gameplay.Scripts.Enemy.Runtime;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
@@ -35,7 +36,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private const int MAX_RESULTS = 16;
         private const float MIN_SQR_DISTANCE = 0.0001f;
         private readonly Collider[] focusResults = new Collider[MAX_RESULTS];
-        private readonly List<FocusTarget> focusTargets = new();
         
         private RuntimeEnemy currentFocusTarget;
         private FocusState focusState = FocusState.Unlock;
@@ -102,34 +102,36 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private bool TryFindFocusTarget(Vector3 origin, Vector3 forward, float radius, LayerMask mask, out RuntimeEnemy target)
         {
-            target = null;
+            using (ListPool<FocusTarget>.Get(out var focusTargets))
+            {
+                target = null;
 
-            forward.y = 0f;
-            if (forward.sqrMagnitude < MIN_SQR_DISTANCE)
-                return false;
+                forward.y = 0f;
+                if (forward.sqrMagnitude < MIN_SQR_DISTANCE)
+                    return false;
 
-            CollectFocusTargets(origin, forward, radius, mask);
-            if (focusTargets.Count == 0)
-                return false;
+                CollectFocusTargets(origin, forward, radius, mask, focusTargets);
+                if (focusTargets.Count == 0)
+                    return false;
 
-            focusTargets.Sort();
-            target = focusTargets[0].enemy;
-            return true;
+                focusTargets.Sort();
+                target = focusTargets[0].enemy;
+                return true;
+            }
         }
 
         // Fills focusTargets with every enemy in the radius and its cost. Not sorted
-        private void CollectFocusTargets(Vector3 origin, Vector3 forward, float radius, LayerMask mask)
+        private void CollectFocusTargets(Vector3 origin, Vector3 forward, float radius, LayerMask mask, List<FocusTarget> focusTargets)
         {
-            focusTargets.Clear();
             var data = Player.Data;
 
             int count = Physics.OverlapSphereNonAlloc(origin, radius, focusResults, mask, QueryTriggerInteraction.Collide);
             for (int i = 0; i < count; i++)
             {
                 RuntimeEnemy enemy = focusResults[i].GetComponentInParent<RuntimeEnemy>();
-                if (enemy == null || ContainsFocusTarget(enemy))
+                if (enemy == null || ContainsFocusTarget(enemy, focusTargets) || enemy == currentFocusTarget)
                     continue;
-
+                
                 Vector3 toEnemy = enemy.transform.position - origin;
                 toEnemy.y = 0f;
                 if (toEnemy.sqrMagnitude < MIN_SQR_DISTANCE)
@@ -145,7 +147,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         }
 
         // An enemy with several colliders is returned once per collider by the overlap
-        private bool ContainsFocusTarget(RuntimeEnemy enemy)
+        private bool ContainsFocusTarget(RuntimeEnemy enemy, List<FocusTarget> focusTargets)
         {
             for (int i = 0; i < focusTargets.Count; i++)
             {

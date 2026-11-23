@@ -412,7 +412,7 @@
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "FocusSwitch",
                     "isComposite": false,
                     "isPartOfComposite": false
