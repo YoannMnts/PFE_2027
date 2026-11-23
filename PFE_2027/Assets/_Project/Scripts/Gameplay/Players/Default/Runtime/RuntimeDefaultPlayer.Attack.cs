@@ -38,6 +38,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (currentBulletTimePhase != null)
             {
                 currentBulletTimePhase.SetResult(false);
+                isInDashChain =  false;
             }
             
             AttackData attack;

@@ -19,6 +19,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
     {
         private float dashReadyTime;
         private Timer dashChargeTimer;
+        private bool isInDashChain = false;
+        
         public bool IsDashing => hitboxRunner != null && hitboxRunner.Current is DashData;
 
         public void StartCharging()
@@ -30,15 +32,13 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         // Called by the input (CharacterControllerExtension)
         public void Dash()
         {
-            //Douane et association des DATAs
+            //Douane  + check de la data (dash || dash chargé)
             PlayerData data = Player.Data;
-            DashData currentDashData = dashChargeTimer.IsFinish ? data.ChargeDash : data.DefaultDash;
+            DashData currentDashData = dashChargeTimer.IsFinish || isInDashChain ? data.ChargeDash : data.DefaultDash;
             Debug.Log($"[Runtime player Dash] {currentDashData.name}");
-            
-
-            
             if (currentDashData == null || hitboxRunner == null || IsDashing || Time.time < dashReadyTime)
                 return;
+            
             if (currentBulletTimePhase != null)
             {
                 currentBulletTimePhase.SetResult(true);
@@ -58,10 +58,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (hit.target is not RuntimeEnemy npc)
                 return;
-            Debug.Log($"[Runtime player Dash] {npc.gameObject.name}");
             
             currentBulletTimePhase = new BulletTimePhase();
             currentBulletTimePhase.RunAndForget();
+            isInDashChain = true;
             
             KnockbackRequest request = PushBackExtension.FromHit(mesh.transform.position, hit, mesh.forward);
             npc.PushBackWithDamage(hit.hitbox.Damage, request);

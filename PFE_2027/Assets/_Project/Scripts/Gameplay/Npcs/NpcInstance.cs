@@ -12,9 +12,7 @@ namespace PFE.Gameplay.Scripts.NPCs
     {
         public event Action<float> OnModifyHealth;
         public event Action<INpcInstance> OnDeath;
-        
         public event Action<bool> OnModifyInteractable;
-
         public readonly TData data;
         INpcData INpcInstance.Data => data;
 
@@ -22,10 +20,14 @@ namespace PFE.Gameplay.Scripts.NPCs
         
         // Raw destination given by the game (pilgrim position, spline point...)
         public Vector3 Goal { get; private set; }
+        public int PlayerInterest { get; }
 
         // Where the NPC actually goes: the goal after its behaviour redirected it
         public Vector3 TargetPosition { get; private set; }
+
         public bool IsDead => CurrentHealth <= 0f;
+
+        private int currentInterest;
         
 
         // resolved once here rather than a lookup on every call
@@ -35,6 +37,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         {
             this.data = data;
             CurrentHealth = data.MaxHealth;
+            PlayerInterest = currentInterest;
 
             if (!data.TryGet(out container))
                 Debug.LogError($"[NpcInstance] No INpc behaviour registered for '{data.GetType().Name}'.");
@@ -48,6 +51,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             CurrentHealth = container.ModifyHealth(data, amount, CurrentHealth);
             OnModifyHealth?.Invoke(CurrentHealth);
+            
 
             if (IsDead)
             {
