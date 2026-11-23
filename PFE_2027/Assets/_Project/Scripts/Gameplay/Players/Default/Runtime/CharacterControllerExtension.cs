@@ -36,10 +36,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void PerformInteract(InputAction.CallbackContext context)
         {
-            //Debug.Log("Performing interact");
             if (!context.performed)
                 return;
-            
             
             runtimePlayer.Interact();
         }
@@ -50,6 +48,15 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 return;
             
             runtimePlayer.Focus();
+        }
+
+        public void PerformSwitchFocus(InputAction.CallbackContext context)
+        {
+            // Canceled = stick back to the center (value (0, 0)): needed to re-arm the switch
+            if (!context.performed && !context.canceled)
+                return;
+            
+            runtimePlayer.SwitchFocus(context.ReadValue<Vector2>());
         }
     }
 }

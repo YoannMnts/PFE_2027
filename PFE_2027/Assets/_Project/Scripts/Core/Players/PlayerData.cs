@@ -17,6 +17,13 @@ namespace PFE.Core.Scripts.Players
         [field: SerializeField, Min(1f), BoxGroup("Metrics")]
         public float FocusRadius { get; private set; } = 10;
 
+        // Focus target choice: cost = angle part * FocusAngleWeight + distance part * FocusDistanceWeight (lowest wins)
+        [field: SerializeField, Min(0f), BoxGroup("Metrics")]
+        public float FocusAngleWeight { get; private set; } = 0.7f;
+
+        [field: SerializeField, Min(0f), BoxGroup("Metrics")]
+        public float FocusDistanceWeight { get; private set; } = 0.3f;
+
         // First attack of the combo chain (the next ones follow AttackData.Next)
         [field: SerializeField, BoxGroup("Attack")]
         public BasicAttackData BasicAttack { get; private set; }

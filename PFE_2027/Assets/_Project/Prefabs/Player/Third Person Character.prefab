@@ -187,6 +187,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bd9cfc77-25e9-41a5-a7d3-736d0ec6552d
     m_ActionName: 'Player/Focus[/DualShock4GamepadHID/rightStickPress]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6129747126310287363}
+        m_TargetAssemblyTypeName: PFE.Gameplay.Scripts.Players.Default.Runtime.CharacterControllerExtension, PFE.Gameplay
+        m_MethodName: PerformSwitchFocus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 363f58b6-cd39-4034-8dfa-356770c2f2e2
+    m_ActionName: 'Player/FocusSwitch[/DualShock4GamepadHID/rightStick]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
