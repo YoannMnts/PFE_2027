@@ -30,6 +30,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         [SerializeField, BoxGroup("References")]
         private CharacterMotor characterMotor;
+
+        // Same View transform as the CharacterRun: stick inputs are relative to it
+        [SerializeField, BoxGroup("References")]
+        private Transform view;
         
         private BulletTimePhase currentBulletTimePhase;
 

@@ -35,11 +35,16 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         
         private const int MAX_RESULTS = 16;
         private const float MIN_SQR_DISTANCE = 0.0001f;
+        // Stick magnitude needed to switch target, and the one under which the stick counts as released
+        private const float SWITCH_FOCUS_THRESHOLD = 0.7f;
+        private const float SWITCH_FOCUS_RESET = 0.3f;
         private readonly Collider[] focusResults = new Collider[MAX_RESULTS];
         
         private RuntimeEnemy currentFocusTarget;
         private FocusState focusState = FocusState.Unlock;
         private readonly ChannelKey focusChannel = ChannelKey.GetUniqueChannelKey();
+        // One switch per flick: re-armed when the stick goes back to the center
+        private bool canSwitchFocus = true;
 
         public void Focus()
         {
@@ -64,16 +69,28 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             currentFocusTarget = null;
         }
 
-        public void SwitchFocus(Vector2 direction)
+        // Called with the right stick value, including (0, 0) when it is released
+        public void SwitchFocus(Vector2 input)
         {
-            if(focusState != FocusState.Lock)
+            float magnitude = input.magnitude;
+            if (magnitude < SWITCH_FOCUS_RESET)
+            {
+                canSwitchFocus = true;
                 return;
-            
+            }
+
+            if (!canSwitchFocus || magnitude < SWITCH_FOCUS_THRESHOLD || focusState != FocusState.Lock)
+                return;
+
+            canSwitchFocus = false;
+
+            // Stick space (x, y) to world space (x, 0, z), turned like the view, as CharacterRun does for the movement
+            Vector3 direction = Quaternion.Euler(0f, view.eulerAngles.y, 0f) * new Vector3(input.x, 0f, input.y);
             if (!TryFindFocusTarget(mesh.position, direction, Player.Data.FocusRadius, hitMask, out var target))
                 return;
 
             currentFocusTarget = target;
-            targetFacingDirection.AddPriority(focusChannel, PriorityTags.Highest, GetFocusDirection());
+            targetFacingDirection.Write(focusChannel, GetFocusDirection());
         }
 
         private void UpdateFocus()

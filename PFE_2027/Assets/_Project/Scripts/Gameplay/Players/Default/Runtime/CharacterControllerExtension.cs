@@ -52,7 +52,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void PerformSwitchFocus(InputAction.CallbackContext context)
         {
-            if(!context.performed)
+            // Canceled = stick back to the center (value (0, 0)): needed to re-arm the switch
+            if (!context.performed && !context.canceled)
                 return;
             
             runtimePlayer.SwitchFocus(context.ReadValue<Vector2>());
