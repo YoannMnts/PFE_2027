@@ -28,6 +28,7 @@ namespace PFE.Gameplay.Scripts.CrossRoadGameModes
         
         public World World { get; private set; }
         public NpcManager NpcManager { get; private set; }
+        public SoundManager SoundManager { get; private set; }
         
         private SceneReference sceneToLoad;
         private AreaData currentAreaData;
