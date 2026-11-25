@@ -16,12 +16,12 @@ MonoBehaviour:
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: bcd561b86e5ae054794d178f3d5668e0, type: 2}
   hitboxes:
   - <Window>k__BackingField:
-      <Start>k__BackingField: 0.39344263
-      <End>k__BackingField: 0.5081967
+      <Start>k__BackingField: 0.5833333
+      <End>k__BackingField: 0.7
     <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
-    <Shape>k__BackingField: 2
-    <Offset>k__BackingField: {x: 0.012638658, y: -0.28418347, z: 0.012023391}
-    <Size>k__BackingField: {x: 0.21790457, y: 1.4984536, z: 0.23149475}
+    <Shape>k__BackingField: 0
+    <Offset>k__BackingField: {x: -0.0056170593, y: -0.036192052, z: -0.01679382}
+    <Size>k__BackingField: {x: 0.3120261, y: 0.616036, z: 0.40437394}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 10
     <Strength>k__BackingField: 0.2
@@ -35,6 +35,16 @@ MonoBehaviour:
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 10
     <Strength>k__BackingField: 0.2
+  - <Window>k__BackingField:
+      <Start>k__BackingField: 0.35
+      <End>k__BackingField: 0.43333334
+    <Anchor>k__BackingField: {fileID: 11400000, guid: 29ac3e895ae28ad4a8040379fc099d33, type: 2}
+    <Shape>k__BackingField: 0
+    <Offset>k__BackingField: {x: 0.038477696, y: 0.07754237, z: 0.0012952925}
+    <Size>k__BackingField: {x: 0.3120261, y: 0.616036, z: 0.40437394}
+    <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
+    <Damage>k__BackingField: 10
+    <Strength>k__BackingField: 0.2
   windows:
   - <Flag>k__BackingField:
       rid: 8017306121691201626
@@ -44,12 +54,45 @@ MonoBehaviour:
   - <Flag>k__BackingField:
       rid: 8017306121691201627
     <Window>k__BackingField:
-      <Start>k__BackingField: 0.5081967
-      <End>k__BackingField: 0.5409836
+      <Start>k__BackingField: 0.41666666
+      <End>k__BackingField: 0.75
+  - <Flag>k__BackingField:
+      rid: 4376917754015907840
+    <Window>k__BackingField:
+      <Start>k__BackingField: 0.15
+      <End>k__BackingField: 0.45
   <AttackRange>k__BackingField: 1
   references:
     version: 2
     RefIds:
+    - rid: 4376917754015907840
+      type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Distance>k__BackingField: 0.5
+        <ProgressOverWindow>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     - rid: 8017306121691201626
       type: {class: MovementLock, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data: 

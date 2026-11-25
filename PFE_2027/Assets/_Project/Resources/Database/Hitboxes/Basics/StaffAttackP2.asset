@@ -16,12 +16,12 @@ MonoBehaviour:
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: 5e4ef4c2a3404ab48a48be81e61bb155, type: 2}
   hitboxes:
   - <Window>k__BackingField:
-      <Start>k__BackingField: 0.25925925
-      <End>k__BackingField: 0.6296296
+      <Start>k__BackingField: 0.45
+      <End>k__BackingField: 0.55
     <Anchor>k__BackingField: {fileID: 11400000, guid: 986baf6aaab4268409fbd936ed68c5e3, type: 2}
     <Shape>k__BackingField: 0
-    <Offset>k__BackingField: {x: 0.012635488, y: -0.28892335, z: 0.012038129}
-    <Size>k__BackingField: {x: 0.21790457, y: 1.507931, z: 0.23149475}
+    <Offset>k__BackingField: {x: 0.017941743, y: -0.031405766, z: -0.0059618657}
+    <Size>k__BackingField: {x: 0.308397, y: 0.57180595, z: 0.23149475}
     <Rotation>k__BackingField: {x: 0, y: 0, z: 0}
     <Damage>k__BackingField: 10
     <Strength>k__BackingField: 0.5
@@ -44,8 +44,8 @@ MonoBehaviour:
   - <Flag>k__BackingField:
       rid: 8017306121691201637
     <Window>k__BackingField:
-      <Start>k__BackingField: 0.14814815
-      <End>k__BackingField: 1
+      <Start>k__BackingField: 0.11666667
+      <End>k__BackingField: 0.6666667
   <AttackRange>k__BackingField: 0
   references:
     version: 2
