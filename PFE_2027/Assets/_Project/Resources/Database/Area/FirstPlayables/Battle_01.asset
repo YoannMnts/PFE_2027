@@ -48,3 +48,4 @@ MonoBehaviour:
   - <AnchorId>k__BackingField: Anchor_11
     <Npc>k__BackingField: {fileID: 11400000, guid: c79027cc7f0556947b3db58062c943a4, type: 2}
     <Progression>k__BackingField: 0.84011704
+  <GlobalSfx>k__BackingField: {fileID: 8300000, guid: ec93994ee6d584843a67aec1b0bcd669, type: 3}

@@ -13,5 +13,8 @@ namespace PFE.Core.Scripts.Area
 
         [field: SerializeField, BoxGroup("Base")]
         public List<SpawnPoint> SpawnPoints { get; private set; }
+
+        [field: SerializeField, BoxGroup("SoundDesign")]
+        public AudioClip GlobalSfx { get; private set; }
     }
 }
