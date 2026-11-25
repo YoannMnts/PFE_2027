@@ -155,6 +155,9 @@ PlayerSettings:
   - {fileID: 11400000, guid: a3bc7a97c3fc5a043b31a42c7260aba9, type: 2}
   - {fileID: 11400000, guid: a8cdf2f39b2819d4ca7c065cabd83ba9, type: 2}
   - {fileID: 11400000, guid: f261ef9ddf24a494f8d254d7d012741f, type: 2}
+  - {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - {fileID: 11400000, guid: d880483933b96ef4a9b5bc5637477d35, type: 2}
+  - {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   xboxOneDisableKinectGpuReservation: 1
