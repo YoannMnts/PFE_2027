@@ -17,7 +17,7 @@ $@"using UnityEngine;
 namespace PFE.Core.Scripts.Enemy
 {{
     // Data of the {typeName} enemy: only what is specific to it (shared fields live in EnemyData / NpcData)
-    [CreateAssetMenu(menuName = ""PFE/Enemy/{typeName}"")]
+    [CreateAssetMenu(menuName = ""PFE/Npcs/Enemies/{UnityEditor.ObjectNames.NicifyVariableName(typeName)}"", fileName = ""{typeName}"")]
     public class {typeName}Data : EnemyData
     {{
     }}

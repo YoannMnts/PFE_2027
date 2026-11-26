@@ -28,6 +28,7 @@ namespace PFE.Gameplay.Scripts.Animations
             public float fadeOutDuration;
             public float speed;             // Playback speed of the clip (1 = its own length)
             public int playId;
+            public bool loop;               // Starts again from the beginning at the end, until Stop
         }
 
         private readonly Slot[] slots = new Slot[SLOT_COUNT];
@@ -112,8 +113,9 @@ namespace PFE.Gameplay.Scripts.Animations
         // Starts the clip in the free slot. Returns the id of this play (or -1 without clip): pass it to
         // TryGetNormalizedTime / Stop to know whether this play is still the current action.
         // duration: real duration in seconds (the clip is sped up or slowed down), negative for the clip length.
+        // loop: the clip starts again each time it finishes and never ends on its own, until Stop.
         public int Play(AnimationClip clip, float fadeIn = DEFAULT_FADE_IN, float fadeOut = DEFAULT_FADE_OUT,
-            float duration = -1f)
+            float duration = -1f, bool loop = false)
         {
             EnsureInitialized();
             if (clip == null)
@@ -144,6 +146,7 @@ namespace PFE.Gameplay.Scripts.Animations
             slot.fadeSpeed = fadeSpeed;
             slot.fadeOutDuration = fadeOut;
             slot.playId = ++nextPlayId;
+            slot.loop = loop;
 
             // The previous action fades out while the new one fades in
             if (activeSlot != NO_SLOT)
@@ -206,6 +209,14 @@ namespace PFE.Gameplay.Scripts.Animations
             ref Slot active = ref slots[activeSlot];
             double time = active.playable.GetTime();
             double length = active.clip.length;
+
+            // Looping: no fade out nor end, back to the start each time the clip finishes (only Stop ends it)
+            if (active.loop)
+            {
+                if (time >= length && length > 0d)
+                    active.playable.SetTime(time % length);
+                return;
+            }
 
             // The fade out starts before the end, so the locomotion is fully back when the clip finishes
             // (remaining clip time converted to real seconds with the playback speed)

@@ -17,7 +17,7 @@ $@"using UnityEngine;
 namespace PFE.Core.Scripts.Pilgrims
 {{
     // Data of the {typeName} pilgrim: only what is specific to it (shared fields live in PilgrimData / NpcData)
-    [CreateAssetMenu(menuName = ""PFE/Npc/{typeName}"")]
+    [CreateAssetMenu(menuName = ""PFE/Npcs/Pilgrims/{UnityEditor.ObjectNames.NicifyVariableName(typeName)}"", fileName = ""{typeName}"")]
     public class {typeName}Data : PilgrimData
     {{
     }}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Fight.Pushbacks
 {
-    [CreateAssetMenu(menuName = "PFE/Fight/Pushback")]
+    [CreateAssetMenu(menuName = "PFE/Actions/Pushback", fileName = "Pushback")]
     public class DefaultPushbackData : PushbackData
     {
         

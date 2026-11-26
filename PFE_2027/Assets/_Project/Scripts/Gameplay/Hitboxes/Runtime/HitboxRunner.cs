@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PFE.Core.Scripts.Fight.Charges;
 using PFE.Gameplay.Scripts.Animations;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -26,6 +27,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private float previousTime;
         private float currentSeconds;       // Real duration of the current action, converts windows into seconds
         private HitboxHitHandler currentHit;
+        private float startTime;            // Time.time when the current action began
 
         public bool IsRunning => current != null;
 
@@ -36,8 +38,15 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 
         public IReadOnlyList<IWindowFlag> ActiveFlags => activeFlags;
 
-        // True if a flag of this type is active; gives it back to read its values
-        public bool Has<TFlag>(out TFlag flag) where TFlag : IWindowFlag
+        // A charge level (ChargeData) is the current action
+        public bool IsCharging => current is ChargeData;
+
+        // Index of the charge level playing (1 = first level), 0 when no charge runs
+        public int ChargeLevel { get; private set; }
+
+        // True if a flag of this type is active: in a window containing the current time, or on the whole
+        // current action (flags of its data); gives it back to read its values
+        public bool Has<TFlag>(out TFlag flag) where TFlag : IHitboxFlag
         {
             for (int i = 0; i < activeFlags.Count; i++)
             {
@@ -47,6 +56,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                 flag = compatible;
                 return true;
             }
+
+            if (current != null && current.TryGetFlag(out flag))
+                return true;
 
             flag = default;
             return false;
@@ -64,21 +76,45 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         
         public void Begin(HitboxData data, HitboxHitHandler specificAction = null)
         {
+            // Any action started from outside cancels the charge in progress
+            ResetCharge();
+            Play(data, specificAction);
+        }
+
+        // Starts the charge of the action if it has a ChargeUp flag (false otherwise, nothing started).
+        // Its levels then follow each other on their own (LateTick), ReleaseCharge ends it.
+        public bool TryBeginCharge(HitboxData action, HitboxHitHandler specificAction = null)
+        {
+            if (action == null || !action.TryGetFlag(out ChargeUp chargeUp) || chargeUp.Charge == null)
+                return false;
+
+            Begin(chargeUp.Charge, specificAction);
+            if (IsCharging)
+                ChargeLevel = 1;
+
+            return IsCharging;
+        }
+
+        // Ends the current charge. Returns the Release of the level playing (what its animation announces),
+        // null if no charge is running (e.g. interrupted by another action) or if that level has no Release
+        public HitboxData ReleaseCharge()
+        {
+            if (current is not ChargeData level)
+                return null;
+
+            HitboxData release = level.Release;
+            End();
+            return release;
+        }
+
+        private void Play(HitboxData data, HitboxHitHandler specificAction)
+        {
             //DOUANE
-            if (specificAction == null)
-            {
-                currentHit = defaultHit;
-            }
-            else
-            {
-                currentHit = specificAction;
-            }
-            
-            
-            
+            currentHit = specificAction ?? defaultHit;
+
             //joue l'anim
-            playId = actionAnimator.Play(data.AnimationClip, duration: data.PlayDuration);
-            
+            bool loop = data.TryGetFlag(out LoopAnimation _);
+            playId = actionAnimator.Play(data.AnimationClip, duration: data.PlayDuration, loop: loop);
             
             if (playId < 0)
             {
@@ -87,8 +123,12 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                 return;
             }
 
+            if (data is ChargeData charge && charge.Next != null && !data.TryGetFlag(out ChargeTime _))
+                Debug.LogWarning($"[AttackRunner] Charge '{data.name}' has a Next level but no ChargeTime flag: the charge never moves on.", data);
+
             current = data;
             currentSeconds = data.PlaySeconds;
+            startTime = Time.time;
             previousTime = -1f;
             alreadyHit.Clear();
             activeFlags.Clear();
@@ -121,6 +161,11 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                 return;
             }
 
+            // Looped (LoopAnimation flag): the windows open again from the start of the clip.
+            // A target stays hit once per action (alreadyHit is kept), even across loops.
+            if (time < previousTime)
+                previousTime = -1f;
+
             // Rebuilt every tick: a flag only lives while the time is inside its window
             activeFlags.Clear();
             ReadOnlySpan<AdditionalWindow> windows = current.Windows;
@@ -147,6 +192,21 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             }
 
             previousTime = time;
+            UpdateCharge();
+        }
+
+        // Moves on to the next charge level once the ChargeTime of the current one elapsed
+        private void UpdateCharge()
+        {
+            if (current is not ChargeData level || level.Next == null)
+                return;
+
+            if (!level.TryGetFlag(out ChargeTime chargeTime) || Time.time - startTime < chargeTime.Duration)
+                return;
+
+            // Not Begin: the charge goes on with the next level
+            Play(level.Next, currentHit);
+            ChargeLevel++;
         }
 
         // Also cancels the animation when the attack is interrupted before its end
@@ -159,7 +219,10 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             playId = -1;
             current = null;
             activeFlags.Clear();
+            ResetCharge();
         }
+
+        private void ResetCharge() => ChargeLevel = 0;
         
         // Detection only: finds what the hitbox touches and hands each new target to the owner's callback
         private void Query(in HitboxWindow hitbox, Transform anchor)

@@ -31,6 +31,7 @@ MonoBehaviour:
     <Window>k__BackingField:
       <Start>k__BackingField: 0
       <End>k__BackingField: 1
+  flags: []
   <Duration>k__BackingField: 0
   <Cooldown>k__BackingField: 0.4
   <MaxCooldown>k__BackingField: 0

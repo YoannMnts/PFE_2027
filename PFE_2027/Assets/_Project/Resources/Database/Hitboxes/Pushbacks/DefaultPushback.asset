@@ -26,6 +26,7 @@ MonoBehaviour:
     <Damage>k__BackingField: 1
     <Strength>k__BackingField: 2
   windows: []
+  flags: []
   <DistancePerStrength>k__BackingField: 2
   <ProgressOverTime>k__BackingField:
     serializedVersion: 2

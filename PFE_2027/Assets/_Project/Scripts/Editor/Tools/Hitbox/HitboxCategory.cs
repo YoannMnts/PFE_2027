@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using PFE.Core.Scripts.Enemy.Attacks;
 using PFE.Editor._Project.Scripts.Editor.DatabaseBrowser;
@@ -14,21 +15,45 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
     // Non-generic base so the tool can keep every category in the same list.
     public abstract class HitboxCategory
     {
+        protected const string HITBOXES_FOLDER = "Assets/_Project/Resources/Database/Hitboxes";
+
         public string Title { get; }
 
         protected HitboxCategory(string title) => Title = title;
 
         public abstract VisualElement Build(Action<HitboxData, VisualElement> buildSelectionActions, string searchRoot);
         public abstract void Reload();
+
+        // One category per type deriving directly from HitboxData (AttackData, ChargeData, DashData, PushbackData...),
+        // sorted by title: a new branch of HitboxData gets its tab without touching the tool.
+        // Deeper types (BasicAttackData : AttackData) are listed and created in the tab of their branch.
+        public static HitboxCategory[] CreateForEveryType()
+        {
+            return TypeCache.GetTypesDerivedFrom<HitboxData>()
+                .Where(type => type.BaseType == typeof(HitboxData) && !type.IsGenericTypeDefinition)
+                .Select(type => (HitboxCategory)Activator.CreateInstance(typeof(HitboxCategory<>).MakeGenericType(type), GetTitle(type)))
+                .OrderBy(category => category.Title, StringComparer.Ordinal)
+                .ToArray();
+        }
+
+        // "AttackData" -> "Attack", "ChargeData" -> "Charge"
+        private static string GetTitle(Type type)
+        {
+            const string SUFFIX = "Data";
+            string name = type.Name.EndsWith(SUFFIX, StringComparison.Ordinal) && type.Name.Length > SUFFIX.Length
+                ? type.Name[..^SUFFIX.Length]
+                : type.Name;
+
+            return ObjectNames.NicifyVariableName(name);
+        }
     }
 
     public sealed class HitboxCategory<T> : HitboxCategory where T : HitboxData
     {
-        // Folder proposed by the save dialog when creating a new asset
-        private readonly string createFolder;
         private DatabaseBrowserView<T> browser;
 
-        public HitboxCategory(string title, string createFolder) : base(title) => this.createFolder = createFolder;
+        // Called through reflection by CreateForEveryType
+        public HitboxCategory(string title) : base(title) { }
 
         public override VisualElement Build(Action<HitboxData, VisualElement> buildSelectionActions, string searchRoot)
         {
@@ -78,11 +103,25 @@ namespace PFE.Editor._Project.Scripts.Editor.Tools.Hitbox
                 .ToList();
         }
 
+        // Folder of the existing assets of this type (first one by path), or the Hitboxes folder itself
+        // for a type without any asset yet (the user picks or creates its sub-folder in the dialog)
+        private static string GetCreateFolder()
+        {
+            string firstPath = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { HITBOXES_FOLDER })
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .OrderBy(path => path, StringComparer.Ordinal)
+                .FirstOrDefault();
+
+            return string.IsNullOrEmpty(firstPath)
+                ? HITBOXES_FOLDER
+                : Path.GetDirectoryName(firstPath)?.Replace('\\', '/') ?? HITBOXES_FOLDER;
+        }
+
         private void Create(Type type)
         {
             string defaultName = $"New {ObjectNames.NicifyVariableName(type.Name)}";
             string path = EditorUtility.SaveFilePanelInProject($"New {Title}", defaultName, "asset",
-                $"Choose where to save the new {Title}.", createFolder);
+                $"Choose where to save the new {Title}.", GetCreateFolder());
 
             // Dialog cancelled
             if (string.IsNullOrEmpty(path))

@@ -8,8 +8,5 @@ namespace PFE.Core.Scripts.Enemy.Attacks
     {
         [field: SerializeReference]
         public IWindowFlag Flag { get; private set; }
-
-        [field: SerializeField]
-        public TimeWindow Window { get; private set; }
     }
 }

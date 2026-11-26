@@ -21,10 +21,11 @@ MonoBehaviour:
     <Window>k__BackingField:
       <Start>k__BackingField: 0
       <End>k__BackingField: 1
+  flags:
+  - rid: 4376917797697486954
   <Duration>k__BackingField: 0
   <Cooldown>k__BackingField: 0.4
   <MaxCooldown>k__BackingField: 0
-  <ChargeUpTime>k__BackingField: 0
   references:
     version: 2
     RefIds:
@@ -56,3 +57,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+    - rid: 4376917797697486954
+      type: {class: ChargeUp, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Charge>k__BackingField: {fileID: 11400000, guid: 3ca0b25aaf9a11c4f9efae9b2ba56d7d, type: 2}

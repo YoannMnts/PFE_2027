@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Dialogues
 {
-    [CreateAssetMenu(fileName = "ChoiceData", menuName = "PFE/Dialogue/ChoiceData")]
+    [CreateAssetMenu(menuName = "PFE/Dialogues/Choice", fileName = "Choice")]
     public class ChoiceData : GameDatabaseObject, IData
     {
         [field: SerializeField, TextArea]

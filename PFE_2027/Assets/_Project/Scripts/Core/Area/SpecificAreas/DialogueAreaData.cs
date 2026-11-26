@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Area
 {
-    [CreateAssetMenu(menuName = "PFE/Area/Dialogue", fileName = "Dialogue")]
+    [CreateAssetMenu(menuName = "PFE/Areas/Dialogue", fileName = "Dialogue")]
     public class DialogueAreaData : AreaData
     {
         [field: SerializeField, BoxGroup("Base")]

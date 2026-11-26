@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace PFE.Core.Scripts.Area
 {
-    [CreateAssetMenu(menuName = "PFE/Area/Campfire", fileName = "Campfire")]
+    [CreateAssetMenu(menuName = "PFE/Areas/Campfire", fileName = "Campfire")]
     public class CampfireAreaData : AreaData
     {
         [field: SerializeField, BoxGroup("References", true, false, 2f)]

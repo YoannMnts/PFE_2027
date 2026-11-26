@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    [CreateAssetMenu(menuName = "PFE/Fight/Hitbox Anchor")]
+    [CreateAssetMenu(menuName = "PFE/Fight/Hitbox Anchor", fileName = "HitboxAnchor")]
     public sealed class HitboxAnchor : GameDatabaseObject
     {
     }

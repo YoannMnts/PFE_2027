@@ -4,7 +4,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
 {
     // Cone used to bend a knockback toward the NPC closest to its axis ("knockback into knockback").
     // Shared asset: several PushbackData can use the same cone.
-    [CreateAssetMenu(menuName = "PFE/Fight/Knockback Redirect")]
+    [CreateAssetMenu(menuName = "PFE/Fight/Knockback Redirect", fileName = "KnockbackRedirect")]
     public class KnockbackRedirectData : ScriptableObject
     {
         // Length of the cone (meters)

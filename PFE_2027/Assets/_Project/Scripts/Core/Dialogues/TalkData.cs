@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace PFE.Core.Scripts.Dialogues
 {
     //a surement passer en dialogueData
-    [CreateAssetMenu(fileName = "TalkData", menuName = "PFE/Dialogue/TalkData")]
+    [CreateAssetMenu(menuName = "PFE/Dialogues/Talk", fileName = "Talk")]
     public class TalkData : GameDatabaseObject, IData
     {
         [field: SerializeField, TextArea, BoxGroup("Content")]

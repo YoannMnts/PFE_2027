@@ -53,8 +53,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             // The player is not IDamageable yet: no owner to exclude
             hitboxRunner = new HitboxRunner(context);
             
-            dashChargeTimer = new Timer(Player.Data.ChargeUpTime);
-            
             InitializeFacing();
         }
 

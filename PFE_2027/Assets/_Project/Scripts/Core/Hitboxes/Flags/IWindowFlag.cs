@@ -1,6 +1,7 @@
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    public interface IWindowFlag
+    // Flag placed in a window (AdditionalWindow): active while the clip time is inside the window
+    public interface IWindowFlag : IHitboxFlag
     {
     }
 }
