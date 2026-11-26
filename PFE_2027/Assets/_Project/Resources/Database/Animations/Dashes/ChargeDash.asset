@@ -16,7 +16,7 @@ MonoBehaviour:
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: 65865a45df233ec48a1d1e090b0ac3eb, type: 2}
   flags:
   - rid: 4376917799354237051
-  - rid: 4376917799354237138
+  - rid: 4376917799354237148
   - rid: 4376917799354237118
   <Duration>k__BackingField: 0
   <Cooldown>k__BackingField: 0.4
@@ -41,7 +41,7 @@ MonoBehaviour:
       type: {class: ChargeOnHit, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data:
         <Charge>k__BackingField: {fileID: 11400000, guid: ec80254443b003048b284ea36cdf2f8d, type: 2}
-    - rid: 4376917799354237138
+    - rid: 4376917799354237148
       type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data:
         <Window>k__BackingField:
