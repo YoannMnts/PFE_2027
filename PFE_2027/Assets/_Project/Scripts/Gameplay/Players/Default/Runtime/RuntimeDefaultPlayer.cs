@@ -35,8 +35,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("References")]
         private Transform view;
         
-        private BulletTimePhase currentBulletTimePhase;
-
         protected override void OnConnected()
         {
             rigidBody.constraints = RigidbodyConstraints.FreezeAll;
