@@ -6,6 +6,5 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
     public class RuntimeEnemyTemplate : RuntimeEnemy
     {
-        
     }
 }

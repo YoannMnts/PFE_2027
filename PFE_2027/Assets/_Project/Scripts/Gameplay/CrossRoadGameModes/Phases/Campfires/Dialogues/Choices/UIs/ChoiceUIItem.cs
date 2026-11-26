@@ -32,7 +32,6 @@ namespace PFE.Gameplay.Scripts.CampfireGameModes.Phases
 
         private void ChooseTalk()
         {
-            
             choicePhaseUI.ChooseTalk(currentChoice);
         }
 
