@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    // Displacement windows of the actions played by the HitboxRunner (dash, lunging attacks...). Started when the
+    // Displacement windows of the actions played by the AnimationRunner (dash, lunging attacks...). Started when the
     // window opens, then driven at the physics rate: the CharacterMotor keeps moving the rigidbody (walls, slopes and
     // steps are handled), the displacement only replaces its velocity goal while it lasts. MoveInput is never touched:
     // it is the player's intent, and CharacterRun doesn't clear it while no input is held.
@@ -16,7 +16,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public bool IsDisplaced { get; private set; }
 
-        private HitboxData displacementSource;      // Action that opened it: replaced by another one = stopped
+        private AnimationData displacementSource;      // Action that opened it: replaced by another one = stopped
         private AnimationCurve displacementCurve;
         private Vector3 displacementDirection;
         private float displacementDistance;
@@ -25,8 +25,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private float displacementElapsed;
         private bool isEndingDisplacement;          // The step right after hands the velocity back to the input
 
-        // HitboxContext.onWindowEnter: a Displacement window opens, the player moves where it faces
-        private void OnWindowEnter(IWindowFlag flag, float duration)
+        // AnimationContext.onWindowEnter: a Displacement window opens, the player moves where it faces
+        private void OnWindowEnter(ITimedFlag flag, float duration)
         {
             if (flag is not Displacement displacement)
                 return;
@@ -38,7 +38,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             Vector3 direction = mesh.forward;
             direction.y = 0f;
 
-            displacementSource = hitboxRunner.Current;
+            displacementSource = animationRunner.Current;
             displacementCurve = displacement.ProgressOverWindow;
             displacementDirection = direction.normalized;
             displacementDistance = displacement.Distance;
@@ -65,7 +65,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 return;
 
             // Another action took over (next attack, dash...): the displacement stops with the one that opened it
-            if (hitboxRunner.Current != null && hitboxRunner.Current != displacementSource)
+            if (animationRunner.Current != null && animationRunner.Current != displacementSource)
             {
                 StopDisplacement();
                 return;

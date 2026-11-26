@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4e68a9f92e64a640a4911900b2f5505, type: 3}
+  m_Name: DashInChargeLevel2
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Charges.ChargeData
+  guidText: c79a4add-2f03-4439-8932-9a86ff699e77
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: af693a5f00f121d408b9e21caa907ef6, type: 2}
+  flags:
+  - rid: 4376917797697486945
+  - rid: 4376917799354237069
+  - rid: 4376917799354237142
+  <Release>k__BackingField: {fileID: 11400000, guid: fa6ffd79173709f44ba3993e3a80e5ce, type: 2}
+  <Next>k__BackingField: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4376917797697486945
+      type: {class: LoopAnimation, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data: 
+    - rid: 4376917799354237069
+      type: {class: MovementLock, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Window>k__BackingField:
+          <Start>k__BackingField: 0
+          <End>k__BackingField: 1
+    - rid: 4376917799354237142
+      type: {class: ChargeTime, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Duration>k__BackingField: 0

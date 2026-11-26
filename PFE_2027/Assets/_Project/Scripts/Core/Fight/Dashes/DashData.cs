@@ -7,8 +7,8 @@ namespace PFE.Core.Scripts.Fight.Dashes
 {
     // Dash of a character: played like an attack (animation, windows). Its movement comes from a Displacement window,
     // a Combo window can chain it into an attack.
-    [CreateAssetMenu(menuName = "PFE/Fight/Dash")]
-    public class DashData : HitboxData
+    [CreateAssetMenu(menuName = "PFE/Actions/Dash", fileName = "Dash")]
+    public class DashData : AnimationData
     {
         // Real duration of the dash in seconds (the clip is sped up or slowed down), 0 = length of the clip
         [field: SerializeField, BoxGroup("Dash"), Min(0f)]

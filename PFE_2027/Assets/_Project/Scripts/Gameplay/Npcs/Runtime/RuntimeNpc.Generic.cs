@@ -26,7 +26,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         private TInstance instance;
         public TInstance Instance => instance;
 
-        public override HitboxRunner HitboxRunner { get; protected set; }
+        public override AnimationRunner AnimationRunner { get; protected set; }
         public override EntityAddress Address { get; protected set; }
 
         protected virtual void OnEnable()
@@ -48,8 +48,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             
             NavMeshAgent.speed = instance.data.Speed;
             
-            var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
-            HitboxRunner = new HitboxRunner(attackContext);
+            var attackContext = new AnimationContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
+            AnimationRunner = new AnimationRunner(attackContext);
 
             // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
             PushbackData pushback = instance.data.PushbackData;
@@ -84,8 +84,8 @@ namespace PFE.Gameplay.Scripts.NPCs
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_SELF_NPC, this);
             behaviorGraphAgent.SetVariableValue(BEHAVIOR_ATTACK_DATA, Instance.data.AttackData);
 
-            var attackContext = new HitboxContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
-            HitboxRunner = new HitboxRunner(attackContext);
+            var attackContext = new AnimationContext(ActionAnimator, hitboxAnchors, this, hitMask, OnAttackHit);
+            AnimationRunner = new AnimationRunner(attackContext);
 
             // Base distance from the data; 0 when this NPC can't be pushed (no PushbackData, e.g. the pilgrim)
             PushbackData pushback = instance.data.PushbackData;
@@ -119,7 +119,7 @@ namespace PFE.Gameplay.Scripts.NPCs
             if (instance != null)
                 behaviorGraphAgent.SetVariableValue(BEHAVIOR_TARGET_POSITION, instance.TargetPosition);
 
-            HitboxRunner?.LateTick();
+            AnimationRunner?.LateTick();
         }
 
         protected virtual void OnDestroy() => Unsubscribe();
@@ -145,8 +145,8 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             bool isLocked = 
                 !IsKnockedBack 
-                && HitboxRunner != null 
-                && HitboxRunner.Has<MovementLock>(out _);
+                && AnimationRunner != null 
+                && AnimationRunner.Has<MovementLock>(out _);
             
             NavMeshAgent.isStopped = isLocked;
 
@@ -176,7 +176,7 @@ namespace PFE.Gameplay.Scripts.NPCs
 
             // Replaces the current attack; its animation lasts as long as the curve (PlayDuration),
             // a new hit restarts both
-            HitboxRunner?.Begin(pushback);
+            AnimationRunner?.Begin(pushback);
 
             NavMeshAgent.ResetPath();
             NavMeshAgent.velocity = Vector3.zero;

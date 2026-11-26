@@ -376,7 +376,7 @@
                 {
                     "name": "",
                     "id": "be0b61a6-d396-4d62-ab1b-1a83da91a711",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -402,6 +402,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
+                    "action": "Focus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e90ffd6-0970-40ec-8dc8-e3a330735d6e",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Focus",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    public abstract class AttackData : HitboxData, IData
+    public abstract class AttackData : AnimationData, IData
     {
         [field : SerializeField, BoxGroup("Metrics")]
         public float AttackRange  { get; private set; }

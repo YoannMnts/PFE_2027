@@ -15,6 +15,8 @@ MonoBehaviour:
   guidText: 12f3dca8-85c2-4226-a058-241f4e8511ea
   <MaxHealth>k__BackingField: 100
   <FocusRadius>k__BackingField: 10
+  <FocusAngleWeight>k__BackingField: 0.7
+  <FocusDistanceWeight>k__BackingField: 0.3
   <BasicAttack>k__BackingField: {fileID: 11400000, guid: 3d366dab21af43043877e7bda598769b, type: 2}
   <AttackInputBuffer>k__BackingField: 0.25
   <DefaultDash>k__BackingField: {fileID: 11400000, guid: d1c9795ea2ab4d641a328b1172a9bd81, type: 2}

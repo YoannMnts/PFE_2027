@@ -15,7 +15,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         [SerializeField, BoxGroup("Attack")]
         private LayerMask hitMask;
 
-        private HitboxRunner hitboxRunner;
+        private AnimationRunner animationRunner;
         
         private float attackRequestTime = float.NegativeInfinity;
         
@@ -35,24 +35,21 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (Time.time - attackRequestTime > data.AttackInputBuffer)
                 return;
 
-            if (currentBulletTimePhase != null)
-            {
-                currentBulletTimePhase.SetResult(false);
-                isInDashChain =  false;
-            }
+            // An attack ends the bullet time of a dash chain
+            EndBulletTime();
             
             AttackData attack;
-            if (!hitboxRunner.IsRunning)
+            if (!animationRunner.IsRunning)
                 attack = data.BasicAttack;
             
-            else if (hitboxRunner.Has<Combo>(out var combo) 
+            else if (animationRunner.Has<Combo>(out var combo) 
                      && combo.NextAttack != null)
                 attack = combo.NextAttack;
             
             else
                 return; // Keep the request buffered until the combo window opens or it expires
             
-            hitboxRunner.Begin(attack);
+            animationRunner.Begin(attack);
             attackRequestTime = float.NegativeInfinity;
         }
 

@@ -49,11 +49,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
             InitializeAnimation();
             
-            var context = new HitboxContext(actionAnimator, hitboxAnchors, this, hitMask, OnDefaultHit, OnWindowEnter);
+            var context = new AnimationContext(actionAnimator, hitboxAnchors, this, hitMask, OnDefaultHit, OnWindowEnter);
             // The player is not IDamageable yet: no owner to exclude
-            hitboxRunner = new HitboxRunner(context);
-            
-            dashChargeTimer = new Timer(Player.Data.ChargeUpTime);
+            animationRunner = new AnimationRunner(context);
             
             InitializeFacing();
         }
@@ -73,10 +71,10 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             UpdateLocomotionAnimation();
             UpdateFocus();
             
-            if (hitboxRunner == null)
+            if (animationRunner == null)
                 return;
 
-            hitboxRunner.LateTick();
+            animationRunner.LateTick();
             TryConsumeAttackRequest();
         }
 
@@ -96,7 +94,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private void LockMovementDuringAttack(ICharacterMotor motor)
         {
-            if (hitboxRunner == null || !hitboxRunner.Has<MovementLock>(out _))
+            if (animationRunner == null || !animationRunner.Has<MovementLock>(out _))
                 return;
             
             motor.MoveInput = Vector3.zero;

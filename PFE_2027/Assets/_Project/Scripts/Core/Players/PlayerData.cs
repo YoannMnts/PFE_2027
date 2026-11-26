@@ -8,7 +8,7 @@ namespace PFE.Core.Scripts.Players
 {
     // Stats of a playable character. The game mode gives it to the player when creating it,
     // GameMetricsSettings only references the default one.
-    [CreateAssetMenu(menuName = "PFE/Player/Player Data")]
+    [CreateAssetMenu(menuName = "PFE/Player", fileName = "Player")]
     public class PlayerData : GameDatabaseObject
     {
         [field: SerializeField, Min(1f), BoxGroup("Metrics")]
@@ -32,16 +32,10 @@ namespace PFE.Core.Scripts.Players
         [field: SerializeField, Min(0f), BoxGroup("Attack")]
         public float AttackInputBuffer { get; private set; } = 0.25f;
         
-        // Dash of this character: animation, windows (Displacement for the movement), duration and cooldown
+        // Dash of this character: animation, windows (Displacement for the movement), duration and cooldown.
+        // Its ChargeUp flag (if any) gives the charge levels and the dash each of them releases.
         [field: SerializeField, BoxGroup("Dash")]
         public DashData DefaultDash { get; private set; }
-        
-        // charge up Dash of this character
-        [field: SerializeField, BoxGroup("Dash")]
-        public DashData ChargeDash { get; private set; }
-        
-        [field: SerializeField, BoxGroup("Dash"), Min(0f)]
-        public float ChargeUpTime { get;  private set; }
         
         [field: SerializeField, BoxGroup("Dash")]
         public int MaxDashSequency { get; private set; }

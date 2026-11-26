@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 namespace PFE.Core.Scripts.Pilgrims
 {
-    [CreateAssetMenu(menuName = "PFE/Npc/Pilgrim")]
+    [CreateAssetMenu(menuName = "PFE/Npcs/Pilgrims/Pilgrim", fileName = "Pilgrim")]
     public class PilgrimData : NpcData
     {
         [field:  SerializeField, Range(0, 10), BoxGroup("Metrics")]
