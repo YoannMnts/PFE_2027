@@ -30,7 +30,7 @@ namespace PFE.Gameplay.Scripts.NPCs
         [field : SerializeField, BoxGroup("References")]
         public Transform Mesh { get; private set; }
         
-        public abstract HitboxRunner HitboxRunner { get; protected set;}
+        public abstract AnimationRunner AnimationRunner { get; protected set;}
         public abstract EntityAddress Address { get; protected set; }
         public abstract void Connect(CrossRoadGameModeContext context, EntityAddress address);
         public abstract void Disconnect();

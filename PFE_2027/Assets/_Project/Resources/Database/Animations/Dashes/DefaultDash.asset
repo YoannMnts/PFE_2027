@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b632d6a0a9f188343951427d1d0436e1, type: 3}
+  m_Name: DefaultDash
+  m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.Fight.Dashes.DashData
+  guidText: d63716d3-be54-4fa1-bf44-e07f435e3ba1
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: 65865a45df233ec48a1d1e090b0ac3eb, type: 2}
+  flags:
+  - rid: 4376917797697486954
+  - rid: 4376917799354237108
+  <Duration>k__BackingField: 0
+  <Cooldown>k__BackingField: 0.4
+  <MaxCooldown>k__BackingField: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4376917797697486954
+      type: {class: ChargeUp, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Charge>k__BackingField: {fileID: 11400000, guid: 3ca0b25aaf9a11c4f9efae9b2ba56d7d, type: 2}
+    - rid: 4376917799354237108
+      type: {class: Displacement, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Window>k__BackingField:
+          <Start>k__BackingField: 0
+          <End>k__BackingField: 1
+        <Distance>k__BackingField: 3
+        <ProgressOverWindow>k__BackingField:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4

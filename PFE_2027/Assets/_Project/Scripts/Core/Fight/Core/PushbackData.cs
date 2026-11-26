@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace PFE.Core.Scripts.Enemy.Attacks
 {
-    public abstract class PushbackData : HitboxData
+    public abstract class PushbackData : AnimationData
     {
         // Meters travelled for a knockback of strength 1. Starting value of RuntimeNpc.KnockbackDistance
         [field: SerializeField, BoxGroup("Knockback"), Min(0f)]

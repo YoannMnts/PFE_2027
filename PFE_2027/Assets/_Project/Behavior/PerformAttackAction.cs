@@ -12,16 +12,16 @@ public partial class PerformAttackAction : Unity.Behavior.Action
     [SerializeReference] public BlackboardVariable<RuntimeNpc> agent;
     [SerializeReference] public BlackboardVariable<AttackData> attack;
     
-    private HitboxRunner runner;
+    private AnimationRunner runner;
     private AttackData started;
 
     protected override Status OnStart()
     {
         RuntimeNpc npc = agent.Value;
-        if (npc == null || npc.HitboxRunner == null || attack.Value == null)
+        if (npc == null || npc.AnimationRunner == null || attack.Value == null)
             return Status.Failure;
 
-        runner = npc.HitboxRunner;
+        runner = npc.AnimationRunner;
         started = attack.Value;
 
         runner.Begin(started);

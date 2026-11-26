@@ -12,15 +12,15 @@ using UnityEngine;
 
 namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 {
-    // Dash: plays PlayerData.Dash through the HitboxRunner like an attack (animation, windows). The movement comes
+    // Dash: plays PlayerData.Dash through the AnimationRunner like an attack (animation, windows). The movement comes
     // from its Displacement window (RuntimeDefaultPlayer.Displacement), a Combo window can chain it into an attack.
-    // Charge: the ChargeUp flag of the default dash gives its charge levels, played by the HitboxRunner while held.
+    // Charge: the ChargeUp flag of the default dash gives its charge levels, played by the AnimationRunner while held.
     public partial class RuntimeDefaultPlayer
     {
         private float dashReadyTime;
         private bool isInDashChain = false;
 
-        public bool IsDashing => hitboxRunner != null && hitboxRunner.Current is DashData;
+        public bool IsDashing => animationRunner != null && animationRunner.Current is DashData;
 
         // Called by the input when the dash is pressed: starts the charge of the dash, if it has one (ChargeUp flag)
         public void StartCharging()
@@ -29,7 +29,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (isInDashChain || !CanStartDash())
                 return;
 
-            hitboxRunner.TryBeginCharge(Player.Data.DefaultDash);
+            animationRunner.TryBeginCharge(Player.Data.DefaultDash);
         }
 
         // Called by the input when the dash is released
@@ -38,7 +38,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             PlayerData data = Player.Data;
 
             // Release of the charge level playing, null if no charge ran (or that level has no Release)
-            HitboxData released = hitboxRunner?.ReleaseCharge();
+            AnimationData released = animationRunner?.ReleaseCharge();
 
             DashData currentDashData;
             if (isInDashChain)
@@ -57,7 +57,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 currentDashData = data.DefaultDash;
             }
 
-            if (currentDashData == null || hitboxRunner == null || IsDashing || Time.time < dashReadyTime)
+            if (currentDashData == null || animationRunner == null || IsDashing || Time.time < dashReadyTime)
                 return;
 
             Debug.Log($"[Runtime player Dash] {currentDashData.name}");
@@ -73,12 +73,12 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             Debug.Log($"[Runtime player Dash] Player is dashing");
             
             // Replaces the current attack; the cooldown counts from the end of the dash
-            hitboxRunner.Begin(currentDashData, OnDashHit);
+            animationRunner.Begin(currentDashData, OnDashHit);
             dashReadyTime = Time.time + currentDashData.PlaySeconds + currentDashData.Cooldown;
         }
 
         // Same conditions as the dash itself: no charge that could never come out
-        private bool CanStartDash() => hitboxRunner != null && !IsDashing && Time.time >= dashReadyTime
+        private bool CanStartDash() => animationRunner != null && !IsDashing && Time.time >= dashReadyTime
             && characterMotor != null && characterMotor.IsGrounded;
         
         private void OnDashHit(in HitboxHit hit)
