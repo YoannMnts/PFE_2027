@@ -35,11 +35,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (Time.time - attackRequestTime > data.AttackInputBuffer)
                 return;
 
-            if (currentBulletTimePhase != null)
-            {
-                currentBulletTimePhase.SetResult(false);
-                isInDashChain =  false;
-            }
+            // An attack ends the bullet time of a dash chain
+            EndBulletTime();
             
             AttackData attack;
             if (!animationRunner.IsRunning)

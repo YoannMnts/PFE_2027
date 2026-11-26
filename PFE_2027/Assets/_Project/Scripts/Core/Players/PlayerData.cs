@@ -37,10 +37,6 @@ namespace PFE.Core.Scripts.Players
         [field: SerializeField, BoxGroup("Dash")]
         public DashData DefaultDash { get; private set; }
         
-        // Dash coming out right after a dash that hit (dash chain), without charging
-        [field: SerializeField, BoxGroup("Dash")]
-        public DashData ChargeDash { get; private set; }
-        
         [field: SerializeField, BoxGroup("Dash")]
         public int MaxDashSequency { get; private set; }
     }

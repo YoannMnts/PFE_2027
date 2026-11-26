@@ -19,6 +19,8 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         private readonly WindowEnterHandler onWindowEnter;
         
         private readonly Collider[] overlapResults = new Collider[MAX_COLLIDERS];
+        // Hits of one Query, handed to the handler once the detection is over
+        private readonly HitboxHit[] hitBuffer = new HitboxHit[MAX_COLLIDERS];
         private readonly List<IDamageable> alreadyHit = new(MAX_COLLIDERS);
         private Transform[] resolvedAnchors = new Transform[4];
         
@@ -42,7 +44,7 @@ namespace PFE.Core.Scripts.Enemy.Attacks
         // A charge level (ChargeData) is the current action
         public bool IsCharging => current is ChargeData;
 
-        // Index of the charge level playing (1 = first level), 0 when no charge runs
+        // Number of levels played by the current charge (1 = the level it started on), 0 when no charge runs
         public int ChargeLevel { get; private set; }
 
         // True if a flag of this type is active now; gives it back to read its values
@@ -78,30 +80,41 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             Play(data, specificAction);
         }
 
-        // Starts the charge of the action if it has a ChargeUp flag (false otherwise, nothing started).
-        // Its levels then follow each other on their own (LateTick), ReleaseCharge ends it.
-        public bool TryBeginCharge(AnimationData action, HitboxHitHandler specificAction = null)
+        // Starts the charge of the action if it has a ChargeUp flag (nothing otherwise).
+        // Its levels then follow each other on their own (LateTick), TryReleaseCharge ends it.
+        public void BeginCharge(AnimationData action, HitboxHitHandler specificAction = null)
         {
-            if (action == null || !action.TryGetFlag(out ChargeUp chargeUp) || chargeUp.Charge == null)
-                return false;
+            if (action == null || !action.TryGetFlag(out ChargeUp chargeUp))
+                return;
 
-            Begin(chargeUp.Charge, specificAction);
-            if (IsCharging)
-                ChargeLevel = 1;
-
-            return IsCharging;
+            BeginChargeAt(chargeUp.Charge, specificAction);
         }
 
-        // Ends the current charge. Returns the Release of the level playing (what its animation announces),
-        // null if no charge is running (e.g. interrupted by another action) or if that level has no Release
-        public AnimationData ReleaseCharge()
+        // Starts a charge directly at this level, without charging the previous ones (e.g. a dash chain)
+        public void BeginChargeAt(ChargeData level, HitboxHitHandler specificAction = null)
+        {
+            if (level == null)
+                return;
+
+            Begin(level, specificAction);
+
+            if (IsCharging)
+                ChargeLevel = 1;
+        }
+
+        // Ends the current charge. True if a charge was running: data = Release of the level playing (what its
+        // animation announces, can be null). False if no charge runs (e.g. interrupted by another action).
+        public bool TryReleaseCharge(out AnimationData data)
         {
             if (current is not ChargeData level)
-                return null;
+            {
+                data = null;
+                return false;
+            }
 
-            AnimationData release = level.Release;
+            data = level.Release;
             End();
-            return release;
+            return true;
         }
 
         private void Play(AnimationData data, HitboxHitHandler specificAction)
@@ -109,8 +122,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             //DOUANE
             currentHit = specificAction ?? defaultHit;
 
-            //joue l'anim
             bool loop = data.TryGetFlag(out LoopAnimation _);
+            
+            //joue l'anim
             playId = actionAnimator.Play(data.AnimationClip, duration: data.PlayDuration, loop: loop);
             
             if (playId < 0)
@@ -176,7 +190,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             if (time < previousTime)
                 previousTime = -1f;
 
-            // One pass over the flags: the active ones, the windows opening, the hitboxes crossed since the last tick
+            // One pass over the flags: the active ones, the windows opening, the hitboxes crossed since the last tick.
+            // A callback (hit, window enter) may start another action: then this one is over, stop reading its flags.
+            int tickingPlayId = playId;
             activeFlags.Clear();
             ReadOnlySpan<IAnimationFlag> flags = current.Flags;
             for (int i = 0; i < flags.Length; i++)
@@ -201,10 +217,18 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                     continue;
 
                 if (!window.Contains(previousTime))
+                {
                     onWindowEnter?.Invoke(timed, (window.End - window.Start) * currentSeconds);
+                    if (playId != tickingPlayId)
+                        return;
+                }
 
                 if (flag is Hitbox hitbox)
+                {
                     Query(in hitbox, resolvedAnchors[i]);
+                    if (playId != tickingPlayId)
+                        return;
+                }
             }
 
             previousTime = time;
@@ -256,6 +280,10 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                 _ => 0,
             };
 
+            // Detection first, callbacks after: a callback may start another action (e.g. a dash chain), every target
+            // of this hitbox still reaches the handler of the action that hit it
+            HitboxHitHandler handler = currentHit;
+            int hitCount = 0;
             for (int i = 0; i < count; i++)
             {
                 Collider collider = overlapResults[i];
@@ -264,8 +292,11 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                     continue;
 
                 alreadyHit.Add(target);
-                currentHit?.Invoke(new HitboxHit(target, collider, in hitbox, center));
+                hitBuffer[hitCount++] = new HitboxHit(target, collider, in hitbox, center);
             }
+
+            for (int i = 0; i < hitCount; i++)
+                handler?.Invoke(in hitBuffer[i]);
         }
 
         private int OverlapCapsule(Vector3 center, Quaternion rotation, Vector3 size)
