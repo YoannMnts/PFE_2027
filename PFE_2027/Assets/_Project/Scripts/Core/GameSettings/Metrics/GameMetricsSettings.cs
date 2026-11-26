@@ -1,4 +1,5 @@
 using System;
+using Helteix.ChanneledProperties.Priorities;
 using Helteix.Tools.Settings;
 using PFE.Core.Scripts.Area;
 using PFE.Core.Scripts.Pilgrims;
@@ -35,5 +36,12 @@ namespace PFE.Core.Scripts.GameSettings
         [field: SerializeField, BoxGroup("World Time Scale")]
         public float BulletTimeScale { get; private set; }
         
+        [field: SerializeField, BoxGroup("Audio")]
+        public PriorityTags AreaPriority { get; private set; } = PriorityTags.Default;
+        
+        [field: SerializeField, BoxGroup("Audio")]
+        public float BGMFadeOutTime { get; private set; } = 0.5f;
+        [field: SerializeField, BoxGroup("Audio")]
+        public float BGMTransitionSmoothness { get; private set; } = 20f;
     }
 }

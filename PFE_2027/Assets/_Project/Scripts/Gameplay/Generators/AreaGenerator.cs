@@ -1,7 +1,10 @@
-﻿using Helteix.Singletons.SceneServices;
+﻿using Helteix.ChanneledProperties.Priorities;
+using Helteix.Singletons.SceneServices;
 using Helteix.Tools;
 using Helteix.Tools.Phases;
+using PFE.Core.Scripts;
 using PFE.Core.Scripts.DataMapping;
+using PFE.Core.Scripts.GameSettings;
 using PFE.Gameplay.Scripts.CrossRoadGameModes.Phases;
 using UnityEngine;
 
@@ -43,13 +46,10 @@ namespace PFE.Gameplay.Scripts.RoadSystem
             Transform runtime = phase.areaData.AreaPrefab.InstantiatePrefab();
             runtime.transform.SetParent(container);
 
-            if (SceneService<SoundManager>.TryGetForActiveScene(out SoundManager soundManager))
-            {
-                Debug.Log($"[Area Generator] {soundManager.name} has been created ");
-                
-                var currentSfx = phase.areaData.GlobalSfx;
-                soundManager.Play(currentSfx);
-            }
+            var currentSfx = phase.areaData.GlobalSfx;
+            PriorityTags priority = GameMetricsSettings.Current.AreaPriority;
+            
+            GameController.MusicManager.AddMusic(currentSfx, gameObject, (int)priority, phase.areaData.GlobalSfxVolume);
 
             if (!runtime.TryGetComponent(out IRuntimeArea arena))
                 Debug.LogError($"[AreaGenerator] Area prefab '{phase.areaData.AreaPrefab.name}' has no RuntimeArena on its root.", runtime);
@@ -59,7 +59,7 @@ namespace PFE.Gameplay.Scripts.RoadSystem
 
         void IPhaseListener<GenerateAreaPhase>.OnPhaseEnd(GenerateAreaPhase phase)
         {
+            GameController.MusicManager.RemoveMusic(gameObject);
         }
-
     }
 }
