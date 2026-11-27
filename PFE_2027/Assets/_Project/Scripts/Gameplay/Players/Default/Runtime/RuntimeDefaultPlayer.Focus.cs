@@ -41,6 +41,8 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         private readonly Collider[] focusResults = new Collider[MAX_RESULTS];
         
         private RuntimeEnemy currentFocusTarget;
+        private RuntimeEnemy lastFocusTarget;
+
         private FocusState focusState = FocusState.Unlock;
         private readonly ChannelKey focusChannel = ChannelKey.GetUniqueChannelKey();
         // One switch per flick: re-armed when the stick goes back to the center
@@ -50,16 +52,23 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (focusState == FocusState.Lock)
             {
+                lastFocusTarget = currentFocusTarget;
+                currentFocusTarget.debugFocusModeUI.gameObject.SetActive(false);
+                
                 Unfocus();
                 return;
             }
 
             if (!TryFindFocusTarget(mesh, Player.Data.FocusRadius, hitMask, out var target))
+            {
+                currentFocusTarget = null;
                 return;
-
+            }
+            
             currentFocusTarget = target;
             focusState = FocusState.Lock;
             targetFacingDirection.AddPriority(focusChannel, PriorityTags.Highest, GetFocusDirection());
+            currentFocusTarget.debugFocusModeUI.gameObject.SetActive(true);
         }
 
         private void Unfocus()
@@ -73,6 +82,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         public void SwitchFocus(Vector2 input)
         {
             float magnitude = input.magnitude;
+            
             if (magnitude < SWITCH_FOCUS_RESET)
             {
                 canSwitchFocus = true;
@@ -80,23 +90,36 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             }
 
             if (!canSwitchFocus || magnitude < SWITCH_FOCUS_THRESHOLD || focusState != FocusState.Lock)
+            {
                 return;
+            }
 
             canSwitchFocus = false;
 
             // Stick space (x, y) to world space (x, 0, z), turned like the view, as CharacterRun does for the movement
             Vector3 direction = Quaternion.Euler(0f, view.eulerAngles.y, 0f) * new Vector3(input.x, 0f, input.y);
+            
             if (!TryFindFocusTarget(mesh.position, direction, Player.Data.FocusRadius, hitMask, out var target))
+            {
+                lastFocusTarget = currentFocusTarget;
                 return;
-
+            }
+            
+            lastFocusTarget = currentFocusTarget;
             currentFocusTarget = target;
+            
+            lastFocusTarget.debugFocusModeUI.gameObject.SetActive(false);
+            currentFocusTarget.debugFocusModeUI.gameObject.SetActive(true);
+            
             targetFacingDirection.Write(focusChannel, GetFocusDirection());
         }
 
         private void UpdateFocus()
         {
             if (focusState != FocusState.Lock)
+            {
                 return;
+            }
 
             if (currentFocusTarget == null)
             {
@@ -119,7 +142,7 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         private bool TryFindFocusTarget(Vector3 origin, Vector3 forward, float radius, LayerMask mask, out RuntimeEnemy target)
         {
-            using (ListPool<FocusTarget>.Get(out var focusTargets))
+            using (ListPool<FocusTarget>.Get(out List<FocusTarget> focusTargets))
             {
                 target = null;
 
@@ -171,7 +194,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 if (focusTargets[i].enemy == enemy)
                     return true;
             }
-
             return false;
         }
     }

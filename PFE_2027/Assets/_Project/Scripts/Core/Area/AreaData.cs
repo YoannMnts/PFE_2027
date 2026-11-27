@@ -16,5 +16,8 @@ namespace PFE.Core.Scripts.Area
 
         [field: SerializeField, BoxGroup("SoundDesign")]
         public AudioClip GlobalSfx { get; private set; }
+
+        [field: SerializeField, BoxGroup("SoundDesign")]
+        public float GlobalSfxVolume { get; private set; } = 1f;
     }
 }

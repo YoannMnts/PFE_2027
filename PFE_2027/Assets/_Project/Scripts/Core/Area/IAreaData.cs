@@ -10,5 +10,6 @@ namespace PFE.Core.Scripts.Area
         public Transform AreaPrefab { get;  }
         public List<SpawnPoint> SpawnPoints { get;  }
         public AudioClip GlobalSfx { get;  }
+        public float GlobalSfxVolume { get;  }
     }
 }
