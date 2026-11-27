@@ -50,37 +50,31 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
         public void Focus()
         {
-            //si on focus déjà
             if (focusState == FocusState.Lock)
             {
                 lastFocusTarget = currentFocusTarget;
-                lastFocusTarget.focusModeUI.gameObject.SetActive(false);
+                currentFocusTarget.debugFocusModeUI.gameObject.SetActive(false);
                 
                 Unfocus();
                 return;
             }
 
-            //si on ne trouve pas de Enemy
             if (!TryFindFocusTarget(mesh, Player.Data.FocusRadius, hitMask, out var target))
             {
                 currentFocusTarget = null;
                 return;
             }
-
+            
             currentFocusTarget = target;
             focusState = FocusState.Lock;
-            
             targetFacingDirection.AddPriority(focusChannel, PriorityTags.Highest, GetFocusDirection());
-            
-            currentFocusTarget.focusModeUI.gameObject.SetActive(true);
+            currentFocusTarget.debugFocusModeUI.gameObject.SetActive(true);
         }
 
         private void Unfocus()
         {
             focusState = FocusState.Unlock;
             targetFacingDirection.RemovePriority(focusChannel);
-            
-            currentFocusTarget.focusModeUI.gameObject.SetActive(false);
             currentFocusTarget = null;
         }
 
@@ -92,10 +86,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             if (magnitude < SWITCH_FOCUS_RESET)
             {
                 canSwitchFocus = true;
-                
-                currentFocusTarget.focusModeUI.gameObject.SetActive(false);
-                currentFocusTarget = null;
-                
                 return;
             }
 
@@ -111,12 +101,15 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
             
             if (!TryFindFocusTarget(mesh.position, direction, Player.Data.FocusRadius, hitMask, out var target))
             {
-                currentFocusTarget = null;
+                lastFocusTarget = currentFocusTarget;
                 return;
             }
             
+            lastFocusTarget = currentFocusTarget;
             currentFocusTarget = target;
-            currentFocusTarget.focusModeUI.gameObject.SetActive(true);
+            
+            lastFocusTarget.debugFocusModeUI.gameObject.SetActive(false);
+            currentFocusTarget.debugFocusModeUI.gameObject.SetActive(true);
             
             targetFacingDirection.Write(focusChannel, GetFocusDirection());
         }
@@ -125,7 +118,6 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
         {
             if (focusState != FocusState.Lock)
             {
-                currentFocusTarget.focusModeUI.gameObject.SetActive(false);
                 return;
             }
 

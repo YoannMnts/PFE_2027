@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204fff0b8a604a3e8619fefd6c3ea5c6, type: 3}
   m_Name: GameAssets
   m_EditorClassIdentifier: PFE.Core::PFE.Core.Scripts.GameSettings.GameAssets
-  <BGMAudioSource>k__BackingField: {fileID: 0}
+  <BGMAudioSource>k__BackingField: {fileID: 68010570189801289, guid: aff1e512d06abc949aec08e44eacd79a, type: 3}

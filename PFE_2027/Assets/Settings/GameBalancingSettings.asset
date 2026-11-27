@@ -22,3 +22,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2bbf2ee941277da4a8cfa30286d88b6a, type: 2}
   <DefaultTimeScale>k__BackingField: 1
   <BulletTimeScale>k__BackingField: 0.1
+  <AreaPriority>k__BackingField: 30
+  <BGMFadeOutTime>k__BackingField: 0.5
+  <BGMTransitionSmoothness>k__BackingField: 20

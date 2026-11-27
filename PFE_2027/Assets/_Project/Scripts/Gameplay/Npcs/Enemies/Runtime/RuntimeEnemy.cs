@@ -9,7 +9,8 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
 {
     public abstract class RuntimeEnemy : RuntimeNpc<EnemyInstance, EnemyData>, IInteractable
     {
-        [field : SerializeField] public Transform focusModeUI { get; private set; }
+        //TODO à supprimer pour remplacer avec VFX de focus
+        [field : SerializeField] public Transform debugFocusModeUI { get; private set; }
         public RuntimeEnemy Interactable => this;
 
         // Pilgrim followed while this enemy is active (given by its instance)
@@ -33,7 +34,7 @@ namespace PFE.Gameplay.Scripts.Enemy.Runtime
         {
             base.OnSetup(context);
 
-            focusModeUI.gameObject.SetActive(false);
+            debugFocusModeUI.gameObject.SetActive(false);
             
             if (isActiveAndEnabled)
                 Follow(Instance.Pilgrim);
