@@ -20,7 +20,6 @@ namespace PFE.Core.Audio
 
 
         private Priority<MusicProfile> activeMusic;
-
         private List<ChannelKey> activeKeys;
         
         private Transform musicRoot;
@@ -100,8 +99,7 @@ namespace PFE.Core.Audio
                     .OnComplete(() => Object.Destroy(profile.source));
             }
         }
-        
-        
+
         private void Refresh()
         {
             foreach (ChannelKey key in activeKeys)

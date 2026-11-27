@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using Helteix.Singletons.MonoSingletons;
+using Helteix.Singletons.MonoSingletons.Attributes;
 using UnityEngine;
 
 namespace PFE.Core.Audio
 {
+    [DontDestroyOnLoad]
     [SuppressMessage("ReSharper", "Unity.PerformanceCriticalCodeCameraMain")]
     public class GameAudioListener : MonoSingleton<GameAudioListener>
     {
@@ -12,8 +14,9 @@ namespace PFE.Core.Audio
         
         private Camera currentCam;
 
-        private void Awake()
+        protected override void OnAwake()
         {
+            base.OnAwake();
             RefreshMainCamera();
             gameObject.AddComponent<AudioListener>();
         }
@@ -27,6 +30,7 @@ namespace PFE.Core.Audio
             {
                 transform.position = currentCam.transform.position;
                 transform.rotation = currentCam.transform.rotation;
+                Debug.Log($"{name} was updated at {transform.position} with {transform.rotation}");
             }
             else
             {

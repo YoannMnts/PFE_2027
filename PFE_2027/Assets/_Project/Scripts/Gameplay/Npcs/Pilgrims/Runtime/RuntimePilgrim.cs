@@ -144,21 +144,14 @@ namespace PFE.Gameplay.Scripts.Pilgrims
 
         public void OnPhaseBegin(ProtectPilgrimPhase phase)
         {
-            Debug.Log($"ProtectPhase is beggin");
             interaction = BattleInteraction;
             protectPhase =  phase;
-            
-            Debug.Log($"{phase.pilgrimInstance}");
-            
             phase.pilgrimInstance.OnPilgrimFinalPosition += LaunchCampfirePhase;
         }
 
 
         public void OnPhaseEnd(ProtectPilgrimPhase phase)
         {
-            Debug.Log($"ProtectPhase is finish");
-            
-            Debug.Log($"{phase.pilgrimInstance}");
             phase.pilgrimInstance.OnPilgrimFinalPosition -= LaunchCampfirePhase;
         }
 
