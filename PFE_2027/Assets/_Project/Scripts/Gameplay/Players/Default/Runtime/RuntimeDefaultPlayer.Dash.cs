@@ -45,9 +45,9 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
                 Debug.LogWarning($"[Runtime player Dash] Charge release '{released.name}' is not a DashData: no dash.", released);
                 return;
             }
-
-            EndBulletTime(true);
-
+            
+            TimeScaleManager.StopBulletTime();
+            
             // The CharacterMotor only drives the velocity on the ground
             if (characterMotor == null || !characterMotor.IsGrounded)
                 return;
@@ -73,26 +73,12 @@ namespace PFE.Gameplay.Scripts.Players.Default.Runtime
 
             // Dash chain: the dash is replaced by the charge level of its ChargeOnHit flag. Only once: for the next
             // enemies of the same hit, the current action is already that charge (no ChargeOnHit flag)
-            AnimationData dash = animationRunner.Current;
-            if (dash == null || !dash.TryGetFlag(out ChargeOnHit chargeOnHit) || chargeOnHit.Charge == null)
+            AnimationData currentData = animationRunner.Current;
+            if (currentData == null || !currentData.TryGetFlag(out ChargeOnHit chargeOnHit) || chargeOnHit.Charge == null)
                 return;
 
-            if (currentBulletTimePhase == null)
-            {
-                currentBulletTimePhase = new BulletTimePhase();
-                currentBulletTimePhase.RunAndForget();
-            }
-
+            TimeScaleManager.StartBulletTime();
             animationRunner.BeginChargeAt(chargeOnHit.Charge);
-        }
-        
-        private void EndBulletTime(bool byDash = false)
-        {
-            if (currentBulletTimePhase == null)
-                return;
-
-            currentBulletTimePhase.SetResult(byDash);
-            currentBulletTimePhase = null;
         }
     }
 }

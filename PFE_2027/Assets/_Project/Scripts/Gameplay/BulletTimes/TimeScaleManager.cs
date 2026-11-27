@@ -1,4 +1,5 @@
-﻿using PFE.Core.Scripts.GameSettings;
+﻿using Helteix.Tools.Phases;
+using PFE.Core.Scripts.GameSettings;
 using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 
@@ -9,6 +10,24 @@ namespace PFE.Gameplay.Scripts.BulletTimes
         [AutoStaticsCleanup]
         public static float TimeMultiplier { get ; private set;} = GameMetricsSettings.Current.DefaultTimeScale;
 
+        private static BulletTimePhase currentBulletTimePhase;
+        
+        public static void StartBulletTime()
+        {
+            if(currentBulletTimePhase != null)
+                currentBulletTimePhase.SetResult(false);
+            
+            currentBulletTimePhase = new BulletTimePhase();
+            currentBulletTimePhase.RunAndForget();
+        }
+
+        public static void StopBulletTime(bool fromDash = false)
+        {
+            if (currentBulletTimePhase == null)
+                return;
+            
+            currentBulletTimePhase.SetResult(fromDash);
+        }
         
         public static void SetTimeScale(float timeScale)
         {

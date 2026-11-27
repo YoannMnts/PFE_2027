@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using PFE.Core.Scripts.Fight.Charges;
 using PFE.Gameplay.Scripts.Animations;
+using PFE.Gameplay.Scripts.BulletTimes;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -148,8 +149,9 @@ namespace PFE.Core.Scripts.Enemy.Attacks
             ReadOnlySpan<IAnimationFlag> flags = data.Flags;
             for (int i = 0; i < flags.Length; i++)
             {
-                if (flags[i] != null && flags[i] is not ITimedFlag)
-                    activeFlags.Add(flags[i]);
+                var animationFlag = flags[i];
+                if (animationFlag != null && animationFlag is not ITimedFlag)
+                    activeFlags.Add(animationFlag);
             }
 
             ResolveAnchors(data);

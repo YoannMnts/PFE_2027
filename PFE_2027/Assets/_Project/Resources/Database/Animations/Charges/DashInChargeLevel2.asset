@@ -17,7 +17,8 @@ MonoBehaviour:
   flags:
   - rid: 4376917797697486945
   - rid: 4376917799354237069
-  - rid: 4376917799354237142
+  - rid: 4376917803787616349
+  - rid: 4376917803787616350
   <Release>k__BackingField: {fileID: 11400000, guid: fa6ffd79173709f44ba3993e3a80e5ce, type: 2}
   <Next>k__BackingField: {fileID: 0}
   references:
@@ -32,7 +33,10 @@ MonoBehaviour:
         <Window>k__BackingField:
           <Start>k__BackingField: 0
           <End>k__BackingField: 1
-    - rid: 4376917799354237142
+    - rid: 4376917803787616349
       type: {class: ChargeTime, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data:
         <Duration>k__BackingField: 0
+    - rid: 4376917803787616350
+      type: {class: LaunchBulletTime, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data: 
