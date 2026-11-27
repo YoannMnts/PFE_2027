@@ -19,10 +19,18 @@ MonoBehaviour:
   - rid: 4376917799354236947
   - rid: 4376917799354236950
   - rid: 4376917799354237014
+  - rid: 497125016019664990
   <AttackRange>k__BackingField: 1
   references:
     version: 2
     RefIds:
+    - rid: 497125016019664990
+      type: {class: SfxLauncher, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
+      data:
+        <Window>k__BackingField:
+          <Start>k__BackingField: 0.4
+          <End>k__BackingField: 0.4
+        <Clip>k__BackingField: {fileID: 8300000, guid: b2494446d0baea243b293d4b8d028fc2, type: 3}
     - rid: 4376917799354236944
       type: {class: Hitbox, ns: PFE.Core.Scripts.Enemy.Attacks, asm: PFE.Core}
       data:
