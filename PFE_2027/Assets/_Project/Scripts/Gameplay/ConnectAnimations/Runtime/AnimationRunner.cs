@@ -210,6 +210,12 @@ namespace PFE.Core.Scripts.Enemy.Attacks
                     continue;
                 }
 
+                if (timed is SfxLauncher launcher)
+                {
+                    var currentClip = launcher.Clip;
+                    GameController.SfxManager.PlaySfx(currentClip);
+                }
+
                 TimeWindow window = timed.Window;
                 if (window.Contains(time))
                     activeFlags.Add(flag);

@@ -19,5 +19,5 @@ MonoBehaviour:
     <Npc>k__BackingField: {fileID: 11400000, guid: 948e340461a85ce46aa3862b2f4f45eb, type: 2}
     <Progression>k__BackingField: 0
   <GlobalSfx>k__BackingField: {fileID: 8300000, guid: b2494446d0baea243b293d4b8d028fc2, type: 3}
-  <GlobalSfxVolume>k__BackingField: 1
+  <GlobalSfxVolume>k__BackingField: 0.2
   <DialogueAreaData>k__BackingField: {fileID: 11400000, guid: a12ea77c73596af44b27ac1d5a7369d4, type: 2}

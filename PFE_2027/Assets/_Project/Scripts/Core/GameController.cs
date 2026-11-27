@@ -12,6 +12,8 @@ namespace PFE.Core.Scripts
         public static GameModeController GameModeController { get; private set; }
         public static GameDatabase GameDatabase { get; private set; }
         public static MusicManager  MusicManager { get; private set; }
+        public static SFXManager  SfxManager { get; private set; }
+
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
@@ -20,6 +22,8 @@ namespace PFE.Core.Scripts
             GameModeController = new GameModeController();
             GameDatabase = new GameDatabase();
             MusicManager = new MusicManager();
+            SfxManager = new SFXManager();
+
             
             GameDatabase.Load();
         }
